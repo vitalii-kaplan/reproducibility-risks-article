@@ -1,0 +1,85 @@
+{
+  "collected_at_utc": "2026-06-29T22:32:21+00:00",
+  "endpoint": "https://api.openalex.org/works",
+  "query_parameters": {
+    "search_parameter": "search.title_and_abstract",
+    "search": "KNIME",
+    "filter": "type:article",
+    "per-page": 200,
+    "cursor": "cursor pagination from *",
+    "mailto": ""
+  },
+  "openalex_first_page_meta": {
+    "count": 963,
+    "db_response_time_ms": 24,
+    "page": null,
+    "per_page": 200,
+    "next_cursor": "IlszMC4wOTI3ODUsIDE0NTY3MDQwMDAwMDAsICdodHRwczovL29wZW5hbGV4Lm9yZy9XMjk3OTExNDg2MiddIg==",
+    "groups_count": null,
+    "x_query": {
+      "oql": "works where type is article",
+      "oqo": {
+        "get_rows": "works",
+        "filter_rows": [
+          {
+            "column_id": "type",
+            "value": "article"
+          }
+        ],
+        "per_page": 200,
+        "cursor": "*"
+      },
+      "url": "/works?filter=type:article&per_page=200&cursor=%2A"
+    },
+    "cost_usd": 0.001
+  },
+  "pages_collected": 5,
+  "works_collected": 963,
+  "page_summaries": [
+    {
+      "page": 1,
+      "url": "https://api.openalex.org/works?search.title_and_abstract=KNIME&filter=type%3Aarticle&per-page=200&cursor=%2A",
+      "path": "data/original/openalex/pages/page_0001.json",
+      "results": 200,
+      "count": 963,
+      "next_cursor_present": true
+    },
+    {
+      "page": 2,
+      "url": "https://api.openalex.org/works?search.title_and_abstract=KNIME&filter=type%3Aarticle&per-page=200&cursor=IlszMC4wOTI3ODUsIDE0NTY3MDQwMDAwMDAsICdodHRwczovL29wZW5hbGV4Lm9yZy9XMjk3OTExNDg2MiddIg%3D%3D",
+      "path": "data/original/openalex/pages/page_0002.json",
+      "results": 200,
+      "count": 963,
+      "next_cursor_present": true
+    },
+    {
+      "page": 3,
+      "url": "https://api.openalex.org/works?search.title_and_abstract=KNIME&filter=type%3Aarticle&per-page=200&cursor=IlsxNS40Mzg0NjIsIDE3Mzc4NDk2MDAwMDAsICdodHRwczovL29wZW5hbGV4Lm9yZy9XNDQwNjgxNzcwMCddIg%3D%3D",
+      "path": "data/original/openalex/pages/page_0003.json",
+      "results": 200,
+      "count": 963,
+      "next_cursor_present": true
+    },
+    {
+      "page": 4,
+      "url": "https://api.openalex.org/works?search.title_and_abstract=KNIME&filter=type%3Aarticle&per-page=200&cursor=Ils3LjgxMDkxMywgMTY0MzMyODAwMDAwMCwgJ2h0dHBzOi8vb3BlbmFsZXgub3JnL1c0MjgwNTEyNjc3J10i",
+      "path": "data/original/openalex/pages/page_0004.json",
+      "results": 200,
+      "count": 963,
+      "next_cursor_present": true
+    },
+    {
+      "page": 5,
+      "url": "https://api.openalex.org/works?search.title_and_abstract=KNIME&filter=type%3Aarticle&per-page=200&cursor=IlsxLjg1NzkxMTgsIDE1OTc0NDk2MDAwMDAsICdodHRwczovL29wZW5hbGV4Lm9yZy9XMzA4MzE2Nzk2NiddIg%3D%3D",
+      "path": "data/original/openalex/pages/page_0005.json",
+      "results": 163,
+      "count": 963,
+      "next_cursor_present": false
+    }
+  ],
+  "raw_page_directory": "data/original/openalex/pages",
+  "derived_files": [
+    "works.jsonl",
+    "works.csv"
+  ]
+}

@@ -1,0 +1,2 @@
+snapshot_id,snapshot_date,plugin_xml_registered_nodes,plugin_xml_deprecated_nodes,plugin_xml_unique_deprecated_factory_classes,plugin_xml_hidden_nodes,plugin_xml_registered_nodesets,plugin_xml_deprecated_nodesets,node_description_files,node_description_deprecated_files,factory_class_mappers,migration_rules
+date-2018-04-03,2018-04-03,1301,193,136,2,7,0,1438,205,9,0

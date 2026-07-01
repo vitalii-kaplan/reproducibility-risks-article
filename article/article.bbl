@@ -1,0 +1,129 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{AdekitanNomaOsaghae2018FirstYear}
+Adekitan, A.I., Noma-Osaghae, E.: Data mining approach to predicting the
+  performance of first year student in a university using the admission
+  requirements. Education and Information Technologies  \textbf{24}(2),
+  1527--1543 (2018). \doi{10.1007/s10639-018-9839-7}
+
+\bibitem{AdekitanSalau2019Engineering}
+Adekitan, A.I., Salau, O.: The impact of engineering students' performance in
+  the first three years on their graduation result using educational data
+  mining. Heliyon  \textbf{5}(2),  e01250 (2019).
+  \doi{10.1016/j.heliyon.2019.e01250}
+
+\bibitem{Berthold2009KNIME}
+Berthold, M.R., Cebron, N., Dill, F., Gabriel, T.R., K{\"o}tter, T., Meinl, T.,
+  Ohl, P., Sieb, C., Thiel, K., Wiswedel, B.: {KNIME}: The {Konstanz}
+  information miner. In: Data Analysis, Machine Learning and Applications, pp.
+  319--326. Springer (2008). \doi{10.1007/978-3-540-78246-9_38}
+
+\bibitem{Fu2025GIScienceKNIME}
+Fu, X., Liu, L., Guan, W.W., Kalra, Y., Bao, S., K{\"o}tter, T., Sturm, K.:
+  Advancing replicable and reproducible {GIScience}: an approach with {KNIME}.
+  Cartography and Geographic Information Science  \textbf{53}(3),  270--290
+  (2025). \doi{10.1080/15230406.2024.2446556}
+
+\bibitem{Hall2009WEKA}
+Hall, M., Frank, E., Holmes, G., Pfahringer, B., Reutemann, P., Witten, I.H.:
+  The {WEKA} data mining software: An update. ACM SIGKDD Explorations
+  Newsletter  \textbf{11}(1),  10--18 (2009). \doi{10.1145/1656274.1656278}
+
+\bibitem{K2PWeb2026}
+Kaplan, V.: {k2p-web}: {KNIME} to {Python/Jupyter} converter.
+  \url{https://k2pweb.org/} (2026), accessed July 1, 2026
+
+\bibitem{KaplanKnime2py2026}
+Kaplan, V.: {knime2py}: {KNIME} to {Python} workbook.
+  \url{https://github.com/vitalii-kaplan/knime2py} (2026), accessed July 1,
+  2026
+
+\bibitem{KaplanReproducibilityRisksArticle2026}
+Kaplan, V.: {reproducibility-risks-article}: Replication repository for {KNIME}
+  workflow reproducibility-risk study.
+  \url{https://github.com/vitalii-kaplan/reproducibility-risks-article} (2026),
+  accessed July 1, 2026
+
+\bibitem{KNIMEExtensions2026}
+{KNIME AG}: Installing extensions and integrations.
+  \url{https://docs.knime.com/ap/latest/analytics_platform_user_guide/index.html\#installing-extensions-and-integrations}
+  (2026), accessed June 29, 2026
+
+\bibitem{KNIMEUserGuide2026}
+{KNIME AG}: {KNIME Analytics Platform User Guide}.
+  \url{https://docs.knime.com/ap/latest/analytics_platform_user_guide/index.html}
+  (2026), accessed June 29, 2026
+
+\bibitem{KNIMECoreClassMapperSchema2026}
+{KNIME AG}: {KNIME Core NodeFactoryClassMapper Extension Point Schema}.
+  \url{https://github.com/knime-oss/knime-core/blob/3885b31a49d047401a076981f9bd4c964b4a97a7/org.knime.core/schema/NodeFactoryClassMapper.exsd}
+  (2026), accessed June 29, 2026
+
+\bibitem{KNIMEWorkbenchNodeSchema2026}
+{KNIME AG}: {KNIME Workbench Repository Node Extension Point Schema}.
+  \url{https://github.com/knime-oss/knime-workbench/blob/c94203746f98ab38cccea54e3497d62c9adee9e1/org.knime.workbench.repository/schema/Node.exsd}
+  (2026), accessed June 29, 2026
+
+\bibitem{KNIMEMigrationRuleSchema2026}
+{KNIME AG}: {KNIME Workflow Migration NodeMigrationRule Extension Point
+  Schema}.
+  \url{https://github.com/knime-oss/knime-database/blob/c4a3356985edf4383ad0a3107658851e6c49fdad/org.knime.workflow.migration/schema/NodeMigrationRule.exsd}
+  (2026), accessed June 29, 2026
+
+\bibitem{Kojima2020KGCN}
+Kojima, R., Ishida, S., Ohta, M., Iwata, H., Honma, T., Okuno, Y.: {kGCN}: a
+  graph-based deep learning framework for chemical structures. Journal of
+  Cheminformatics  \textbf{12}(1) (2020). \doi{10.1186/s13321-020-00435-6}
+
+\bibitem{Kurtzer2017Singularity}
+Kurtzer, G.M., Sochat, V., Bauer, M.W.: Singularity: Scientific containers for
+  mobility of compute. PLOS ONE  \textbf{12}(5),  e0177459 (2017).
+  \doi{10.1371/journal.pone.0177459}
+
+\bibitem{Orru2020Pump}
+Orr{\`u}, P.F., Zoccheddu, A., Sassu, L., Mattia, C., Cozza, R., Arena, S.:
+  Machine learning approach using {MLP} and {SVM} algorithms for the fault
+  prediction of a centrifugal pump in the oil and gas industry. Sustainability
+  \textbf{12}(11), ~4776 (2020). \doi{10.3390/su12114776}
+
+\bibitem{Priem2022OpenAlex}
+Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly
+  works, authors, venues, institutions, and concepts. arXiv preprint
+  arXiv:2205.01833  (2022). \doi{10.48550/arXiv.2205.01833},
+  \url{https://arxiv.org/abs/2205.01833}
+
+\bibitem{SamuelMietchen2024JupyterReproducibility}
+Samuel, S., Mietchen, D.: Computational reproducibility of {Jupyter} notebooks
+  from biomedical publications. GigaScience  \textbf{13} (2024).
+  \doi{10.1093/gigascience/giad113}
+
+\bibitem{Saubern2011PAINS}
+Saubern, S., Guha, R., Baell, J.B.: {KNIME} workflow to assess {PAINS} filters
+  in {SMARTS} format: Comparison of {RDKit} and {Indigo} cheminformatics
+  libraries. Molecular Informatics  \textbf{30}(10),  847--850 (2011).
+  \doi{10.1002/minf.201100076}
+
+\bibitem{Rasheed2023FlakinessReview}
+Tahir, A., Rasheed, S., Dietrich, J., Hashemi, N., Zhang, L.: Test flakiness'
+  causes, detection, impact and responses: A multivocal review. Journal of
+  Systems and Software  \textbf{206},  111837 (2023).
+  \doi{10.1016/j.jss.2023.111837}
+
+\bibitem{Walker2013ProveML}
+Walker, R., Slingsby, A., Dykes, J., Xu, K., Wood, J., Nguyen, P.H., Stephens,
+  D., Wong, B.L.W., Zheng, Y.: An extensible framework for provenance in human
+  terrain visual analytics. IEEE Transactions on Visualization and Computer
+  Graphics  \textbf{19}(12),  2139--2148 (2013). \doi{10.1109/TVCG.2013.132}
+
+\bibitem{Weigert2018CARE}
+Weigert, M., Schmidt, U., Boothe, T., M{\"u}ller, A., Dibrov, A., Jain, A.,
+  Wilhelm, B., Schmidt, D., Broaddus, C., Culley, S., Rocha-Martins, M.,
+  Segovia-Miranda, F., Norden, C., Henriques, R., Zerial, M., Solimena, M.,
+  Rink, J., Tomancak, P., Royer, L., Jug, F., Myers, E.W.: Content-aware image
+  restoration: pushing the limits of fluorescence microscopy. Nature Methods
+  \textbf{15}(12),  1090--1097 (2018). \doi{10.1038/s41592-018-0216-7}
+
+\end{thebibliography}

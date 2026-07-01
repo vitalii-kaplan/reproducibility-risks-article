@@ -1,0 +1,14 @@
+{
+  "total_articles": 963,
+  "open_access_articles": 619,
+  "fulltext_available_articles": 625,
+  "pdf_available_articles": 421,
+  "open_access_status_counts": {
+    "closed": 344,
+    "diamond": 171,
+    "green": 154,
+    "gold": 152,
+    "hybrid": 94,
+    "bronze": 48
+  }
+}

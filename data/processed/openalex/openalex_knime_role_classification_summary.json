@@ -1,0 +1,31 @@
+{
+  "role_counts": {
+    "ambiguous_match": 465,
+    "uses_knime_as_tool": 314,
+    "about_knime_or_extension": 156,
+    "about_or_mentions_knime": 28
+  },
+  "likely_workflow_platform_articles": 410,
+  "method": {
+    "about_patterns": [
+      "\\bknime\\s*[-:]",
+      "\\bkonstanz information miner\\b",
+      "\\bknime\\b.*\\b(platform|extension|node|nodes|tutorial|workflow system)\\b",
+      "\\b(knime-cdk|knime4bio|knime analytics platform)\\b"
+    ],
+    "usage_patterns": [
+      "\\busing knime\\b",
+      "\\bused knime\\b",
+      "\\bknime was used\\b",
+      "\\bperformed (using|with|in) knime\\b",
+      "\\bimplemented (using|with|in) knime\\b",
+      "\\bdeveloped (using|with|in) knime\\b",
+      "\\bbuilt (using|with|in) knime\\b",
+      "\\bknime workflow\\b",
+      "\\bworkflow[s]?\\b.{0,80}\\bknime\\b",
+      "\\bknime\\b.{0,80}\\bworkflow[s]?\\b",
+      "\\bknime analytics platform\\b"
+    ],
+    "note": "This is a metadata heuristic over titles, abstracts, and OpenAlex keywords. It is suitable for triage, not final manual coding."
+  }
+}
