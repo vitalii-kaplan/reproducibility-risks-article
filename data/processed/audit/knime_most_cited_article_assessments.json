@@ -72,24 +72,24 @@
       "reproducibility_relevance": "This is an influential case where KNIME appears as a distribution interface for a computational method. Because only a workflow image was found, exact KNIME reproduction would require reconstructing the workflow and resolving its software/plugin dependencies.",
       "evidence": [
         {
-          "pdf_text_lines": "22-23",
-          "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME."
+          "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME.",
+          "extracted_text_lines": "22-23"
         },
         {
-          "pdf_text_lines": "631-639",
-          "note": "The methods section reports that restoration experiments were performed in Python with Keras and TensorFlow."
+          "note": "The methods section reports that restoration experiments were performed in Python with Keras and TensorFlow.",
+          "extracted_text_lines": "631-639"
         },
         {
-          "pdf_text_lines": "725-731",
-          "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+          "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+          "extracted_text_lines": "725-731"
         },
         {
-          "pdf_text_lines": "supplementary PDF",
-          "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact."
+          "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact.",
+          "extracted_text_lines": "supplementary PDF"
         },
         {
-          "pdf_text_lines": "866-871",
-          "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations."
+          "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations.",
+          "extracted_text_lines": "866-871"
         }
       ],
       "article_identifier": "https://openalex.org/W2950501364",
@@ -131,114 +131,115 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/s41592-018-0216-7.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/s41592-018-0216-7.txt"
             }
           ],
           "provides_workflow_screenshots_or_figures": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The supplementary PDF includes an image of the KNIME workflow, but no downloadable KNIME workflow file was found in the assessed materials."
+              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+              "extracted_text_lines": "725-731"
             },
             {
-              "pdf_text_lines": "725-731",
-              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+              "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations.",
+              "extracted_text_lines": "866-871"
             },
             {
-              "pdf_text_lines": "supplementary PDF",
-              "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact."
+              "extracted_text_lines": "739-741",
+              "note": "Extracted text evidence: (membrane). The samples were imaged using a Zeiss LSM 780 NLO multiphoton models readily available, we developed user-friendly FIJI plugins and KNIME laser-scanning microscope with a 63×​/1.3-NA glycerol-immersion objective workflows (Supplementary Figs. 29 and 30). (Zeiss) using 780-nm two-photon excitation and an isotropic voxel size of 0.3 μ​m."
             },
             {
-              "pdf_text_lines": "866-871",
-              "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations."
-            },
-            {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: shown_or_described_but_no_public_workflow_found"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "The supplementary PDF shows a KNIME workflow image, but no separate KNIME workflow download URL was found."
+              "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact.",
+              "extracted_text_lines": "supplementary PDF"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "Training and test data are reported as available through the publication site."
+              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+              "extracted_text_lines": "725-731"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://publications.mpi-cbg.de/publications-sites/7207"
+              "extracted_text_lines": "735-737",
+              "note": "Extracted text evidence for linked resource https://publications.mpi-cbg.de/publications-sites/7207: Mouse liver isotropic restoration. Mouse livers were fixed through transcardial Training and test data for all experiments presented can be found at perfusion with 4% paraformaldehyde and post-fixed overnight at 4 °C with the https://publications.mpi-cbg.de/publications-sites/7207. The code for network same solution. Tissue slices were optically cleared by a modified version of SeeDB66 training and prediction (in Python/TensorFlow) is publicly available at"
             },
             {
-              "pdf_text_lines": "725-731",
-              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+              "note": "Resource URL recorded in assessment: https://publications.mpi-cbg.de/publications-sites/7207",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "Training and test data are reported as available through the publication site."
+              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+              "extracted_text_lines": "725-731"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://publications.mpi-cbg.de/publications-sites/7207"
+              "extracted_text_lines": "33-35",
+              "note": "Extracted text evidence: and super-resolution microscopy6–8 enable time-resolved volumetric on the specific content of the images to be restored. Intuitively, a imaging of biological processes within cells at high resolution. The method that leverages available knowledge about the data at hand quality at which these processes can be faithfully recorded, however, ought to yield superior restoration results."
             },
             {
-              "pdf_text_lines": "725-731",
-              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+              "extracted_text_lines": "40-42",
+              "note": "Extracted text evidence: not all be optimized at the same time—trade-offs must be made, for instance, been applied to the automatic extraction of connectomes example, by sacrificing signal-to-noise ratio (SNR) by reducing expo- from large electron microscopy data27, for classification of image- sure time to gain imaging speed. Such trade-offs are often depicted by based high-content screens28, fluorescence signal prediction from"
+            },
+            {
+              "note": "Resource URL recorded in assessment: https://publications.mpi-cbg.de/publications-sites/7207",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "provides_code_or_scripts": [
             {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "Source code is reported as available through the CSBDeep GitHub repository and documentation site."
+              "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME.",
+              "extracted_text_lines": "22-23"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/CSBDeep/CSBDeep"
+              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+              "extracted_text_lines": "725-731"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://csbdeep.bioimagecomputing.com/doc/"
+              "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations.",
+              "extracted_text_lines": "866-871"
             },
             {
-              "pdf_text_lines": "22-23",
-              "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME."
+              "extracted_text_lines": "737-739",
+              "note": "Extracted text evidence for linked resource https://github.com/CSBDeep/CSBDeep: same solution. Tissue slices were optically cleared by a modified version of SeeDB66 training and prediction (in Python/TensorFlow) is publicly available at and stained with 4′​,6-diamidino-2-phenylindole (DAPI) (nuclei) and phalloidin https://github.com/CSBDeep/CSBDeep. Furthermore, to make our restoration (membrane). The samples were imaged using a Zeiss LSM 780 NLO multiphoton models readily available, we developed user-friendly FIJI plugins and KNIME"
             },
             {
-              "pdf_text_lines": "725-731",
-              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+              "extracted_text_lines": "646-648",
+              "note": "Extracted text evidence for linked resource http://csbdeep.bioimagecomputing.com/doc/: prediction, example applications, and documentation can be found at their intensities and labeled connected components of pixels above the threshold as http://csbdeep.bioimagecomputing.com/doc/. The training details for each individual nuclei. The segmentation accuracy was computed as the SEG score59, which restoration experiment (e.g., number of used images, network hyper-parameters) corresponds to the average overlap of segmented regions with matched ground-truth"
             },
             {
-              "pdf_text_lines": "866-871",
-              "note": "The software summary reports Python, TensorFlow, Keras, Fiji/ImageJ, and public code locations."
+              "note": "Resource URL recorded in assessment: https://github.com/CSBDeep/CSBDeep",
+              "extracted_text_lines": "linked_resources"
+            },
+            {
+              "note": "Resource URL recorded in assessment: http://csbdeep.bioimagecomputing.com/doc/",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "22-23",
-              "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME."
+              "note": "The abstract says the methods are available as open-source software in Python, FIJI, and KNIME.",
+              "extracted_text_lines": "22-23"
             },
             {
-              "pdf_text_lines": "725-731",
-              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows."
+              "note": "The data availability section lists data, code, FIJI plugins, and KNIME workflows.",
+              "extracted_text_lines": "725-731"
             },
             {
-              "pdf_text_lines": "supplementary PDF",
-              "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact."
+              "extracted_text_lines": "22-24",
+              "note": "Extracted text evidence: rates compared to state-of-the-art methods. All developed image restoration methods are freely available as open source soft- ware in Python, FIJI, and KNIME. "
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study develops content-aware image restoration methods. The experiments are reported as Python/Keras/TensorFlow work, while KNIME is presented as one user-facing way to access the developed restoration tools."
+              "extracted_text_lines": "607-609",
+              "note": "Extracted text evidence: 32. Nehme, E. et al. Deep-STORM: super-resolution single-molecule microscopy the FIJI and KNIME integration. E.W.M. supervised the project. F.J., M.W., P.T., L.R., by deep learning. Optica 5, 458–464 (2018)."
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study develops content-aware image restoration methods. The experiments are reported as Python/Keras/TensorFlow work, while KNIME is presented as one user-facing way to access the developed restoration tools."
+              "note": "Manual assessment found a KNIME workflow image, not a downloadable workflow artifact.",
+              "extracted_text_lines": "supplementary PDF"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/s41592-018-0216-7.txt"
     },
     {
       "rank": 2,
@@ -276,20 +277,20 @@
       "reproducibility_relevance": "This article is useful background evidence for KNIME's workflow abstraction and extension architecture, but it does not provide a scientific workflow artifact to reproduce.",
       "evidence": [
         {
-          "pdf_text_lines": "24-31",
-          "note": "The abstract says the paper introduces KNIME internals and features available in version 2.0."
+          "note": "The abstract says the paper introduces KNIME internals and features available in version 2.0.",
+          "extracted_text_lines": "24-31"
         },
         {
-          "pdf_text_lines": "38-67",
-          "note": "The overview explains workflows as nodes connected by edges, with data and node settings stored with the workflow."
+          "note": "The overview explains workflows as nodes connected by edges, with data and node settings stored with the workflow.",
+          "extracted_text_lines": "38-67"
         },
         {
-          "pdf_text_lines": "267-273",
-          "note": "The text reports support for Weka 3.5.6 and about 100 Weka nodes."
+          "note": "The text reports support for Weka 3.5.6 and about 100 Weka nodes.",
+          "extracted_text_lines": "267-273"
         },
         {
-          "pdf_text_lines": "289-297",
-          "note": "The text describes new features in KNIME 2.0."
+          "note": "The text describes new features in KNIME 2.0.",
+          "extracted_text_lines": "289-297"
         }
       ],
       "article_identifier": "https://openalex.org/W1979900513",
@@ -314,73 +315,10 @@
           "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
           "evidence_notes": "This article is useful background evidence for KNIME's workflow abstraction and extension architecture, but it does not provide a scientific workflow artifact to reproduce."
         },
-        "flag_audit_fields": {
-          "full_text_accessible": true,
-          "uses_knime": false,
-          "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": false,
-          "provides_workflow_screenshots_or_figures": false,
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": false,
-          "reports_input_data_availability": false,
-          "provides_code_or_scripts": false,
-          "reports_extension_or_plugin_dependencies": false,
-          "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
-        },
-        "flag_audit_support": {
-          "full_text_accessible": [
-            {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/Berthold_237652.pdf"
-            }
-          ],
-          "reports_knime_version": [
-            {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 2.0"
-            },
-            {
-              "pdf_text_lines": "24-31",
-              "note": "The abstract says the paper introduces KNIME internals and features available in version 2.0."
-            },
-            {
-              "pdf_text_lines": "289-297",
-              "note": "The text describes new features in KNIME 2.0."
-            }
-          ],
-          "describes_workflow_or_nodes_in_text": [
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Weka integration"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "database nodes"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "loops"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "metanodes"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "workflow editor"
-            },
-            {
-              "pdf_text_lines": "38-67",
-              "note": "The overview explains workflows as nodes connected by edges, with data and node settings stored with the workflow."
-            },
-            {
-              "pdf_text_lines": "267-273",
-              "note": "The text reports support for Weka 3.5.6 and about 100 Weka nodes."
-            }
-          ]
-        }
-      }
+        "flag_audit_fields": {},
+        "flag_audit_support": {}
+      },
+      "processed_text_file": "data/processed/articles/Berthold_237652.txt"
     },
     {
       "rank": 3,
@@ -417,16 +355,16 @@
       "reproducibility_relevance": "The article supports the paper's framing that KNIME is used as a scientific workflow system and that workflow sharing matters, but it is not itself an executable workflow case.",
       "evidence": [
         {
-          "pdf_text_lines": "18-23",
-          "note": "The abstract frames the article as a comparison of Pipeline Pilot and KNIME."
+          "note": "The abstract frames the article as a comparison of Pipeline Pilot and KNIME.",
+          "extracted_text_lines": "18-23"
         },
         {
-          "pdf_text_lines": "27-33",
-          "note": "The introduction says myExperiment includes KNIME workflows."
+          "note": "The introduction says myExperiment includes KNIME workflows.",
+          "extracted_text_lines": "27-33"
         },
         {
-          "pdf_text_lines": "92-113",
-          "note": "The KNIME section discusses registered users, downloads, KNIME Server, and workflow exchange."
+          "note": "The KNIME section discusses registered users, downloads, KNIME Server, and workflow exchange.",
+          "extracted_text_lines": "92-113"
         }
       ],
       "article_identifier": "https://openalex.org/W1969389753",
@@ -451,43 +389,10 @@
           "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
           "evidence_notes": "The article supports the paper's framing that KNIME is used as a scientific workflow system and that workflow sharing matters, but it is not itself an executable workflow case."
         },
-        "flag_audit_fields": {
-          "full_text_accessible": true,
-          "uses_knime": false,
-          "reports_knime_version": false,
-          "provides_downloadable_knime_workflow_files": false,
-          "provides_workflow_screenshots_or_figures": false,
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": false,
-          "reports_input_data_availability": false,
-          "provides_code_or_scripts": false,
-          "reports_extension_or_plugin_dependencies": false,
-          "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
-        },
-        "flag_audit_support": {
-          "full_text_accessible": [
-            {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/s10822-012-9577-7.pdf"
-            }
-          ],
-          "describes_workflow_or_nodes_in_text": [
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "KNIME extensions"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "KNIME Server"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "RushAnalyzer"
-            }
-          ]
-        }
-      }
+        "flag_audit_fields": {},
+        "flag_audit_support": {}
+      },
+      "processed_text_file": "data/processed/articles/s10822-012-9577-7.txt"
     },
     {
       "rank": 4,
@@ -522,20 +427,20 @@
       "reproducibility_relevance": "This is a direct KNIME workflow use case. Without a downloadable workflow, KNIME version, and public data, reproduction would require reconstructing the workflow from the paper and figure descriptions.",
       "evidence": [
         {
-          "pdf_text_lines": "26-30",
-          "note": "The abstract states that SVM and MLP were implemented in the KNIME platform."
+          "note": "The abstract states that SVM and MLP were implemented in the KNIME platform.",
+          "extracted_text_lines": "26-30"
         },
         {
-          "pdf_text_lines": "230-235",
-          "note": "The methods state that KNIME was adopted to set up the model workflow."
+          "note": "The methods state that KNIME was adopted to set up the model workflow.",
+          "extracted_text_lines": "230-235"
         },
         {
-          "pdf_text_lines": "510-513",
-          "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis."
+          "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis.",
+          "extracted_text_lines": "510-513"
         },
         {
-          "pdf_text_lines": "567-731",
-          "note": "The text names several KNIME preprocessing, modeling, and scoring nodes."
+          "note": "The text names several KNIME preprocessing, modeling, and scoring nodes.",
+          "extracted_text_lines": "567-731"
         }
       ],
       "article_identifier": "https://openalex.org/W3035667192",
@@ -577,90 +482,95 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/sustainability-12-04776-v2.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/sustainability-12-04776-v2.txt"
             }
           ],
           "provides_workflow_screenshots_or_figures": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The article shows and describes a KNIME workflow, but the PDF text does not provide a downloadable workflow artifact."
+              "note": "The methods state that KNIME was adopted to set up the model workflow.",
+              "extracted_text_lines": "230-235"
             },
             {
-              "pdf_text_lines": "230-235",
-              "note": "The methods state that KNIME was adopted to set up the model workflow."
+              "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis.",
+              "extracted_text_lines": "510-513"
             },
             {
-              "pdf_text_lines": "510-513",
-              "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis."
+              "extracted_text_lines": "388-390",
+              "note": "Extracted text evidence: Knime platform is used to design the workflow of centrifugal pump fault diagnosis, as reported in Figure 2. In accordance with the logic of this workflow, the data analysis and processing will be in Figure 2. In accordance with the logic of this workflow, the data analysis and processing will be"
             },
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: shown_or_described_but_no_public_artifact_found_in_pdf"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "No data URL, data DOI, code URL, or workflow URL was found in the extracted PDF text."
+              "extracted_text_lines": "389-391",
+              "note": "Extracted text evidence: in Figure 2. In accordance with the logic of this workflow, the data analysis and processing will be in Figure 2. In accordance with the logic of this workflow, the data analysis and processing will be "
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Missing Values"
+              "note": "The text names several KNIME preprocessing, modeling, and scoring nodes.",
+              "extracted_text_lines": "567-731"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Moving Average"
+              "extracted_text_lines": "232-234",
+              "note": "Extracted text evidence: complex problems that require the handling of large number of computations. The open-source software KNIME platform is adopted to set-up the model workflow. The data used To select a simple and accurate ML model to failure prediction, a comparison between two"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Rule Based Filter"
+              "extracted_text_lines": "237-239",
+              "note": "Extracted text evidence: production line of the SARLUX refinery (Sarroch, Italy). The data analysis is complicated by difficulties performed. The open‐source software KNIME platform is adopted to set‐up the model workflow. linked"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Normalizer"
+              "note": "Missing Values",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "RProp MLP"
+              "note": "Moving Average",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Scorer"
+              "note": "Rule Based Filter",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "567-731",
-              "note": "The text names several KNIME preprocessing, modeling, and scoring nodes."
+              "note": "Normalizer",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "RProp MLP",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "Scorer",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "26-30",
-              "note": "The abstract states that SVM and MLP were implemented in the KNIME platform."
+              "note": "The abstract states that SVM and MLP were implemented in the KNIME platform.",
+              "extracted_text_lines": "26-30"
             },
             {
-              "pdf_text_lines": "230-235",
-              "note": "The methods state that KNIME was adopted to set up the model workflow."
+              "note": "The methods state that KNIME was adopted to set up the model workflow.",
+              "extracted_text_lines": "230-235"
             },
             {
-              "pdf_text_lines": "510-513",
-              "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis."
+              "note": "Figure 2 is described as the KNIME workflow built for fault diagnosis.",
+              "extracted_text_lines": "510-513"
             },
             {
-              "pdf_text_lines": "567-731",
-              "note": "The text names several KNIME preprocessing, modeling, and scoring nodes."
+              "note": "The text names several KNIME preprocessing, modeling, and scoring nodes.",
+              "extracted_text_lines": "567-731"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study builds a KNIME workflow for pump fault diagnosis using preprocessing, filtering, normalization, neural network and SVM-related modeling, and scoring nodes."
+              "extracted_text_lines": "28-30",
+              "note": "Extracted text evidence: capabilities of the ML model, two different algorithms—the Support Vector Machine (SVM) and the Multilayer Perceptron (MLP)—are implemented in KNIME platform. Based on these algorithms, potential faults are successfully recognized and classified ensuring good prediction accuracy. Indeed,"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study builds a KNIME workflow for pump fault diagnosis using preprocessing, filtering, normalization, neural network and SVM-related modeling, and scoring nodes."
+              "extracted_text_lines": "232-234",
+              "note": "Extracted text evidence: complex problems that require the handling of large number of computations. The open-source software KNIME platform is adopted to set-up the model workflow. The data used To select a simple and accurate ML model to failure prediction, a comparison between two"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/sustainability-12-04776-v2.txt"
     },
     {
       "rank": 5,
@@ -696,20 +606,20 @@
       "reproducibility_relevance": "This is relevant because KNIME is part of the data-preparation chain, but the public code repository does not appear to preserve the KNIME workflow used for curation.",
       "evidence": [
         {
-          "pdf_text_lines": "23-25",
-          "note": "The abstract says structures were curated and standardized using KNIME."
+          "note": "The abstract says structures were curated and standardized using KNIME.",
+          "extracted_text_lines": "23-25"
         },
         {
-          "pdf_text_lines": "143-148",
-          "note": "The methods describe a KNIME workflow for chemical structure standardization."
+          "note": "The methods describe a KNIME workflow for chemical structure standardization.",
+          "extracted_text_lines": "143-148"
         },
         {
-          "pdf_text_lines": "267-274",
-          "note": "The methods point to OPERA documentation and GitHub."
+          "note": "The methods point to OPERA documentation and GitHub.",
+          "extracted_text_lines": "267-274"
         },
         {
-          "pdf_text_lines": "982-984",
-          "note": "The availability statement says datasets and code are available as additional files and on GitHub."
+          "note": "The availability statement says datasets and code are available as additional files and on GitHub.",
+          "extracted_text_lines": "982-984"
         }
       ],
       "article_identifier": "https://openalex.org/W2973634761",
@@ -751,86 +661,99 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/s13321-019-0384-1.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/s13321-019-0384-1.txt"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper reports that all datasets are available as additional files and on GitHub."
+              "note": "The availability statement says datasets and code are available as additional files and on GitHub.",
+              "extracted_text_lines": "982-984"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA"
-            },
-            {
-              "pdf_text_lines": "982-984",
-              "note": "The availability statement says datasets and code are available as additional files and on GitHub."
+              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper reports that all datasets are available as additional files and on GitHub."
+              "note": "The availability statement says datasets and code are available as additional files and on GitHub.",
+              "extracted_text_lines": "982-984"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA"
+              "extracted_text_lines": "19-21",
+              "note": "Extracted text evidence: for the prediction of pKa, but to the best of our knowledge no free and open-source programs exist for this purpose. Using a freely available data set and three machine learning approaches, we developed open-source models for pKa prediction."
             },
             {
-              "pdf_text_lines": "982-984",
-              "note": "The availability statement says datasets and code are available as additional files and on GitHub."
+              "extracted_text_lines": "22-24",
+              "note": "Extracted text evidence: Methods: The experimental strongest acidic and strongest basic pKa values in water for 7912 chemicals were obtained from DataWarrior, a freely available software package. Chemical structures were curated and standardized for quantitative structure–activity relationship (QSAR) modeling using KNIME, and a subset comprising 79% of the ini-"
+            },
+            {
+              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "provides_code_or_scripts": [
             {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "The OPERA GitHub repository provides code/data for the published models, but was not found to provide a KNIME workflow."
+              "note": "The methods point to OPERA documentation and GitHub.",
+              "extracted_text_lines": "267-274"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA"
+              "note": "The availability statement says datasets and code are available as additional files and on GitHub.",
+              "extracted_text_lines": "982-984"
             },
             {
-              "pdf_text_lines": "267-274",
-              "note": "The methods point to OPERA documentation and GitHub."
+              "extracted_text_lines": "855-857",
+              "note": "Extracted text evidence: 42 pKa values were removed from the basic dataset. The For OPERA (release v2.0), the pKa model currently concordance improvement was higher for the XGB and available on the Github repository is available as both a DNN models in comparison to OPERA. For OPERA, command line module and in the form of a user-friendly"
             },
             {
-              "pdf_text_lines": "982-984",
-              "note": "The availability statement says datasets and code are available as additional files and on GitHub."
+              "extracted_text_lines": "1000-1002",
+              "note": "Extracted text evidence: Availability of data and materials for analytical and chemical knowledge management. https​://www.acdla​ All data sets and code are available as Additional files attached to this paper bs.com/. Accessed 21 May 2019 and on GitHub: https​://githu​b.com/NIEHS​/OPERA​ 16. Simulations Plus (2019) Simulations Plus: model-based drug develop-"
+            },
+            {
+              "note": "Resource URL recorded in assessment: https://github.com/NIEHS/OPERA",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "23-25",
-              "note": "The abstract says structures were curated and standardized using KNIME."
+              "note": "The abstract says structures were curated and standardized using KNIME.",
+              "extracted_text_lines": "23-25"
             },
             {
-              "pdf_text_lines": "143-148",
-              "note": "The methods describe a KNIME workflow for chemical structure standardization."
+              "note": "The methods describe a KNIME workflow for chemical structure standardization.",
+              "extracted_text_lines": "143-148"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study uses a KNIME workflow to curate and standardize chemical structures before QSAR modeling. The main modeling workflow uses additional software, including OPERA, Python, R, PaDEL, and machine learning libraries."
+              "extracted_text_lines": "23-25",
+              "note": "Extracted text evidence: obtained from DataWarrior, a freely available software package. Chemical structures were curated and standardized for quantitative structure–activity relationship (QSAR) modeling using KNIME, and a subset comprising 79% of the ini- tial set was used for modeling. To evaluate different approaches to modeling, several datasets were constructed based"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study uses a KNIME workflow to curate and standardize chemical structures before QSAR modeling. The main modeling workflow uses additional software, including OPERA, Python, R, PaDEL, and machine learning libraries."
+              "extracted_text_lines": "144-146",
+              "note": "Extracted text evidence: here below) to provide several options for data modeling. The initial dataset of 7912 chemical structures had 3614 The resulting QSAR-ready structures were used to gen- acidic pKa values and 4298 basic pKa values. A KNIME erate 1D/2D chemical descriptors, binary fingerprints, [34] workflow was used to standardize the structures and"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "chemical structure standardization workflow"
+              "note": "The methods describe a KNIME workflow for chemical structure standardization.",
+              "extracted_text_lines": "143-148"
             },
             {
-              "pdf_text_lines": "143-148",
-              "note": "The methods describe a KNIME workflow for chemical structure standardization."
+              "extracted_text_lines": "247-249",
+              "note": "Extracted text evidence: files contained 1444 continuous descriptors, 9121 binary chemical would have an acidic or basic pKa or be ampho- fingerprints (CDK, Estate, CDK graph only, MACCS, teric, were selected and implemented in OPERA, a free PubChem, Substructure, Klekota-Roth and 2D atom and open-source suite of QSAR models [13, 27, 45]."
+            },
+            {
+              "extracted_text_lines": "376-378",
+              "note": "Extracted text evidence: ranges where these two tools were most concordant is then applied to predict the pKa values. The OPERA with DataWarrior pKa values. These rules would then be pKa predictor is also equipped with an ionization applied to predictions from ACD/Labs and ChemAxon checker based on the hydrogen donor and acceptor sites"
+            },
+            {
+              "note": "chemical structure standardization workflow",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/s13321-019-0384-1.txt"
     },
     {
       "rank": 6,
@@ -877,20 +800,20 @@
       "reproducibility_relevance": "This is a direct KNIME analysis workflow case. The paper gives useful node-level reconstruction clues, but missing version and workflow artifact information limit exact reproducibility.",
       "evidence": [
         {
-          "pdf_text_lines": "46-48",
-          "note": "The abstract refers to a KNIME-based data mining model."
+          "note": "The abstract refers to a KNIME-based data mining model.",
+          "extracted_text_lines": "46-48"
         },
         {
-          "pdf_text_lines": "271-272",
-          "note": "The paper identifies a supplementary spreadsheet dataset."
+          "note": "The paper identifies a supplementary spreadsheet dataset.",
+          "extracted_text_lines": "271-272"
         },
         {
-          "pdf_text_lines": "359-373",
-          "note": "The methods describe the KNIME workflow structure and named node groups."
+          "note": "The methods describe the KNIME workflow structure and named node groups.",
+          "extracted_text_lines": "359-373"
         },
         {
-          "pdf_text_lines": "409-412",
-          "note": "The text describes forward feature selection in the KNIME workflow."
+          "note": "The text describes forward feature selection in the KNIME workflow.",
+          "extracted_text_lines": "409-412"
         }
       ],
       "article_identifier": "https://openalex.org/W2917344953",
@@ -932,124 +855,117 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/PIIS240584401836924X.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/PIIS240584401836924X.txt"
             }
           ],
           "provides_workflow_screenshots_or_figures": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The article describes the KNIME workflow in detail, but no downloadable KNIME workflow artifact was found in the extracted PDF text."
+              "note": "The methods describe the KNIME workflow structure and named node groups.",
+              "extracted_text_lines": "359-373"
             },
             {
-              "pdf_text_lines": "359-373",
-              "note": "The methods describe the KNIME workflow structure and named node groups."
-            },
-            {
-              "pdf_text_lines": "409-412",
-              "note": "The text describes forward feature selection in the KNIME workflow."
-            },
-            {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: shown_or_described_but_no_public_artifact_found_in_pdf"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "The PDF says the spreadsheet is named Supplementary material and is available from Popoola et al. (2018) via appendix A, but no direct dataset URL is visible in the extracted text."
+              "note": "The text describes forward feature selection in the KNIME workflow.",
+              "extracted_text_lines": "409-412"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Excel Reader"
+              "note": "The methods describe the KNIME workflow structure and named node groups.",
+              "extracted_text_lines": "359-373"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Statistics"
+              "extracted_text_lines": "121-123",
+              "note": "Extracted text evidence: loaded and not adequately meeting the societal knowledge needs of the Nigerian learner (Obadara and Alaka, 2013; Omoregie, 2008). "
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Stratified Sampling"
+              "extracted_text_lines": "344-346",
+              "note": "Extracted text evidence: mining application which facilitates interactive, visual, easy assembling, testing and running of data mining pipelines. The graphical workﬂow in KNIME is made possible by means of an Eclipse plug-in (Berthold et al., 2009) and the KNIME"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Color Manager"
+              "note": "Excel Reader",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Scatter Plot"
+              "note": "Statistics",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Normalizer"
+              "note": "Stratified Sampling",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "PCA"
+              "note": "Color Manager",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Learners Meta node"
+              "note": "Scatter Plot",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Predictors Meta node"
+              "note": "Normalizer",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Scorers"
+              "note": "PCA",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Excel Writer"
+              "note": "Learners Meta node",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Forward Feature Selection Meta node"
+              "note": "Predictors Meta node",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "359-373",
-              "note": "The methods describe the KNIME workflow structure and named node groups."
+              "note": "Scorers",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "Excel Writer",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "Forward Feature Selection Meta node",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper reports a supplementary spreadsheet dataset associated with an earlier publication."
+              "note": "The abstract refers to a KNIME-based data mining model.",
+              "extracted_text_lines": "46-48"
             },
             {
-              "pdf_text_lines": "46-48",
-              "note": "The abstract refers to a KNIME-based data mining model."
-            },
-            {
-              "pdf_text_lines": "271-272",
-              "note": "The paper identifies a supplementary spreadsheet dataset."
+              "note": "The paper identifies a supplementary spreadsheet dataset.",
+              "extracted_text_lines": "271-272"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "46-48",
-              "note": "The abstract refers to a KNIME-based data mining model."
+              "note": "The abstract refers to a KNIME-based data mining model.",
+              "extracted_text_lines": "46-48"
             },
             {
-              "pdf_text_lines": "359-373",
-              "note": "The methods describe the KNIME workflow structure and named node groups."
+              "note": "The methods describe the KNIME workflow structure and named node groups.",
+              "extracted_text_lines": "359-373"
             },
             {
-              "pdf_text_lines": "409-412",
-              "note": "The text describes forward feature selection in the KNIME workflow."
+              "note": "The text describes forward feature selection in the KNIME workflow.",
+              "extracted_text_lines": "409-412"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study develops a KNIME-based educational data mining workflow with Excel import, descriptive statistics, partitioning, visualization, normalization, PCA, learner and predictor metanodes, scoring, and Excel export."
+              "extracted_text_lines": "45-47",
+              "note": "Extracted text evidence: the year of entry and the Grade Point Average (GPA) for the ﬁrst three years of study as inputs into a Konstanz Information Miner (KNIME) based data mining model. Six data mining algorithms were considered, and a maximum accuracy of"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study develops a KNIME-based educational data mining workflow with Excel import, descriptive statistics, partitioning, visualization, normalization, PCA, learner and predictor metanodes, scoring, and Excel export."
+              "extracted_text_lines": "140-142",
+              "note": "Extracted text evidence: ing programs in Covenant University was analysed using a predictive Konstanz In- formation Miner (KNIME) based data mining model and regression analysis in MATLAB."
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/PIIS240584401836924X.txt"
     },
     {
       "rank": 7,
@@ -1087,12 +1003,12 @@
       "reproducibility_relevance": "This is weak evidence for KNIME usage in publications. It is better treated as ecosystem evidence, not as a KNIME workflow reproducibility case.",
       "evidence": [
         {
-          "pdf_text_lines": "24-31",
-          "note": "The abstract says ImgLib2 underlies ImageJ2, the KNIME Image Processing toolbox, and other tools."
+          "note": "The abstract says ImgLib2 underlies ImageJ2, the KNIME Image Processing toolbox, and other tools.",
+          "extracted_text_lines": "24-31"
         },
         {
-          "pdf_text_lines": "32-33",
-          "note": "The abstract reports supplementary data availability."
+          "note": "The abstract reports supplementary data availability.",
+          "extracted_text_lines": "32-33"
         }
       ],
       "article_identifier": "https://openalex.org/W2170358380",
@@ -1134,42 +1050,47 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/bts543_pdf.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/bts543_pdf.txt"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "Supplementary data are reported as available through the journal."
+              "note": "The abstract reports supplementary data availability.",
+              "extracted_text_lines": "32-33"
             },
             {
-              "pdf_text_lines": "32-33",
-              "note": "The abstract reports supplementary data availability."
+              "extracted_text_lines": "31-33",
+              "note": "Extracted text evidence: tory at https://github.com/imagej/imglib. image as any mapping from a subset of n-dimensional Supplementary Information: Supplementary data are available at Euclidean coordinate space to a generic pixel value type. Image Bioinformatics Online. properties are expressed by Accessible interfaces: coordinates can"
             }
           ],
           "provides_code_or_scripts": [
             {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "The paper reports ImgLib2 availability through its project site and GitHub."
+              "extracted_text_lines": "29-31",
+              "note": "Extracted text evidence for linked resource http://imglib2.net: Availability: ImgLib2 is licensed under BSD. Documentation and The ImgLib2 core design is based on three main concepts: source code are available at http://imglib2.net and in a public reposi- Accessibles (i.e. images), Accessors and Types. We define an tory at https://github.com/imagej/imglib. image as any mapping from a subset of n-dimensional"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://imglib2.net"
+              "extracted_text_lines": "30-32",
+              "note": "Extracted text evidence for linked resource https://github.com/imagej/imglib: source code are available at http://imglib2.net and in a public reposi- Accessibles (i.e. images), Accessors and Types. We define an tory at https://github.com/imagej/imglib. image as any mapping from a subset of n-dimensional Supplementary Information: Supplementary data are available at Euclidean coordinate space to a generic pixel value type. Image"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/imagej/imglib"
+              "note": "Resource URL recorded in assessment: http://imglib2.net",
+              "extracted_text_lines": "linked_resources"
+            },
+            {
+              "note": "Resource URL recorded in assessment: https://github.com/imagej/imglib",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "KNIME Image Processing toolbox"
+              "note": "KNIME Image Processing toolbox",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/bts543_pdf.txt"
     },
     {
       "rank": 8,
@@ -1208,16 +1129,16 @@
       "reproducibility_relevance": "This is useful because it reports a specific KNIME version. However, without workflow files and parameterized node settings, the KNIME part of the comparison is not directly reproducible from the paper alone.",
       "evidence": [
         {
-          "pdf_text_lines": "23-25",
-          "note": "The abstract lists KNIME among the compared data mining tools."
+          "note": "The abstract lists KNIME among the compared data mining tools.",
+          "extracted_text_lines": "23-25"
         },
         {
-          "pdf_text_lines": "196-219",
-          "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool."
+          "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool.",
+          "extracted_text_lines": "196-219"
         },
         {
-          "pdf_text_lines": "365-375",
-          "note": "The availability section gives the UCI dataset source and tool download links."
+          "note": "The availability section gives the UCI dataset source and tool download links.",
+          "extracted_text_lines": "365-375"
         }
       ],
       "article_identifier": "https://openalex.org/W3026428279",
@@ -1259,80 +1180,89 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/s12553-020-00438-1.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/s12553-020-00438-1.txt"
             }
           ],
           "reports_knime_version": [
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 4.0.2"
+              "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool.",
+              "extracted_text_lines": "196-219"
             },
             {
-              "pdf_text_lines": "196-219",
-              "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool."
+              "extracted_text_lines": "220-222",
+              "note": "Extracted text evidence: as AGPL Knime 4.0.2 Open source GUI – visual Workflow nodes GNU program- 3.2 Data analysis"
+            },
+            {
+              "extracted_text_lines": "246-248",
+              "note": "Extracted text evidence: RapidMiner 83.50% 81.75% 85.00% 81.14% 65.69% 94.38% Knime 82.49% 78.83% 85.62% 83.84% 78.83% 81.12% Matlab 82.83% 78.10% 86.88% 82.83% 78.10% 86.88%"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper reports use of the UCI Machine Learning Repository heart disease dataset."
+              "note": "The abstract lists KNIME among the compared data mining tools.",
+              "extracted_text_lines": "23-25"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://archive.ics.uci.edu/ml/datasets/Heart+Disease"
+              "note": "The availability section gives the UCI dataset source and tool download links.",
+              "extracted_text_lines": "365-375"
             },
             {
-              "pdf_text_lines": "23-25",
-              "note": "The abstract lists KNIME among the compared data mining tools."
+              "extracted_text_lines": "372-374",
+              "note": "Extracted text evidence for linked resource https://archive.ics.uci.edu/ml/datasets/Heart+Disease: School of Information and Computer Science, University of California, Irvine. https://archive.ics.uci.edu/ml/datasets/Heart+Disease 6 Summary of the current research study"
             },
             {
-              "pdf_text_lines": "365-375",
-              "note": "The availability section gives the UCI dataset source and tool download links."
+              "note": "Resource URL recorded in assessment: https://archive.ics.uci.edu/ml/datasets/Heart+Disease",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper reports use of the UCI Machine Learning Repository heart disease dataset."
+              "note": "The abstract lists KNIME among the compared data mining tools.",
+              "extracted_text_lines": "23-25"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://archive.ics.uci.edu/ml/datasets/Heart+Disease"
+              "note": "The availability section gives the UCI dataset source and tool download links.",
+              "extracted_text_lines": "365-375"
             },
             {
-              "pdf_text_lines": "23-25",
-              "note": "The abstract lists KNIME among the compared data mining tools."
+              "extracted_text_lines": "22-24",
+              "note": "Extracted text evidence: Nowadays, in healthcare industry, data analysis can save lives by improving the medical diagnosis. And with the huge devel- opment in software engineering, different data mining tools are available for researchers, and used to conduct studies and experiments. For this, we have decided to compare six common data mining tools: Orange, Weka, RapidMiner, Knime,"
             },
             {
-              "pdf_text_lines": "365-375",
-              "note": "The availability section gives the UCI dataset source and tool download links."
+              "extracted_text_lines": "218-220",
+              "note": "Extracted text evidence: limit) is available Tables 1, and 2 describe in detail the dataset. as AGPL"
+            },
+            {
+              "note": "Resource URL recorded in assessment: https://archive.ics.uci.edu/ml/datasets/Heart+Disease",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "23-25",
-              "note": "The abstract lists KNIME among the compared data mining tools."
+              "note": "The abstract lists KNIME among the compared data mining tools.",
+              "extracted_text_lines": "23-25"
             },
             {
-              "pdf_text_lines": "196-219",
-              "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool."
+              "note": "Table 3 reports KNIME 4.0.2 and describes it as an open-source visual workflow tool.",
+              "extracted_text_lines": "196-219"
             },
             {
-              "pdf_text_lines": "365-375",
-              "note": "The availability section gives the UCI dataset source and tool download links."
+              "note": "The availability section gives the UCI dataset source and tool download links.",
+              "extracted_text_lines": "365-375"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study compares several data mining tools, including KNIME 4.0.2, on heart disease classification tasks using multiple machine learning techniques."
+              "extracted_text_lines": "23-25",
+              "note": "Extracted text evidence: opment in software engineering, different data mining tools are available for researchers, and used to conduct studies and experiments. For this, we have decided to compare six common data mining tools: Orange, Weka, RapidMiner, Knime, Matlab, and Scikit-Learn, using six machine learning techniques: Logistic Regression, Support Vector Machine, K Nearest"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study compares several data mining tools, including KNIME 4.0.2, on heart disease classification tasks using multiple machine learning techniques."
+              "extracted_text_lines": "220-222",
+              "note": "Extracted text evidence: as AGPL Knime 4.0.2 Open source GUI – visual Workflow nodes GNU program- 3.2 Data analysis"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/s12553-020-00438-1.txt"
     },
     {
       "rank": 9,
@@ -1373,20 +1303,20 @@
       "reproducibility_relevance": "This is a strong artifact case for the study because it gives KNIME version requirements, extension availability, source availability, and example workflow links. It is also exposed to long-term risks from extension compatibility and external workflow-hosting availability.",
       "evidence": [
         {
-          "pdf_text_lines": "15-30",
-          "note": "The abstract introduces KNIME-CDK as an open-source KNIME plugin."
+          "note": "The abstract introduces KNIME-CDK as an open-source KNIME plugin.",
+          "extracted_text_lines": "15-30"
         },
         {
-          "pdf_text_lines": "75-80",
-          "note": "The implementation section reports example workflows in myExperiment and testing on KNIME 2.6 and 2.7."
+          "note": "The implementation section reports example workflows in myExperiment and testing on KNIME 2.6 and 2.7.",
+          "extracted_text_lines": "75-80"
         },
         {
-          "pdf_text_lines": "135-143",
-          "note": "The availability section gives the project URL, update mechanism, KNIME Desktop v2.6+ requirement, and license."
+          "note": "The availability section gives the project URL, update mechanism, KNIME Desktop v2.6+ requirement, and license.",
+          "extracted_text_lines": "135-143"
         },
         {
-          "pdf_text_lines": "232-233",
-          "note": "The references include a myExperiment KNIME workflow URL."
+          "note": "The references include a myExperiment KNIME workflow URL.",
+          "extracted_text_lines": "232-233"
         }
       ],
       "article_identifier": "https://openalex.org/W2124955716",
@@ -1411,117 +1341,10 @@
           "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
           "evidence_notes": "This is a strong artifact case for the study because it gives KNIME version requirements, extension availability, source availability, and example workflow links. It is also exposed to long-term risks from extension compatibility and external workflow-hosting availability."
         },
-        "flag_audit_fields": {
-          "full_text_accessible": true,
-          "uses_knime": false,
-          "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": false,
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": false,
-          "reports_input_data_availability": false,
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
-        },
-        "flag_audit_support": {
-          "full_text_accessible": [
-            {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/1471-2105-14-257.pdf"
-            }
-          ],
-          "reports_knime_version": [
-            {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 2.6+; tested on 2.6 and 2.7"
-            },
-            {
-              "pdf_text_lines": "75-80",
-              "note": "The implementation section reports example workflows in myExperiment and testing on KNIME 2.6 and 2.7."
-            }
-          ],
-          "provides_downloadable_knime_workflow_files": [
-            {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The paper reports example workflows in myExperiment and cites a specific myExperiment KNIME workflow URL."
-            },
-            {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/3045.html"
-            },
-            {
-              "pdf_text_lines": "75-80",
-              "note": "The implementation section reports example workflows in myExperiment and testing on KNIME 2.6 and 2.7."
-            },
-            {
-              "pdf_text_lines": "232-233",
-              "note": "The references include a myExperiment KNIME workflow URL."
-            },
-            {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: published_or_linked_in_text"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "The workflow URL is cited in the references as a MyExperiment KNIME workflow."
-            }
-          ],
-          "provides_code_or_scripts": [
-            {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "The plugin is reported as available through the KNIME update mechanism, with source releases and nightly builds under LGPLv3."
-            },
-            {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://tech.knime.org/community/cdk"
-            }
-          ],
-          "reports_extension_or_plugin_dependencies": [
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "KNIME-CDK nodes"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "descriptor calculation workflow"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "ChEBI example workflow"
-            }
-          ],
-          "reports_extension_installation_source": [
-            {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "The plugin is reported as available through the KNIME update mechanism, with source releases and nightly builds under LGPLv3."
-            },
-            {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://tech.knime.org/community/cdk"
-            },
-            {
-              "pdf_text_lines": "135-143",
-              "note": "The availability section gives the project URL, update mechanism, KNIME Desktop v2.6+ requirement, and license."
-            }
-          ],
-          "describes_workflow_or_nodes_in_text": [
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "KNIME-CDK nodes"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "descriptor calculation workflow"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "ChEBI example workflow"
-            }
-          ]
-        }
-      }
+        "flag_audit_fields": {},
+        "flag_audit_support": {}
+      },
+      "processed_text_file": "data/processed/articles/1471-2105-14-257.txt"
     },
     {
       "rank": 10,
@@ -1554,16 +1377,16 @@
       "reproducibility_relevance": "This record shows that OpenAlex KNIME matches include tool overviews, not only empirical KNIME-based studies. It should not be counted as evidence of a reproducible KNIME workflow.",
       "evidence": [
         {
-          "pdf_text_lines": "17-20",
-          "note": "The abstract frames the paper as a review of data mining and machine learning tools."
+          "note": "The abstract frames the paper as a review of data mining and machine learning tools.",
+          "extracted_text_lines": "17-20"
         },
         {
-          "pdf_text_lines": "40-46",
-          "note": "The introduction lists KNIME among the reviewed tools."
+          "note": "The introduction lists KNIME among the reviewed tools.",
+          "extracted_text_lines": "40-46"
         },
         {
-          "pdf_text_lines": "222-234",
-          "note": "The comparison table reports KNIME metadata, including version 2.9."
+          "note": "The comparison table reports KNIME metadata, including version 2.9.",
+          "extracted_text_lines": "222-234"
         }
       ],
       "article_identifier": "https://openalex.org/W3189818995",
@@ -1605,22 +1428,19 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/I10030789S19.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/I10030789S19.txt"
             }
           ],
           "reports_knime_version": [
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 2.9"
-            },
-            {
-              "pdf_text_lines": "222-234",
-              "note": "The comparison table reports KNIME metadata, including version 2.9."
+              "note": "The comparison table reports KNIME metadata, including version 2.9.",
+              "extracted_text_lines": "222-234"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/I10030789S19.txt"
     },
     {
       "rank": 11,
@@ -1661,12 +1481,12 @@
       "reproducibility_relevance": "The dataset source is public, but exact KNIME reproduction would require the missing workflow, tool version, node settings, and data split details.",
       "evidence": [
         {
-          "pdf_text_lines": "132-139",
-          "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset."
+          "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset.",
+          "extracted_text_lines": "132-139"
         },
         {
-          "pdf_text_lines": "317-375",
-          "note": "The paper reports KNIME classification results and accuracy comparisons."
+          "note": "The paper reports KNIME classification results and accuracy comparisons.",
+          "extracted_text_lines": "317-375"
         }
       ],
       "article_identifier": "https://openalex.org/W2472149534",
@@ -1708,76 +1528,69 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/1-s2.0-S1877050916306019-main.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/1-s2.0-S1877050916306019-main.txt"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper says the Indian Liver Patient Dataset was downloaded from the UCI repository."
-            },
-            {
-              "pdf_text_lines": "manual_assessment",
-              "note": "UCI repository, Indian Liver Patient Dataset"
-            },
-            {
-              "pdf_text_lines": "132-139",
-              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset."
+              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset.",
+              "extracted_text_lines": "132-139"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper says the Indian Liver Patient Dataset was downloaded from the UCI repository."
+              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset.",
+              "extracted_text_lines": "132-139"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "UCI repository, Indian Liver Patient Dataset"
+              "extracted_text_lines": "22-24",
+              "note": "Extracted text evidence:  This paper conducts a correlation review of classification algorithm using some free available data mining and knowledge discovery tools such as WEKA, Rapid miner, Tanagra, Orange and Knime. The accuracy of classification algorithm like"
             },
             {
-              "pdf_text_lines": "132-139",
-              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset."
+              "extracted_text_lines": "43-45",
+              "note": "Extracted text evidence: strategic decision making. Hence humans need help of data mining to mine interesting information from the available data. Data mining is the process of discovering interesting knowledge from large amounts of data stored in databases, data warehouses, or other information repositories .One of the important problem in data mining is the"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "132-139",
-              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset."
+              "note": "The paper describes KNIME and the UCI Indian Liver Patient Dataset.",
+              "extracted_text_lines": "132-139"
             },
             {
-              "pdf_text_lines": "317-375",
-              "note": "The paper reports KNIME classification results and accuracy comparisons."
+              "note": "The paper reports KNIME classification results and accuracy comparisons.",
+              "extracted_text_lines": "317-375"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The paper compares classification algorithms across several data mining tools, including KNIME, using the Indian Liver Patient Dataset."
+              "extracted_text_lines": "10-12",
+              "note": "Extracted text evidence: Correlation review of classification algorithm using data mining tool: WEKA , Rapidminer , Tanagra ,Orange and Knime "
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The paper compares classification algorithms across several data mining tools, including KNIME, using the Indian Liver Patient Dataset."
+              "extracted_text_lines": "23-25",
+              "note": "Extracted text evidence: This paper conducts a correlation review of classification algorithm using some free available data mining and knowledge discovery tools such as WEKA, Rapid miner, Tanagra, Orange and Knime. The accuracy of classification algorithm like Decision tree, Decision Stump, K-Nearest Neighbor and Naïve Bayes algorithm have been compared using all five tools. Indian"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Decision Tree classification"
+              "note": "The paper reports KNIME classification results and accuracy comparisons.",
+              "extracted_text_lines": "317-375"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Naive Bayes classification"
+              "note": "Decision Tree classification",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "K-Nearest Neighbor classification"
+              "note": "Naive Bayes classification",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "317-375",
-              "note": "The paper reports KNIME classification results and accuracy comparisons."
+              "note": "K-Nearest Neighbor classification",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/1-s2.0-S1877050916306019-main.txt"
     },
     {
       "rank": 12,
@@ -1816,12 +1629,12 @@
       "reproducibility_relevance": "This is background evidence for KNIME's workflow and node model, not a reproducible workflow case study.",
       "evidence": [
         {
-          "pdf_text_lines": "14-24",
-          "note": "The abstract presents KNIME as a modular environment for visual assembly and execution of data pipelines."
+          "note": "The abstract presents KNIME as a modular environment for visual assembly and execution of data pipelines.",
+          "extracted_text_lines": "14-24"
         },
         {
-          "pdf_text_lines": "86-100",
-          "note": "The architecture section describes workflows as directed graphs connecting nodes."
+          "note": "The architecture section describes workflows as directed graphs connecting nodes.",
+          "extracted_text_lines": "86-100"
         }
       ],
       "article_identifier": "https://openalex.org/W2395911948",
@@ -1846,55 +1659,10 @@
           "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
           "evidence_notes": "This is background evidence for KNIME's workflow and node model, not a reproducible workflow case study."
         },
-        "flag_audit_fields": {
-          "full_text_accessible": true,
-          "uses_knime": false,
-          "reports_knime_version": false,
-          "provides_downloadable_knime_workflow_files": false,
-          "provides_workflow_screenshots_or_figures": false,
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": false,
-          "reports_input_data_availability": false,
-          "provides_code_or_scripts": false,
-          "reports_extension_or_plugin_dependencies": false,
-          "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
-        },
-        "flag_audit_support": {
-          "full_text_accessible": [
-            {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/knime_konstanz_information_miner_2006.pdf"
-            }
-          ],
-          "describes_workflow_or_nodes_in_text": [
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "workflow manager"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "nodes"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "NodeModel"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "data table"
-            },
-            {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "extension API"
-            },
-            {
-              "pdf_text_lines": "86-100",
-              "note": "The architecture section describes workflows as directed graphs connecting nodes."
-            }
-          ]
-        }
-      }
+        "flag_audit_fields": {},
+        "flag_audit_support": {}
+      },
+      "processed_text_file": "data/processed/articles/knime_konstanz_information_miner_2006.txt"
     },
     {
       "rank": 13,
@@ -1961,7 +1729,8 @@
           "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {}
-      }
+      },
+      "processed_text_file": null
     },
     {
       "rank": 14,
@@ -1998,16 +1767,16 @@
       "reproducibility_relevance": "This record supports KNIME popularity and platform positioning, but should not be counted as a KNIME-based empirical workflow study.",
       "evidence": [
         {
-          "pdf_text_lines": "14-36",
-          "note": "The abstract frames the paper as a comparison of free data-mining tools including KNIME."
+          "note": "The abstract frames the paper as a comparison of free data-mining tools including KNIME.",
+          "extracted_text_lines": "14-36"
         },
         {
-          "pdf_text_lines": "78-105",
-          "note": "The comparison table reports KNIME current version 2.9.1."
+          "note": "The comparison table reports KNIME current version 2.9.1.",
+          "extracted_text_lines": "78-105"
         },
         {
-          "pdf_text_lines": "426-488",
-          "note": "The KNIME section discusses example workflows, integrations, nodes, and community support."
+          "note": "The KNIME section discusses example workflows, integrations, nodes, and community support.",
+          "extracted_text_lines": "426-488"
         }
       ],
       "article_identifier": "https://openalex.org/W2000190989",
@@ -2049,40 +1818,45 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/An_overview_of_free_software_tools_for_general_data_mining.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/An_overview_of_free_software_tools_for_general_data_mining.txt"
             }
           ],
           "reports_knime_version": [
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 2.9.1"
-            },
-            {
-              "pdf_text_lines": "78-105",
-              "note": "The comparison table reports KNIME current version 2.9.1."
+              "note": "The comparison table reports KNIME current version 2.9.1.",
+              "extracted_text_lines": "78-105"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Weka integration"
+              "note": "The KNIME section discusses example workflows, integrations, nodes, and community support.",
+              "extracted_text_lines": "426-488"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "R integration"
+              "extracted_text_lines": "195-197",
+              "note": "Extracted text evidence: Decision tree learner CART A (Weka) A (RWeka) + + A (Weka) +, A (own*, dec. +, A (own*,"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "example workflow repository"
+              "extracted_text_lines": "437-439",
+              "note": "Extracted text evidence: reasonable to expect that the feature set will be expanded integration enables using almost all the functionality in the future. available in Weka as KNIME nodes, while R integration enables running R code as a step in the workflow, opening"
             },
             {
-              "pdf_text_lines": "426-488",
-              "note": "The KNIME section discusses example workflows, integrations, nodes, and community support."
+              "note": "Weka integration",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "R integration",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "example workflow repository",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/An_overview_of_free_software_tools_for_general_data_mining.txt"
     },
     {
       "rank": 15,
@@ -2116,12 +1890,12 @@
       "reproducibility_relevance": "This is a direct KNIME-use case in health informatics. Missing workflow, version, and public clinical data limit independent reproduction.",
       "evidence": [
         {
-          "pdf_text_lines": "212-270",
-          "note": "The materials section describes the institutional CAD dataset and database design."
+          "note": "The materials section describes the institutional CAD dataset and database design.",
+          "extracted_text_lines": "212-270"
         },
         {
-          "pdf_text_lines": "270-286",
-          "note": "The methods state that the algorithm was implemented using KNIME Analytics Platform and R."
+          "note": "The methods state that the algorithm was implemented using KNIME Analytics Platform and R.",
+          "extracted_text_lines": "270-286"
         }
       ],
       "article_identifier": "https://openalex.org/W3001976279",
@@ -2163,36 +1937,41 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/Linear_discriminant_analysis_and_principal_compone.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/Linear_discriminant_analysis_and_principal_compone.txt"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "270-286",
-              "note": "The methods state that the algorithm was implemented using KNIME Analytics Platform and R."
+              "note": "The methods state that the algorithm was implemented using KNIME Analytics Platform and R.",
+              "extracted_text_lines": "270-286"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The study implements a coronary-artery-disease prediction algorithm using a combination of KNIME Analytics Platform and R."
+              "extracted_text_lines": "73-75",
+              "note": "Extracted text evidence:  discriminant analysis is implemented twice through both the Knime analytics platform and R statistical programming language to classify patients as either normal or pathological. The former of these analyses"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The study implements a coronary-artery-disease prediction algorithm using a combination of KNIME Analytics Platform and R."
+              "extracted_text_lines": "279-281",
+              "note": "Extracted text evidence: Methods The algorithm was implemented through the combination of the Knime analytics platform and R software.54,55"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "R integration"
+              "extracted_text_lines": "595-597",
+              "note": "Extracted text evidence: 35–41. 58. Warr WA. Scientific workflow systems: pipeline Pilot and KNIME. J Comput Aided Mol Des 2012; 26(7): 801–804."
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "MASS lda function"
+              "note": "R integration",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "MASS lda function",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/Linear_discriminant_analysis_and_principal_compone.txt"
     },
     {
       "rank": 16,
@@ -2242,12 +2021,12 @@
       "reproducibility_relevance": "This paper directly supports the study because it reports KNIME, node-library versions, workflow artifacts, inputs, and external workflow-hosting links. It is also a good candidate for current-KNIME import testing.",
       "evidence": [
         {
-          "pdf_text_lines": "64-80",
-          "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs."
+          "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs.",
+          "extracted_text_lines": "64-80"
         },
         {
-          "pdf_text_lines": "180-196",
-          "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+          "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+          "extracted_text_lines": "180-196"
         }
       ],
       "article_identifier": "https://openalex.org/W1969293071",
@@ -2289,190 +2068,203 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/Molecular Informatics - 2011 - Saubern - KNIME Workflow to Assess PAINS Filters in SMARTS Format  Comparison of RDKit and.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt"
             }
           ],
           "reports_knime_version": [
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Reported KNIME version value(s): 2.3.4"
+              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+              "extracted_text_lines": "180-196"
             },
             {
-              "pdf_text_lines": "180-196",
-              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+              "extracted_text_lines": "185-187",
+              "note": "Extracted text evidence: [12] Tripos, St. Louis, MO USA, http://www.tripos.com. The workflows were constructed with KNIME 2.3.4 (avail- [13] R. Guha, PAINS Substructure Filters as SMARTS, 2010-11-14, able at http://knime.org) containing the RDKit nodes URL:http://blog.rguha.net/?p = 850, accessed: 2010-11-14. (Ar-"
             }
           ],
           "provides_downloadable_knime_workflow_files": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The paper states that workflows are in the Supporting Information and available from myExperiment."
+              "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs.",
+              "extracted_text_lines": "64-80"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/1841"
+              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+              "extracted_text_lines": "180-196"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/2164"
+              "extracted_text_lines": "73-75",
+              "note": "Extracted text evidence: workflow automatically. tration IDs, plus any additional columns that the user choo- The workflow appears in the Supporting Information of ses, as a tab separated text file. The user can easily add al- this paper, and is also available for download at the ternative output nodes to produce Microsoft Excel spread-"
             },
             {
-              "pdf_text_lines": "64-80",
-              "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs."
+              "extracted_text_lines": "192-194",
+              "note": "Extracted text evidence: me.org/community/). www.daylight.com/dayhtml/doc/theory/theory.smarts.html. The workflows are available as part of the Supporting In- [15] D. Lagorce, J. Maupetit, J. Baell, O. Sperandio, P. Tuffry, M. A. formation, and at the myExperiment website at http:// Miteva, H. Galons, B. O. Villoutreix, Bioinformatics 2011, 27,"
             },
             {
-              "pdf_text_lines": "180-196",
-              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/1841",
+              "extracted_text_lines": "linked_resources"
             },
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: published_or_linked_in_text"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "This is one of the strongest workflow-artifact cases in the top-cited set."
+              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/2164",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The workflow includes a reference set of 10,000 structures and PAINS SMARTS filters as of 2010-11-20."
+              "extracted_text_lines": "186-188",
+              "note": "Extracted text evidence for linked resource http://blog.rguha.net/?p=850: The workflows were constructed with KNIME 2.3.4 (avail- [13] R. Guha, PAINS Substructure Filters as SMARTS, 2010-11-14, able at http://knime.org) containing the RDKit nodes URL:http://blog.rguha.net/?p = 850, accessed: 2010-11-14. (Ar- 1.0.0.886 and the Indigo nodes 1.0.0.951 distributed as part chived by WebCite at http://www.webcitation.org/5uF4-"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://blog.rguha.net/?p=850"
+              "note": "Resource URL recorded in assessment: http://blog.rguha.net/?p=850",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The workflow includes a reference set of 10,000 structures and PAINS SMARTS filters as of 2010-11-20."
-            },
-            {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://blog.rguha.net/?p=850"
+              "note": "Resource URL recorded in assessment: http://blog.rguha.net/?p=850",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "linked_workflow_artifacts_retrievable": [
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "Linked workflow artifact retrievability classification: retrievable_in_current_project_notes"
+              "note": "Linked workflow artifact retrievability classification: retrievable_in_current_project_notes",
+              "extracted_text_lines": "manual_assessment"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/1841"
+              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/1841",
+              "extracted_text_lines": "linked_resources"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/2164"
+              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/2164",
+              "extracted_text_lines": "linked_resources"
             },
             {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "This is one of the strongest workflow-artifact cases in the top-cited set."
+              "note": "This is one of the strongest workflow-artifact cases in the top-cited set.",
+              "extracted_text_lines": "manual_assessment:linked_resources"
             },
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The paper states that workflows are in the Supporting Information and available from myExperiment."
+              "note": "The paper states that workflows are in the Supporting Information and available from myExperiment.",
+              "extracted_text_lines": "manual_assessment:workflow_artifact"
             }
           ],
           "reports_extension_or_plugin_dependencies": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "RDKit nodes 1.0.0.886"
+              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+              "extracted_text_lines": "180-196"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Indigo nodes 1.0.0.951"
+              "extracted_text_lines": "97-99",
+              "note": "Extracted text evidence:  Results: The RDKit nodes contain no functionality to Table 2. Number of SMARTS filters over or under matching struc- clean or normalize structures, but were successful in con- tures compared to the original SLN filters using the RDKit package"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "GroupBy"
+              "extracted_text_lines": "128-130",
+              "note": "Extracted text evidence: structure (see Supporting Information, Table B). A similar analysis with the Indigo library (see Supporting The Indigo library consists of a number of nodes, includ- Information, Table D), summarized in Table 3, indicates that ing ones for aromatizing, salt stripping, and neutralizing. As 21 filters need to be adjusted to match the outcome of the"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "SD input"
+              "note": "RDKit nodes 1.0.0.886",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "SMILES input"
+              "note": "Indigo nodes 1.0.0.951",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "database extraction input"
+              "note": "GroupBy",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "180-196",
-              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+              "note": "SD input",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "SMILES input",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "database extraction input",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ],
           "reports_extension_installation_source": [
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://www.rdkit.org/"
+              "extracted_text_lines": "189-191",
+              "note": "Extracted text evidence: wHEpB). of the ‘community contributions’ (see http://tech.kni- [14] Daylight Chemical Information Systems Manual, http://"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://knime.org"
+              "note": "Resource URL recorded in assessment: http://www.rdkit.org/",
+              "extracted_text_lines": "linked_resources"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://tech.knime.org/community/"
+              "note": "Resource URL recorded in assessment: http://knime.org",
+              "extracted_text_lines": "linked_resources"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://ggasoftware.com/"
+              "note": "Resource URL recorded in assessment: http://tech.knime.org/community/",
+              "extracted_text_lines": "linked_resources"
+            },
+            {
+              "note": "Resource URL recorded in assessment: http://ggasoftware.com/",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "64-80",
-              "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs."
+              "note": "The paper says the workflow appears in Supporting Information and at myExperiment URLs.",
+              "extracted_text_lines": "64-80"
             },
             {
-              "pdf_text_lines": "180-196",
-              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+              "extracted_text_lines": "180-196"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The article presents executable KNIME workflows for applying PAINS SMARTS filters and comparing RDKit and Indigo cheminformatics libraries."
+              "extracted_text_lines": "3-5",
+              "note": "Extracted text evidence:  KNIME Workflow to Assess PAINS Filters in SMARTS Format. Comparison of RDKit and Indigo Cheminformatics"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The article presents executable KNIME workflows for applying PAINS SMARTS filters and comparing RDKit and Indigo cheminformatics libraries."
+              "extracted_text_lines": "16-18",
+              "note": "Extracted text evidence: pounds that have little likelihood of being developed into intuitive manner. To this end, we chose the open source drugs. In order not to waste additional resources pursuing and freely available Konstanz Information Miner (KNIME these leads, Baell and Holloway[1] recently published a list http://knime.org).[17] This is a data analysis platform consist-"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "RDKit nodes 1.0.0.886"
+              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability.",
+              "extracted_text_lines": "180-196"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Indigo nodes 1.0.0.951"
+              "extracted_text_lines": "23-25",
+              "note": "Extracted text evidence: and academic communities.[2–11] MacOS, Windows). KNIME is distributed with the Chemistry The structural features filter list was published in Sybyl Development Kit (CDK)[18][19] and, recently, the RDKit[20] and Line Notation (SLN) format, a format only useable by the Indigo[21] software packages. KNIME can access additional"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "GroupBy"
+              "extracted_text_lines": "24-26",
+              "note": "Extracted text evidence: The structural features filter list was published in Sybyl Development Kit (CDK)[18][19] and, recently, the RDKit[20] and Line Notation (SLN) format, a format only useable by the Indigo[21] software packages. KNIME can access additional proprietary Sybyl software package.[12] chemistry software packages by use of its ‘external tool’"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "SD input"
+              "note": "RDKit nodes 1.0.0.886",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "SMILES input"
+              "note": "Indigo nodes 1.0.0.951",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "database extraction input"
+              "note": "GroupBy",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "180-196",
-              "note": "The experimental section reports KNIME 2.3.4, RDKit and Indigo node versions, and workflow availability."
+              "note": "SD input",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "SMILES input",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "database extraction input",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt"
     },
     {
       "rank": 17,
@@ -2512,12 +2304,12 @@
       "reproducibility_relevance": "This is a direct KNIME workflow-use case, but reproduction would require reconstructing the workflow and obtaining the dataset and exact node settings.",
       "evidence": [
         {
-          "pdf_text_lines": "238-260",
-          "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records."
+          "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records.",
+          "extracted_text_lines": "238-260"
         },
         {
-          "pdf_text_lines": "354-383",
-          "note": "The results section describes and shows the KNIME workflow."
+          "note": "The results section describes and shows the KNIME workflow.",
+          "extracted_text_lines": "354-383"
         }
       ],
       "article_identifier": "https://openalex.org/W2902553462",
@@ -2559,92 +2351,89 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/Data_mining_approach_to_predicting_the_performance.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/Data_mining_approach_to_predicting_the_performance.txt"
             }
           ],
           "provides_workflow_screenshots_or_figures": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The article shows the KNIME workflow in a figure, but no downloadable workflow artifact was found in the extracted PDF text."
+              "note": "The results section describes and shows the KNIME workflow.",
+              "extracted_text_lines": "354-383"
             },
             {
-              "pdf_text_lines": "354-383",
-              "note": "The results section describes and shows the KNIME workflow."
+              "extracted_text_lines": "367-369",
+              "note": "Extracted text evidence:  The predictive KNIME based model deployed in this study is shown in Fig. 7. The samples were selected using stratified sampling, and 70% of the data sample was used to"
             },
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: shown_or_described_but_no_public_artifact_found_in_pdf"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "The PDF mentions the dataset source publication but does not expose a direct dataset or workflow URL in the extracted text."
+              "extracted_text_lines": "383-385",
+              "note": "Extracted text evidence:  Fig. 7 The KNIME workflow "
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "stratified sampling"
+              "extracted_text_lines": "383-385",
+              "note": "Extracted text evidence:  Fig. 7 The KNIME workflow "
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Random Forest"
+              "note": "stratified sampling",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Tree Ensemble"
+              "note": "Random Forest",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Decision Tree"
+              "note": "Tree Ensemble",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Naive Bayes"
+              "note": "Decision Tree",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Logistic Regression"
+              "note": "Naive Bayes",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "RProp Multi-Layer Perceptron"
+              "note": "Logistic Regression",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "PCA"
+              "note": "RProp Multi-Layer Perceptron",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "PCA",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper analyzes 1,445 Covenant University student records from 2005 to 2009, based on a previously published dataset."
-            },
-            {
-              "pdf_text_lines": "238-260",
-              "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records."
+              "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records.",
+              "extracted_text_lines": "238-260"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "238-260",
-              "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records."
+              "note": "The methods state that the data-mining model was deployed on KNIME and Orange using 1,445 student records.",
+              "extracted_text_lines": "238-260"
             },
             {
-              "pdf_text_lines": "354-383",
-              "note": "The results section describes and shows the KNIME workflow."
+              "note": "The results section describes and shows the KNIME workflow.",
+              "extracted_text_lines": "354-383"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The paper builds a KNIME predictive model for first-year student performance and compares it with Orange and regression analyses."
+              "extracted_text_lines": "30-32",
+              "note": "Extracted text evidence: performance of students in their first year, using their CGPA and class of degree was examined using six data mining algorithms in KNIME and Orange platforms. Maximum accuracies of 50.23% and 51.9% respectively were observed, and the results"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The paper builds a KNIME predictive model for first-year student performance and compares it with Orange and regression analyses."
+              "extracted_text_lines": "248-250",
+              "note": "Extracted text evidence: area (Arsad and Buniyamin 2014) but in this study, a data mining model was deployed on KNIME and Orange platform, and the veracity of the prediction was checked using regression analysis for performance comparison. Based on the dataset by (Odukoya"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/Data_mining_approach_to_predicting_the_performance.txt"
     },
     {
       "rank": 18,
@@ -2689,12 +2478,12 @@
       "reproducibility_relevance": "Public benchmark data helps, but the missing workflow and tool-version information make exact KNIME reproduction uncertain.",
       "evidence": [
         {
-          "pdf_text_lines": "145-170",
-          "note": "The paper describes KNIME and says datasets were downloaded from UCI."
+          "note": "The paper describes KNIME and says datasets were downloaded from UCI.",
+          "extracted_text_lines": "145-170"
         },
         {
-          "pdf_text_lines": "512-520",
-          "note": "The references give KNIME and UCI repository URLs."
+          "note": "The references give KNIME and UCI repository URLs.",
+          "extracted_text_lines": "512-520"
         }
       ],
       "article_identifier": "https://openalex.org/W161431362",
@@ -2736,92 +2525,97 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/thesai_specialissue_010304.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/thesai_specialissue_010304.txt"
             }
           ],
           "provides_input_data_direct_url": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper uses several datasets downloaded from the UCI Machine Learning Repository."
+              "note": "The paper describes KNIME and says datasets were downloaded from UCI.",
+              "extracted_text_lines": "145-170"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://archive.ics.uci.edu/ml/"
+              "note": "The references give KNIME and UCI repository URLs.",
+              "extracted_text_lines": "512-520"
             },
             {
-              "pdf_text_lines": "145-170",
-              "note": "The paper describes KNIME and says datasets were downloaded from UCI."
+              "extracted_text_lines": "524-526",
+              "note": "Extracted text evidence for linked resource http://archive.ics.uci.edu/ml/: classification algorithms namely; Naïve Bayes (NB), Decision [15] UCI Machine Learning Repository, Available at: http:// http://archive.ics.uci.edu/ml/, (Accessed 22 April 2011). Tree (C4.5), Support Vector Machine (SVM), K Nearest"
             },
             {
-              "pdf_text_lines": "512-520",
-              "note": "The references give KNIME and UCI repository URLs."
+              "note": "Resource URL recorded in assessment: http://archive.ics.uci.edu/ml/",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "reports_input_data_availability": [
             {
-              "pdf_text_lines": "manual_assessment:data_availability",
-              "note": "The paper uses several datasets downloaded from the UCI Machine Learning Repository."
+              "note": "The paper describes KNIME and says datasets were downloaded from UCI.",
+              "extracted_text_lines": "145-170"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: http://archive.ics.uci.edu/ml/"
+              "note": "The references give KNIME and UCI repository URLs.",
+              "extracted_text_lines": "512-520"
             },
             {
-              "pdf_text_lines": "145-170",
-              "note": "The paper describes KNIME and says datasets were downloaded from UCI."
+              "extracted_text_lines": "13-15",
+              "note": "Extracted text evidence: Abstract- Nowadays, huge amount of data and information are Currently, many data mining and knowledge discovery available for everyone, Data can now be stored in many different tools and software are available for every one and different kinds of databases and information repositories, besides being usage such as the Waikato Environment for Knowledge"
             },
             {
-              "pdf_text_lines": "512-520",
-              "note": "The references give KNIME and UCI repository URLs."
+              "extracted_text_lines": "18-20",
+              "note": "Extracted text evidence: interpretation of these data that exceeds the human's ability for provide a set of methods and algorithms that help in better comprehension and making decision in a better way. In order to utilization of data and information available to users; including reveal the best tools for dealing with the classification task that methods and algorithms for data analysis, cluster analysis,"
+            },
+            {
+              "note": "Resource URL recorded in assessment: http://archive.ics.uci.edu/ml/",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "145-170",
-              "note": "The paper describes KNIME and says datasets were downloaded from UCI."
+              "note": "The paper describes KNIME and says datasets were downloaded from UCI.",
+              "extracted_text_lines": "145-170"
             },
             {
-              "pdf_text_lines": "512-520",
-              "note": "The references give KNIME and UCI repository URLs."
+              "note": "The references give KNIME and UCI repository URLs.",
+              "extracted_text_lines": "512-520"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The paper compares WEKA, Orange, Tanagra, and KNIME on classification algorithms across UCI datasets."
+              "extracted_text_lines": "29-31",
+              "note": "Extracted text evidence: achieved the highest applicability followed by Orange, Tanagra, The accuracy measure; which represents the percentage of and KNIME respectively. Finally; WEKA toolkit has achieved correctly classified instances, is used for judging the the highest improvement in classification performance; when performance of the selected tools and software."
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The paper compares WEKA, Orange, Tanagra, and KNIME on classification algorithms across UCI datasets."
+              "extracted_text_lines": "32-34",
+              "note": "Extracted text evidence: moving from the percentage split test mode to the Cross Validation test mode, followed by Orange, KNIME and finally The rest of the paper is organized as follows: Section 2 Tanagra respectively. summaries related works on data mining, mining tools and data"
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Naive Bayes"
+              "note": "Naive Bayes",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Decision Tree"
+              "note": "Decision Tree",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "Support Vector Machine"
+              "note": "Support Vector Machine",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "K Nearest Neighbor"
+              "note": "K Nearest Neighbor",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "OneR"
+              "note": "OneR",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "ZeroR"
+              "note": "ZeroR",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/thesai_specialissue_010304.txt"
     },
     {
       "rank": 19,
@@ -2864,16 +2658,16 @@
       "reproducibility_relevance": "This paper shows KNIME as a GUI layer over an evolving software framework. Long-term reproduction depends on the kGCN code, KNIME modules, TensorFlow/Python dependencies, and example workflow availability.",
       "evidence": [
         {
-          "pdf_text_lines": "19-30",
-          "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub."
+          "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub.",
+          "extracted_text_lines": "19-30"
         },
         {
-          "pdf_text_lines": "376-384",
-          "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use."
+          "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use.",
+          "extracted_text_lines": "376-384"
         },
         {
-          "pdf_text_lines": "646-656",
-          "note": "The availability section gives the kGCN GitHub project and dependencies."
+          "note": "The availability section gives the kGCN GitHub project and dependencies.",
+          "extracted_text_lines": "646-656"
         }
       ],
       "article_identifier": "https://openalex.org/W3030071125",
@@ -2915,96 +2709,97 @@
         "flag_audit_support": {
           "full_text_accessible": [
             {
-              "pdf_text_lines": "local_pdf",
-              "note": "Local full text PDF assessed: data/original/articles/s13321-020-00435-6.pdf"
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/s13321-020-00435-6.txt"
             }
           ],
           "provides_workflow_screenshots_or_figures": [
             {
-              "pdf_text_lines": "manual_assessment:workflow_artifact",
-              "note": "The article shows KNIME-interface workflows and publishes the kGCN software, but the extracted PDF text does not identify separate downloadable KNIME workflow files."
+              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use.",
+              "extracted_text_lines": "376-384"
             },
             {
-              "pdf_text_lines": "376-384",
-              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use."
+              "extracted_text_lines": "388-390",
+              "note": "Extracted text evidence: ticularly useful in the field of data science. The kGCN KNIME nodes described below are useful for the execu- Another example of the workflow is shown in Fig. 6, tion of various kGCN functions in combination with which includes an example of multi-modal neural net-"
             },
             {
-              "pdf_text_lines": "article_audit_fields",
-              "note": "Workflow artifact status: shown_or_described_but_no_public_artifact_found_in_pdf"
-            },
-            {
-              "pdf_text_lines": "manual_assessment:linked_resources",
-              "note": "The GitHub repository may contain KNIME modules or examples, but this pass did not verify repository contents."
+              "extracted_text_lines": "475-477",
+              "note": "Extracted text evidence:  Fig. 5 Single-task workflow for the hold-out procedure using the KNIME interface (Upper). Multi-task workflow for the hold-out procedure (Lower) "
             }
           ],
           "describes_workflow_or_nodes_in_text": [
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "kGCN KNIME modules"
+              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use.",
+              "extracted_text_lines": "376-384"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "GCNVisualizer"
+              "extracted_text_lines": "147-149",
+              "note": "Extracted text evidence: described in the Implementation section. M′ = (A, F), where A = {A(t) |t ∈ T }. The framework in Similar types of software have been reported in prior the present system uses RDKit [29] to create adjacency studies, e.g., DeepChem [25], Chainer chemistry [26], and feature matrices and employs M′ as the input for"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "GCNGraphViewer"
+              "extracted_text_lines": "341-343",
+              "note": "Extracted text evidence: suitable for batch execution. Data processing is designed part is for data preparation, for which kGCN includes the according to the aim, but there is a standard process com- following KNIME nodes: mon to many data processing designs, e.g., a series of pro-"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "single-task workflow"
+              "note": "kGCN KNIME modules",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "multi-task workflow"
+              "note": "GCNVisualizer",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "nodes_or_components_reported",
-              "note": "multi-modal workflow"
+              "note": "GCNGraphViewer",
+              "extracted_text_lines": "nodes_or_components_reported"
             },
             {
-              "pdf_text_lines": "376-384",
-              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use."
+              "note": "single-task workflow",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "multi-task workflow",
+              "extracted_text_lines": "nodes_or_components_reported"
+            },
+            {
+              "note": "multi-modal workflow",
+              "extracted_text_lines": "nodes_or_components_reported"
             }
           ],
           "provides_code_or_scripts": [
             {
-              "pdf_text_lines": "manual_assessment:code_or_software_availability",
-              "note": "The paper reports the kGCN project home page on GitHub and Docker availability."
+              "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub.",
+              "extracted_text_lines": "19-30"
             },
             {
-              "pdf_text_lines": "linked_resources",
-              "note": "Resource URL recorded in assessment: https://github.com/clinfo/kGCN"
+              "note": "The availability section gives the kGCN GitHub project and dependencies.",
+              "extracted_text_lines": "646-656"
             },
             {
-              "pdf_text_lines": "19-30",
-              "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub."
-            },
-            {
-              "pdf_text_lines": "646-656",
-              "note": "The availability section gives the kGCN GitHub project and dependencies."
+              "note": "Resource URL recorded in assessment: https://github.com/clinfo/kGCN",
+              "extracted_text_lines": "linked_resources"
             }
           ],
           "uses_knime": [
             {
-              "pdf_text_lines": "19-30",
-              "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub."
+              "note": "The abstract says kGCN includes a KNIME GUI and is available on GitHub.",
+              "extracted_text_lines": "19-30"
             },
             {
-              "pdf_text_lines": "376-384",
-              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use."
+              "note": "The KNIME-interface section describes kGCN KNIME modules and workflow use.",
+              "extracted_text_lines": "376-384"
             },
             {
-              "pdf_text_lines": "manual_assessment:knime_usage_summary",
-              "note": "The paper presents kGCN, a graph-based deep learning framework with three interfaces, including a KNIME GUI for users with limited programming skills."
+              "extracted_text_lines": "18-20",
+              "note": "Extracted text evidence: open-source GCN tool, kGCN, is introduced. To support the users with various levels of programming skills, kGCN includes three interfaces: a graphical user interface (GUI) employing KNIME for users with limited programming skills such as chemists, as well as command-line and Python library interfaces for users with advanced programming skills"
             },
             {
-              "pdf_text_lines": "manual_assessment",
-              "note": "The paper presents kGCN, a graph-based deep learning framework with three interfaces, including a KNIME GUI for users with limited programming skills."
+              "extracted_text_lines": "29-31",
+              "note": "Extracted text evidence: tion. kGCN is available at https​://githu​b.com/clinf​o. Keywords: Graph convolutional network, kGCN, Graph neural network, Open source software, KNIME "
             }
           ]
         }
-      }
+      },
+      "processed_text_file": "data/processed/articles/s13321-020-00435-6.txt"
     },
     {
       "rank": 20,
@@ -3071,7 +2866,8 @@
           "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {}
-      }
+      },
+      "processed_text_file": null
     }
   ],
   "article_audit_schema": {
@@ -3099,7 +2895,7 @@
       ]
     },
     "flag_audit_fields": {
-      "description": "Map of statistics-ready presence flags. A true value means the article assessment found the named item/category; a false value means that item/category was absent, not reported, not applicable, not assessed, or not verified in the current evidence.",
+      "description": "Map of statistics-ready presence flags for deeper workflow-reporting audit cases. A true value means the article assessment found the named item/category; a false value means that item/category was absent, not reported, not applicable, not assessed, or not verified in the current evidence. Records with knime_article_relation=about_knime keep this map empty because they are background/platform papers.",
       "item_shape": {
         "field_name": "true means presence; false means absence or no supporting evidence"
       },
@@ -3126,28 +2922,30 @@
       "item_shape": {
         "flag_name": [
           {
-            "pdf_text_lines": "PDF line range or source label",
-            "note": "supporting phrase or resource note"
+            "note": "supporting phrase or resource note",
+            "extracted_text_lines": "extracted-text line range or source label"
           }
         ]
       }
     }
   },
   "article_audit_summary_counts": {
-    "records": 20,
-    "boolean_true_counts": {
-      "describes_workflow_or_nodes_in_text": 15,
-      "full_text_accessible": 18,
-      "linked_workflow_artifacts_retrievable": 1,
-      "provides_code_or_scripts": 5,
-      "provides_downloadable_knime_workflow_files": 2,
-      "provides_input_data_direct_url": 6,
-      "provides_workflow_screenshots_or_figures": 5,
-      "reports_extension_installation_source": 2,
-      "reports_extension_or_plugin_dependencies": 2,
-      "reports_input_data_availability": 9,
-      "reports_knime_version": 6,
-      "uses_knime": 11
-    }
+    "full_text_accessible": 14,
+    "uses_knime": 11,
+    "reports_knime_version": 4,
+    "provides_downloadable_knime_workflow_files": 1,
+    "provides_workflow_screenshots_or_figures": 5,
+    "describes_workflow_or_nodes_in_text": 11,
+    "provides_input_data_direct_url": 6,
+    "reports_input_data_availability": 9,
+    "provides_code_or_scripts": 4,
+    "reports_extension_or_plugin_dependencies": 1,
+    "reports_extension_installation_source": 1,
+    "linked_workflow_artifacts_retrievable": 1
+  },
+  "article_text_source": {
+    "directory": "data/processed/articles",
+    "method": "Generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout.",
+    "articles_with_extracted_text": 18
   }
 }

@@ -4,8 +4,9 @@
   "assessment_file": "data/processed/audit/knime_most_cited_article_assessments.json",
   "principles": [
     "Use description_audit_fields for traceability labels, source identifiers, and conservative textual classifications.",
+    "For records where knime_article_relation is about_knime, keep descriptive metadata but leave flag_audit_fields and flag_audit_support empty because these background/platform articles are not part of the deeper workflow-reporting audit.",
     "Use flag_audit_fields only for presence flags where true means the item is present in the current evidence.",
-    "Use flag_audit_support only for true flags, with citation objects containing pdf_text_lines and note.",
+    "Use flag_audit_support only for true flags, with citation objects containing extracted_text_lines and note.",
     "Do not create true flags for no, not_applicable, not_assessed, unclear, or not_checked states; preserve those states as description fields."
   ],
   "description_questions": {

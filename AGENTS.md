@@ -177,16 +177,24 @@ Create directories only when they are needed. Keep generated files out of versio
   absent, unsupported, not applicable, not assessed, or not verified. Do not add
   flags whose true value means `no`, `not_applicable`, `not_assessed`, or
   `unclear`; preserve those labels in `description_audit_fields`.
+- Records with `description_audit_fields.knime_article_relation` equal to
+  `about_knime` are background/platform papers, not deeper workflow-reporting
+  audit cases. Keep their descriptive metadata, but leave `flag_audit_fields`
+  and `flag_audit_support` empty so they do not enter workflow-reporting
+  statistics.
 - Detailed KNIME presentation categories are not represented as flag fields.
   Use `description_audit_fields.knime_article_relation` for the simplified
   relation and `flag_audit_fields.uses_knime` for statistics. Workflow-artifact
   presentation is represented by direct presence flags for downloadable
   workflows, screenshots/figures, and text descriptions.
 - The `flag_audit_support` object maps each `true` flag to citation objects
-  with `pdf_text_lines` and `note`, following the same shape as article-level
-  `evidence` entries. Reuse PDF line references where available; use source
-  labels such as `linked_resources`, `local_pdf`, `article_audit_fields`, or
-  `manual_assessment` for resource values and manual classification notes.
+  with `extracted_text_lines` and `note`, following the same shape as
+  article-level `evidence` entries. The line references point to generated
+  `pdftotext -layout` text files under `data/processed/articles/`, not to
+  intrinsic PDF line numbers. Reuse extracted-text line references where
+  available; use source labels such as `linked_resources`, `local_pdf`,
+  `article_audit_fields`, or `manual_assessment` for resource values and
+  manual classification notes.
   False flags intentionally have no support entry. Keep it in sync when
   changing any flag value.
 - The current `article_audit_fields` values were derived from existing manual

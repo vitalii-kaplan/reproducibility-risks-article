@@ -127,6 +127,15 @@ Run scripts from the repository root unless noted otherwise.
   scripts/extract_article_texts.py
   ```
 
+- `scripts/refresh_article_audit_support.py`: refreshes support/provenance for
+  the existing manual article audit. It does not perform the audit or change
+  yes/no decisions; it maps articles to generated text files and adds
+  extracted-text line support where matching text is found.
+
+  ```sh
+  python3 scripts/refresh_article_audit_support.py
+  ```
+
 - `scripts/clone_knime_oss_repos.sh`: clones public repositories from the
   `knime-oss` GitHub organization into a local directory.
 
