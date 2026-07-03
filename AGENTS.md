@@ -152,6 +152,87 @@ Create directories only when they are needed. Keep generated files out of versio
 - The top-cited article audit uses the 20 most-cited records from the processed
   OpenAlex result. Eighteen records were assessed from full text; two were not
   available at the time of assessment.
+- The top-cited article assessment file
+  `data/processed/audit/knime_most_cited_article_assessments.json` now has
+  an explicit `article_audit_fields` block for each record. The block is split
+  into `description_audit_fields` for traceability and `flag_audit_fields` for
+  statistics, with `article_audit_schema` and `article_audit_summary_counts` at
+  the top level. Use `flag_audit_fields` for article-level workflow-presentation
+  statistics before reinterpreting prose notes.
+- The audit questions and field definitions are recorded in
+  `data/processed/audit/knime_article_audit_questions.json`. Keep this file
+  synchronized when adding, removing, renaming, or changing the meaning of any
+  article-audit field.
+- The article-audit fields cover article identifier, title, year, venue, DOI or
+  URL, full-text accessibility, simplified KNIME article relation
+  (`about_knime`, `uses_knime`, `not_a_knime_use_case`, or `not_assessed`), the
+  `uses_knime` presence flag, KNIME version reporting, downloadable
+  workflow-file availability, workflow screenshot or figure presentation, input
+  data, code/scripts, whether the article describes workflow steps, nodes,
+  modules, or components in text, extension or plugin dependency information,
+  extension installation/source information, linked-workflow retrievability, and
+  evidence notes.
+- `flag_audit_fields` must contain only presence flags. A `true` value means
+  the item or category is present in the current evidence; a `false` value means
+  absent, unsupported, not applicable, not assessed, or not verified. Do not add
+  flags whose true value means `no`, `not_applicable`, `not_assessed`, or
+  `unclear`; preserve those labels in `description_audit_fields`.
+- Detailed KNIME presentation categories are not represented as flag fields.
+  Use `description_audit_fields.knime_article_relation` for the simplified
+  relation and `flag_audit_fields.uses_knime` for statistics. Workflow-artifact
+  presentation is represented by direct presence flags for downloadable
+  workflows, screenshots/figures, and text descriptions.
+- The `flag_audit_support` object maps each `true` flag to citation objects
+  with `pdf_text_lines` and `note`, following the same shape as article-level
+  `evidence` entries. Reuse PDF line references where available; use source
+  labels such as `linked_resources`, `local_pdf`, `article_audit_fields`, or
+  `manual_assessment` for resource values and manual classification notes.
+  False flags intentionally have no support entry. Keep it in sync when
+  changing any flag value.
+- The current `article_audit_fields` values were derived from existing manual
+  notes and the OpenAlex top-cited CSV without rereading the article full
+  texts. Do not silently upgrade `not_checked_in_this_pass`, `unclear`, or
+  `reported_without_direct_url` values to stronger claims unless new evidence
+  is recorded.
+- Processed article text extracted from local PDFs belongs under
+  `data/processed/articles/`, one text file per article/PDF. This directory is
+  ignored by Git because it is generated; use `scripts/extract_article_texts.py`
+  to regenerate it and keep the extraction manifest under `data/processed/audit/`.
+- The empirical expansion priority is to increase the scale of article and
+  workflow evidence, not to restart the paper. Continue assessing
+  KNIME-related article records beyond the top-20 sample as time allows, and
+  use only the number actually completed by the deadline.
+- For every retrievable KNIME workflow found during article assessment, record
+  the source article, workflow source URL, retrieval date, package or file name,
+  available workflow metadata, node identifiers or factory classes where
+  extractable, deprecated nodes, legacy nodes, missing nodes, unresolved
+  extension dependencies, import outcome in current KNIME, and execution outcome
+  when execution is feasible.
+- Keep workflow-level failure categories distinct: import failure,
+  extension-resolution failure, data-missing failure, configuration failure,
+  and execution failure should not be collapsed into a single failure label.
+- Article-level statistics should include counts and percentages for assessed
+  records, full-text accessibility, KNIME-use articles, KNIME version reporting,
+  downloadable workflow files, workflow screenshots or text descriptions, input
+  data, code/scripts, and extension or plugin information.
+- Workflow-level statistics should include the number of retrieved workflows,
+  importable workflows, executable workflows where feasible, workflows with
+  deprecated nodes, legacy nodes, missing nodes, unresolved extensions, and the
+  distribution of deprecated-node counts per workflow.
+- Formal statistical tests are optional and should be added only if the
+  collected sample size supports them. Prefer simple, defensible counts,
+  percentages, and distributions over underpowered tests.
+- Frame the expanded work as a reproducibility-risk audit method for visual
+  workflow studies: collect bibliometric records, assess publication-level
+  preservation signals, retrieve workflow artifacts, extract node metadata,
+  compare nodes with platform compatibility metadata, and classify risks from
+  missing artifacts, missing versions, unresolved extensions, deprecated nodes,
+  and failed imports or executions.
+- Do not prioritize a cross-platform comparison before the deadline unless it
+  becomes systematic and evidence-backed. A shallow comparison with Galaxy,
+  Weka, RapidMiner, Orange, Taverna, or similar systems would weaken the paper;
+  the stronger near-term contribution is a deeper KNIME workflow corpus with
+  quantitative node-level compatibility analysis.
 - In the current assessment, PAINS is the only non-KNIME-focused top-cited case
   with retrievable KNIME workflow files suitable for a current-KNIME import
   experiment.
@@ -193,16 +274,23 @@ Create directories only when they are needed. Keep generated files out of versio
   added.
 - Case-study reproduction attempts should record environment details: operating system, KNIME version, extension installation steps, workflow source URL, errors, and outcome.
 - For each selected paper, maintain a structured assessment with fields such as:
-  - bibliographic metadata
-  - citation count and source date
-  - whether KNIME is central or incidental
-  - KNIME version reported
-  - workflow availability
-  - data availability
-  - extension or node dependencies
-  - current KNIME import result
-  - current KNIME execution result
-  - deprecated nodes observed
+  - article identifier, title, year, venue, DOI or URL
+  - full-text accessibility
+  - KNIME article relation: about KNIME, uses KNIME, not a KNIME use case, or
+    not assessed
+  - whether the article uses KNIME
+  - KNIME version reporting
+  - downloadable KNIME workflow-file availability
+  - workflow screenshot or figure presentation
+  - workflow, node, module, or component description in text
+  - input-data availability
+  - code/script availability
+  - extension or plugin dependency information
+  - extension installation/source information
+  - linked workflow artifact retrievability
+  - current KNIME import result, when workflow-level testing is performed
+  - current KNIME execution result, when workflow-level testing is performed
+  - deprecated nodes observed, when workflow-level inspection is performed
   - notes and evidence links
 
 ## Verification

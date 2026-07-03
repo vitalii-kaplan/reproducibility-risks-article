@@ -219,3 +219,6 @@ __marimo__/
 
 # Private or bulky article source PDFs
 data/original/articles/
+
+# Generated article text extracted from local PDFs
+data/processed/articles/

@@ -1,189 +1,197 @@
 # KNIME Workflows in Scientific Studies
 
-This repository contains the source, data, and scripts for the article
-**"KNIME Workflows in Scientific Studies: Publication Practices and
-Reproducibility Risks"**.
+This repository supports the article **"KNIME Workflows in Scientific Studies:
+Publication Practices and Reproducibility Risks"**.
 
-The article studies how KNIME workflows are reported in scientific
-publications, and how long-term reproducibility can be affected when workflow
-artifacts, version information, data, and extension context are incomplete. It
-uses KNIME as a case study because KNIME is an open-source visual workflow
-platform with a long public development history and substantial visibility in
-scientific literature.
+The project studies how scientific papers report KNIME workflows and what that
+means for long-term reproducibility. It focuses on whether papers preserve
+enough information for later researchers to inspect, import, or rerun the
+workflow: executable workflow files, KNIME versions, input data, code, and
+extension or plugin context.
 
-The article itself is the source of truth for the current claims. This README
-summarizes the project for repository visitors and points to the files needed
-to inspect or rebuild the work.
+KNIME is used as the case study because it is a widely used open-source visual
+workflow platform with a long public development history.
 
-## Main Findings
+## What This Project Contains
+
+- The paper source and generated PDF.
+- OpenAlex-based bibliographic evidence for KNIME-related articles.
+- Manual audit data for highly cited KNIME-related papers.
+- A current-KNIME compatibility case study for the PAINS workflows.
+- KNIME source-repository mining data on node metadata and deprecation.
+- Scripts used to extract, process, and summarize the evidence.
+
+The paper is the source of truth for the current scientific claims. The data
+and scripts in this repository are here to make those claims inspectable.
+
+## Current Findings
 
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
   records and collected on June 29, 2026, returned 963 article-type records.
-- A manual assessment of the 20 most-cited KNIME-matching article records found
-  that influential studies often report KNIME through figures, descriptions, or
-  tool mentions rather than downloadable workflow artifacts.
-- In the assessed set, the PAINS filters paper was the only non-KNIME-focused
-  case with retrievable KNIME workflow files suitable for a current-KNIME import
-  experiment.
+- A manual audit of the 20 most-cited KNIME-matching article records found that
+  influential papers often present KNIME through text, figures, or tool
+  mentions rather than downloadable workflow artifacts.
+- In that top-cited audit, the PAINS filters paper was the only
+  non-KNIME-focused case with retrievable KNIME workflow files suitable for a
+  current-KNIME import experiment.
 - In the PAINS experiment, the RDKit workflow executed in KNIME Analytics
   Platform 5.8.3 LTS after extension installation, while the Indigo workflow
   was blocked by a missing third-party extension.
-- Repository mining shows that deprecated ordinary nodes increased from 14.83%
+- Repository mining found that deprecated ordinary nodes increased from 14.83%
   of registered ordinary nodes in the 2018 source baseline to 33.33% in the
   June 28, 2026 local source snapshot.
 
-The article does **not** claim that KNIME workflows are generally
-unreproducible. The claim is narrower: weak workflow preservation and evolving
-node metadata create reproducibility risks, especially when papers preserve
+These results do **not** show that KNIME workflows are generally
+unreproducible. The narrower claim is that weak artifact preservation and
+platform evolution create reproducibility risks, especially when papers provide
 only workflow images or textual descriptions.
 
-## Repository Layout
+## Repository Map
 
 ```text
-.
-|-- article/
-|   |-- article.tex
-|   |-- references.bib
-|   |-- article.bbl
-|   |-- article.pdf
-|   |-- figs/
-|   |-- llncs.cls
-|   `-- splncs04.bst
-|-- data/
-|   |-- original/
-|   `-- processed/
-|-- scripts/
-|-- notes/
-|-- Methods.md
-|-- Deprecated.md
-|-- README.md
-`-- AGENTS.md
+article/                 Paper source, bibliography, figures, and PDF
+data/original/           Raw or source evidence where included
+data/processed/audit/    Structured article-audit data and audit questions
+data/processed/knime_snapshots/
+                         Processed KNIME repository-mining outputs
+scripts/                 Data extraction and analysis scripts
+Methods.md               Method notes for repository mining and data collection
+Deprecated.md            Notes on deprecated-node semantics
+AGENTS.md                Detailed working rules for future project updates
 ```
 
-Key files:
-
-- `article/article.tex`: article source.
-- `article/references.bib`: BibTeX database.
-- `article/article.bbl`: generated bibliography included for reproducible
-  article builds.
-- `article/article.pdf`: generated article PDF.
-- `article/figs/`: figures used by the article.
-- `data/processed/articles/knime_most_cited_article_assessments.json`: manual
-  assessment of the top-cited records.
-- `data/processed/knime_snapshots/knime_node_snapshot_summary.csv`: processed
-  KNIME repository-mining summary.
-- `data/processed/knime_snapshots/knime_oss_repositories.csv`: repository list
-  used for KNIME source mining.
-- `Methods.md`: repository-mining and data-collection method notes.
-- `Deprecated.md`: notes on deprecated-node semantics and related article
-  tasks.
-
-## Building The Article
-
-Build from the `article/` directory:
+Generated text extracted from article PDFs is written to
+`data/processed/articles/`. That directory is ignored by Git because it can be
+regenerated from local PDFs with:
 
 ```sh
-latexmk -pdf -interaction=nonstopmode article.tex
+scripts/extract_article_texts.py
 ```
 
-The article uses Springer LNCS / S-LNCS formatting:
+## Key Data Files
 
-```tex
-\documentclass[runningheads]{llncs}
-\bibliographystyle{splncs04}
-```
+- `data/processed/audit/knime_most_cited_article_assessments.json`: structured
+  manual assessment of the top-cited KNIME-related article records.
+- `data/processed/audit/knime_article_audit_questions.json`: questions and
+  field definitions used in the article audit.
+- `data/processed/audit/article_text_extraction_manifest.csv`: manifest for
+  the PDF-to-text extraction run.
+- `data/processed/knime_snapshots/knime_node_snapshot_summary.csv`: summary of
+  KNIME node metadata across source snapshots.
+- `data/processed/knime_snapshots/knime_oss_repositories.csv`: repository list
+  used for KNIME source mining.
 
-The repository vendors the LNCS files used for the current build:
+## Requirements
 
-- `article/llncs.cls`: Springer `llncs` class, v2.26, dated 2025-02-25.
-- `article/splncs04.bst`: Springer LNCS BibTeX style.
-- `article/llncsdoc.pdf`: Springer LNCS class documentation.
-- `article/llncs-README.md`: LNCS bundle readme.
+The Python scripts use only Python standard-library modules. A Python virtual
+environment is not currently required.
 
-These files were downloaded from:
+Command-line tools used by the scripts and paper build:
 
-```text
-https://mirrors.ctan.org/macros/latex/contrib/llncs.zip
-```
+- Python 3
+- Bash
+- Git
+- curl
+- jq
+- `pdftotext`, from Poppler
+- `latexmk`, for rebuilding the paper PDF
 
-Current author metadata in `article/article.tex`:
+OpenAlex and GitHub collection scripts require network access. Locally captured
+tool versions are recorded in
+`data/processed/environment/tool_versions.txt`.
 
-- author: Vitalii Kaplan
-- ORCID: `0009-0009-8181-2863`
-- email: `2333275007@alu.istinye.edu.tr`
+## Scripts
 
-## Evidence Sources
+Run scripts from the repository root unless noted otherwise.
 
-The article combines four evidence streams:
+- `scripts/collect_openalex_knime_works.py`: collects OpenAlex article records
+  matching `KNIME` in title and abstract and writes raw results to
+  `data/original/openalex/`.
 
-1. OpenAlex bibliometrics for article records matching `KNIME` in title and
-   abstract.
-2. Manual assessment of the 20 most-cited KNIME-matching article records.
-3. A current-KNIME import and execution experiment for the PAINS workflows.
-4. Repository-level mining of KNIME node metadata across date-based source
-   snapshots.
+  ```sh
+  python3 scripts/collect_openalex_knime_works.py
+  ```
 
-The PAINS case records the following reproduction-relevant context:
+- `scripts/build_openalex_knime_bibliometrics.py`: builds processed OpenAlex
+  summary tables from `data/original/openalex/works.jsonl`.
 
-- article DOI: `10.1002/minf.201100076`
-- reported KNIME version: 2.3.4
-- RDKit nodes: 1.0.0.886
-- Indigo nodes: 1.0.0.951
-- current test environment: KNIME Analytics Platform 5.8.3 LTS
+  ```sh
+  python3 scripts/build_openalex_knime_bibliometrics.py
+  ```
 
-The PAINS figures used in the article are copied to `article/figs/` so the
-article package does not depend on `data/manual/`.
+- `scripts/extract_article_texts.py`: converts local article PDFs from
+  `data/original/articles/` to plain-text files in `data/processed/articles/`
+  and writes an extraction manifest.
 
-## KNIME Repository Mining
+  ```sh
+  scripts/extract_article_texts.py
+  ```
 
-The repository-mining analysis starts from the earliest locally available
-KNIME Analytics Platform source-code baseline in the `knime-product` tag
-history:
+- `scripts/clone_knime_oss_repos.sh`: clones public repositories from the
+  `knime-oss` GitHub organization into a local directory.
 
-| Date | Version context | Registered ordinary nodes | Deprecated ordinary nodes | Deprecated share |
-|---|---|---:|---:|---:|
-| 2018-04-03 | KNIME Analytics Platform 3.5.3 source-date anchor | 1301 | 193 | 14.83% |
-| 2019-12-05 | KNIME Analytics Platform 4.1.0 source-date anchor | 1191 | 227 | 19.06% |
-| 2023-02-22 | KNIME Analytics Platform 5.0.0 source-date anchor | 1442 | 433 | 30.03% |
-| 2026-03-03 | KNIME Analytics Platform 5.11.0 source-date anchor | 1503 | 503 | 33.47% |
-| 2026-06-28 | Current local source-date snapshot | 1506 | 502 | 33.33% |
+  ```sh
+  scripts/clone_knime_oss_repos.sh /path/to/knime-oss
+  ```
 
-The source-mining scripts parse structured XML rather than grepping strings.
-Only case-insensitive `deprecated="true"` on ordinary node registrations is
-treated as a deprecation marker. Hidden nodes are tracked separately.
+- `scripts/checkout_knime_oss_by_date.sh`: checks each cloned KNIME repository
+  out to the latest commit at or before a chosen date and records a manifest.
 
-Important scripts:
+  ```sh
+  scripts/checkout_knime_oss_by_date.sh /path/to/knime-oss 2026-06-28
+  ```
 
-- `scripts/checkout_knime_oss_by_date.sh`
-- `scripts/collect_knime_node_snapshot.py`
-- `scripts/build_knime_node_snapshot_summary.py`
+- `scripts/collect_knime_node_snapshot.py`: extracts node, nodeset,
+  deprecation, hidden-node, class-mapper, and migration-rule metadata from one
+  checked-out KNIME source snapshot.
 
-Per-snapshot audit files are stored under
-`data/original/knime_snapshots/<snapshot-date>/`. The processed cross-snapshot
-summary is stored at
-`data/processed/knime_snapshots/knime_node_snapshot_summary.csv`.
+  ```sh
+  python3 scripts/collect_knime_node_snapshot.py /path/to/knime-oss \
+    --snapshot-id date-2026-06-28 \
+    --snapshot-date 2026-06-28
+  ```
 
-## Bibliography Notes
+- `scripts/build_knime_node_snapshot_summary.py`: builds the processed
+  cross-snapshot KNIME node summary from extracted snapshot directories.
 
-The final bibliography pass checked DOI-bearing entries in `article.bbl`
-against DOI registry resolution and Crossref metadata where available.
+  ```sh
+  python3 scripts/build_knime_node_snapshot_summary.py
+  ```
 
-## Scope And Limitations
+## The Paper formatting
 
-- Repository-level deprecation statistics are evidence of source metadata
-  evolution, not direct evidence that published workflows fail.
-- The PAINS experiment is a single manual current-KNIME compatibility test, not
-  a population-level workflow failure-rate estimate.
-- The top-cited article assessment records both evidence and absence of
-  evidence, such as whether workflow files, KNIME versions, data, code, or
-  extension context were reported.
-- k2pweb.org and `knime2py` are discussed only as possible future sources of
-  workflow-level usage evidence. Private k2pweb.org logs are not part of this
-  repository and should not be committed.
+The paper uses Springer LNCS / S-LNCS formatting and vendors the LNCS class and
+BibTeX style files needed for the current build.
+
+## Current Extension Plan
+
+The next empirical step is to increase the scale of the workflow evidence. The
+goal is to audit more KNIME-related papers, collect every retrievable KNIME
+workflow found during that audit, and inspect those workflows for compatibility
+risk signals such as deprecated nodes, missing nodes, unresolved extensions,
+and current-KNIME import or execution failures.
+
+The planned statistics are deliberately simple: counts, percentages, and
+distributions for article-level reporting practices and workflow-level
+compatibility signals. Formal statistical tests should only be added if the
+eventual sample size supports them.
+
+Cross-platform comparison is lower priority unless it can be done
+systematically. The stronger near-term contribution is a deeper KNIME workflow
+corpus with traceable node-level compatibility analysis.
+
+## Scope And Limits
+
+- Repository-level deprecation statistics show source metadata evolution; they
+  do not by themselves prove that published workflows fail.
+- The PAINS experiment is a single manual compatibility case study, not a
+  population-level workflow failure-rate estimate.
+- The article audit records both evidence and absence of evidence, including
+  whether papers report workflow files, KNIME versions, data, code, and
+  extension context.
 
 ## Reuse
 
 When reusing this repository, cite the article and preserve the connection
-between claims, data, and scripts. If new workflow-level evidence or k2pweb.org
-usage evidence is added later, use only anonymized aggregate outputs and
-document the aggregation method.
+between claims, data, and scripts. New evidence should be added with enough
+metadata to show where it came from and how it was processed.

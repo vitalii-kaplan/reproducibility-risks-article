@@ -1,0 +1,22 @@
+Tool versions captured on 2026-07-03.
+
+python3 --version
+Python 3.14.5
+
+bash --version
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+
+git --version
+git version 2.54.0
+
+curl --version
+curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1
+
+jq --version
+jq-1.8.1
+
+pdftotext -v
+pdftotext version 26.06.0
+
+latexmk --version
+Latexmk, John Collins, 27 Dec. 2024. Version 4.86a

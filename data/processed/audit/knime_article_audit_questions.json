@@ -1,0 +1,168 @@
+{
+  "created_at": "2026-07-03",
+  "purpose": "Question guide for extracting article-level KNIME workflow reporting evidence into article_audit_fields.",
+  "assessment_file": "data/processed/audit/knime_most_cited_article_assessments.json",
+  "principles": [
+    "Use description_audit_fields for traceability labels, source identifiers, and conservative textual classifications.",
+    "Use flag_audit_fields only for presence flags where true means the item is present in the current evidence.",
+    "Use flag_audit_support only for true flags, with citation objects containing pdf_text_lines and note.",
+    "Do not create true flags for no, not_applicable, not_assessed, unclear, or not_checked states; preserve those states as description fields."
+  ],
+  "description_questions": {
+    "article_identifier": {
+      "question": "What is the article identifier used to link this assessment to the bibliographic source record?",
+      "value_type": "string",
+      "source": "OpenAlex top-cited CSV or equivalent bibliographic source"
+    },
+    "title": {
+      "question": "What is the article title?",
+      "value_type": "string",
+      "source": "OpenAlex top-cited CSV or article metadata"
+    },
+    "year": {
+      "question": "What is the publication year?",
+      "value_type": "string",
+      "source": "OpenAlex top-cited CSV or article metadata"
+    },
+    "venue": {
+      "question": "What is the publication venue or source?",
+      "value_type": "string",
+      "source": "OpenAlex top-cited CSV or article metadata"
+    },
+    "doi_or_url": {
+      "question": "What DOI or stable URL identifies the article?",
+      "value_type": "string",
+      "source": "OpenAlex top-cited CSV or article metadata"
+    },
+    "knime_role_source_field": {
+      "question": "What detailed manual role label was assigned before simplification?",
+      "value_type": "string",
+      "source": "Manual assessment"
+    },
+    "knime_article_relation": {
+      "question": "Is the article about KNIME, does it use KNIME, is it not a KNIME use case, or was it not assessed?",
+      "value_type": "enum",
+      "allowed_values": [
+        "about_knime",
+        "uses_knime",
+        "not_a_knime_use_case",
+        "not_assessed"
+      ],
+      "source": "Manual assessment of article role"
+    },
+    "knime_version_values": {
+      "question": "Which KNIME version value or values does the article report?",
+      "value_type": "string",
+      "source": "Article text or manual assessment notes"
+    },
+    "workflow_artifact_status": {
+      "question": "How does the article present KNIME workflow artifacts?",
+      "value_type": "enum",
+      "source": "Manual assessment of article text, figures, supplements, and links"
+    },
+    "provides_input_data": {
+      "question": "How does the article report input data availability?",
+      "value_type": "enum",
+      "source": "Article availability statements, methods, supplements, and resource links"
+    },
+    "provides_code_or_scripts": {
+      "question": "How does the article report code or script availability?",
+      "value_type": "enum",
+      "source": "Article availability statements, methods, supplements, and resource links"
+    },
+    "reports_extension_or_plugin_dependencies": {
+      "question": "How does the article report KNIME extension or plugin dependencies?",
+      "value_type": "enum",
+      "source": "Article text, named nodes/components, software availability notes, and resource links"
+    },
+    "reports_extension_installation_source": {
+      "question": "How does the article report where or how required KNIME extensions/plugins can be obtained?",
+      "value_type": "enum",
+      "source": "Article text, update-site information, software URLs, and availability notes"
+    },
+    "linked_workflow_artifacts_retrievable": {
+      "question": "What is known about whether linked KNIME workflow artifacts are still retrievable?",
+      "value_type": "enum",
+      "source": "Current project notes and any documented retrieval checks"
+    },
+    "evidence_notes": {
+      "question": "What short note explains the reproducibility relevance and evidence basis for this article?",
+      "value_type": "string",
+      "source": "Manual assessment"
+    }
+  },
+  "flag_questions": {
+    "full_text_accessible": {
+      "question": "Was the article full text accessible for assessment?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "uses_knime": {
+      "question": "Does the article use KNIME as part of a study, workflow, comparison, interface, or implementation?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "reports_knime_version": {
+      "question": "Does the article report a KNIME version?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "provides_downloadable_knime_workflow_files": {
+      "question": "Does the article provide or link downloadable KNIME workflow files?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "provides_workflow_screenshots_or_figures": {
+      "question": "Does the article include screenshots or figures showing KNIME workflows?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "describes_workflow_or_nodes_in_text": {
+      "question": "Does the article describe KNIME workflow steps, nodes, modules, or components in text?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "provides_input_data_direct_url": {
+      "question": "Does the assessment record a direct URL or resource pointer for input data?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "reports_input_data_availability": {
+      "question": "Does the article report input data availability, including direct resources or availability statements without direct URLs?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "provides_code_or_scripts": {
+      "question": "Does the article provide or link code, scripts, or a code repository relevant to the reported work?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "reports_extension_or_plugin_dependencies": {
+      "question": "Does the article report KNIME extension/plugin dependencies or named KNIME node-library dependencies?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "reports_extension_installation_source": {
+      "question": "Does the article report an installation source, update site, project URL, or other source for required KNIME extensions/plugins?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    },
+    "linked_workflow_artifacts_retrievable": {
+      "question": "Were linked KNIME workflow artifacts documented as retrievable in current project notes?",
+      "value_type": "boolean",
+      "statistics_field": true,
+      "support_required_when_true": true
+    }
+  }
+}
