@@ -131,10 +131,10 @@ def build_top_table(articles: list[dict[str, Any]]) -> list[TableRow]:
 
     rows = [
         TableRow(
-            "Expanded audit records",
+            "Audit records",
             total,
             pct(total, total),
-            "Original top-60 records plus 20 rank 61--80 records",
+            "Most-cited KNIME-matching article records selected from OpenAlex",
         ),
         TableRow(
             "Assessed from full text",

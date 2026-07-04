@@ -1,9 +1,9 @@
 label,generated_count,article_count,count_match,generated_share_percent,article_share_percent,share_match
-Uses KNIME,51,51,True,100.0,100.0,True
-Workflow or nodes described in text,44,44,True,86.3,86.3,True
-Workflow screenshots or figures,30,30,True,58.8,58.8,True
-Reports KNIME version,15,15,True,29.4,29.4,True
-Reports extension/plugin dependencies,20,20,True,39.2,39.2,True
-Reports extension installation source,11,11,True,21.6,21.6,True
-Reports downloadable workflows,22,22,True,43.1,43.1,True
-Articles with successfully downloaded workflows,12,12,True,23.5,23.5,True
+Uses KNIME,67,67,True,100.0,100.0,True
+Workflow or nodes described in text,59,59,True,88.1,88.1,True
+Workflow screenshots or figures,37,37,True,55.2,55.2,True
+Reports KNIME version,18,18,True,26.9,26.9,True
+Reports extension/plugin dependencies,30,30,True,44.8,44.8,True
+Reports extension installation source,19,19,True,28.4,28.4,True
+Reports downloadable workflows,28,28,True,41.8,41.8,True
+Articles with successfully downloaded workflows,12,12,True,17.9,17.9,True

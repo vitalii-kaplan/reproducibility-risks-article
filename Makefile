@@ -43,7 +43,7 @@ DOWNLOAD_TIMEOUT ?= 45
 # Article-audit and table parameters.
 ASSESSMENT ?= data/processed/audit/knime_most_cited_article_assessments.json
 AUDIT_QUESTIONS ?= data/processed/audit/knime_article_audit_questions.json
-WORKFLOW_REFERENCES ?= data/original/workflows/knime_downloadable_workflow_references.json
+WORKFLOW_REFERENCES ?= data/processed/audit/knime_downloadable_workflow_references.json
 ARTICLE_TEX ?= article/article.tex
 ARTICLE_TABLE_DIR ?= article/tables
 FAIL_ON_MISMATCH ?= --fail-on-mismatch
