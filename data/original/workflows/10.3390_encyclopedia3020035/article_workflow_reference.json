@@ -1,0 +1,23 @@
+{
+  "rank": 25,
+  "title": "Molecular Filters in Medicinal Chemistry",
+  "doi": "10.3390/encyclopedia3020035",
+  "knime_version": "4.7",
+  "workflow_artifact_status": "downloadable_workflow_linked",
+  "processed_text_file": "data/processed/articles/encyclopedia3020035_um.txt",
+  "evidence_extracted_text_lines": "432-436; 693-700",
+  "workflow_references": [
+    {
+      "type": "KNIME Hub workflow",
+      "url": "https://hub.knime.com/-/spaces/-/latest/~xoK5FQgB_5Jmg54V/"
+    },
+    {
+      "type": "GitLab repository",
+      "url": "https://gitlab.com/Jukic/knime_medchem_filters"
+    },
+    {
+      "type": "KNIME Hub workflow",
+      "url": "https://hub.knime.com/marko_/spaces/Medicinal%20Chemistry%20Filtering/latest/~XQX98NGeZEgCxQ_j/"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+HTTP/1.1 301 Moved Permanently
+Date: Fri, 03 Jul 2026 18:11:24 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Location: https://bioinformatics.charite.de/sweet/
+Content-Length: 339
+Content-Type: text/html; charset=iso-8859-1
+
+HTTP/1.1 200 OK
+Date: Fri, 03 Jul 2026 18:11:24 GMT
+Server: Apache/2.4.52 (Ubuntu)
+Last-Modified: Wed, 11 Jan 2023 09:53:13 GMT
+ETag: "19e-5f1f9f7fecb66"
+Accept-Ranges: bytes
+Content-Length: 414
+Vary: Accept-Encoding
+Content-Type: text/html
+

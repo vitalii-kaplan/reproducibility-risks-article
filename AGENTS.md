@@ -21,7 +21,6 @@ The active article source is in `article/`:
 - BibTeX database: `article/references.bib`
 - generated bibliography: `article/article.bbl`
 - generated PDF: `article/article.pdf`
-- journal-shippable figures: `article/figs/`
 
 The article uses Springer LNCS / S-LNCS formatting:
 
@@ -68,8 +67,8 @@ workflow artifacts, version information, data, and extension context. At the
 same time, KNIME evolves: nodes can become deprecated, hidden, migrated,
 removed, or dependent on third-party extensions that are difficult to recover.
 The current paper investigates this claim using OpenAlex bibliometrics, manual
-assessment of the 20 most-cited KNIME-matching article records, one
-current-KNIME import experiment for the PAINS workflows, and longitudinal
+assessment of the 40 most-cited KNIME-matching article records, current-KNIME
+opening and execution attempts for retrievable workflows, and longitudinal
 repository mining of KNIME node metadata.
 
 ## Core Research Questions
@@ -90,8 +89,8 @@ repository mining of KNIME node metadata.
 - KNIME source repositories and release history.
 - Highly cited KNIME-related papers from OpenAlex.
 - Public workflow artifacts linked from papers, repositories, supplements, or KNIME Hub.
-- Manual PAINS workflow import results from the author's current KNIME
-  environment.
+- Manual current-KNIME opening and execution results for retrievable workflow
+  artifacts from the top-cited article audit.
 - k2pweb.org workflow usage logs or request records, if available, are future
   evidence rather than part of the current article's empirical core.
 
@@ -149,9 +148,9 @@ Create directories only when they are needed. Keep generated files out of versio
 - The current OpenAlex query uses title-and-abstract search for `KNIME` and
   `type:article`, collected on June 29, 2026. The processed result contains
   963 article-type records.
-- The top-cited article audit uses the 20 most-cited records from the processed
-  OpenAlex result. Eighteen records were assessed from full text; two were not
-  available at the time of assessment.
+- The top-cited article audit uses the 40 most-cited records from the processed
+  OpenAlex result. Thirty-five records were assessed from full text; five were
+  not available at the time of assessment.
 - The top-cited article assessment file
   `data/processed/audit/knime_most_cited_article_assessments.json` now has
   an explicit `article_audit_fields` block for each record. The block is split
@@ -159,6 +158,12 @@ Create directories only when they are needed. Keep generated files out of versio
   statistics, with `article_audit_schema` and `article_audit_summary_counts` at
   the top level. Use `flag_audit_fields` for article-level workflow-presentation
   statistics before reinterpreting prose notes.
+- The creation process for
+  `data/processed/audit/knime_most_cited_article_assessments.json` is now
+  described in the Methods subsection "Top-Cited Article Assessment" in
+  `article/article.tex`. Keep that method description synchronized with the
+  audit JSON, `knime_article_audit_questions.json`, and the support-refresh
+  script.
 - The audit questions and field definitions are recorded in
   `data/processed/audit/knime_article_audit_questions.json`. Keep this file
   synchronized when adding, removing, renaming, or changing the meaning of any
@@ -187,28 +192,49 @@ Create directories only when they are needed. Keep generated files out of versio
   relation and `flag_audit_fields.uses_knime` for statistics. Workflow-artifact
   presentation is represented by direct presence flags for downloadable
   workflows, screenshots/figures, and text descriptions.
-- The `flag_audit_support` object maps each `true` flag to citation objects
-  with `extracted_text_lines` and `note`, following the same shape as
-  article-level `evidence` entries. The line references point to generated
-  `pdftotext -layout` text files under `data/processed/articles/`, not to
-  intrinsic PDF line numbers. Reuse extracted-text line references where
+- The `flag_audit_support` object maps each `true` flag to citation objects.
+  Article-text support should include `extracted_text_lines`, `quote`,
+  `article_section`, and `note`. The `quote` field is direct wording from the
+  extracted article text; `note` is the audit explanation. The line references
+  point to processed reading files under `data/processed/articles/`, not to
+  intrinsic PDF line numbers. Raw `pdftotext -layout` output is preserved under
+  `data/processed/articles/raw/`. Reuse extracted-text line references where
   available; use source labels such as `linked_resources`, `local_pdf`,
-  `article_audit_fields`, or `manual_assessment` for resource values and
-  manual classification notes.
+  `article_audit_fields`, or `manual_assessment` for resource values and manual
+  classification notes.
   False flags intentionally have no support entry. Keep it in sync when
   changing any flag value.
-- The current `article_audit_fields` values were derived from existing manual
-  notes and the OpenAlex top-cited CSV without rereading the article full
-  texts. Do not silently upgrade `not_checked_in_this_pass`, `unclear`, or
+- For article-text flags, a `true` value requires direct quote support. After
+  finding a candidate quote, check whether the quote actually supports the flag
+  and answers the corresponding question in
+  `data/processed/audit/knime_article_audit_questions.json`. If it does not,
+  find another quote. If more than five candidates fail and no supporting quote
+  is found, set the flag to `false`. Do not keep keyword-only support that does
+  not make the claim true.
+- Use `scripts/refresh_article_audit_support.py` as the provenance/support
+  refresher for the top-cited article audit. It rebuilds candidate flags from
+  `description_audit_fields`, searches the processed one-column article text,
+  records direct quotes and section names, rejects invalid quote support, and
+  removes positive article-text flags that have no valid quote. Treat it as a
+  support/provenance updater, not as a substitute for human assessment.
+- As of the current quote-validated audit, every remaining `true` article-text
+  flag has at least one direct quote in `flag_audit_support`; false flags have
+  no support entry. Do not manually add a `true` article-text flag without
+  adding a quote-backed support object.
+- Do not silently upgrade `not_checked_in_this_pass`, `unclear`, or
   `reported_without_direct_url` values to stronger claims unless new evidence
-  is recorded.
-- Processed article text extracted from local PDFs belongs under
-  `data/processed/articles/`, one text file per article/PDF. This directory is
-  ignored by Git because it is generated; use `scripts/extract_article_texts.py`
-  to regenerate it and keep the extraction manifest under `data/processed/audit/`.
+  is recorded and the relevant quote support is added.
+- Raw article text extracted from local PDFs belongs under
+  `data/processed/articles/raw/`, one text file per article/PDF. Processed
+  reading copies belong under `data/processed/articles/`; use
+  `scripts/normalize_article_text_columns.py` to convert sustained two-column
+  pages to one-column order when possible. This directory is ignored by Git
+  because it is generated; keep extraction and normalization manifests under
+  `data/processed/audit/`. Keep these generated-directory details in
+  `AGENTS.md` rather than the public-facing `README.md`.
 - The empirical expansion priority is to increase the scale of article and
   workflow evidence, not to restart the paper. Continue assessing
-  KNIME-related article records beyond the top-20 sample as time allows, and
+  KNIME-related article records beyond the current 40-record sample as time allows, and
   use only the number actually completed by the deadline.
 - For every retrievable KNIME workflow found during article assessment, record
   the source article, workflow source URL, retrieval date, package or file name,
@@ -223,6 +249,26 @@ Create directories only when they are needed. Keep generated files out of versio
   records, full-text accessibility, KNIME-use articles, KNIME version reporting,
   downloadable workflow files, workflow screenshots or text descriptions, input
   data, code/scripts, and extension or plugin information.
+- Current 40-record top-cited audit counts used in the article tables are:
+  - all top-cited records: 40
+  - assessed from full text: 35
+  - not assessed from full text: 5
+  - about KNIME: 5
+  - not a KNIME use case: 6
+  - uses KNIME: 24
+  - workflow or nodes described in text: 19
+  - workflow screenshots or figures: 11
+  - reports KNIME version: 7
+  - downloadable KNIME workflow files: 8
+  - extension/plugin dependencies reported: 6
+  - extension installation source reported: 3
+  - linked workflow artifacts retrieved in the workflow experiment: 4 article records
+  - code or scripts reported: 9
+  - reports input-data availability: 17
+  - direct input-data resource: 9
+  Keep these counts synchronized with `article/article.tex` and
+  `data/processed/audit/knime_most_cited_article_assessments.json` when the
+  audit changes.
 - Workflow-level statistics should include the number of retrieved workflows,
   importable workflows, executable workflows where feasible, workflows with
   deprecated nodes, legacy nodes, missing nodes, unresolved extensions, and the
@@ -241,12 +287,24 @@ Create directories only when they are needed. Keep generated files out of versio
   Weka, RapidMiner, Orange, Taverna, or similar systems would weaken the paper;
   the stronger near-term contribution is a deeper KNIME workflow corpus with
   quantitative node-level compatibility analysis.
-- In the current assessment, PAINS is the only non-KNIME-focused top-cited case
-  with retrievable KNIME workflow files suitable for a current-KNIME import
-  experiment.
-- The PAINS figures used in the article have been copied to `article/figs/`.
-  The article should use these copies, not files from `data/manual/`, so that
-  the journal submission package is self-contained.
+- The current workflow-retrieval experiment covers the eight article records
+  whose audit reports downloadable or linked KNIME workflow files. Workflow
+  artifacts were obtained for four article records. Because the PAINS record
+  contains separate RDKit and Indigo workflows, five workflows were opened in
+  the local KNIME environment. Only the PAINS RDKit workflow executed
+  successfully; the other opened workflows failed during execution, required
+  missing R packages or extensions, or could not be confidently executed from
+  the available workflow state.
+- Manual workflow-opening screenshots are stored under
+  `data/original/workflows/<doi-safe-directory>/opened/`. Do not restore the
+  obsolete `data/manual/` or `article/figs/` PAINS-only figure copies unless the
+  article again needs standalone figure files.
+- The workflow reference inventory is
+  `data/original/workflows/knime_downloadable_workflow_references.json`. It
+  records the eight article records with workflow links, download outcomes,
+  reasons for unavailable workflows, manual KNIME opening tests, and the
+  summary that four article records yielded workflow artifacts, five workflows
+  were opened, and one workflow executed successfully.
 - The final bibliography pass checked DOI-bearing entries in `article.bbl`
   against DOI registry resolution and Crossref metadata where available. The
   applied metadata corrections are:
@@ -311,7 +369,6 @@ When moving this project to a separate GitHub directory, keep these files and
 directories together:
 
 - `article/article.tex`, `article/references.bib`, and `article/article.bbl`
-- `article/figs/`
 - `article/llncs.cls` and `article/splncs04.bst`
 - `data/processed/`
 - `data/original/` when raw evidence is intended to be part of the replication

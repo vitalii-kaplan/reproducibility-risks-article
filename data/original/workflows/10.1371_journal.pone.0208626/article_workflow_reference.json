@@ -1,0 +1,15 @@
+{
+  "rank": 23,
+  "title": "Identifying disease genes using machine learning and gene functional similarities, assessed through Gene Ontology",
+  "doi": "10.1371/journal.pone.0208626",
+  "knime_version": null,
+  "workflow_artifact_status": "downloadable_workflow_linked",
+  "processed_text_file": "data/processed/articles/journal_pone_0208626.txt",
+  "evidence_extracted_text_lines": "45-53",
+  "workflow_references": [
+    {
+      "type": "GitHub repository",
+      "url": "https://github.com/Muh-Asif/ASD-genes-prediction"
+    }
+  ]
+}

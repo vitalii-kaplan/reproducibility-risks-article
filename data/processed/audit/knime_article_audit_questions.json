@@ -6,8 +6,9 @@
     "Use description_audit_fields for traceability labels, source identifiers, and conservative textual classifications.",
     "For records where knime_article_relation is about_knime, keep descriptive metadata but leave flag_audit_fields and flag_audit_support empty because these background/platform articles are not part of the deeper workflow-reporting audit.",
     "Use flag_audit_fields only for presence flags where true means the item is present in the current evidence.",
-    "Use flag_audit_support only for true flags, with citation objects containing extracted_text_lines and note.",
-    "Do not create true flags for no, not_applicable, not_assessed, unclear, or not_checked states; preserve those states as description fields."
+    "Use flag_audit_support only for true flags. For article-text support, citation objects should contain extracted_text_lines, quote, article_section, and note. The quote is direct article wording from the extracted text; the note is an audit explanation.",
+    "Do not create true flags for no, not_applicable, not_assessed, unclear, or not_checked states; preserve those states as description fields.",
+    "After finding a candidate quote, check whether the quote really supports the idea behind the flag and answers the audit question. If it does, keep it as support. If it does not, try to find another quote. If more than five candidate quotes have been checked and all are wrong, and no quote supports the answer, set the flag answer to false."
   ],
   "description_questions": {
     "article_identifier": {

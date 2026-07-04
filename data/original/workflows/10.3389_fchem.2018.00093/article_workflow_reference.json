@@ -1,0 +1,15 @@
+{
+  "rank": 24,
+  "title": "BitterSweetForest: A Random Forest Based Binary Classifier to Predict Bitterness and Sweetness of Chemical Compounds",
+  "doi": "10.3389/fchem.2018.00093",
+  "knime_version": null,
+  "workflow_artifact_status": "supplementary_workflow_reported",
+  "processed_text_file": "data/processed/articles/fchem_2018_00093.txt",
+  "evidence_extracted_text_lines": "813-815",
+  "workflow_references": [
+    {
+      "type": "project/download page",
+      "url": "http://bioinformatics.charite.de/sweet/"
+    }
+  ]
+}

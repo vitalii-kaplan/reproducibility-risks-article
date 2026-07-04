@@ -1,0 +1,15 @@
+{
+  "rank": 26,
+  "title": "“MS-Ready” structures for non-targeted high-resolution mass spectrometry screening studies",
+  "doi": "10.1186/s13321-018-0299-2",
+  "knime_version": null,
+  "workflow_artifact_status": "downloadable_workflow_linked",
+  "processed_text_file": "data/processed/articles/s13321-018-0299-2_osti.txt",
+  "evidence_extracted_text_lines": "168-170; 923-927",
+  "workflow_references": [
+    {
+      "type": "GitHub repository",
+      "url": "https://github.com/kmansouri/MS-ready"
+    }
+  ]
+}

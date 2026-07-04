@@ -17,7 +17,10 @@ workflow platform with a long public development history.
 - The paper source and generated PDF.
 - OpenAlex-based bibliographic evidence for KNIME-related articles.
 - Manual audit data for highly cited KNIME-related papers.
-- A current-KNIME compatibility case study for the PAINS workflows.
+- A current-KNIME compatibility experiment for the retrievable workflows
+  linked from the top-cited article audit.
+- Workflow retrieval notes and manual opening screenshots for the workflow
+  artifacts that could be obtained.
 - KNIME source-repository mining data on node metadata and deprecation.
 - Scripts used to extract, process, and summarize the evidence.
 
@@ -28,15 +31,17 @@ and scripts in this repository are here to make those claims inspectable.
 
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
   records and collected on June 29, 2026, returned 963 article-type records.
-- A manual audit of the 20 most-cited KNIME-matching article records found that
+- A manual audit of the 40 most-cited KNIME-matching article records found that
   influential papers often present KNIME through text, figures, or tool
   mentions rather than downloadable workflow artifacts.
-- In that top-cited audit, the PAINS filters paper was the only
-  non-KNIME-focused case with retrievable KNIME workflow files suitable for a
-  current-KNIME import experiment.
-- In the PAINS experiment, the RDKit workflow executed in KNIME Analytics
-  Platform 5.8.3 LTS after extension installation, while the Indigo workflow
-  was blocked by a missing third-party extension.
+- In that top-cited audit, eight records reported downloadable or linked KNIME
+  workflow files. Workflow artifacts were obtained for four article records;
+  five workflows were opened because the PAINS record contains separate RDKit
+  and Indigo workflows.
+- In the current manual experiment, only the PAINS RDKit workflow executed
+  successfully. The other opened workflows failed during execution, required
+  missing packages or extensions, or could not be confidently executed from the
+  available workflow state.
 - Repository mining found that deprecated ordinary nodes increased from 14.83%
   of registered ordinary nodes in the 2018 source baseline to 33.33% in the
   June 28, 2026 local source snapshot.
@@ -49,8 +54,9 @@ only workflow images or textual descriptions.
 ## Repository Map
 
 ```text
-article/                 Paper source, bibliography, figures, and PDF
+article/                 Paper source, bibliography, LNCS files, and PDF
 data/original/           Raw or source evidence where included
+data/original/workflows/ Retrieved workflow artifacts and opening screenshots
 data/processed/audit/    Structured article-audit data and audit questions
 data/processed/knime_snapshots/
                          Processed KNIME repository-mining outputs
@@ -60,20 +66,14 @@ Deprecated.md            Notes on deprecated-node semantics
 AGENTS.md                Detailed working rules for future project updates
 ```
 
-Generated text extracted from article PDFs is written to
-`data/processed/articles/`. That directory is ignored by Git because it can be
-regenerated from local PDFs with:
-
-```sh
-scripts/extract_article_texts.py
-```
-
 ## Key Data Files
 
 - `data/processed/audit/knime_most_cited_article_assessments.json`: structured
   manual assessment of the top-cited KNIME-related article records.
 - `data/processed/audit/knime_article_audit_questions.json`: questions and
   field definitions used in the article audit.
+- `data/original/workflows/knime_downloadable_workflow_references.json`:
+  workflow-link records, retrieval outcomes, and manual KNIME opening results.
 - `data/processed/audit/article_text_extraction_manifest.csv`: manifest for
   the PDF-to-text extraction run.
 - `data/processed/knime_snapshots/knime_node_snapshot_summary.csv`: summary of
@@ -119,12 +119,19 @@ Run scripts from the repository root unless noted otherwise.
   python3 scripts/build_openalex_knime_bibliometrics.py
   ```
 
-- `scripts/extract_article_texts.py`: converts local article PDFs from
-  `data/original/articles/` to plain-text files in `data/processed/articles/`
-  and writes an extraction manifest.
+- `scripts/extract_article_texts.py`: converts local article PDFs to raw
+  `pdftotext -layout` files and writes an extraction manifest.
 
   ```sh
   scripts/extract_article_texts.py
+  ```
+
+- `scripts/normalize_article_text_columns.py`: creates reading copies of raw
+  extracted article text. Sustained two-column pages are converted to
+  one-column order; one-column or complex layouts are copied through unchanged.
+
+  ```sh
+  python3 scripts/normalize_article_text_columns.py
   ```
 
 - `scripts/refresh_article_audit_support.py`: refreshes support/provenance for
@@ -167,7 +174,7 @@ Run scripts from the repository root unless noted otherwise.
   python3 scripts/build_knime_node_snapshot_summary.py
   ```
 
-## The Paper formatting
+## Paper Formatting
 
 The paper uses Springer LNCS / S-LNCS formatting and vendors the LNCS class and
 BibTeX style files needed for the current build.
@@ -193,8 +200,9 @@ corpus with traceable node-level compatibility analysis.
 
 - Repository-level deprecation statistics show source metadata evolution; they
   do not by themselves prove that published workflows fail.
-- The PAINS experiment is a single manual compatibility case study, not a
-  population-level workflow failure-rate estimate.
+- The workflow-opening experiment is a small manual compatibility test over
+  retrievable artifacts from the top-cited audit, not a population-level
+  workflow failure-rate estimate.
 - The article audit records both evidence and absence of evidence, including
   whether papers report workflow files, KNIME versions, data, code, and
   extension context.

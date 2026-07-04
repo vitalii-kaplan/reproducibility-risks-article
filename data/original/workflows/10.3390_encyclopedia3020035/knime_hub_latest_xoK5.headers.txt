@@ -1,0 +1,20 @@
+HTTP/2 404 
+content-type: application/json
+content-length: 189
+date: Fri, 03 Jul 2026 18:11:50 GMT
+referrer-policy: no-referrer
+x-permitted-cross-domain-policies: none
+access-control-allow-origin: *
+content-security-policy: script-src 'none'; frame-ancestors 'none';
+cache-control: no-cache
+x-envoy-upstream-service-time: 15
+server: istio-envoy
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+vary: Accept-Encoding
+x-cache: Error from cloudfront
+via: 1.1 6164863a8032b4b19e42aff8915017e2.cloudfront.net (CloudFront)
+x-amz-cf-pop: BUD50-P1
+x-amz-cf-id: mO01CLsrLWcI6G3Yol40AuXG31z3mv-vYWD5ZTv66UkN1zFzNoX0bg==
+

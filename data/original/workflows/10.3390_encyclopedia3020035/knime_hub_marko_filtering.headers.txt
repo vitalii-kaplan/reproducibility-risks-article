@@ -1,0 +1,47 @@
+HTTP/2 301 
+content-type: text/html
+content-length: 153
+date: Fri, 03 Jul 2026 18:11:50 GMT
+referrer-policy: no-referrer
+x-permitted-cross-domain-policies: none
+access-control-allow-origin: *
+cross-origin-resource-policy: same-origin
+cross-origin-opener-policy: same-origin
+content-security-policy: default-src 'none';
+origin-agent-cluster: ?1
+permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+location: /marko_/spaces/Medicinal%20Chemistry%20Filtering/~XQX98NGeZEgCxQ_j/
+x-envoy-upstream-service-time: 86
+server: istio-envoy
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+vary: Accept-Encoding
+x-cache: Miss from cloudfront
+via: 1.1 8125f3278f119d79dff685f04463a968.cloudfront.net (CloudFront)
+x-amz-cf-pop: BUD50-P1
+x-amz-cf-id: 0cmjJaNyAQIVF3oAbuIZ3sQfFIG-CW7Cx2DR_Azsgfd-19xIpICVUA==
+
+HTTP/2 200 
+content-type: text/html;charset=utf-8
+content-length: 367914
+date: Fri, 03 Jul 2026 18:11:50 GMT
+referrer-policy: no-referrer
+x-permitted-cross-domain-policies: none
+access-control-allow-origin: *
+cross-origin-resource-policy: same-origin
+cross-origin-opener-policy: same-origin
+content-security-policy: base-uri 'none'; font-src 'self' data: https://cdn.eu.pendo.io; form-action 'self'; frame-ancestors 'self'; img-src * data: https://app.eu.pendo.io https://data.eu.pendo.io https://cdn.eu.pendo.io https://pendo-eu-static.storage.googleapis.com https://pendo-eu-static-4601724388179968.storage.googleapis.com https://content-4601724388179968.static.eu.pendo.io; object-src 'none'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://app.eu.pendo.io https://pendo-eu-static.storage.googleapis.com https://pendo-eu-static-4601724388179968.storage.googleapis.com https://content-4601724388179968.static.eu.pendo.io; script-src 'strict-dynamic' 'nonce-SqFIovemz7GFLNeCulgHkCYl' https://app.eu.pendo.io https://data.eu.pendo.io https://cdn.eu.pendo.io https://pendo-eu-static.storage.googleapis.com https://pendo-eu-static-4601724388179968.storage.googleapis.com https://content-4601724388179968.static.eu.pendo.io; upgrade-insecure-requests; frame-src https://app.eu.pendo.io https://portal.eu.pendo.io https://js.stripe.com; connect-src 'self' https://app.eu.pendo.io https://data.eu.pendo.io https://pendo-eu-static-4601724388179968.storage.googleapis.com https://content-4601724388179968.static.eu.pendo.io https://api.eu.amplitude.com https://sr-client-cfg.eu.amplitude.com https://api-sr.eu.amplitude.com https://gs.eu.amplitude.com https://api.hub.knime.com https://googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://cdn.matomo.cloud https://knime.matomo.cloud https://*.hubspot.com https://*.hs-scripts.com https://*.hubapi.com https://*.hscollectedforms.net wss://api.hub.knime.com https://s3.eu-central-1.amazonaws.com https://*.knime.com; worker-src blob:;
+origin-agent-cluster: ?1
+permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+x-envoy-upstream-service-time: 96
+server: istio-envoy
+strict-transport-security: max-age=31536000; includeSubDomains
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+vary: Accept-Encoding
+x-cache: Miss from cloudfront
+via: 1.1 8125f3278f119d79dff685f04463a968.cloudfront.net (CloudFront)
+x-amz-cf-pop: BUD50-P1
+x-amz-cf-id: fC2zcJYX1uoZJ6jcJKvnoQapCu76-1AP5rKjCONUKtDqk32nHHUceA==
+

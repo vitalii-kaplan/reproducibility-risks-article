@@ -3,18 +3,6 @@
 \providecommand{\urlprefix}{URL }
 \providecommand{\doi}[1]{https://doi.org/#1}
 
-\bibitem{AdekitanNomaOsaghae2018FirstYear}
-Adekitan, A.I., Noma-Osaghae, E.: Data mining approach to predicting the
-  performance of first year student in a university using the admission
-  requirements. Education and Information Technologies  \textbf{24}(2),
-  1527--1543 (2018). \doi{10.1007/s10639-018-9839-7}
-
-\bibitem{AdekitanSalau2019Engineering}
-Adekitan, A.I., Salau, O.: The impact of engineering students' performance in
-  the first three years on their graduation result using educational data
-  mining. Heliyon  \textbf{5}(2),  e01250 (2019).
-  \doi{10.1016/j.heliyon.2019.e01250}
-
 \bibitem{Berthold2009KNIME}
 Berthold, M.R., Cebron, N., Dill, F., Gabriel, T.R., K{\"o}tter, T., Meinl, T.,
   Ohl, P., Sieb, C., Thiel, K., Wiswedel, B.: {KNIME}: The {Konstanz}
@@ -73,21 +61,10 @@ Kaplan, V.: {reproducibility-risks-article}: Replication repository for {KNIME}
   \url{https://github.com/knime-oss/knime-database/blob/c4a3356985edf4383ad0a3107658851e6c49fdad/org.knime.workflow.migration/schema/NodeMigrationRule.exsd}
   (2026), accessed June 29, 2026
 
-\bibitem{Kojima2020KGCN}
-Kojima, R., Ishida, S., Ohta, M., Iwata, H., Honma, T., Okuno, Y.: {kGCN}: a
-  graph-based deep learning framework for chemical structures. Journal of
-  Cheminformatics  \textbf{12}(1) (2020). \doi{10.1186/s13321-020-00435-6}
-
 \bibitem{Kurtzer2017Singularity}
 Kurtzer, G.M., Sochat, V., Bauer, M.W.: Singularity: Scientific containers for
   mobility of compute. PLOS ONE  \textbf{12}(5),  e0177459 (2017).
   \doi{10.1371/journal.pone.0177459}
-
-\bibitem{Orru2020Pump}
-Orr{\`u}, P.F., Zoccheddu, A., Sassu, L., Mattia, C., Cozza, R., Arena, S.:
-  Machine learning approach using {MLP} and {SVM} algorithms for the fault
-  prediction of a centrifugal pump in the oil and gas industry. Sustainability
-  \textbf{12}(11), ~4776 (2020). \doi{10.3390/su12114776}
 
 \bibitem{Priem2022OpenAlex}
 Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly
@@ -117,13 +94,5 @@ Walker, R., Slingsby, A., Dykes, J., Xu, K., Wood, J., Nguyen, P.H., Stephens,
   D., Wong, B.L.W., Zheng, Y.: An extensible framework for provenance in human
   terrain visual analytics. IEEE Transactions on Visualization and Computer
   Graphics  \textbf{19}(12),  2139--2148 (2013). \doi{10.1109/TVCG.2013.132}
-
-\bibitem{Weigert2018CARE}
-Weigert, M., Schmidt, U., Boothe, T., M{\"u}ller, A., Dibrov, A., Jain, A.,
-  Wilhelm, B., Schmidt, D., Broaddus, C., Culley, S., Rocha-Martins, M.,
-  Segovia-Miranda, F., Norden, C., Henriques, R., Zerial, M., Solimena, M.,
-  Rink, J., Tomancak, P., Royer, L., Jug, F., Myers, E.W.: Content-aware image
-  restoration: pushing the limits of fluorescence microscopy. Nature Methods
-  \textbf{15}(12),  1090--1097 (2018). \doi{10.1038/s41592-018-0216-7}
 
 \end{thebibliography}

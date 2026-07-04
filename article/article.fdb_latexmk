@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex article"] 1783081759.93173 "article.aux" "article.bbl" "article" 1783081901.83476 0
+["bibtex article"] 1783121190.69697 "article.aux" "article.bbl" "article" 1783121195.4445 0
   "./references.bib" 1782899520.20792 9364 94b7b146e8b95e3dc27b4f1196f7bb87 ""
   "./splncs04.bst" 1782898237.30583 32146 aadf770ded437d161532035219ea6f45 ""
-  "article.aux" 1783081901.57831 6736 e2416918ea29a1781d82c2ff4a0053f7 "pdflatex"
+  "article.aux" 1783121194.21432 5803 a4403cd7b12644f969bd2cc2869ad00b "pdflatex"
   (generated)
   "article.bbl"
   "article.blg"
   (rewritten before read)
-["pdflatex"] 1783081900.6582 "article.tex" "article.pdf" "article" 1783081901.83489 0
+["pdflatex"] 1783121190.95641 "article.tex" "article.pdf" "article" 1783121195.44504 0
   "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1782795811.93882 294 c709f8171e909c2832b2b4469444f964 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -21,6 +21,7 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1136768653 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm" 1136768653 3584 3169d30142b88a27d4ab0e3468e963a2 ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ectt0800.tfm" 1136768653 1536 0b0b8ca286de6a006b681926403f35cd ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ectt0900.tfm" 1136768653 1536 ae7aab2f8a4bc9edfce2899f53ba88c3 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm0900.tfm" 1136768653 1536 c4f439db76ef96a9c53bc437f35ffe20 ""
@@ -39,6 +40,7 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb" 1215737283 154599 ded6d7c21788a8930eadc7fef7518942 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb" 1215737283 149037 995a6f1e12c1d647b99b1cf55db78699 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1215737283 138258 6525c253f16cededa14c7fd0da7f67b2 ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb" 1215737283 175641 e30a691dc1402b08fd6535cf8a31e5b7 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb" 1215737283 170827 2e4b634de7b58578eae1dc93e51dfe48 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb" 1215737283 169201 9ebf99020dde51a5086e186761a34e8f ""
   "/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -175,12 +177,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739209689 5466570 e8651e7fa7bb054fee9a07d3f37faf28 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739209844 3352639 2aa689c226d5667ed0ad838dc122ce61 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "article.aux" 1783081901.57831 6736 e2416918ea29a1781d82c2ff4a0053f7 "pdflatex"
-  "article.bbl" 1783081760.02079 6220 c31017d4bdc09b90ba8bd0d93251e540 "bibtex article"
-  "article.tex" 1783081896.88288 47824 eb2f8343e6132c2a86158f08d6deca59 ""
-  "figs/pains-indigo-error.png" 1782896158.39104 383614 e3428c47ca28d5515b300c9f987fcf36 ""
-  "figs/pains-no-extension.png" 1782896158.4005 61395 b80db37f1983a487b9bf0e1088f01eda ""
-  "figs/pains-rdkit-complete.png" 1782896158.39108 345612 d977a0b8b3664951198b53ed64687352 ""
+  "article.aux" 1783121194.21432 5803 a4403cd7b12644f969bd2cc2869ad00b "pdflatex"
+  "article.bbl" 1783121190.95376 4583 1caf44a1656aed51b2de70b30288e943 "bibtex article"
+  "article.tex" 1783121176.65181 50193 4a9eb6e0555313f52010141f7f99564a ""
   "llncs.cls" 1782898237.30583 43405 543b73320c367b0229b3cdfcddaedc46 ""
   (generated)
   "article.aux"

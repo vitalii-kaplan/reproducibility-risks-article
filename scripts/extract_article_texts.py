@@ -28,9 +28,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-dir",
-        default="data/processed/articles",
+        default="data/processed/articles/raw",
         type=Path,
-        help="Directory for generated text files.",
+        help="Directory for raw generated text files.",
     )
     parser.add_argument(
         "--manifest",

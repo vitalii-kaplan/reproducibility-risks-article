@@ -1,0 +1,19 @@
+{
+  "rank": 16,
+  "title": "KNIME Workflow to Assess PAINS Filters in SMARTS Format. Comparison of RDKit and Indigo Cheminformatics Libraries",
+  "doi": "10.1002/minf.201100076",
+  "knime_version": "2.3.4",
+  "workflow_artifact_status": "published_or_linked_in_text",
+  "processed_text_file": "data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt",
+  "evidence_extracted_text_lines": "315-318",
+  "workflow_references": [
+    {
+      "type": "myExperiment workflow",
+      "url": "http://www.myexperiment.org/workflows/1841"
+    },
+    {
+      "type": "myExperiment workflow",
+      "url": "http://www.myexperiment.org/workflows/2164"
+    }
+  ]
+}

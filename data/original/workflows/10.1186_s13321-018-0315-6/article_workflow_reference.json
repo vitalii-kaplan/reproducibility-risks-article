@@ -1,0 +1,15 @@
+{
+  "rank": 22,
+  "title": "A new semi-automated workflow for chemical data retrieval and quality checking for modeling applications",
+  "doi": "10.1186/s13321-018-0315-6",
+  "knime_version": "3.4",
+  "workflow_artifact_status": "downloadable_workflow_linked",
+  "processed_text_file": "data/processed/articles/s13321-018-0315-6.txt",
+  "evidence_extracted_text_lines": "1111-1113",
+  "workflow_references": [
+    {
+      "type": "GitHub repository",
+      "url": "https://github.com/DGadaleta88/data_curation_workflow"
+    }
+  ]
+}

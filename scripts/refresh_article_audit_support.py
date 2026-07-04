@@ -13,6 +13,7 @@ from typing import Any
 DEFAULT_ASSESSMENT = Path("data/processed/audit/knime_most_cited_article_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
+MAX_REJECTED_CANDIDATE_QUOTES = 5
 
 
 FLAG_PATTERNS: dict[str, list[str]] = {
@@ -24,6 +25,7 @@ FLAG_PATTERNS: dict[str, list[str]] = {
         r"\bKNIME\b.{0,120}\b(version|Desktop|Analytics Platform|v[0-9])\b",
         r"\b(version|Desktop|Analytics Platform|v[0-9])\b.{0,120}\bKNIME\b",
         r"\bKNIME\s+[0-9]+(?:\.[0-9]+)+\b",
+        r"\bKNIME\b.{0,80}\b[0-9]+\.[0-9]+(?:\.[0-9]+)?\b",
     ],
     "provides_downloadable_knime_workflow_files": [
         r"workflow.{0,160}(available|download|Supporting Information)",
@@ -31,21 +33,34 @@ FLAG_PATTERNS: dict[str, list[str]] = {
         r"myexperiment\.org/workflows",
     ],
     "provides_workflow_screenshots_or_figures": [
-        r"(Fig\.|Figure|Supplementary Fig).{0,160}(workflow|KNIME)",
-        r"(workflow|KNIME).{0,160}(Fig\.|Figure|Supplementary Fig)",
+        r"(Fig\.|Figure|Supplementary Fig).{0,180}\bKNIME\b.{0,80}(\bworkflow\b|workﬂow|\bmodel\b|\bnodes\b)",
+        r"\bKNIME\b.{0,180}(\bworkflow\b|workﬂow|\bmodel\b|\bnodes\b).{0,180}(Fig\.|Figure|Supplementary Fig)",
+        r"\bKNIME\b.{0,80}workflows?.{0,80}Supplementary Figs?",
+        r"workflows?.{0,80}Supplementary Figs?",
     ],
     "describes_workflow_or_nodes_in_text": [
-        r"\bKNIME\b.{0,160}(workflow|node|nodes|module|modules|pipeline)",
-        r"(workflow|node|nodes|module|modules|pipeline).{0,160}\bKNIME\b",
-        r"\b(GroupBy|RDKit|Indigo|CDK|Learner|Predictor|X-Partitioner|Normalizer)\b",
+        r"\bKNIME\b.{0,220}(predictive model|model deployed|algorithms)",
+        r"\bKNIME\b.{0,220}(Random Forest|Tree Ensemble|Decision Tree|Naive Bayes|Logistic Regression|Multi-Layer Perceptron|Rprop|statistics node|X-Partitioner|Normalizer|Meta node)",
+        r"(Random Forest|Tree Ensemble|Decision Tree|Naive Bayes|Logistic Regression|Multi-Layer Perceptron|Rprop|statistics node|X-Partitioner|Normalizer|Meta node).{0,220}\bKNIME\b",
+        r"\bKNIME\b.{0,160}(\bworkflow\b|workﬂow|\bnode\b|\bnodes\b|\bmodule\b|\bmodules\b|\bpipeline\b|\bpipelines\b)",
+        r"(\bworkflow\b|workﬂow|\bnode\b|\bnodes\b|\bmodule\b|\bmodules\b|\bpipeline\b|\bpipelines\b).{0,160}\bKNIME\b",
+        r"\b(GroupBy|RDKit|Indigo|CDK|X-Partitioner|Normalizer|GCNLearner|GCNDatasetBuilder|GCNDatasetSplitter|GCNPredictor|GCNGraphViewer)\b",
+        r"\b(node called|through the nodes)\b",
     ],
     "provides_input_data_direct_url": [
         r"(training and test data|data|dataset).{0,160}https?://",
         r"https?://[^ ]*(data|dataset|publications-sites|uci)[^ ]*",
     ],
     "reports_input_data_availability": [
+        r"(reference set|structures|SMARTS filters|PAINS filters).{0,220}(made available|available|website|used)",
+        r"(made available|available|website|used).{0,220}(reference set|structures|SMARTS filters|PAINS filters)",
+        r"(Availability of data|Data availability|Availability of data and materials).{0,200}(data|dataset|repository|available|http)",
+        r"(dataset|data set|data).{0,220}(used in this research|used in this study|investigated in this study|obtained from|downloaded from|collected from|available from|available as|available at|analysed|analyzed)",
+        r"(used in this research|used in this study|investigated in this study|obtained from|downloaded from|collected from|available from|available as|available at|analysed|analyzed).{0,220}(dataset|data set|data)",
         r"(data|dataset|training and test data|Supplementary data).{0,160}(available|repository|download|UCI)",
         r"(available|repository|download|UCI).{0,160}(data|dataset|training and test data|Supplementary data)",
+        r"(data|dataset).{0,160}(obtained from|available from|generated|analysed|analyzed)",
+        r"(obtained from|available from|generated|analysed|analyzed).{0,160}(data|dataset)",
     ],
     "provides_code_or_scripts": [
         r"(source code|code|scripts|public repository).{0,160}(available|github|http)",
@@ -111,6 +126,7 @@ def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | Non
 
 
 def normalize_line(line: str) -> str:
+    line = re.sub(r"[\u200b\u200c\u200d\ufeff]", "", line)
     line = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", line)
     return re.sub(r"\s+", " ", line).strip()
 
@@ -123,10 +139,367 @@ def line_window(lines: list[str], index: int, radius: int = 1) -> tuple[str, str
     return label, snippet[:500]
 
 
+def line_label(start: int, end: int) -> str:
+    return str(start + 1) if start == end - 1 else f"{start + 1}-{end}"
+
+
+def line_ends_sentence(line: str) -> bool:
+    value = line.strip()
+    if not value:
+        return False
+    if re.search(r"\b(Fig|Figs|Table|Eq|Ref|Refs|Dr|Prof|et al)\.$", value):
+        return False
+    return bool(re.search(r"[.!?][\"')\]]?$", value))
+
+
+def citation_window_for_index(
+    lines: list[str], index: int, before_limit: int = 8, after_limit: int = 8
+) -> tuple[str, str]:
+    start = index
+    lower_bound = max(0, index - before_limit)
+    while start > lower_bound:
+        previous = lines[start - 1]
+        current = lines[start]
+        if not previous.strip() or not current.strip():
+            break
+        if looks_like_section_heading(previous):
+            break
+        if line_ends_sentence(previous):
+            break
+        start -= 1
+
+    end = index + 1
+    upper_bound = min(len(lines), index + after_limit + 1)
+    while end < upper_bound:
+        current = lines[end - 1]
+        next_line = lines[end]
+        if line_ends_sentence(current):
+            break
+        if not next_line.strip():
+            break
+        if looks_like_section_heading(next_line):
+            break
+        end += 1
+
+    quote_lines = [line.rstrip() for line in lines[start:end] if line.strip()]
+    if not quote_lines:
+        return line_label(index, index + 1), normalize_line(lines[index])
+    return line_label(start, end), trim_trailing_sentence_fragment("\n".join(quote_lines))
+
+
+def trim_trailing_sentence_fragment(quote: str) -> str:
+    stripped = quote.rstrip()
+    if not stripped or re.search(r"[.!?][\"')\]]?$", stripped):
+        return stripped
+    if re.search(r"https?://\S+$", stripped):
+        return stripped
+
+    last_end: int | None = None
+    for match in re.finditer(r"[.!?][\"')\]]?(?=\s|$)", stripped):
+        last_end = match.end()
+    if last_end is None:
+        return stripped
+    return stripped[:last_end].rstrip()
+
+
+def parse_line_ref(line_ref: str) -> tuple[int, int] | None:
+    match = re.fullmatch(r"(\d+)(?:-(\d+))?", line_ref)
+    if not match:
+        return None
+    start = int(match.group(1))
+    end = int(match.group(2) or start)
+    if start < 1 or end < start:
+        return None
+    return start, end
+
+
+def exact_line_window(lines: list[str], line_ref: str) -> list[tuple[int, str]]:
+    parsed = parse_line_ref(line_ref)
+    if parsed is None:
+        return []
+    start, end = parsed
+    start_index = max(0, start - 1)
+    end_index = min(len(lines), end)
+    return [(index + 1, lines[index].rstrip()) for index in range(start_index, end_index)]
+
+
+def compact(value: str) -> str:
+    return re.sub(r"\s+", " ", value).strip()
+
+
+def citation_patterns_for(flag: str, note: str) -> list[re.Pattern[str]]:
+    raw_patterns = list(FLAG_PATTERNS.get(flag, []))
+    for url in re.findall(r"https?://\S+", note):
+        raw_patterns.insert(0, re.escape(url.rstrip(".,;)")))
+    if "KNIME" in note and not raw_patterns:
+        raw_patterns.append(r"\bKNIME\b")
+    return [re.compile(pattern, re.IGNORECASE) for pattern in raw_patterns]
+
+
+def direct_quote_for_support(
+    lines: list[str], flag: str, item: dict[str, str]
+) -> str | None:
+    line_ref = item.get("extracted_text_lines", item.get("pdf_text_lines", ""))
+    window = exact_line_window(lines, line_ref)
+    if not window:
+        return None
+
+    patterns = citation_patterns_for(flag, item.get("note", ""))
+    matching_indexes: list[int] = []
+    for index, (_line_number, line) in enumerate(window):
+        if any(pattern.search(compact(line)) for pattern in patterns):
+            matching_indexes.append(index)
+
+    if matching_indexes:
+        target_line = window[matching_indexes[0]][0] - 1
+    else:
+        nonempty = [index for index, (_line_number, line) in enumerate(window) if line.strip()]
+        if not nonempty:
+            return None
+        target_line = window[nonempty[0]][0] - 1
+
+    _label, quote = citation_window_for_index(lines, target_line)
+    return quote or None
+
+
+SECTION_HEADING_PATTERNS = [
+    re.compile(r"^\d+(?:\.\d+)*\.?\s+[A-Z][A-Za-z0-9,()/:;\- ]{2,90}$"),
+    re.compile(r"^(Abstract|Introduction|Background|Methods?|Materials and methods|Results|Discussion|Conclusion|Conclusions|Availability|Availability and requirements|Data availability|Code availability|Software availability|Implementation|KNIME interface|References)$", re.IGNORECASE),
+]
+
+
+def looks_like_section_heading(line: str) -> bool:
+    value = compact(line)
+    if not value:
+        return False
+    left_column = compact(re.split(r"\s{2,}", line.strip(), maxsplit=1)[0])
+    if left_column and left_column != value:
+        if looks_like_section_heading(left_column):
+            return True
+    if len(value) > 110:
+        return False
+    if re.match(r"^(Results?|Conclusions?|Experimental|Methods?|Discussion):?(?:\s|$)", value, re.IGNORECASE):
+        return True
+    if value.endswith((".", ",", ";", ":")) and not re.match(r"^\d+(?:\.\d+)*\.", value):
+        return False
+    if any(pattern.match(value) for pattern in SECTION_HEADING_PATTERNS):
+        return True
+    if value.isupper() and 3 <= len(value) <= 80:
+        return True
+    return False
+
+
+def article_section_for_line(lines: list[str], line_ref: str) -> str | None:
+    parsed = parse_line_ref(line_ref)
+    if parsed is None:
+        return None
+    start, _end = parsed
+    _start, end = parsed
+    forward_start = max(0, start - 1)
+    forward_end = min(len(lines), end)
+    search_indexes = list(range(forward_start, forward_end))
+    search_indexes.extend(range(forward_start - 1, -1, -1))
+    for index in search_indexes:
+        line = lines[index]
+        if looks_like_section_heading(line):
+            value = compact(line)
+            inline = re.match(
+                r"^(Results?|Conclusions?|Experimental|Methods?|Discussion):?(?:\s|$)",
+                value,
+                re.IGNORECASE,
+            )
+            if inline:
+                return inline.group(1).rstrip(":")
+            left_column = compact(re.split(r"\s{2,}", line.strip(), maxsplit=1)[0])
+            return left_column if left_column else value
+    if start <= 80:
+        return "Abstract"
+    return "Main text"
+
+
+def quote_text(item: dict[str, str]) -> str:
+    return compact(item.get("quote", ""))
+
+
+def quote_lower(item: dict[str, str]) -> str:
+    return quote_text(item).lower()
+
+
+def is_reference_section(item: dict[str, str]) -> bool:
+    return item.get("article_section", "").strip().lower() in {"references", "reference"}
+
+
+def has_url(value: str) -> bool:
+    return bool(re.search(r"https?://", normalize_line(value), re.IGNORECASE))
+
+
+def resource_key(value: str) -> str:
+    key = normalize_line(value).lower()
+    key = re.sub(r"https?://", "", key)
+    key = re.sub(r"\s+", "", key)
+    key = key.rstrip(".,;)")
+    return key
+
+
+def validates_true_flag(flag: str, item: dict[str, str]) -> bool:
+    text = quote_lower(item)
+    if not text:
+        return False
+
+    if flag == "full_text_accessible":
+        return True
+
+    if flag == "uses_knime":
+        if "knime" not in text and "konstanz information miner" not in text:
+            return False
+        if text.startswith("correlation review") and "this paper" not in text:
+            return False
+        if "roving the medical diagnosis" in text:
+            return False
+        return bool(
+            re.search(
+                r"\b(this study|this paper|use[ds]?|using|implemented|deployed|workflow|workﬂow|platform|"
+                r"interface|tools such as|toolkits?|comparison|compared|model|nodes?|chosen|includes?)\b",
+                text,
+            )
+        )
+
+    if flag == "reports_knime_version":
+        return bool(
+            re.search(r"\bknime\b", text)
+            and re.search(r"\b\d+\.\d+(?:\.\d+)?\b", text)
+        )
+
+    if flag == "provides_downloadable_knime_workflow_files":
+        return bool(
+            re.search(r"workflow|workﬂow", text)
+            and re.search(r"available|download|supporting information|myexperiment", text)
+        )
+
+    if flag == "provides_workflow_screenshots_or_figures":
+        if quote_text(item).strip().lower() in {"fig.", "figure", "fig"}:
+            return False
+        return bool(
+            re.search(r"fig\.|figure|supplementary fig", text)
+            and re.search(r"workflow|workﬂow|model|nodes?", text)
+            and re.search(r"knime", text)
+        )
+
+    if flag == "describes_workflow_or_nodes_in_text":
+        if is_reference_section(item):
+            return False
+        if re.match(r"^\d+\.\s+[a-z].+\bj comput\b", text):
+            return False
+        if quote_text(item).strip().lower() in {"fig.", "figure", "fig"}:
+            return False
+        generic_knime_only = (
+            "well-known" in text
+            and "data mining application" in text
+            and not re.search(
+                r"random forest|tree ensemble|decision tree|naive bayes|logistic regression|"
+                r"multi-layer perceptron|statistics node|x-partitioner|normalizer|gcn|rdkit|indigo",
+                text,
+            )
+        )
+        if generic_knime_only:
+            return False
+        return bool(
+            (
+                re.search(r"\bknime\b|kgcn", text)
+                and re.search(
+                    r"workflow|workﬂow|nodes?|modules?|pipeline|data flow|model deployed|"
+                    r"random forest|tree ensemble|decision tree|naive bayes|logistic regression|"
+                    r"multi-layer perceptron|algorithms",
+                    text,
+                )
+            )
+            or re.search(
+                r"statistics node|x-partitioner|normalizer|gcnlearner|gcndatasetbuilder|"
+                r"gcndatasetsplitter|gcnpredictor|gcngraphviewer|rdkit nodes|indigo nodes|"
+                r"node called|through the nodes",
+                text,
+            )
+        )
+
+    if flag == "provides_input_data_direct_url":
+        return bool(
+            has_url(text)
+            and re.search(
+                r"data|dataset|repository|uci|publications-sites|heart\+disease|archive\.ics|"
+                r"pains|smarts|filters|blog\.rguha",
+                text,
+            )
+        )
+
+    if flag == "reports_input_data_availability":
+        generic_phrases = [
+            "data mining is",
+            "huge amount of data",
+            "what differentiates between a good and a bad machine learning model is data",
+            "data at hand",
+            "training data errone",
+            "educational data mining is the extraction",
+            "volumes of data are daily generated",
+            "data mining and knowledge discovery tools and software are available",
+            "open-source data mining tools and software are available",
+            "available data mining software and tools",
+            "applied on the dataset using",
+            "relationship among the data features analysed",
+            "supplementary data are available at bioinformatics online",
+        ]
+        if any(phrase in text for phrase in generic_phrases):
+            return "supplementary data are available at bioinformatics online" in text
+        if item.get("article_section", "").strip().lower().endswith("background") and "this study" not in text:
+            return False
+        if not re.search(
+            r"dataset|data set|data sets|training and test data|training data|supplementary data|"
+            r"student records|patient records|uci|pains|smarts|filters|reference set|structures",
+            text,
+        ):
+            return False
+        return bool(
+            re.search(r"data|dataset|data set|supplementary data|records|reference set|structures|filters", text)
+            and re.search(
+                r"available|repository|downloaded|obtained|collected|used in this research|"
+                r"used in this study|investigated in this study|based on the dataset|"
+                r"analysed|analyzed|uci|additional files|supporting information|available in smarts|"
+                r"available.*website|made available",
+                text,
+            )
+        )
+
+    if flag == "provides_code_or_scripts":
+        return bool(
+            re.search(r"source code|code|scripts?|public repository|github|project home page", text)
+            and re.search(r"available|github|repository|http|project home page", text)
+        )
+
+    if flag == "reports_extension_or_plugin_dependencies":
+        return bool(
+            re.search(r"rdkit|indigo|cdk|chemaxon", text)
+            and re.search(r"nodes?|plug-in|plugin|extension|version|library|distributed", text)
+        )
+
+    if flag == "reports_extension_installation_source":
+        return bool(
+            re.search(
+                r"community contributions|update site|project url|available via|tech\.knime\.org/community|"
+                r"knime\.org/community",
+                text,
+            )
+        )
+
+    if flag == "linked_workflow_artifacts_retrievable":
+        return True
+
+    return True
+
+
 def find_support(lines: list[str], flag: str, limit: int = 2) -> list[dict[str, str]]:
     patterns = [re.compile(pattern, re.IGNORECASE) for pattern in FLAG_PATTERNS.get(flag, [])]
     support: list[dict[str, str]] = []
     seen_ranges: set[str] = set()
+    rejected_candidates = 0
     for index, line in enumerate(lines):
         if flag in {
             "provides_workflow_screenshots_or_figures",
@@ -134,45 +507,101 @@ def find_support(lines: list[str], flag: str, limit: int = 2) -> list[dict[str, 
             "reports_extension_or_plugin_dependencies",
         } and index < 10:
             continue
-        haystack = normalize_line(line)
+        haystack = normalize_line(" ".join(lines[index : index + 5]))
         if not haystack:
             continue
         if not any(pattern.search(haystack) for pattern in patterns):
             continue
-        label, snippet = line_window(lines, index)
+        target_index = index
+        for offset, candidate_line in enumerate(lines[index : index + 5]):
+            if any(pattern.search(normalize_line(candidate_line)) for pattern in patterns):
+                target_index = index + offset
+                break
+        label, quote = citation_window_for_index(lines, target_index)
         if label in seen_ranges:
             continue
         seen_ranges.add(label)
+        snippet = normalize_line(quote)
+        if not snippet:
+            continue
         support.append(
             {
                 "extracted_text_lines": label,
+                "quote": quote,
+                "article_section": article_section_for_line(lines, label) or "Unknown",
                 "note": f"Extracted text evidence: {snippet}",
             }
         )
+        if not validates_true_flag(flag, support[-1]):
+            support.pop()
+            rejected_candidates += 1
+            if rejected_candidates > MAX_REJECTED_CANDIDATE_QUOTES and not support:
+                break
+            continue
         if len(support) >= limit:
             break
     return support
 
 
 def find_linked_resource_support(
-    lines: list[str], urls: list[str], limit: int = 2
+    lines: list[str], urls: list[str], flag: str, limit: int = 2
 ) -> list[dict[str, str]]:
     support: list[dict[str, str]] = []
-    compact_lines = [normalize_line(line).replace(" ", "") for line in lines]
+    compact_lines = [resource_key(line) for line in lines]
     for url in urls:
-        compact_url = normalize_line(url).replace(" ", "")
+        compact_url = resource_key(url)
         if not compact_url:
             continue
         for index, compact_line in enumerate(compact_lines):
             if compact_url not in compact_line:
                 continue
-            label, snippet = line_window(lines, index)
+            label, quote = citation_window_for_index(lines, index)
+            snippet = normalize_line(quote)
+            item = {
+                "extracted_text_lines": label,
+                "quote": quote,
+                "article_section": article_section_for_line(lines, label) or "Unknown",
+                "note": f"Extracted text evidence for linked resource {url}: {snippet}",
+            }
+            if validates_true_flag(flag, item):
+                support.append(item)
+            break
+        if len(support) >= limit:
+            break
+    return support
+
+
+def find_version_value_support(
+    lines: list[str], version_values: str, limit: int = 2
+) -> list[dict[str, str]]:
+    values = [
+        value.strip()
+        for value in re.split(r"[,;/]", version_values)
+        if re.search(r"\d", value)
+    ]
+    support: list[dict[str, str]] = []
+    seen_ranges: set[str] = set()
+    for value in values:
+        value_pattern = re.compile(re.escape(value), re.IGNORECASE)
+        for index, line in enumerate(lines):
+            if not value_pattern.search(normalize_line(line)):
+                continue
+            label, quote = citation_window_for_index(lines, index, before_limit=3, after_limit=5)
+            if label in seen_ranges:
+                continue
+            seen_ranges.add(label)
+            snippet = normalize_line(quote)
             support.append(
                 {
                     "extracted_text_lines": label,
-                    "note": f"Extracted text evidence for linked resource {url}: {snippet}",
+                    "quote": quote,
+                    "article_section": article_section_for_line(lines, label) or "Unknown",
+                    "note": f"Extracted text evidence for reported KNIME version {value}: {snippet}",
                 }
             )
+            if not validates_true_flag("reports_knime_version", support[-1]):
+                support.pop()
+                continue
             break
         if len(support) >= limit:
             break
@@ -188,6 +617,17 @@ def is_generated_text_support(item: dict[str, str]) -> bool:
     return item.get("note", "").startswith("Extracted text evidence")
 
 
+def keep_non_text_support(item: dict[str, str]) -> bool:
+    if has_numeric_line_ref(item):
+        return False
+    if is_generated_text_support(item):
+        return False
+    line_ref = str(item.get("extracted_text_lines", item.get("pdf_text_lines", "")))
+    if line_ref in {"article_audit_fields", "processed_text_file"}:
+        return False
+    return True
+
+
 def dedupe_support(items: list[dict[str, str]]) -> list[dict[str, str]]:
     deduped: list[dict[str, str]] = []
     seen: set[tuple[str, str]] = set()
@@ -199,6 +639,103 @@ def dedupe_support(items: list[dict[str, str]]) -> list[dict[str, str]]:
         seen.add(key)
         deduped.append(item)
     return deduped
+
+
+def enrich_support_with_citations(
+    support: dict[str, list[dict[str, str]]], lines: list[str]
+) -> int:
+    enriched = 0
+    for flag, items in support.items():
+        if flag == "full_text_accessible":
+            continue
+        for item in items:
+            if "quote" in item and validates_true_flag(flag, item):
+                continue
+            line_ref = item.get("extracted_text_lines", item.get("pdf_text_lines", ""))
+            if not re.fullmatch(r"\d+(?:-\d+)?", line_ref):
+                continue
+            quote = direct_quote_for_support(lines, flag, item)
+            section = article_section_for_line(lines, line_ref)
+            if quote:
+                item["quote"] = quote
+                enriched += 1
+            if section:
+                item["article_section"] = section
+            elif "article_section" not in item:
+                item["article_section"] = "Unknown"
+    return enriched
+
+
+def remove_invalid_quote_support(
+    support: dict[str, list[dict[str, str]]],
+    flags: dict[str, Any],
+) -> None:
+    for flag, items in list(support.items()):
+        if flag == "full_text_accessible":
+            continue
+        valid_items = [
+            item
+            for item in items
+            if (
+                ("quote" in item and validates_true_flag(flag, item))
+                or (flag == "linked_workflow_artifacts_retrievable" and "quote" not in item)
+            )
+        ]
+        if valid_items:
+            support[flag] = valid_items
+        else:
+            support.pop(flag, None)
+            if flag != "linked_workflow_artifacts_retrievable":
+                flags[flag] = False
+
+
+def reset_candidate_flags_from_descriptions(audit: dict[str, Any]) -> None:
+    descriptions = audit.get("description_audit_fields", {})
+    flags = audit.setdefault("flag_audit_fields", {})
+    relation = descriptions.get("knime_article_relation", "")
+
+    if relation in {"about_knime", "not_assessed"}:
+        for flag in list(flags):
+            if flag != "full_text_accessible":
+                flags[flag] = False
+        return
+
+    workflow_status = descriptions.get("workflow_artifact_status", "")
+    input_status = descriptions.get("provides_input_data", "")
+
+    flags["uses_knime"] = relation == "uses_knime"
+    flags["reports_knime_version"] = bool(descriptions.get("knime_version_values", ""))
+    flags["provides_downloadable_knime_workflow_files"] = (
+        workflow_status == "published_or_linked_in_text"
+    )
+    flags["provides_workflow_screenshots_or_figures"] = workflow_status in {
+        "shown_or_described_but_no_public_workflow_found",
+        "shown_or_described_but_no_public_artifact_found_in_pdf",
+        "published_or_linked_in_text",
+    }
+    flags["describes_workflow_or_nodes_in_text"] = workflow_status in {
+        "shown_or_described_but_no_public_workflow_found",
+        "shown_or_described_but_no_public_artifact_found_in_pdf",
+        "published_or_linked_in_text",
+    }
+    flags["provides_input_data_direct_url"] = input_status == "yes"
+    flags["reports_input_data_availability"] = input_status in {
+        "yes",
+        "reported_without_direct_url",
+    }
+    flags["provides_code_or_scripts"] = (
+        descriptions.get("provides_code_or_scripts", "") == "yes"
+    )
+    flags["reports_extension_or_plugin_dependencies"] = (
+        descriptions.get("reports_extension_or_plugin_dependencies", "") == "yes"
+    )
+    flags["reports_extension_installation_source"] = (
+        descriptions.get("reports_extension_installation_source", "") == "yes"
+    )
+    flags["linked_workflow_artifacts_retrievable"] = (
+        descriptions.get("linked_workflow_artifacts_retrievable", "")
+        == "retrievable_in_current_project_notes"
+    )
 
 
 def summary_counts(articles: list[dict[str, Any]], flag_names: list[str]) -> dict[str, int]:
@@ -226,6 +763,7 @@ def main() -> int:
 
     updated_articles = 0
     text_backed_flags = 0
+    citation_enriched_items = 0
 
     for article in assessment["articles"]:
         audit = article.setdefault("article_audit_fields", {})
@@ -247,10 +785,12 @@ def main() -> int:
         if text_path is None:
             continue
 
-        lines = text_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        reset_candidate_flags_from_descriptions(audit)
+        lines = text_path.read_text(encoding="utf-8", errors="replace").split("\n")
 
         flags = audit.setdefault("flag_audit_fields", {})
-        support = audit.setdefault("flag_audit_support", {})
+        old_support = audit.get("flag_audit_support", {})
+        support: dict[str, list[dict[str, str]]] = {}
 
         if flags.get("full_text_accessible") is True:
             support["full_text_accessible"] = [
@@ -263,21 +803,34 @@ def main() -> int:
         for flag in flag_names:
             if flag == "full_text_accessible" or flags.get(flag) is not True:
                 continue
-            if flag == "linked_workflow_artifacts_retrievable":
-                continue
-
-            existing = [
-                item for item in support.get(flag, []) if not is_generated_text_support(item)
+            existing_non_text = [
+                item for item in old_support.get(flag, []) if keep_non_text_support(item)
             ]
-            line_backed = [item for item in existing if has_numeric_line_ref(item)]
+
+            if flag == "linked_workflow_artifacts_retrievable":
+                support[flag] = dedupe_support(existing_non_text)
+                continue
 
             if flag == "provides_input_data_direct_url":
                 candidates = find_linked_resource_support(
-                    lines, article.get("linked_resources", {}).get("data_urls", [])
+                    lines,
+                    article.get("linked_resources", {}).get("data_urls", []),
+                    flag,
                 )
+            elif flag == "reports_knime_version":
+                candidates = find_version_value_support(
+                    lines,
+                    audit.get("description_audit_fields", {}).get(
+                        "knime_version_values", ""
+                    ),
+                )
+                if not candidates:
+                    candidates = find_support(lines, flag)
             elif flag == "provides_code_or_scripts":
                 candidates = find_linked_resource_support(
-                    lines, article.get("linked_resources", {}).get("code_urls", [])
+                    lines,
+                    article.get("linked_resources", {}).get("code_urls", []),
+                    flag,
                 )
                 if not candidates:
                     candidates = find_support(lines, flag)
@@ -286,27 +839,29 @@ def main() -> int:
             if candidates:
                 text_backed_flags += 1
 
-            support[flag] = dedupe_support(
-                [
-                    *line_backed,
-                    *candidates,
-                    *[
-                        item
-                        for item in existing
-                        if not has_numeric_line_ref(item)
-                        and not str(
-                            item.get("extracted_text_lines", item.get("pdf_text_lines", ""))
-                        ).startswith("manual_assessment")
-                        and item.get("extracted_text_lines", item.get("pdf_text_lines"))
-                        != "article_audit_fields"
-                    ],
-                ]
-            )
+            valid_support = [
+                item
+                for item in dedupe_support([*candidates, *existing_non_text])
+                if "quote" not in item or validates_true_flag(flag, item)
+            ]
+            if not valid_support:
+                flags[flag] = False
+                continue
+
+            support[flag] = valid_support
+
+        citation_enriched_items += enrich_support_with_citations(support, lines)
+        remove_invalid_quote_support(support, flags)
+        audit["flag_audit_support"] = {
+            flag: items for flag, items in support.items() if flags.get(flag) is True
+        }
 
     assessment["article_text_source"] = {
         "directory": args.text_dir.as_posix(),
-        "method": "Generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout.",
+        "raw_directory": "data/processed/articles/raw",
+        "method": "Raw text is generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout; processed reading files are generated with scripts/normalize_article_text_columns.py.",
         "articles_with_extracted_text": updated_articles,
+        "line_reference_semantics": "extracted_text_lines refer to processed text files under data/processed/articles, not original PDF page lines.",
     }
     assessment["article_audit_summary_counts"] = summary_counts(
         assessment["articles"], flag_names
@@ -315,7 +870,8 @@ def main() -> int:
     write_json(args.assessment, assessment)
     print(
         f"Updated {updated_articles} articles with extracted text provenance; "
-        f"found text-backed support for {text_backed_flags} positive flags."
+        f"found text-backed support for {text_backed_flags} positive flags; "
+        f"added direct citation fields to {citation_enriched_items} support items."
     )
     return 0
 
