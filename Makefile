@@ -25,6 +25,7 @@ OPENALEX_PER_PAGE ?= 200
 OPENALEX_MAILTO ?=
 OPENALEX_SLEEP ?= 0.2
 OPENALEX_MAX_PAGES ?= 0
+OPENALEX_MOST_CITED_LIMIT ?= 80
 OPENALEX_RAW_DIR ?= data/original/openalex
 OPENALEX_WORKS ?= data/original/openalex/works.jsonl
 OPENALEX_PROCESSED_DIR ?= data/processed/openalex
@@ -65,6 +66,7 @@ help: ## Show target descriptions and important parameters.
 	@printf '  SNAPSHOT_DATE=%s SNAPSHOT_ID=%s   KNIME source snapshot id/date\n' "$(SNAPSHOT_DATE)" "$(SNAPSHOT_ID)"
 	@printf '  KNIME_OSS_ROOT=%s                 local knime-oss clone root\n' "$(KNIME_OSS_ROOT)"
 	@printf '  OPENALEX_MAILTO=%s                optional email for OpenAlex polite pool\n' "$(OPENALEX_MAILTO)"
+	@printf '  OPENALEX_MOST_CITED_LIMIT=%s      citation-ranked OpenAlex subset size\n' "$(OPENALEX_MOST_CITED_LIMIT)"
 	@printf '  FAIL_ON_MISMATCH=%s               pass empty to allow table mismatches\n' "$(FAIL_ON_MISMATCH)"
 
 .PHONY: all
@@ -94,7 +96,8 @@ openalex-collect: ## Collect OpenAlex KNIME article records. Network access requ
 openalex-bibliometrics: ## Build processed OpenAlex bibliometric CSV/JSON summaries.
 	$(PYTHON) scripts/build_openalex_knime_bibliometrics.py \
 	  --input "$(OPENALEX_WORKS)" \
-	  --out-dir "$(OPENALEX_PROCESSED_DIR)"
+	  --out-dir "$(OPENALEX_PROCESSED_DIR)" \
+	  --most-cited-limit "$(OPENALEX_MOST_CITED_LIMIT)"
 
 .PHONY: download-rank-range
 download-rank-range: ## Try to download article PDFs for ranks START-END. Network access required.

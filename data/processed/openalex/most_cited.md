@@ -482,3 +482,163 @@ Query: OpenAlex `/works`, `search.title_and_abstract=KNIME`, `filter=type:articl
 - Source: Journal of Proteome Research
 - Link: https://doi.org/10.1021/acs.jproteome.8b00723
 - Heuristic role: `uses_knime_as_tool`
+
+## 61. KniMet: a pipeline for the processing of chromatography–mass spectrometry metabolomics data
+
+- Year: 2018
+- Citations: 43
+- Source: Metabolomics
+- Link: https://doi.org/10.1007/s11306-018-1349-5
+- Heuristic role: `about_knime_or_extension`
+
+## 62. Integration of the ImageJ Ecosystem in KNIME Analytics Platform
+
+- Year: 2020
+- Citations: 42
+- Source: Frontiers in Computer Science
+- Link: https://doi.org/10.3389/fcomp.2020.00008
+- Heuristic role: `about_knime_or_extension`
+
+## 63. Extending KNIME for next-generation sequencing data analysis
+
+- Year: 2011
+- Citations: 42
+- Source: Bioinformatics
+- Link: https://doi.org/10.1093/bioinformatics/btr478
+- Heuristic role: `about_knime_or_extension`
+
+## 64. Comparison of data mining techniques and tools for data classification
+
+- Year: 2013
+- Citations: 41
+- Source: Proceedings of the International C* Conference on Computer Science and Software Engineering
+- Link: https://doi.org/10.1145/2494444.2494451
+- Heuristic role: `ambiguous_match`
+
+## 65. Hotel service quality dimensions and attributes: An analysis of online hotel customer reviews
+
+- Year: 2022
+- Citations: 40
+- Source: Tourism and Hospitality Research
+- Link: https://doi.org/10.1177/14673584221145819
+- Heuristic role: `uses_knime_as_tool`
+
+## 66. GediNET for discovering gene associations across diseases using knowledge based machine learning approach
+
+- Year: 2022
+- Citations: 40
+- Source: Scientific Reports
+- Link: https://doi.org/10.1038/s41598-022-24421-0
+- Heuristic role: `uses_knime_as_tool`
+
+## 67. Multi-template matching: a versatile tool for object-localization in microscopy images
+
+- Year: 2020
+- Citations: 40
+- Source: BMC Bioinformatics
+- Link: https://doi.org/10.1186/s12859-020-3363-7
+- Heuristic role: `uses_knime_as_tool`
+
+## 68. ESB Platform Integrating Knime Data Mining Tool Oriented on Industry 4.0 Based on Artificial Neural Network Predictive Maintenance
+
+- Year: 2018
+- Citations: 40
+- Source: International Journal of Artificial Intelligence & Applications
+- Link: https://doi.org/10.5121/ijaia.2018.9301
+- Heuristic role: `about_knime_or_extension`
+
+## 69. Phaedra, a Protocol-Driven System for Analysis and Validation of High-Content Imaging and Flow Cytometry
+
+- Year: 2012
+- Citations: 40
+- Source: SLAS DISCOVERY
+- Link: https://doi.org/10.1177/1087057111432885
+- Heuristic role: `ambiguous_match`
+
+## 70. Multimodal Learning and Intelligent Prediction of Symptom Development in Individual Parkinson’s Patients
+
+- Year: 2016
+- Citations: 39
+- Source: Sensors
+- Link: https://doi.org/10.3390/s16091498
+- Heuristic role: `uses_knime_as_tool`
+
+## 71. Screening Chemicals for Receptor‐Mediated Toxicological and Pharmacological Endpoints: Using Public Data to Build Screening Tools within a KNIME Workflow
+
+- Year: 2015
+- Citations: 39
+- Source: Molecular Informatics
+- Link: https://doi.org/10.1002/minf.201400188
+- Heuristic role: `about_knime_or_extension`
+
+## 72. OpenML: A Collaborative Science Platform
+
+- Year: 2014
+- Citations: 38
+- Source: http://www.ecmlpkdd2013.org/wp-content/uploads/2013/07/647.pdf
+- Link: https://openalex.org/W2521252293
+- Heuristic role: `ambiguous_match`
+
+## 73. Network intrusion detection system: machine learning approach
+
+- Year: 2022
+- Citations: 37
+- Source: Indonesian Journal of Electrical Engineering and Computer Science
+- Link: https://doi.org/10.11591/ijeecs.v25.i2.pp1151-1158
+- Heuristic role: `uses_knime_as_tool`
+
+## 74. Molecular similarity-based predictions of the Tox21 screening outcome
+
+- Year: 2015
+- Citations: 37
+- Source: Frontiers in Environmental Science
+- Link: https://doi.org/10.3389/fenvs.2015.00054
+- Heuristic role: `ambiguous_match`
+
+## 75. Computational Tools And Resources For Metabolism-Related Property Predictions. 2. Application To Prediction Of Half-Life Time In Human Liver Microsomes
+
+- Year: 2012
+- Citations: 37
+- Source: Future Medicinal Chemistry
+- Link: https://doi.org/10.4155/fmc.12.152
+- Heuristic role: `ambiguous_match`
+
+## 76. Business Intelligence Improved by Data Mining Algorithms and Big Data Systems: An Overview of Different Tools Applied in Industrial Research
+
+- Year: 2019
+- Citations: 36
+- Source: Computer Science and Information Technology
+- Link: https://doi.org/10.13189/csit.2019.070101
+- Heuristic role: `ambiguous_match`
+
+## 77. VSPrep: A General KNIME Workflow for the Preparation of Molecules for Virtual Screening
+
+- Year: 2017
+- Citations: 36
+- Source: Molecular Informatics
+- Link: https://doi.org/10.1002/minf.201700023
+- Heuristic role: `about_knime_or_extension`
+
+## 78. Data mining approach for predicting the daily Internet data traffic of a smart university
+
+- Year: 2019
+- Citations: 35
+- Source: Journal Of Big Data
+- Link: https://doi.org/10.1186/s40537-019-0176-5
+- Heuristic role: `ambiguous_match`
+
+## 79. Workflows for automated downstream data analysis and visualization in large‐scale computational mass spectrometry
+
+- Year: 2015
+- Citations: 35
+- Source: PROTEOMICS
+- Link: https://doi.org/10.1002/pmic.201400391
+- Heuristic role: `uses_knime_as_tool`
+
+## 80. High content organelle trafficking enables disease state profiling as powerful tool for disease modelling
+
+- Year: 2018
+- Citations: 34
+- Source: Scientific Data
+- Link: https://doi.org/10.1038/sdata.2018.241
+- Heuristic role: `ambiguous_match`

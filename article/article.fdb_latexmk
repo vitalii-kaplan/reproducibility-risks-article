@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex article"] 1783186824.26548 "article.aux" "article.bbl" "article" 1783186825.4467 0
+["bibtex article"] 1783190012.58868 "article.aux" "article.bbl" "article" 1783190013.63863 0
   "./references.bib" 1783179480.25998 10883 370e0078323827835a851ab3bd610f92 ""
   "./splncs04.bst" 1782898237.30583 32146 aadf770ded437d161532035219ea6f45 ""
-  "article.aux" 1783186825.14924 6132 ddc7d94c54ab4d4eed5e68997aa4e418 "pdflatex"
+  "article.aux" 1783190013.33946 6086 0e161a79ef2674e0b4553fc79a40b2ab "pdflatex"
   (generated)
   "article.bbl"
   "article.blg"
   (rewritten before read)
-["pdflatex"] 1783186824.39756 "article.tex" "article.pdf" "article" 1783186825.44684 0
-  "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1783131020.87142 294 c709f8171e909c2832b2b4469444f964 ""
+["pdflatex"] 1783190012.68996 "article.tex" "article.pdf" "article" 1783190013.63878 0
+  "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1783188856.57995 294 c709f8171e909c2832b2b4469444f964 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -177,9 +177,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739209689 5466570 e8651e7fa7bb054fee9a07d3f37faf28 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739209844 3352639 2aa689c226d5667ed0ad838dc122ce61 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "article.aux" 1783186825.14924 6132 ddc7d94c54ab4d4eed5e68997aa4e418 "pdflatex"
-  "article.bbl" 1783186824.3964 5576 83a60c9ae246f2fabe9332280f386749 "bibtex article"
-  "article.tex" 1783186776.61038 52640 8dad1575dbbce7c3f3766e59c1654eb3 ""
+  "article.aux" 1783190013.33946 6086 0e161a79ef2674e0b4553fc79a40b2ab "pdflatex"
+  "article.bbl" 1783190012.68741 5576 83a60c9ae246f2fabe9332280f386749 "bibtex article"
+  "article.tex" 1783190008.32562 50258 40b447cc1b1055ea4e2181892944469e ""
   "llncs.cls" 1782898237.30583 43405 543b73320c367b0229b3cdfcddaedc46 ""
   (generated)
   "article.aux"

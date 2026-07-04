@@ -27,14 +27,14 @@ Publication Practices and Reproducibility Risks}
 In this paper, we study how visual workflows are reported in scientific
 publications and how incomplete workflow preservation can make older studies
 harder to reproduce as workflow platforms evolve. We use KNIME as a case
-study, combining OpenAlex bibliometrics, an expanded top-cited article audit
+study, combining OpenAlex bibliometrics, an 80-record top-cited article audit
 registry,
 a manual compatibility test using current KNIME,
 and repository-level mining of KNIME node metadata. OpenAlex
 shows that KNIME is visible across a broad
 scientific literature, while the article assessment shows that influential
 studies often report KNIME through figures, descriptions, or tool mentions
-rather than downloadable workflow artifacts. In the 80-record expanded audit
+rather than downloadable workflow artifacts. In the 80-record article audit
 registry, twenty-two records report downloadable or linked KNIME workflow
 files. We
 could obtain workflow artifacts for twelve article records. In the manual
@@ -75,12 +75,11 @@ papers, and domain studies that use KNIME as an analysis interface. KNIME is
 therefore a suitable case for studying whether visual workflows are preserved
 as executable artifacts or only reported through descriptions and figures.
 
-Our top-cited article collection now covers the original 60 most-cited
-KNIME-matching records and citation ranks 61--80, with not-assessed
-placeholders retained where local full text is unavailable. The completed
-structured audit subset reported in
+Our top-cited article collection covers the 80 most-cited KNIME-matching
+records, with not-assessed placeholders retained where local full text is
+unavailable. The completed structured audit subset reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. In the 80-record expanded audit registry, twenty-two records
+weak link. In the 80-record article audit registry, twenty-two records
 report downloadable or linked KNIME workflow files. Current retrieval results
 were mixed: workflow artifacts were obtained for twelve article records, while
 some links were stale, blocked, incomplete, or not attempted in the current
@@ -221,65 +220,40 @@ Derived bibliometric tables are generated from the JSONL file by
 
 \subsection{Top-Cited Article Assessment}
 
-For manual full-text retrieval and assessment, we sorted the processed
-OpenAlex records by \texttt{cited\_by\_count} in descending order and first
-retained the 60 most-cited records in
-\path{data/processed/openalex/openalex_knime_most_cited.csv}. We then expanded
-the registry to citation ranks 61--80, adding detailed assessments for records
-with local full text and not-assessed placeholders for records still missing
-local full text. Open-access papers were downloaded directly, and
-non-open papers were requested through the author's institutional subscription
-access or added manually when available. At the time of this draft, the
-expanded structured audit contains 80 article records: the original top-60
-registry plus all 20 records from ranks 61--80. Fifteen of the rank 61--80
-records have local PDF files and processed one-column text; five are retained
-as not-assessed placeholders. In total, 16 records are retained as
-not-assessed placeholders because no local full text is available. Downloaded
-papers receive detailed fields and quote-supported flags, while records without
-local full text retain not-assessed metadata.
-For audited records, we manually inspected each retrieved paper, using
-LLM-assisted text analysis only to support extraction and consistency checking
-from the accessible full text. The assessment was organized as a structured
-audit rather than a free-form note file. First, each record was assigned
-descriptive fields for
-the article identifier, title, year, venue, DOI or URL, full-text access
-status, and the relation of the paper to KNIME. The KNIME relation separates
-papers about KNIME from papers that use KNIME in a domain study, tool
-comparison, interface, or implementation context. Papers classified as
-background or platform papers about KNIME were kept in the audited sample,
-but were not included in the deeper workflow-reporting flag audit.
+For the article-level audit, we sorted the processed OpenAlex article records
+by \texttt{cited\_by\_count} in descending order and selected the 80
+most-cited records. Open-access papers were downloaded directly. Papers that
+required access through a publisher were downloaded where institutional
+subscription access was available or were added manually when a local copy was
+available. Not all 80 papers could be downloaded; records without local full
+text were retained as not-assessed placeholders so that the denominator stayed
+visible.
 
-Second, for papers that use KNIME, we recorded statistics-ready Boolean flags
-for the publication details relevant to reproducibility: whether the paper
-reports a KNIME version; provides downloadable KNIME workflow files; shows a
-KNIME workflow in figures or screenshots; describes workflow steps, nodes, or
-components in text; reports input-data availability; gives a direct data
-resource URL; provides code or scripts; reports KNIME extension or plugin
-dependencies; reports an extension installation source; and whether linked
-workflow artifacts were documented as retrievable in the project notes. The
-question guide used for these fields is stored in
-\path{data/processed/audit/knime_article_audit_questions.json}.
+Downloaded PDFs were converted to plain text with
+\path{scripts/extract_article_texts.py}. Where extracted text followed a
+two-column reading order, we normalized it to a one-column reading copy with
+\path{scripts/normalize_article_text_columns.py}; this step used script output
+and LLM-assisted correction checks. We then processed the article text into a
+structured audit stored in
+\path{data/processed/audit/knime_most_cited_article_assessments.json}. Each
+record contains descriptive metadata, full-text access status, the article's
+relation to KNIME, and reproducibility-relevant flags for version reporting,
+workflow artifacts, workflow figures or text descriptions, input data, code,
+and extension information.
 
-Third, each positive article-text flag was supported by a direct quote from
-the extracted article text. The quote-support object records the processed
-text line range, the quoted phrase or sentence block, the article section, and
-an audit note explaining the evidence. Candidate quotes were checked against
-the meaning of the corresponding question; if a candidate quote did not
-support the flag, another quote was sought. If repeated candidate quotes did
-not support the intended answer and no supporting quote was found, the flag
-was set to false. This rule makes a positive flag depend on article wording
-rather than on a keyword match alone.
-
-The structured assessment is stored in
-\path{data/processed/audit/knime_most_cited_article_assessments.json}.
-Local article PDFs were converted to extracted text with
-\path{scripts/extract_article_texts.py}; where needed, two-column extracted
-text was normalized into reading order with
-\path{scripts/normalize_article_text_columns.py}. The support and provenance
-fields in the audit JSON were refreshed from the processed text with
-\path{scripts/refresh_article_audit_support.py}. This first pass is a
-document and artifact-availability audit. It does not execute workflows,
-verify every external URL, or test workflow import in KNIME.
+The audit fields are defined in
+\path{data/processed/audit/knime_article_audit_questions.json}. Positive
+article-text flags require direct quote support from the processed text,
+including line references, article section, and an audit note. The support and
+provenance fields were refreshed with
+\path{scripts/refresh_article_audit_support.py}, and article tables were
+generated from the JSON audit with
+\path{scripts/build_article_audit_tables.py} and
+\path{scripts/build_knime_use_workflow_reporting_table.py}. For records that
+reported downloadable or linked KNIME workflows, we attempted to retrieve the
+workflow artifacts, recorded the download outcomes in the workflow inventory,
+and finally tested whether the downloaded workflows could be opened and
+executed in a current local KNIME installation.
 
 \subsection{Repository-Level Analysis}
 
@@ -429,40 +403,32 @@ These files summarize artifact-access signals and role-classification counts.
 
 \subsection{Top-Cited Article Assessment}
 
-The top-cited article dataset records the manual assessment of the original
-top-60 OpenAlex records and citation ranks 61--80. Detailed fields are present
-for records with local full text, while records still missing local full text
-are retained as not-assessed placeholders.
-The public replication package contains the processed assessment metadata, but
-not the article PDFs. The processed assessment is stored in
-\path{data/processed/audit/knime_most_cited_article_assessments.json}. The
-ranked source list is available as
-\path{data/processed/openalex/openalex_knime_most_cited.csv}, with rank-range
-download attempts recorded under \path{data/processed/audit/}.
-Each record in the assessment JSON stores the OpenAlex rank, manual assessment
-status, KNIME role, reported KNIME version, workflow-artifact status, data and
-code availability, linked resources visible in the paper, quote-backed support
-for positive flags, and short evidence notes. Records without accessible full
-text are retained in the JSON as not-assessed placeholders. This keeps the
-original top-60 denominator explicit while allowing the expanded full-text
-audit records to be reported separately.
+The top-cited article dataset records the structured assessment of the 80
+most-cited OpenAlex records. The public replication package contains processed
+assessment metadata and extracted text, but not the article PDFs. The
+citation-ranked source list is
+\path{data/processed/openalex/openalex_knime_most_cited.csv}. Download logs
+and text-conversion manifests are stored under
+\path{data/processed/audit/logs/}. Processed one-column reading files are
+stored under \path{data/processed/articles/}.
 
-The PAINS filters paper is one example in which the assessment found
-reproduction-relevant workflow identifiers \cite{Saubern2011PAINS}. The
-assessment records the following identifiers:
-\begin{itemize}
-\item Article DOI: \path{https://doi.org/10.1002/minf.201100076}.
-\item KNIME version: \texttt{2.3.4}.
-\item RDKit nodes: \texttt{1.0.0.886}.
-\item Indigo nodes: \texttt{1.0.0.951}.
-\item myExperiment workflow: \path{http://www.myexperiment.org/workflows/1841}.
-\item myExperiment workflow: \path{http://www.myexperiment.org/workflows/2164}.
-\item Input-data reference: \path{http://blog.rguha.net/?p=850}.
-\end{itemize}
-These fields make the case useful for compatibility testing because they
-identify the workflow source, software versions, extension dependencies, and
-input-data context that must be checked before import or execution in a current
-KNIME release.
+The main assessment file is
+\path{data/processed/audit/knime_most_cited_article_assessments.json}. Each
+record stores the OpenAlex rank, article metadata, full-text access status,
+KNIME role, reported KNIME version, workflow-artifact status, data and code
+availability, linked resources visible in the paper, quote-backed support for
+positive article-text flags, and short evidence notes. Records without
+accessible full text are retained as not-assessed placeholders.
+
+The article-level summary tables are generated from the assessment JSON rather
+than edited manually. Table~\ref{tab:top-cited-assessment} is generated from
+the audit flags, and Table~\ref{tab:knime-use-assessment} combines the
+same assessment file with the workflow-retrieval inventory. Downloadable
+workflow references, download outcomes, local workflow paths, and manual
+opening or execution notes are recorded in
+\path{data/original/workflows/knime_downloadable_workflow_references.json}.
+Manual KNIME-opening screenshots are stored under each workflow directory's
+\path{opened/} subdirectory.
 
 \subsection{Repository-Level Analysis}
 
@@ -673,7 +639,7 @@ final case-study claims require manual full-text and artifact assessment.
 
 \subsection{Top-Cited Article Assessment}
 
-We built an expanded top-cited retrieval pool from OpenAlex records matching
+We built a top-cited retrieval pool from OpenAlex records matching
 \texttt{KNIME}. The statistics in this subsection use the 80-record structured
 audit registry. The purpose of this part of the study is to ask whether
 KNIME-matching papers preserve the evidence needed to open and reproduce a
@@ -687,7 +653,7 @@ itself or a KNIME extension. These records are important for understanding the
 KNIME ecosystem, but they do not need the same artifact-preservation audit as
 domain studies that use KNIME. We therefore retain their descriptive metadata
 but leave their workflow-reporting flag maps empty.
-Table~\ref{tab:top-cited-assessment} uses all 80 records in the expanded
+Table~\ref{tab:top-cited-assessment} uses all 80 records in the
 registry as the denominator. It first reports the classification of the
 records, then reports the workflow-reporting flags observed in the structured
 audit.
@@ -718,8 +684,8 @@ extension context.
   r|
   r|
   >{\raggedright\arraybackslash}p{0.25\textwidth}|}
-\caption{Flag summary for the expanded top-cited article audit. Shares use all
-80 records in the expanded registry as the denominator.}
+\caption{Flag summary for the top-cited article audit. Shares use all
+80 records in the registry as the denominator.}
 \label{tab:top-cited-assessment}\\
 \toprule
 Audit category or flag & Count & Share of 80 & Interpretation \\
@@ -731,7 +697,7 @@ Audit category or flag & Count & Share of 80 & Interpretation \\
 \endhead
 \bottomrule
 \endfoot
-Expanded audit records & 80 & 100.0\% & Original top-60 records plus 20 rank 61--80 records \\
+Audit records & 80 & 100.0\% & Most-cited KNIME-matching article records selected from OpenAlex \\
 Assessed from full text & 64 & 80.0\% & Article text available for manual assessment \\
 Not assessed from full text & 16 & 20.0\% & Full text unavailable at assessment time \\
 About KNIME & 6 & 7.5\% & Background/platform or extension papers, not deeper workflow-reporting cases \\

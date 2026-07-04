@@ -14,6 +14,7 @@ from typing import Any
 
 DEFAULT_INPUT = Path("data/original/openalex/works.jsonl")
 DEFAULT_OUTPUT = Path("data/processed/openalex")
+DEFAULT_MOST_CITED_LIMIT = 80
 
 
 ABOUT_PATTERNS = [
@@ -45,6 +46,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--most-cited-limit",
+        type=int,
+        default=DEFAULT_MOST_CITED_LIMIT,
+        help="Number of citation-ranked records to write to openalex_knime_most_cited.csv.",
+    )
     return parser.parse_args()
 
 
@@ -249,7 +256,7 @@ def main() -> int:
         compact_rows,
         key=lambda row: (int(row["cited_by_count"]), str(row["publication_year"])),
         reverse=True,
-    )[:60]
+    )[: args.most_cited_limit]
     likely_workflow = [
         row for row in compact_rows if row["likely_uses_knime_workflow_platform"]
     ]
@@ -312,6 +319,7 @@ def main() -> int:
     summary = {
         "source_file": str(args.input),
         "total_articles": len(compact_rows),
+        "most_cited_limit": args.most_cited_limit,
         "year_min": min(years) if years else "",
         "year_max": max(years) if years else "",
         "top_venues": counter_rows(venues, "venue")[:10],
