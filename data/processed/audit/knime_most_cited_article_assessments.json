@@ -1836,6 +1836,14 @@
               "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "http://www.myexperiment.org/workflows/1841",
+            "http://www.myexperiment.org/workflows/2164"
+          ],
+          "source": "article text",
+          "note": "The article states that the workflows are available in Supporting Information and at myExperiment."
         }
       },
       "processed_text_file": "data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt"
@@ -2534,6 +2542,13 @@
               "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://github.com/DGadaleta88/data_curation_workflow"
+          ],
+          "source": "article text",
+          "note": "The article says the KNIME workflow is freely available for download from this GitHub repository."
         }
       },
       "processed_text_file": "data/processed/articles/s13321-018-0315-6.txt"
@@ -2672,6 +2687,13 @@
               "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://github.com/Muh-Asif/ASD-genes-prediction"
+          ],
+          "source": "article text",
+          "note": "The data availability statement says source code and the workflow are available from this GitHub repository."
         }
       },
       "processed_text_file": "data/processed/articles/journal_pone_0208626.txt"
@@ -2787,6 +2809,14 @@
               "note": "The workflow description names an RDKit KNIME node."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "http://bioinformatics.charite.de/sweet/",
+            "https://www.frontiersin.org/articles/10.3389/fchem.2018.00093/full#supplementary-material"
+          ],
+          "source": "article text",
+          "note": "The article states the BitterSweetForest KNIME workflow will be made available through the Charite URL and also points to supplementary material."
         }
       },
       "processed_text_file": "data/processed/articles/fchem_2018_00093.txt"
@@ -2919,6 +2949,15 @@
               "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://hub.knime.com/-/spaces/-/latest/~xoK5FQgB_5Jmg54V/",
+            "https://gitlab.com/Jukic/knime_medchem_filters",
+            "https://hub.knime.com/marko_/spaces/Medicinal%20Chemistry%20Filtering/latest/~XQX98NGeZEgCxQ_j/"
+          ],
+          "source": "article text",
+          "note": "The article cites a KNIME Hub implementation and later gives GitLab and KNIME Hub URLs for the filtering pipeline."
         }
       },
       "processed_text_file": "data/processed/articles/encyclopedia3020035_um.txt"
@@ -3050,6 +3089,13 @@
               "note": "The methods report INDIGO nodes in the KNIME workflow."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://github.com/kmansouri/MS-ready"
+          ],
+          "source": "article text",
+          "note": "The article states that the MS-Ready workflow and transformation files are available on GitHub."
         }
       },
       "processed_text_file": "data/processed/articles/s13321-018-0299-2_osti.txt"
@@ -3320,6 +3366,13 @@
               "note": "The methods provide the KNIME-OMICS GitHub URL for new workflow nodes."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://github.com/KNIME-OMICS"
+          ],
+          "source": "article text",
+          "note": "The article says the newly developed nodes and complete workflow are available as open source on KNIME-OMICS."
         }
       },
       "processed_text_file": "data/processed/articles/1-s2.0-S187439191630344X-main.txt"
@@ -3435,6 +3488,13 @@
               "note": "The methods identify PDB IDs downloaded from RCSB Protein Data Bank."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "http://teqip.jdvu.ac.in/QSAR_Tools/"
+          ],
+          "source": "article text",
+          "note": "The abstract says the KNIME workflows are made available at this QSAR tools URL."
         }
       },
       "processed_text_file": "data/processed/articles/Identifying_natural_compounds_as_multi-target-directed_ligands_against_Alzheimer_s_disease_an_in_silico_approach.txt"
@@ -4497,6 +4557,13 @@
               "note": "The article reports that ten human gene-expression datasets were downloaded from GEO."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://malikyousef.com/"
+          ],
+          "source": "article text",
+          "note": "The article says the workflow is available for download from Bioinformatics online and this author website; Bioinformatics online is named but not given as a direct workflow URL in the extracted text."
         }
       },
       "processed_text_file": "data/processed/articles/bioinformatics_35_20_4020.txt"
@@ -4627,6 +4694,13 @@
               "note": "The article reports descriptor calculation using the CDK node in KNIME."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "http://cosmosspace.cosmostox.eu/app/login"
+          ],
+          "source": "article text",
+          "note": "The article states that the workflow is freely available to use and download from COSMOS Space."
         }
       },
       "processed_text_file": "data/processed/articles/41_10.1021_acs.chemrestox.txt"
@@ -4861,6 +4935,17 @@
               "note": "The article provides the KNIME Hub extension URL for the required widgets."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://kni.me/w/5TRvnGfMJs_gTkcZu",
+            "https://github.com/NIEHS/QSAR-ready",
+            "https://hub.docker.com/r/kamelmansouri/qsar-ready",
+            "https://github.com/kmansouri/QSAR-ready",
+            "https://knime.niehs.nih.gov/knime/"
+          ],
+          "source": "article text",
+          "note": "The article lists KNIME Hub, GitHub, Docker, and NIEHS KNIME Server WebPortal locations for the QSAR-ready workflow."
         }
       },
       "processed_text_file": "data/processed/articles/44_10.txt"
@@ -5019,7 +5104,7 @@
           "provides_code_or_scripts": "no",
           "reports_extension_or_plugin_dependencies": "knime_extension_reported",
           "reports_extension_installation_source": "knime_extension_install_menu_reported",
-          "linked_workflow_artifacts_retrievable": "not_checked",
+          "linked_workflow_artifacts_retrievable": "retrieved_manual_local_artifact",
           "evidence_notes": "The article is a KNIME Hub workflow-sharing case and reports workflow figures, datasets, and an extension dependency."
         },
         "flag_audit_fields": {
@@ -5034,7 +5119,7 @@
           "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -5106,7 +5191,42 @@
               "article_section": "3.2.2 Practical implementation in KNIME",
               "note": "The article says users can download the extension through File > Install KNIME Extensions."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "local_workflow_artifact",
+              "artifact_path": "data/original/workflows/10.1016_j.jbusres.2021.08.036/Webinar Pricing Analytics_English.knwf",
+              "screenshot_directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036/opened",
+              "note": "User-downloaded workflow opened and executed successfully in the local KNIME environment; screenshots were added on 2026-07-04."
+            }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://kni.me/w/9cBJzpQEeZyMtSNa",
+            "https://kni.me/w/PRrwnq5kb6UYXJuP",
+            "https://kni.me/w/KvOyB7vz9Dt1MZOQ",
+            "https://kni.me/w/Qvn6ezkH4z9KaLn-",
+            "https://kni.me/w/A5JrR6DA9zxLZD9m",
+            "https://kni.me/w/C80at_YXQ6PK-R19",
+            "https://kni.me/w/3VGz0gdnmIy-DfT4",
+            "https://kni.me/w/myYBJS_VRYmt8h2P",
+            "https://kni.me/w/zHAUMcOElRy20qO1",
+            "https://kni.me/w/djkzPLAKhP-j3Y17",
+            "https://kni.me/w/FEczzB1FQBnPrCQg",
+            "https://kni.me/w/8XFC5HmWmuLd6LW1",
+            "https://kni.me/w/P8j6x0NqLsSZWkSa",
+            "https://kni.me/w/zXa_WBQgRZz4nqq6",
+            "https://kni.me/w/tST9mpGcmDVL3y_P",
+            "https://kni.me/w/GCI4B-AzIczhIwjG",
+            "https://kni.me/w/m9lFUDUeLyLFjpMr",
+            "https://hub.knime.com/knime/spaces/Examples/latest/50_Applications/39_Fraud_Detection/03_Keras_Autoencoder_for_Fraud_Detection_Training~9qFNMrsuN4PH1hRg",
+            "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors~HYlUnc7CnzG2fe8d",
+            "https://kni.me/w/O04qJIa1oD94M1rd",
+            "https://kni.me/w/szC3HhTNkE12-r6h"
+          ],
+          "source": "article text",
+          "note": "The article lists KNIME Hub workflow links in Table 2 and gives additional KNIME Hub workflow examples in the text and notes."
         }
       },
       "processed_text_file": "data/processed/articles/1-s2.0-S014829632100597X-main.txt"
@@ -5920,6 +6040,16 @@
               "note": "The article describes the datasets and reports the full compilation as supplementary information."
             }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://doi.org/10.1016/j.chemosphere.2015.06.009",
+            "https://www.sciencedirect.com/science/article/pii/S0045653515006104",
+            "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc1.xlsx",
+            "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc2.xlsx"
+          ],
+          "source": "article text plus supplement lookup from DOI/PII",
+          "note": "The article says the KNIME workflow is available as supplementary information. The DOI/ScienceDirect PII and two resolving Elsevier supplementary Excel URLs are recorded, but no direct KNIME workflow archive URL was confirmed."
         }
       },
       "processed_text_file": "data/processed/articles/54_10.1016_j.chemosphere.2015.06.txt"
@@ -6037,7 +6167,7 @@
           "provides_code_or_scripts": "no",
           "reports_extension_or_plugin_dependencies": "r_node_and_package_reported",
           "reports_extension_installation_source": "no",
-          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "linked_workflow_artifacts_retrievable": "retrieved_manual_local_artifact",
           "evidence_notes": "This is a KNIME workflow-use case with a publicly searchable KNIME Hub workflow and R-package dependency context."
         },
         "flag_audit_fields": {
@@ -6052,7 +6182,7 @@
           "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6100,7 +6230,22 @@
               "article_section": "2.6 Optimization of image analysis",
               "note": "The article reports the R-snippet node and dcpR package embedded in KNIME."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "local_workflow_artifact",
+              "artifact_path": "data/original/workflows/10.1016_j.ntt.2020.106918/Spontaneous tail coilings-measurement.knwf",
+              "screenshot_directory": "data/original/workflows/10.1016_j.ntt.2020.106918/opened",
+              "note": "User-downloaded workflow opened in the local KNIME environment; screenshots were added on 2026-07-04."
+            }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://hub.knime.com/"
+          ],
+          "source": "article text",
+          "note": "The article says the workflow is freely available by searching for 'spontaneous tail coilings detection in zebrafish' on KNIME Hub; no direct workflow URL appears in the extracted text."
         }
       },
       "processed_text_file": "data/processed/articles/58_10.1016_j.ntt.2020.106918.txt"
@@ -6283,7 +6428,7 @@
           "provides_code_or_scripts": "no",
           "reports_extension_or_plugin_dependencies": "knime_extensions_reported",
           "reports_extension_installation_source": "update_sites_reported",
-          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "linked_workflow_artifacts_retrievable": "retrieved_manual_local_artifact",
           "evidence_notes": "This is a KNIME workflow publication with version, downloadable workflow, data, and extension/update-site information."
         },
         "flag_audit_fields": {
@@ -6298,7 +6443,7 @@
           "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6370,7 +6515,22 @@
               "article_section": "Data Availability Statement",
               "note": "The article reports KNIME update sites for the extensions."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "local_workflow_artifact",
+              "artifact_path": "data/original/workflows/10.3390_pharmaceutics14101998/20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+              "screenshot_directory": "data/original/workflows/10.3390_pharmaceutics14101998/opened",
+              "note": "User-downloaded workflow opened in the local KNIME environment; screenshots were added on 2026-07-04."
+            }
           ]
+        },
+        "workflow_urls": {
+          "urls": [
+            "https://pikairos.eu/download/Caco-2-permeability-prediction"
+          ],
+          "source": "article text",
+          "note": "The article states that the KNIME workflow can be downloaded free of charge from this URL."
         }
       },
       "processed_text_file": "data/processed/articles/59_10.3390_pharmaceutics14101998.txt"
@@ -6513,7 +6673,7 @@
     "provides_code_or_scripts": 9,
     "reports_extension_or_plugin_dependencies": 6,
     "reports_extension_installation_source": 3,
-    "linked_workflow_artifacts_retrievable": 1
+    "linked_workflow_artifacts_retrievable": 7
   },
   "article_text_source": {
     "directory": "data/processed/articles",

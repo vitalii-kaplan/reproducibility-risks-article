@@ -273,22 +273,134 @@
         "notes": "Referenced http://teqip.jdvu.ac.in/QSAR_Tools/ failed DNS resolution both in sandbox and escalated retry; no workflow archive was retrieved."
       },
       "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 46,
+      "title": "Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications",
+      "doi": "10.1016/j.jbusres.2021.08.036",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
+      "processed_text_file": "data/processed/articles/1-s2.0-S014829632100597X-main.txt",
+      "evidence_extracted_text_lines": "393-405",
+      "workflow_references": [
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/szC3HhTNkE12-r6h"
+        }
+      ],
+      "download_result": {
+        "directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036",
+        "status": "downloaded_workflow_file_manual",
+        "downloaded_files": [
+          "Webinar Pricing Analytics_English.knwf"
+        ],
+        "workflow_files_found": [
+          "Webinar Pricing Analytics_English.knwf"
+        ],
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "Webinar Pricing Analytics",
+          "artifact": "Webinar Pricing Analytics_English.knwf",
+          "opened_in_knime": true,
+          "execution_result": "success",
+          "notes": "Opened and executed successfully in the current local KNIME environment.",
+          "screenshot_directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036/opened"
+        }
+      ]
+    },
+    {
+      "rank": 57,
+      "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
+      "doi": "10.1016/j.ntt.2020.106918",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/58_10.1016_j.ntt.2020.106918.txt",
+      "evidence_extracted_text_lines": "645-653",
+      "workflow_references": [
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://hub.knime.com/"
+        }
+      ],
+      "download_result": {
+        "directory": "data/original/workflows/10.1016_j.ntt.2020.106918",
+        "status": "downloaded_workflow_file_manual",
+        "downloaded_files": [
+          "Spontaneous tail coilings-measurement.knwf"
+        ],
+        "workflow_files_found": [
+          "Spontaneous tail coilings-measurement.knwf"
+        ],
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "Spontaneous tail coilings measurement",
+          "artifact": "Spontaneous tail coilings-measurement.knwf",
+          "opened_in_knime": true,
+          "execution_result": "not_confirmed_successful",
+          "notes": "Opened in the current local KNIME environment, but a successful end-to-end execution was not established in the available notes.",
+          "screenshot_directory": "data/original/workflows/10.1016_j.ntt.2020.106918/opened"
+        }
+      ]
+    },
+    {
+      "rank": 59,
+      "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
+      "doi": "10.3390/pharmaceutics14101998",
+      "knime_version": "4.4.2",
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/59_10.3390_pharmaceutics14101998.txt",
+      "evidence_extracted_text_lines": "831-838",
+      "workflow_references": [
+        {
+          "type": "project download page",
+          "url": "https://pikairos.eu/download/Caco-2-permeability-prediction"
+        }
+      ],
+      "download_result": {
+        "directory": "data/original/workflows/10.3390_pharmaceutics14101998",
+        "status": "downloaded_workflow_file_manual",
+        "downloaded_files": [
+          "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf"
+        ],
+        "workflow_files_found": [
+          "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf"
+        ],
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "Caco-2 permeability prediction workflow",
+          "artifact": "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+          "opened_in_knime": true,
+          "execution_result": "not_confirmed_successful",
+          "notes": "Opened in the current local KNIME environment, but a successful end-to-end execution was not established in the available notes.",
+          "screenshot_directory": "data/original/workflows/10.3390_pharmaceutics14101998/opened"
+        }
+      ]
     }
   ],
   "download_status_note": "download_result records local retrieval outcomes under data/original/workflows. Manual files are recorded as manual when they were supplied outside the automated download attempts.",
   "summary_counts": {
-    "article_records_with_downloadable_workflow_references": 8,
-    "downloaded_with_workflow_files_or_workflow_directory": 4,
+    "article_records_with_downloadable_workflow_references": 11,
+    "downloaded_with_workflow_files_or_workflow_directory": 7,
     "repository_downloaded_but_no_workflow_file_found": 1,
     "failed_or_not_obtained": 3
   },
   "manual_opening_summary": {
-    "article_records_with_workflow_links_attempted": 8,
-    "article_records_with_workflow_artifacts_obtained": 4,
-    "workflow_opening_attempts": 5,
-    "workflows_opened": 5,
-    "workflows_executed_successfully": 1,
-    "successful_workflow": "PAINS RDKit",
-    "notes": "PAINS contributes two workflow-opening attempts. Deprecated or legacy nodes were visible in opened workflows, but visible deprecated nodes were not counted for this experiment."
+    "article_records_with_workflow_links_attempted": 11,
+    "article_records_with_workflow_artifacts_obtained": 7,
+    "workflow_opening_attempts": 8,
+    "workflows_opened": 8,
+    "workflows_executed_successfully": 2,
+    "successful_workflows": [
+      "PAINS RDKit",
+      "Webinar Pricing Analytics"
+    ],
+    "article_records_with_successful_workflow_execution": 2,
+    "notes": "PAINS contributes two workflow-opening attempts. Three additional rank 41-60 article records were manually downloaded and opened. Deprecated or legacy nodes were visible in opened workflows, but visible deprecated nodes were not counted for this experiment."
   }
 }

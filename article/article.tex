@@ -35,9 +35,9 @@ scientific literature, while the article assessment shows that influential
 studies often report KNIME through figures, descriptions, or tool mentions
 rather than downloadable workflow artifacts. In the top-60 audit registry,
 fifteen records report downloadable or linked KNIME workflow files. We
-could obtain workflow artifacts for four article records and open five KNIME
-workflows from those artifacts in a current local KNIME environment; only one
-workflow executed successfully.
+could obtain workflow artifacts for seven article records and open eight KNIME
+workflows from those artifacts in a current local KNIME environment; two
+workflows executed successfully.
 Repository mining gives the source-evolution context: deprecated ordinary
 nodes increased from 14.83\% of registered ordinary nodes in the 2018 source
 baseline to 33.33\% in the June 28, 2026 local source snapshot. Together,
@@ -75,10 +75,10 @@ as executable artifacts or only reported through descriptions and figures.
 Our top-cited article collection now covers the 60 most-cited
 KNIME-matching records. The completed structured audit subset reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. Among the assessed non-KNIME-focused records, eight report
+weak link. In the top-60 audit registry, fifteen records report
 downloadable or linked KNIME workflow files. Current retrieval and manual
-opening results were mixed: workflow artifacts were obtained for four article
-records, five KNIME workflows were opened, and only one workflow executed
+opening results were mixed: workflow artifacts were obtained for seven article
+records, eight KNIME workflows were opened, and two workflows executed
 successfully in the tested local environment. For other influential studies,
 the strongest workflow evidence is usually weaker than an executable artifact.
 Several records present screenshots or figures of connected KNIME nodes, or
@@ -686,7 +686,7 @@ the structured audit file. Thirty-six records use KNIME as a workflow, tool,
 interface, or implementation context. Thirty records contain textual workflow
 or node descriptions, and nineteen show workflow screenshots or figures. Fifteen
 records report downloadable or linked KNIME workflow files. Current retrieval
-attempts have so far obtained workflow artifacts for four of these article
+attempts have so far obtained workflow artifacts for seven of these article
 records; one additional repository was reachable but did not contain a KNIME
 workflow file. Version and dependency reporting remain limited: eleven records
 report a KNIME version, eleven report KNIME extension or plugin dependencies,
@@ -732,7 +732,7 @@ Reports KNIME version & 11 & 18.3\% & Specific KNIME version value found \\
 Downloadable KNIME workflow files & 15 & 25.0\% & Executable workflow files provided or linked \\
 Reports extension/plugin dependencies & 11 & 18.3\% & KNIME extension or node-library dependency reported \\
 Reports extension installation source & 6 & 10.0\% & Update site, project URL, or installation source reported \\
-Linked workflow artifacts retrieved & 4 & 6.7\% & Linked KNIME workflow artifacts obtained in project notes \\
+Linked workflow artifacts retrieved & 7 & 11.7\% & Linked KNIME workflow artifacts obtained in project notes \\
 \midrule
 Provides code or scripts & 10 & 16.7\% & Code repository, scripts, or software code reported \\
 Reports input-data availability & 29 & 48.3\% & Data availability stated, with or without direct URL \\
@@ -766,21 +766,24 @@ Reports KNIME version & 11 & 30.6\% \\
 Downloadable KNIME workflow files & 15 & 41.7\% \\
 Reports extension/plugin dependencies & 11 & 30.6\% \\
 Reports extension installation source & 6 & 16.7\% \\
-Linked workflow artifacts retrieved & 4 & 11.1\% \\
+Linked workflow artifacts retrieved & 7 & 19.4\% \\
 \end{longtable}
 \endgroup
 
-The workflow-level experiment then tested the eight earlier article records
-that reported downloadable or linked KNIME workflow files before the rank
-41--60 audit expansion. The purpose was limited:
+The workflow-level experiment then tested eleven article records with
+downloadable or linked KNIME workflow files, including three records from the
+rank 41--60 audit expansion. The purpose was limited:
 we checked whether the linked artifacts could be obtained, whether a current
 local KNIME installation could open them, and whether execution completed
-without manual repair. Four article records yielded workflow artifacts. Because
-the PAINS record contains separate RDKit and Indigo workflows, these four
-article records produced five workflow-opening attempts. Only the PAINS RDKit
-workflow executed successfully. The other opened workflows either failed during
-execution, required missing R packages or extensions, or could not be
-confidently executed from the available workflow state. Across the opened
+without manual repair. Seven article records yielded workflow artifacts. Because
+the PAINS record contains separate RDKit and Indigo workflows, these seven
+article records produced eight workflow-opening attempts. Two workflows
+executed successfully: the PAINS RDKit workflow and the Webinar Pricing
+Analytics workflow linked from the Journal of Business Research KNIME Hub
+article \cite{Saubern2011PAINS,VillarroelOrdenes2021KNIMEHub}. The other
+opened workflows either failed during execution, required
+missing R packages or extensions, or could not be confidently executed from the
+available workflow state. Across the opened
 workflows, the screenshots also show deprecated or legacy nodes, but we treat
 this as qualitative compatibility evidence here rather than counting visible
 deprecated nodes. The screenshots are archived under each workflow directory's
@@ -795,7 +798,8 @@ deprecated nodes. The screenshots are archived under each workflow directory's
   >{\raggedright\arraybackslash}p{0.30\textwidth}|
   >{\raggedright\arraybackslash}p{0.13\textwidth}|}
 \caption{Manual workflow retrieval, opening, and execution results for the
-eight article records with downloadable or linked KNIME workflow files.}
+eleven article records with downloadable or linked KNIME workflow files tested
+in the workflow-level experiment.}
 \label{tab:workflow-opening-results}\\
 \toprule
 Article record or workflow & Retrieval result & Manual KNIME result & Screenshot evidence \\
@@ -851,6 +855,18 @@ Not obtained. The referenced project site failed DNS resolution during the
 retrieval attempt. &
 No KNIME opening test possible. &
 -- \\
+Webinar Pricing Analytics workflow, DOI \path{10.1016/j.jbusres.2021.08.036} &
+Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
+Opened and executed successfully in the current local KNIME environment. &
+Available \\
+Spontaneous tail coiling workflow, DOI \path{10.1016/j.ntt.2020.106918} &
+Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
+Opened, but the available notes do not establish a successful end-to-end run. &
+Available \\
+Caco-2 permeability prediction workflow, DOI \path{10.3390/pharmaceutics14101998} &
+Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
+Opened, but the available notes do not establish a successful end-to-end run. &
+Available \\
 \end{longtable}
 \endgroup
 
@@ -976,8 +992,9 @@ study. First, KNIME is visible in a broad and sustained scientific literature.
 Second, influential papers that use or mention KNIME rarely provide the full
 workflow-preservation package needed for later reproduction: executable
 workflow files, KNIME versions, extension context, data, and code. In the
-assessed non-KNIME-focused set, PAINS was the only case where we could retrieve
-KNIME workflow files and perform a current-version import experiment. Third,
+workflow-level experiment, seven article records yielded workflow artifacts,
+eight workflows opened in the current local KNIME environment, and two
+workflows executed successfully. Third,
 KNIME's source metadata continues to evolve, and roughly one third of ordinary
 registered nodes are marked deprecated in recent source snapshots. The result
 is not a claim that all KNIME workflows fail. The result is a reproducibility
@@ -992,8 +1009,8 @@ The contribution is intentionally narrower than a full reproducibility
 benchmark. We do not estimate the failure rate of all published KNIME
 workflows. Instead, we show a reproducibility risk pattern: KNIME is used in a
 visible scientific literature, influential papers often do not publish
-executable workflow artifacts, the one retrievable workflow case in our
-non-KNIME-focused assessment still depends on extension availability, and the
+executable workflow artifacts, successful current-version execution was
+confirmed for only two of eight opened workflows in the manual experiment, and the
 KNIME node ecosystem has accumulated a substantial deprecated-node surface.
 
 The results suggest three practical implications. First, a published workflow
