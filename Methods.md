@@ -20,6 +20,11 @@ The cloning script is:
 
 - `scripts/clone_knime_oss_repos.sh`
 
+The project `Makefile` is the current command index for rerunning these steps.
+Use `make help` to see the wrapped targets and parameters. In particular,
+`make knime-snapshot` wraps checkout plus extraction for one date, and
+`make knime-snapshot-summary` rebuilds the processed cross-snapshot table.
+
 The repositories are treated as source snapshots. A row in the results table is
 computed by putting the cloned repositories into a defined state, then running
 the same mining script over the whole source tree.
@@ -215,7 +220,15 @@ For every date in the register, the checkout command followed this template:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   <YYYY-MM-DD> \
-  data/original/knime_snapshots/<YYYY-MM-DD>/checkout_<YYYY-MM-DD>.csv
+  data/original/knime_snapshots/<YYYY-MM-DD>/logs/checkout_<YYYY-MM-DD>.csv
+```
+
+The equivalent Makefile form is:
+
+```bash
+make knime-snapshot \
+  KNIME_OSS_ROOT=/Users/vitaly/Home/git_proj/2026-06-knime-oss \
+  SNAPSHOT_DATE=<YYYY-MM-DD>
 ```
 
 The extraction command followed this template:
@@ -259,7 +272,7 @@ For `2026-01-01`, the checkout command was:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2026-01-01 \
-  data/original/knime_snapshots/2026-01-01/checkout_2026-01-01.csv
+  data/original/knime_snapshots/2026-01-01/logs/checkout_2026-01-01.csv
 ```
 
 The checkout script:
@@ -273,7 +286,7 @@ The checkout script:
 For this run, the script processed 90 repositories, checked out 90, and skipped
 0. The manifest is:
 
-- `data/original/knime_snapshots/2026-01-01/checkout_2026-01-01.csv`
+- `data/original/knime_snapshots/2026-01-01/logs/checkout_2026-01-01.csv`
 
 The script sets `GIT_LFS_SKIP_SMUDGE=1` so that historical checkouts do not
 download large Git LFS payloads. This is acceptable for the deprecated-node
@@ -308,7 +321,7 @@ For `2025-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2025-01-01 \
-  data/original/knime_snapshots/2025-01-01/checkout_2025-01-01.csv
+  data/original/knime_snapshots/2025-01-01/logs/checkout_2025-01-01.csv
 ```
 
 This processed 90 repositories, checked out 86, and skipped 4 repositories
@@ -332,7 +345,7 @@ For `2024-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2024-01-01 \
-  data/original/knime_snapshots/2024-01-01/checkout_2024-01-01.csv
+  data/original/knime_snapshots/2024-01-01/logs/checkout_2024-01-01.csv
 ```
 
 This processed 90 repositories, checked out 80, and skipped 10 repositories
@@ -356,7 +369,7 @@ For `2023-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2023-01-01 \
-  data/original/knime_snapshots/2023-01-01/checkout_2023-01-01.csv
+  data/original/knime_snapshots/2023-01-01/logs/checkout_2023-01-01.csv
 ```
 
 This processed 90 repositories, checked out 72, and skipped 18 repositories
@@ -380,7 +393,7 @@ For `2022-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2022-01-01 \
-  data/original/knime_snapshots/2022-01-01/checkout_2022-01-01.csv
+  data/original/knime_snapshots/2022-01-01/logs/checkout_2022-01-01.csv
 ```
 
 This processed 90 repositories, checked out 67, and skipped 23 repositories
@@ -404,7 +417,7 @@ For `2021-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2021-01-01 \
-  data/original/knime_snapshots/2021-01-01/checkout_2021-01-01.csv
+  data/original/knime_snapshots/2021-01-01/logs/checkout_2021-01-01.csv
 ```
 
 This processed 90 repositories, checked out 60, and skipped 30 repositories
@@ -426,7 +439,7 @@ For `2020-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2020-01-01 \
-  data/original/knime_snapshots/2020-01-01/checkout_2020-01-01.csv
+  data/original/knime_snapshots/2020-01-01/logs/checkout_2020-01-01.csv
 ```
 
 This processed 90 repositories, checked out 54, and skipped 36 repositories
@@ -450,7 +463,7 @@ For `2019-01-01`, the same process was run with:
 ./scripts/checkout_knime_oss_by_date.sh \
   /Users/vitaly/Home/git_proj/2026-06-knime-oss \
   2019-01-01 \
-  data/original/knime_snapshots/2019-01-01/checkout_2019-01-01.csv
+  data/original/knime_snapshots/2019-01-01/logs/checkout_2019-01-01.csv
 ```
 
 This processed 90 repositories, checked out 45, and skipped 45 repositories
@@ -485,13 +498,13 @@ the local clone.
 To add another date-based row:
 
 1. Choose a target date.
-2. Run `scripts/checkout_knime_oss_by_date.sh` with that date and a new manifest
-   path.
-3. Run `scripts/collect_knime_node_snapshot.py` into a snapshot-specific output
-   directory.
-4. Rebuild `data/processed/knime_snapshots/knime_node_snapshot_summary.csv` with
+2. Run `make knime-snapshot SNAPSHOT_DATE=<YYYY-MM-DD>` with `KNIME_OSS_ROOT`
+   set to the local KNIME source clone. This writes the checkout manifest under
+   the snapshot's `logs/` directory and collects per-record metadata into the
+   snapshot directory.
+3. Rebuild `data/processed/knime_snapshots/knime_node_snapshot_summary.csv` with
    `scripts/build_knime_node_snapshot_summary.py`.
-5. Keep the checkout manifest and per-record snapshot tables for auditability.
+4. Keep the checkout manifest and per-record snapshot tables for auditability.
 
 To add another tag-based row:
 
@@ -523,7 +536,7 @@ The retained files needed to audit the current results are:
 
 - `data/processed/knime_snapshots/knime_oss_repositories.csv`
 - `data/processed/knime_snapshots/knime_node_snapshot_summary.csv`
-- `data/original/knime_snapshots/<snapshot-date>/checkout_<snapshot-date>.csv`
+- `data/original/knime_snapshots/<snapshot-date>/logs/checkout_<snapshot-date>.csv`
 - `data/original/knime_snapshots/<snapshot-date>/plugin_nodes.csv`
 - `data/original/knime_snapshots/<snapshot-date>/node_descriptions.csv`
 - `data/original/knime_snapshots/<snapshot-date>/factory_class_mappers.csv`

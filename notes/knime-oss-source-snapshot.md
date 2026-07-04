@@ -6,12 +6,12 @@ This note records the local KNIME source-code snapshot cloned for repository min
 
 - Organization: `knime-oss`
 - Source organization URL: https://github.com/knime-oss
-- Local path: `/Users/vitaly/Home/git_proj/2026-06-knime-oss`
+- Local path relative to this repository: `../2026-06-knime-oss`
 - Clone script: `scripts/clone_knime_oss_repos.sh`
 - Clone command:
 
 ```bash
-./scripts/clone_knime_oss_repos.sh /Users/vitaly/Home/git_proj/2026-06-knime-oss
+./scripts/clone_knime_oss_repos.sh ../2026-06-knime-oss
 ```
 
 ## Clone Method
@@ -47,7 +47,7 @@ The script continued after this warning and completed all repositories.
 
 ## Notes For Data Mining
 
-- Treat `/Users/vitaly/Home/git_proj/2026-06-knime-oss` as an external source snapshot, not as project source code.
+- Treat `../2026-06-knime-oss` as an external source snapshot, not as project source code.
 - Do not commit the cloned repositories into this paper repository.
 - Record future mining scripts, derived tables, and figures in this project repository.
 - If the source snapshot is updated later, record the update date, command, repository count, disk usage, and any new warnings in this note or a dated successor note.

@@ -199,16 +199,25 @@ The current process is reproducible from the project scripts:
 - `scripts/collect_knime_node_snapshot.py`
 - `scripts/build_knime_node_snapshot_summary.py`
 
+The project `Makefile` is the preferred command index for these scripts. Use
+`make help` for parameters, `make knime-snapshot` for one checkout/extraction
+date, and `make knime-snapshot-summary` for the cross-snapshot summary.
+
 Per-snapshot extracted records are stored under:
 
 - `data/original/knime_snapshots/<snapshot-date>/`
 
-## TODO
+Checkout manifests are stored under each snapshot's `logs/` subdirectory:
 
-### Strengthen Official KNIME Semantics
+- `data/original/knime_snapshots/<snapshot-date>/logs/checkout_<snapshot-date>.csv`
 
-For the article, convert the source-code notes above into a concise,
-citable description of KNIME node status semantics:
+## Follow-Up Work
+
+### Maintain Official KNIME Semantics
+
+The article already uses a concise version of these source-code notes. Keep
+future revisions synchronized with the KNIME node status semantics recorded
+here:
 
 - what `deprecated="true"` means in the KNIME repository extension schema
 - what `hidden="true"` means and why it must be counted separately
@@ -217,13 +226,14 @@ citable description of KNIME node status semantics:
 - how `NodeFactoryClassMapper` and `NodeMigrationRule` support compatibility
   without being deprecation markers themselves
 
-This section should cite or quote only short passages from the KNIME schema or
+Article text should cite or quote only short passages from the KNIME schema or
 source comments and then paraphrase the rest.
 
 ### Build A Node-Level Lifecycle Table
 
-The aggregate summary table is useful, but the article needs stronger evidence
-from node-level lifecycle tracking. Create a derived table with columns such as:
+The aggregate summary table is useful, but future versions of the study could
+add stronger evidence from node-level lifecycle tracking. A derived table could
+use columns such as:
 
 ```text
 node_key, repo, factory_class, first_seen, last_seen,
@@ -256,8 +266,8 @@ path.
 
 ### Validate A Manual Sample
 
-Manually inspect a small sample of extracted nodes before using the results in
-the paper:
+Manually inspect a small sample of extracted nodes before adding stronger
+node-lifecycle claims to the paper:
 
 - deprecated node with a migration rule
 - deprecated node without a migration rule
@@ -269,9 +279,9 @@ the paper:
 The goal is to verify that the parser interpretation matches KNIME metadata and
 to collect concrete examples for the paper.
 
-### State Limitations Clearly
+### Maintain Limitations Clearly
 
-The repository-mining section should explicitly state these limitations:
+The repository-mining section should continue to state these limitations:
 
 - The analysis covers public `knime-oss` repositories only.
 - Date-based snapshots approximate source states near selected dates; they are
@@ -284,13 +294,12 @@ The repository-mining section should explicitly state these limitations:
 
 ### Connect Repository Data To Published-Workflow Reproducibility
 
-The deprecated-node data is sufficient for the KNIME repository-evolution part
-of the study. To support the full paper argument, it still needs to be connected
-to empirical evidence from published workflows:
+The deprecated-node data supports the KNIME repository-evolution part of the
+study. Keep connecting it to empirical evidence from published workflows:
 
 - OpenAlex frequency of KNIME-related publications
-- k2pweb.org workflow usage involving deprecated nodes
 - audit of highly cited KNIME papers
 - whether papers publish workflows
 - whether papers report KNIME versions
 - whether workflows can be downloaded, opened, and run in current KNIME
+- future aggregate k2pweb.org evidence, if it is later added and anonymized
