@@ -104,6 +104,9 @@ of KNIME node metadata.
 - Mark preliminary numbers clearly as provisional until the data collection scripts and raw data are present.
 - Preserve raw data, scripts, and derived tables separately.
 - Prefer reproducible scripts over manual spreadsheet edits.
+- Keep `Makefile` as the project workflow index. It should document every
+  script target, important parameters, and whether a target requires network
+  access or an external local KNIME source clone.
 - Keep paper claims traceable to a source, dataset, script, or explicit manual assessment note.
 - When assessing a paper, record both the evidence and the absence of evidence, for example whether the paper mentions a KNIME version or provides a downloadable workflow.
 - Keep writing concise and suitable for an 11-page LNCS short paper.

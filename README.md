@@ -84,6 +84,15 @@ AGENTS.md                Detailed maintenance notes for future project updates
 
 ## Rebuilding
 
+The repository includes a `Makefile` as a compact workflow index. It documents
+the main scripts, parameters, and common rebuild targets:
+
+```sh
+make help
+make audit-tables
+make article
+```
+
 The paper uses Springer LNCS / S-LNCS formatting. The required LNCS class and
 BibTeX style files are vendored in `article/`.
 
