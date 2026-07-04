@@ -53,7 +53,24 @@ def parse_args() -> argparse.Namespace:
         type=int,
         help="Minimum candidate pages required to normalize a whole article.",
     )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Re-create normalized text files for all raw text inputs.",
+    )
     return parser.parse_args()
+
+
+def read_existing_manifest(path: Path) -> dict[str, dict[str, str]]:
+    if not path.exists():
+        return {}
+
+    with path.open(newline="", encoding="utf-8") as handle:
+        return {
+            row["source_text_file"]: row
+            for row in csv.DictReader(handle)
+            if row.get("source_text_file")
+        }
 
 
 def has_text(value: str) -> bool:
@@ -228,7 +245,37 @@ def main() -> int:
     args.manifest.parent.mkdir(parents=True, exist_ok=True)
 
     rows: list[dict[str, str]] = []
+    existing_manifest = read_existing_manifest(args.manifest)
+    processed = 0
+    skipped = 0
     for source in text_files:
+        target = args.output_dir / source.name
+        existing_row = existing_manifest.get(source.as_posix())
+        if (
+            not args.all
+            and target.exists()
+            and target.stat().st_size > 0
+            and existing_row
+            and existing_row.get("normalized_text_file") == target.as_posix()
+        ):
+            rows.append(existing_row)
+            skipped += 1
+            continue
+        if not args.all and target.exists() and target.stat().st_size > 0:
+            rows.append(
+                {
+                    "source_text_file": source.as_posix(),
+                    "normalized_text_file": target.as_posix(),
+                    "layout": "existing",
+                    "pages": "",
+                    "candidate_two_column_pages": "",
+                    "converted_pages": "",
+                    "one_column_pages": "",
+                }
+            )
+            skipped += 1
+            continue
+
         text = source.read_text(encoding="utf-8", errors="replace")
         normalized, stats = normalize_text(
             text,
@@ -237,13 +284,13 @@ def main() -> int:
             min_converted_page_share=args.min_converted_page_share,
             min_converted_pages=args.min_converted_pages,
         )
-        target = args.output_dir / source.name
         target.write_text(normalized, encoding="utf-8")
         layout = (
             "two_column_normalized"
             if stats["normalized"]
             else "one_column_or_complex_layout"
         )
+        processed += 1
         rows.append(
             {
                 "source_text_file": source.as_posix(),
@@ -274,8 +321,9 @@ def main() -> int:
 
     converted_files = sum(1 for row in rows if row["layout"] == "two_column_normalized")
     print(
-        f"Normalized {len(rows)} text files to {args.output_dir}; "
+        f"Normalized {processed} text files, skipped {skipped} existing files; "
         f"detected two-column pages in {converted_files} files; "
+        f"output: {args.output_dir}; "
         f"manifest: {args.manifest}"
     )
     return 0

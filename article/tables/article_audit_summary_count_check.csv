@@ -1,0 +1,13 @@
+flag,generated_true_count,json_summary_count,match
+uses_knime,51,51,True
+describes_workflow_or_nodes_in_text,44,44,True
+provides_workflow_screenshots_or_figures,30,30,True
+reports_knime_version,15,15,True
+provides_downloadable_knime_workflow_files,22,22,True
+reports_extension_or_plugin_dependencies,20,20,True
+reports_extension_installation_source,11,11,True
+linked_workflow_artifacts_retrievable,7,7,True
+provides_code_or_scripts,15,15,True
+reports_input_data_availability,41,41,True
+provides_input_data_direct_url,20,20,True
+full_text_accessible,58,58,True

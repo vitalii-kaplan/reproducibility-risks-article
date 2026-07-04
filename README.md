@@ -121,7 +121,9 @@ Run scripts from the repository root unless noted otherwise.
   ```
 
 - `scripts/extract_article_texts.py`: converts local article PDFs to raw
-  `pdftotext -layout` files and writes an extraction manifest.
+  `pdftotext -layout` files and writes an extraction manifest. By default, it
+  only extracts PDFs that do not already have generated text; pass `--all` to
+  rebuild every text file.
 
   ```sh
   scripts/extract_article_texts.py
@@ -130,6 +132,8 @@ Run scripts from the repository root unless noted otherwise.
 - `scripts/normalize_article_text_columns.py`: creates reading copies of raw
   extracted article text. Sustained two-column pages are converted to
   one-column order; one-column or complex layouts are copied through unchanged.
+  By default, it only creates missing normalized files; pass `--all` to rebuild
+  every normalized file.
 
   ```sh
   python3 scripts/normalize_article_text_columns.py

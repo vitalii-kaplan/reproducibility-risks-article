@@ -67,9 +67,10 @@ workflow artifacts, version information, data, and extension context. At the
 same time, KNIME evolves: nodes can become deprecated, hidden, migrated,
 removed, or dependent on third-party extensions that are difficult to recover.
 The current paper investigates this claim using OpenAlex bibliometrics, a
-top-60 article audit registry with not-assessed placeholders for missing full
-texts, current-KNIME opening and execution attempts for retrievable workflows,
-and longitudinal repository mining of KNIME node metadata.
+80-record expanded top-cited article audit registry with not-assessed
+placeholders for missing original top-60 full texts, current-KNIME opening and
+execution attempts for retrievable workflows, and longitudinal repository
+mining of KNIME node metadata.
 
 ## Core Research Questions
 
@@ -148,15 +149,20 @@ Create directories only when they are needed. Keep generated files out of versio
 - The current OpenAlex query uses title-and-abstract search for `KNIME` and
   `type:article`, collected on June 29, 2026. The processed result contains
   963 article-type records.
-- The top-cited article audit registry uses the 60 most-cited records from the
-  processed OpenAlex result. Forty-nine records currently have local PDFs and
-  processed one-column text; eleven records are retained as not-assessed
-  placeholders because no local full text is available.
+- The top-cited article audit registry now contains 80 records: the original 60
+  most-cited records from the processed OpenAlex result plus all 20 records
+  from citation ranks 61-80. Sixty-four records currently have local PDFs or
+  full text and processed one-column text; sixteen records are retained as
+  not-assessed placeholders because no local full text is available.
 - Current local article retrieval for ranks 41-60 is recorded in
   `data/processed/audit/article_download_attempts_41-60.csv`: 14 of 20 records
   have local PDFs, including one user-provided record without DOI. The six
   records still not downloaded in that rank range are ranks 47, 48, 49, 50, 56,
   and 60 in the current OpenAlex top-60 order.
+- Current local article retrieval for ranks 61-80 is recorded in
+  `data/processed/audit/article_download_attempts_61-80.csv`. Fifteen of those
+  20 records currently have local PDFs or full text; ranks 67, 72, 74, 76, and
+  79 are retained as not-assessed placeholders in the expanded 80-record audit.
 - The top-cited article assessment file
   `data/processed/audit/knime_most_cited_article_assessments.json` now has
   an explicit `article_audit_fields` block for each record. The block is split
@@ -240,7 +246,7 @@ Create directories only when they are needed. Keep generated files out of versio
   `AGENTS.md` rather than the public-facing `README.md`.
 - The empirical expansion priority is to increase the scale of article and
   workflow evidence, not to restart the paper. Continue assessing
-  KNIME-related article records beyond the current top-60 audit registry as
+  KNIME-related article records beyond the current 80-record audit registry as
   time allows, and use only the number actually completed by the deadline.
 - For every retrievable KNIME workflow found during article assessment, record
   the source article, workflow source URL, retrieval date, package or file name,
@@ -255,24 +261,33 @@ Create directories only when they are needed. Keep generated files out of versio
   records, full-text accessibility, KNIME-use articles, KNIME version reporting,
   downloadable workflow files, workflow screenshots or text descriptions, input
   data, code/scripts, and extension or plugin information.
-- Current 60-record structured audit counts used in the article tables are:
-  - all top-cited records: 60
-  - assessed from full text: 49
-  - not assessed from full text: 11
+- Use `scripts/build_article_audit_tables.py` to generate the article-table CSV
+  sources from `flag_audit_fields` and relation fields. The generated CSVs live
+  under `article/tables/`: `top_cited_article_audit_summary.csv`,
+  `knime_use_workflow_reporting_signals.csv`,
+  `article_audit_table_comparison.csv`, and
+  `article_audit_summary_count_check.csv`. Run
+  `python3 scripts/build_article_audit_tables.py --fail-on-mismatch` after
+  changing the audit JSON or article tables.
+- Current 80-record structured audit counts used in the article tables are:
+  - expanded audit records: 80
+  - assessed from full text: 64
+  - not assessed from full text: 16
   - about KNIME: 6
   - not a KNIME use case: 7
-  - uses KNIME: 36
-  - workflow or nodes described in text: 30
-  - workflow screenshots or figures: 19
-  - reports KNIME version: 11
-  - downloadable KNIME workflow files: 15
-  - extension/plugin dependencies reported: 11
-  - extension installation source reported: 6
-  - linked workflow artifacts retrieved in the workflow experiment: 4 article records
-  - code or scripts reported: 10
-  - reports input-data availability: 29
-  - direct input-data resource: 14
-  Keep these counts synchronized with `article/article.tex` and
+  - uses KNIME: 51
+  - workflow or nodes described in text: 44
+  - workflow screenshots or figures: 30
+  - reports KNIME version: 15
+  - downloadable KNIME workflow files: 22
+  - extension/plugin dependencies reported: 20
+  - extension installation source reported: 11
+  - linked workflow artifacts retrieved in the workflow experiment: 7 article records
+  - code or scripts reported: 15
+  - reports input-data availability: 41
+  - direct input-data resource: 20
+  Keep these counts synchronized with `article/article.tex`,
+  `article/tables/*.csv`, and
   `data/processed/audit/knime_most_cited_article_assessments.json` when the
   audit changes.
 - Workflow-level statistics should include the number of retrieved workflows,
@@ -293,24 +308,25 @@ Create directories only when they are needed. Keep generated files out of versio
   Weka, RapidMiner, Orange, Taverna, or similar systems would weaken the paper;
   the stronger near-term contribution is a deeper KNIME workflow corpus with
   quantitative node-level compatibility analysis.
-- The current workflow-retrieval experiment covers the eight article records
-  whose audit reports downloadable or linked KNIME workflow files. Workflow
-  artifacts were obtained for four article records. Because the PAINS record
-  contains separate RDKit and Indigo workflows, five workflows were opened in
-  the local KNIME environment. Only the PAINS RDKit workflow executed
-  successfully; the other opened workflows failed during execution, required
-  missing R packages or extensions, or could not be confidently executed from
-  the available workflow state.
+- The current workflow-retrieval experiment covers eleven article records with
+  downloadable or linked KNIME workflow files, including records from the rank
+  41-60 audit expansion. Workflow artifacts were obtained for seven article
+  records. Because the PAINS record contains separate RDKit and Indigo
+  workflows, eight workflows were opened in the local KNIME environment. Two
+  workflows executed successfully; the other opened workflows failed during
+  execution, required missing R packages or extensions, or could not be
+  confidently executed from the available workflow state.
 - Manual workflow-opening screenshots are stored under
   `data/original/workflows/<doi-safe-directory>/opened/`. Do not restore the
   obsolete `data/manual/` or `article/figs/` PAINS-only figure copies unless the
   article again needs standalone figure files.
 - The workflow reference inventory is
-  `data/original/workflows/knime_downloadable_workflow_references.json`. It
-  records the eight article records with workflow links, download outcomes,
-  reasons for unavailable workflows, manual KNIME opening tests, and the
-  summary that four article records yielded workflow artifacts, five workflows
-  were opened, and one workflow executed successfully.
+  `data/processed/audit/knime_downloadable_workflow_references.json`. It
+  records the 22 article records with downloadable or linked KNIME workflow
+  evidence, download outcomes, reasons for unavailable workflows, manual KNIME
+  opening tests, and the summary that seven article records yielded workflow
+  artifacts, eight workflows were opened, and two workflows executed
+  successfully.
 - The final bibliography pass checked DOI-bearing entries in `article.bbl`
   against DOI registry resolution and Crossref metadata where available. The
   applied metadata corrections are:

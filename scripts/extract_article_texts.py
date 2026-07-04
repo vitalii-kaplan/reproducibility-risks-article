@@ -43,7 +43,24 @@ def parse_args() -> argparse.Namespace:
         default="pdftotext",
         help="pdftotext executable to use.",
     )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Re-create text files for all PDFs, including PDFs that already have output text.",
+    )
     return parser.parse_args()
+
+
+def read_existing_manifest(path: Path) -> dict[str, dict[str, str]]:
+    if not path.exists():
+        return {}
+
+    with path.open(newline="", encoding="utf-8") as handle:
+        return {
+            row["pdf_file"]: row
+            for row in csv.DictReader(handle)
+            if row.get("pdf_file")
+        }
 
 
 def main() -> int:
@@ -58,6 +75,9 @@ def main() -> int:
     rows = []
     used_names: set[str] = set()
     failures = 0
+    processed = 0
+    skipped = 0
+    existing_manifest = read_existing_manifest(args.manifest)
 
     for pdf in pdfs:
         base = slugify(pdf.stem)
@@ -69,6 +89,31 @@ def main() -> int:
         used_names.add(name)
 
         output = args.output_dir / name
+        existing_row = existing_manifest.get(pdf.as_posix())
+        if (
+            not args.all
+            and output.exists()
+            and output.stat().st_size > 0
+            and existing_row
+            and existing_row.get("status") == "ok"
+            and existing_row.get("text_file") == output.as_posix()
+        ):
+            rows.append(existing_row)
+            skipped += 1
+            continue
+        if not args.all and output.exists() and output.stat().st_size > 0:
+            rows.append(
+                {
+                    "pdf_file": pdf.as_posix(),
+                    "text_file": output.as_posix(),
+                    "status": "existing",
+                    "returncode": "",
+                    "stderr": "",
+                }
+            )
+            skipped += 1
+            continue
+
         result = subprocess.run(
             [args.pdftotext, "-layout", str(pdf), str(output)],
             check=False,
@@ -79,6 +124,8 @@ def main() -> int:
         if result.returncode != 0:
             failures += 1
             output.unlink(missing_ok=True)
+        else:
+            processed += 1
 
         rows.append(
             {
@@ -99,7 +146,8 @@ def main() -> int:
         writer.writerows(rows)
 
     print(
-        f"Extracted {len(rows) - failures} of {len(rows)} PDFs to "
+        f"Extracted {processed} PDFs, skipped {skipped} existing PDFs, "
+        f"failed {failures}, total {len(rows)}; output: "
         f"{args.output_dir}; manifest: {args.manifest}"
     )
     return 1 if failures else 0

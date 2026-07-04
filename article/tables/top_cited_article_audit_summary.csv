@@ -1,0 +1,17 @@
+label,count,share_percent,interpretation
+Expanded audit records,80,100.0,Original top-60 records plus 20 rank 61--80 records
+Assessed from full text,64,80.0,Article text available for manual assessment
+Not assessed from full text,16,20.0,Full text unavailable at assessment time
+About KNIME,6,7.5,"Background/platform or extension papers, not deeper workflow-reporting cases"
+Not a KNIME use case,7,8.8,KNIME appears in the record but is not a KNIME-based study
+Uses KNIME,51,63.7,"KNIME used as a workflow, tool, interface, or implementation context"
+Workflow or nodes described in text,44,55.0,"Named workflow steps, nodes, modules, or components recorded"
+Workflow screenshots or figures,30,37.5,Workflow shown visually in article or supplement
+Reports KNIME version,15,18.8,Specific KNIME version value found
+Downloadable KNIME workflow files,22,27.5,Executable workflow files provided or linked
+Reports extension/plugin dependencies,20,25.0,KNIME extension or node-library dependency reported
+Reports extension installation source,11,13.8,"Update site, project URL, or installation source reported"
+Linked workflow artifacts retrieved,7,8.8,Linked KNIME workflow artifacts obtained in project notes
+Provides code or scripts,15,18.8,"Code repository, scripts, or software code reported"
+Reports input-data availability,41,51.2,"Data availability stated, with or without direct URL"
+Direct input-data resource,20,25.0,Direct data URL or resource pointer recorded

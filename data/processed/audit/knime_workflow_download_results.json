@@ -1,16 +1,18 @@
 {
   "created_at": "2026-07-03",
-  "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+  "updated_at": "2026-07-04",
+  "source": "data/original/workflows/knime_downloadable_workflow_references.json",
   "workflow_root": "data/original/workflows",
+  "note": "Derived compact download-result summary. The authoritative workflow reference inventory, including manual opening and execution results, is data/original/workflows/knime_downloadable_workflow_references.json.",
   "records": [
     {
       "rank": 16,
       "doi": "10.1002/minf.201100076",
       "directory": "data/original/workflows/10.1002_minf.201100076",
-      "status": "failed",
-      "downloaded_files": "myexperiment_1841_page.html; myexperiment_2164_page.html; myexperiment_1841_download; myexperiment_2164_download",
-      "workflow_files_found": "",
-      "notes": "myExperiment pages and download endpoints returned HTTP 403 HTML; workflow files were not retrieved."
+      "status": "downloaded_workflow_archives_manual",
+      "downloaded_files": "RDKit-pains-v4.zip; Indigo-pains-v2.zip",
+      "workflow_files_found": "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime; Indigo-pains-v2.zip::Indigo-pains/workflow.knime",
+      "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but the user manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files."
     },
     {
       "rank": 22,
@@ -34,10 +36,10 @@
       "rank": 24,
       "doi": "10.3389/fchem.2018.00093",
       "directory": "data/original/workflows/10.3389_fchem.2018.00093",
-      "status": "failed",
+      "status": "failed_not_obtained",
       "downloaded_files": "bioinformatics_charite_sweet.html; virtualtaste.html",
       "workflow_files_found": "",
-      "notes": "Original page redirected to VirtualTaste; redirected page returned HTTP 404. No workflow archive was retrieved."
+      "notes": "Original project page redirected to VirtualTaste; redirected page returned HTTP 404. No workflow archive was retrieved."
     },
     {
       "rank": 25,
@@ -55,13 +57,13 @@
       "status": "repository_downloaded_no_workflow_file_found",
       "downloaded_files": "github_ms_ready_master.zip",
       "workflow_files_found": "",
-      "notes": "GitHub archive downloaded and passed unzip integrity test, but extracted archive contains only LICENSE and README.md; no .knwf or workflow.knime file found."
+      "notes": "GitHub archive downloaded and passed unzip integrity test, but the extracted archive contains only LICENSE and README.md; no .knwf or workflow.knime file was found."
     },
     {
       "rank": 29,
       "doi": "10.1016/j.jprot.2016.08.002",
       "directory": "data/original/workflows/10.1016_j.jprot.2016.08.002",
-      "status": "failed",
+      "status": "failed_not_obtained",
       "downloaded_files": "github_knime_omics_page.html",
       "workflow_files_found": "",
       "notes": "Referenced https://github.com/KNIME-OMICS returned HTTP 404 Not Found; no workflow archive was retrieved."
@@ -70,16 +72,43 @@
       "rank": 30,
       "doi": "10.1080/07391102.2018.1456975",
       "directory": "data/original/workflows/10.1080_07391102.2018.1456975",
-      "status": "failed",
+      "status": "failed_not_obtained",
       "downloaded_files": "",
       "workflow_files_found": "",
       "notes": "Referenced http://teqip.jdvu.ac.in/QSAR_Tools/ failed DNS resolution both in sandbox and escalated retry; no workflow archive was retrieved."
+    },
+    {
+      "rank": 46,
+      "doi": "10.1016/j.jbusres.2021.08.036",
+      "directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036",
+      "status": "downloaded_workflow_file_manual",
+      "downloaded_files": "Webinar Pricing Analytics_English.knwf",
+      "workflow_files_found": "Webinar Pricing Analytics_English.knwf",
+      "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+    },
+    {
+      "rank": 57,
+      "doi": "10.1016/j.ntt.2020.106918",
+      "directory": "data/original/workflows/10.1016_j.ntt.2020.106918",
+      "status": "downloaded_workflow_file_manual",
+      "downloaded_files": "Spontaneous tail coilings-measurement.knwf",
+      "workflow_files_found": "Spontaneous tail coilings-measurement.knwf",
+      "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+    },
+    {
+      "rank": 59,
+      "doi": "10.3390/pharmaceutics14101998",
+      "directory": "data/original/workflows/10.3390_pharmaceutics14101998",
+      "status": "downloaded_workflow_file_manual",
+      "downloaded_files": "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+      "workflow_files_found": "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+      "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
     }
   ],
   "summary_counts": {
-    "article_records_attempted": 8,
-    "downloaded_with_workflow_files_or_workflow_directory": 3,
+    "article_records_attempted": 11,
+    "downloaded_with_workflow_files_or_workflow_directory": 7,
     "repository_downloaded_but_no_workflow_file_found": 1,
-    "failed_or_not_retrieved": 4
+    "failed_or_not_retrieved": 3
   }
 }

@@ -27,14 +27,16 @@ Publication Practices and Reproducibility Risks}
 In this paper, we study how visual workflows are reported in scientific
 publications and how incomplete workflow preservation can make older studies
 harder to reproduce as workflow platforms evolve. We use KNIME as a case
-study, combining OpenAlex bibliometrics, a top-60 article audit registry,
+study, combining OpenAlex bibliometrics, an expanded top-cited article audit
+registry,
 a manual compatibility test using current KNIME,
 and repository-level mining of KNIME node metadata. OpenAlex
 shows that KNIME is visible across a broad
 scientific literature, while the article assessment shows that influential
 studies often report KNIME through figures, descriptions, or tool mentions
-rather than downloadable workflow artifacts. In the top-60 audit registry,
-fifteen records report downloadable or linked KNIME workflow files. We
+rather than downloadable workflow artifacts. In the 80-record expanded audit
+registry, twenty-two records report downloadable or linked KNIME workflow
+files. We
 could obtain workflow artifacts for seven article records and open eight KNIME
 workflows from those artifacts in a current local KNIME environment; two
 workflows executed successfully.
@@ -72,11 +74,13 @@ papers, and domain studies that use KNIME as an analysis interface. KNIME is
 therefore a suitable case for studying whether visual workflows are preserved
 as executable artifacts or only reported through descriptions and figures.
 
-Our top-cited article collection now covers the 60 most-cited
-KNIME-matching records. The completed structured audit subset reported in
+Our top-cited article collection now covers the original 60 most-cited
+KNIME-matching records and citation ranks 61--80, with not-assessed
+placeholders retained where local full text is unavailable. The completed
+structured audit subset reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. In the top-60 audit registry, fifteen records report
-downloadable or linked KNIME workflow files. Current retrieval and manual
+weak link. In the 80-record expanded audit registry, twenty-two records
+report downloadable or linked KNIME workflow files. Current retrieval and manual
 opening results were mixed: workflow artifacts were obtained for seven article
 records, eight KNIME workflows were opened, and two workflows executed
 successfully in the tested local environment. For other influential studies,
@@ -215,17 +219,21 @@ Derived bibliometric tables are generated from the JSONL file by
 \subsection{Top-Cited Article Assessment}
 
 For manual full-text retrieval and assessment, we sorted the processed
-OpenAlex records by \texttt{cited\_by\_count} in descending order and retained
-the 60 most-cited
-records in
-\path{data/processed/openalex/openalex_knime_most_cited.csv}.
-We then attempted to retrieve all 60 articles. Open-access papers were
-downloaded directly, and non-open papers were requested through the author's
-institutional subscription access or added manually when available. At the
-time of this draft, 49 of the 60 records had local PDF files and processed
-one-column text. The structured audit retains all 60 records: downloaded papers
-receive detailed fields and quote-supported flags, while records without local
-full text are retained as not-assessed placeholders.
+OpenAlex records by \texttt{cited\_by\_count} in descending order and first
+retained the 60 most-cited records in
+\path{data/processed/openalex/openalex_knime_most_cited.csv}. We then expanded
+the registry to citation ranks 61--80, adding detailed assessments for records
+with local full text and not-assessed placeholders for records still missing
+local full text. Open-access papers were downloaded directly, and
+non-open papers were requested through the author's institutional subscription
+access or added manually when available. At the time of this draft, the
+expanded structured audit contains 80 article records: the original top-60
+registry plus all 20 records from ranks 61--80. Fifteen of the rank 61--80
+records have local PDF files and processed one-column text; five are retained
+as not-assessed placeholders. In total, 16 records are retained as
+not-assessed placeholders because no local full text is available. Downloaded
+papers receive detailed fields and quote-supported flags, while records without
+local full text retain not-assessed metadata.
 For audited records, we manually inspected each retrieved paper, using
 LLM-assisted text analysis only to support extraction and consistency checking
 from the accessible full text. The assessment was organized as a structured
@@ -418,27 +426,27 @@ These files summarize artifact-access signals and role-classification counts.
 
 \subsection{Top-Cited Article Assessment}
 
-The top-cited article dataset records the manual assessment of the 20
-citation-ranked OpenAlex records selected in Methods. The public replication
-package contains the processed assessment metadata, but not the article PDFs.
-The processed assessment is stored in
-\path{data/processed/articles/knime_most_cited_article_assessments.json}.
-The ranked source list is also available in human-readable form as
-\path{data/processed/openalex/most_cited.md}.
-Each record in this JSON file stores the OpenAlex rank, manual assessment
+The top-cited article dataset records the manual assessment of the original
+top-60 OpenAlex records and citation ranks 61--80. Detailed fields are present
+for records with local full text, while records still missing local full text
+are retained as not-assessed placeholders.
+The public replication package contains the processed assessment metadata, but
+not the article PDFs. The processed assessment is stored in
+\path{data/processed/audit/knime_most_cited_article_assessments.json}. The
+ranked source list is available as
+\path{data/processed/openalex/openalex_knime_most_cited.csv}, with rank-range
+download attempts recorded under \path{data/processed/audit/}.
+Each record in the assessment JSON stores the OpenAlex rank, manual assessment
 status, KNIME role, reported KNIME version, workflow-artifact status, data and
-code availability, linked resources visible in the paper, and short evidence
-notes.
-Records without accessible full text are retained in the JSON with the status:
-\begin{quote}
-\texttt{unable\_to\_download\_or\_not\_present}
-\end{quote}
-This keeps the sample denominator explicit.
+code availability, linked resources visible in the paper, quote-backed support
+for positive flags, and short evidence notes. Records without accessible full
+text are retained in the JSON as not-assessed placeholders. This keeps the
+original top-60 denominator explicit while allowing the expanded full-text
+audit records to be reported separately.
 
-The PAINS filters paper is the only assessed top-cited applied-study case in
-which we found explicitly retrievable KNIME workflow files
-\cite{Saubern2011PAINS}. The assessment records the following
-reproduction-relevant identifiers:
+The PAINS filters paper is one example in which the assessment found
+reproduction-relevant workflow identifiers \cite{Saubern2011PAINS}. The
+assessment records the following identifiers:
 \begin{itemize}
 \item Article DOI: \path{https://doi.org/10.1002/minf.201100076}.
 \item KNIME version: \texttt{2.3.4}.
@@ -662,10 +670,11 @@ final case-study claims require manual full-text and artifact assessment.
 
 \subsection{Top-Cited Article Assessment}
 
-We built a top-60 retrieval pool from the most-cited OpenAlex records matching
-\texttt{KNIME}. The statistics in this subsection use the top-60 structured
-audit registry, converted into explicit article-level flags. The purpose of
-this part of the study is not to decide whether KNIME is
+We built an expanded top-cited retrieval pool from OpenAlex records matching
+\texttt{KNIME}. The statistics in this subsection use the 80-record structured
+audit registry: the original top-60 registry plus all 20 records from citation
+ranks 61--80. The purpose of this part of the study is
+not to decide whether KNIME is
 visible in the literature; the bibliometric data already show that. The purpose
 is to ask whether highly cited KNIME-matching papers preserve the evidence
 needed to understand or reproduce a KNIME-based workflow: full text, KNIME-use
@@ -673,27 +682,28 @@ role, version information, workflow files, workflow figures or textual
 descriptions, data, code, and extension context.
 
 The audit separates background and platform papers from deeper workflow-reporting
-cases. Six of the 60 records are about KNIME itself or a KNIME extension. These
+cases. Six of the 80 records are about KNIME itself or a KNIME extension. These
 records are important for understanding the KNIME ecosystem, but they do not
 need the same artifact-preservation audit as domain studies that use KNIME. We
 therefore retain their descriptive metadata but leave their workflow-reporting
-flag maps empty. Table~\ref{tab:top-cited-assessment} uses all 60 top-cited
-records as the denominator. It first reports the classification of the records,
-then reports the workflow-reporting flags observed in the structured audit.
+flag maps empty. Table~\ref{tab:top-cited-assessment} uses all 80 records in
+the expanded registry as the denominator. It first reports the classification
+of the records, then reports the workflow-reporting flags observed in the
+structured audit.
 
 Table~\ref{tab:top-cited-assessment} summarizes the statistics-ready flags in
-the structured audit file. Thirty-six records use KNIME as a workflow, tool,
-interface, or implementation context. Thirty records contain textual workflow
-or node descriptions, and nineteen show workflow screenshots or figures. Fifteen
-records report downloadable or linked KNIME workflow files. Current retrieval
-attempts have so far obtained workflow artifacts for seven of these article
-records; one additional repository was reachable but did not contain a KNIME
-workflow file. Version and dependency reporting remain limited: eleven records
-report a KNIME version, eleven report KNIME extension or plugin dependencies,
-and six report an installation source. Data and code signals are more common
-than retrievable workflow-artifact evidence: twenty-nine records report
-input-data availability, fourteen provide a direct input-data resource, and ten
-provide code or scripts.
+the structured audit file. Fifty-one records use KNIME as a workflow, tool,
+interface, or implementation context. Forty-four records contain textual
+workflow or node descriptions, and thirty show workflow screenshots or figures.
+Twenty-two records report downloadable or linked KNIME workflow files. Current
+retrieval attempts have so far obtained workflow artifacts for seven of these
+article records; one additional repository was reachable but did not contain a
+KNIME workflow file. Version and dependency reporting remain limited: fifteen
+records report a KNIME version, twenty report KNIME extension or plugin
+dependencies, and eleven report an installation source. Data and code signals
+are more common than retrievable workflow-artifact evidence: forty-one records
+report input-data availability, twenty provide a direct input-data resource,
+and fifteen provide code or scripts.
 This pattern is important because a reader may find data or code without being
 able to recover the actual KNIME workflow, node settings, KNIME version, or
 extension context.
@@ -706,37 +716,37 @@ extension context.
   r|
   r|
   >{\raggedright\arraybackslash}p{0.25\textwidth}|}
-\caption{Flag summary for the top-cited article audit. Shares use all 60
-top-cited records as the denominator.}
+\caption{Flag summary for the expanded top-cited article audit. Shares use all
+80 records in the expanded registry as the denominator.}
 \label{tab:top-cited-assessment}\\
 \toprule
-Audit category or flag & Count & Share of 60 & Interpretation \\
+Audit category or flag & Count & Share of 80 & Interpretation \\
 \midrule
 \endfirsthead
 \toprule
-Audit category or flag & Count & Share of 60 & Interpretation \\
+Audit category or flag & Count & Share of 80 & Interpretation \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
-All top-cited records & 60 & 100.0\% & Records retained from the OpenAlex ranking \\
-Assessed from full text & 49 & 81.7\% & Article text available for manual assessment \\
-Not assessed from full text & 11 & 18.3\% & Full text unavailable at assessment time \\
-About KNIME & 6 & 10.0\% & Background/platform or extension papers, not deeper workflow-reporting cases \\
-Not a KNIME use case & 7 & 11.7\% & KNIME appears in the record but is not a KNIME-based study \\
+Expanded audit records & 80 & 100.0\% & Original top-60 records plus 20 rank 61--80 records \\
+Assessed from full text & 64 & 80.0\% & Article text available for manual assessment \\
+Not assessed from full text & 16 & 20.0\% & Full text unavailable at assessment time \\
+About KNIME & 6 & 7.5\% & Background/platform or extension papers, not deeper workflow-reporting cases \\
+Not a KNIME use case & 7 & 8.8\% & KNIME appears in the record but is not a KNIME-based study \\
 \midrule
-Uses KNIME & 36 & 60.0\% & KNIME used as a workflow, tool, interface, or implementation context \\
-Workflow or nodes described in text & 30 & 50.0\% & Named workflow steps, nodes, modules, or components recorded \\
-Workflow screenshots or figures & 19 & 31.7\% & Workflow shown visually in article or supplement \\
-Reports KNIME version & 11 & 18.3\% & Specific KNIME version value found \\
-Downloadable KNIME workflow files & 15 & 25.0\% & Executable workflow files provided or linked \\
-Reports extension/plugin dependencies & 11 & 18.3\% & KNIME extension or node-library dependency reported \\
-Reports extension installation source & 6 & 10.0\% & Update site, project URL, or installation source reported \\
-Linked workflow artifacts retrieved & 7 & 11.7\% & Linked KNIME workflow artifacts obtained in project notes \\
+Uses KNIME & 51 & 63.7\% & KNIME used as a workflow, tool, interface, or implementation context \\
+Workflow or nodes described in text & 44 & 55.0\% & Named workflow steps, nodes, modules, or components recorded \\
+Workflow screenshots or figures & 30 & 37.5\% & Workflow shown visually in article or supplement \\
+Reports KNIME version & 15 & 18.8\% & Specific KNIME version value found \\
+Downloadable KNIME workflow files & 22 & 27.5\% & Executable workflow files provided or linked \\
+Reports extension/plugin dependencies & 20 & 25.0\% & KNIME extension or node-library dependency reported \\
+Reports extension installation source & 11 & 13.8\% & Update site, project URL, or installation source reported \\
+Linked workflow artifacts retrieved & 7 & 8.8\% & Linked KNIME workflow artifacts obtained in project notes \\
 \midrule
-Provides code or scripts & 10 & 16.7\% & Code repository, scripts, or software code reported \\
-Reports input-data availability & 29 & 48.3\% & Data availability stated, with or without direct URL \\
-Direct input-data resource & 14 & 23.3\% & Direct data URL or resource pointer recorded \\
+Provides code or scripts & 15 & 18.8\% & Code repository, scripts, or software code reported \\
+Reports input-data availability & 41 & 51.2\% & Data availability stated, with or without direct URL \\
+Direct input-data resource & 20 & 25.0\% & Direct data URL or resource pointer recorded \\
 \end{longtable}
 \endgroup
 
@@ -747,7 +757,7 @@ Direct input-data resource & 14 & 23.3\% & Direct data URL or resource pointer r
   >{\raggedright\arraybackslash}p{0.62\textwidth}|
   r|
   r|}
-\caption{Workflow-reporting signals among the 36 assessed KNIME-use cases.}
+\caption{Workflow-reporting signals among the 51 assessed KNIME-use cases.}
 \label{tab:knime-use-assessment}\\
 \toprule
 Audit flag & Count & Share of KNIME-use cases \\
@@ -759,14 +769,14 @@ Audit flag & Count & Share of KNIME-use cases \\
 \endhead
 \bottomrule
 \endfoot
-Uses KNIME & 36 & 100.0\% \\
-Workflow or nodes described in text & 30 & 83.3\% \\
-Workflow screenshots or figures & 19 & 52.8\% \\
-Reports KNIME version & 11 & 30.6\% \\
-Downloadable KNIME workflow files & 15 & 41.7\% \\
-Reports extension/plugin dependencies & 11 & 30.6\% \\
-Reports extension installation source & 6 & 16.7\% \\
-Linked workflow artifacts retrieved & 7 & 19.4\% \\
+Uses KNIME & 51 & 100.0\% \\
+Workflow or nodes described in text & 44 & 86.3\% \\
+Workflow screenshots or figures & 30 & 58.8\% \\
+Reports KNIME version & 15 & 29.4\% \\
+Downloadable KNIME workflow files & 22 & 43.1\% \\
+Reports extension/plugin dependencies & 20 & 39.2\% \\
+Reports extension installation source & 11 & 21.6\% \\
+Linked workflow artifacts retrieved & 7 & 13.7\% \\
 \end{longtable}
 \endgroup
 

@@ -2,7 +2,7 @@
   "created_at": "2026-07-04",
   "source_assessment": "data/processed/audit/knime_most_cited_article_assessments.json",
   "selection_rule": "Records where article_audit_fields.flag_audit_fields.provides_downloadable_knime_workflow_files is true.",
-  "url_status_note": "References are normalized from article text and existing assessment notes. Newly added references were not downloaded or revalidated in this update.",
+  "url_status_note": "References are normalized from article text and existing assessment notes. Newly added references were not downloaded or revalidated in this update. Rank 61-80 records were added from local processed article text and have not yet been downloaded or revalidated. Ranks 66 and 80 were added after the remaining rank 61-80 processed texts were assessed.",
   "records": [
     {
       "rank": 16,
@@ -396,6 +396,186 @@
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
         "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 61,
+      "title": "KniMet: a pipeline for the processing of chromatography-mass spectrometry metabolomics data",
+      "doi": "10.1007/s11306-018-1349-5",
+      "knime_version": null,
+      "workflow_artifact_status": "software_release_reference",
+      "processed_text_file": "data/processed/articles/61_10.txt",
+      "evidence_extracted_text_lines": "21-25; 301-304",
+      "workflow_references": [
+        {
+          "type": "article-cited Zenodo software/workflow release",
+          "url": "https://doi.org/10.5281/zenodo.1041482"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 62,
+      "title": "Extending KNIME for next-generation sequencing data analysis",
+      "doi": "10.1093/bioinformatics/btr478",
+      "knime_version": null,
+      "workflow_artifact_status": "published_or_linked_in_text",
+      "processed_text_file": "data/processed/articles/bioinformatics_27_20_2907.txt",
+      "evidence_extracted_text_lines": "31-36; 94-98",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "http://www.myexperiment.org/workflows/2183.html"
+        },
+        {
+          "type": "article-reported workflow repository/search reference",
+          "url": "http://www.myexperiment.org/search?query=KNIME"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 63,
+      "title": "Integration of the ImageJ Ecosystem in KNIME Analytics Platform",
+      "doi": "10.3389/fcomp.2020.00008",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
+      "processed_text_file": "data/processed/articles/63_10.3389_fcomp.2020.txt",
+      "evidence_extracted_text_lines": "544-570; 1149-1152; 1179-1184; 1208-1216; 1237-1240; 1428-1434",
+      "workflow_references": [
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/DU4eH3TjYhcxfWXD"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/ThmsDDG4kj-_Ecml"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/oZteZanXoWURLouy"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/7yXlo4oq91qSBWeU"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/QVjrs0Vj7xG48Pcr"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/F3K1YgZKt_923UgH"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/QMky8ZEz3dzja42q"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 66,
+      "title": "Multi-template matching: a versatile tool for object-localization in microscopy images",
+      "doi": "10.1186/s12859-020-3363-7",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/66_10.1186_s12859-020-3363-7_counter.txt",
+      "evidence_extracted_text_lines": "24-30",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow repository",
+          "url": "nodepit and KNIME Hub"
+        },
+        {
+          "type": "source-code repository",
+          "url": "https://github.com/multi-template-matching"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 69,
+      "title": "GediNET for discovering gene associations across diseases using knowledge based machine learning approach",
+      "doi": "10.1038/s41598-022-24421-0",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/69_10.txt",
+      "evidence_extracted_text_lines": "25-27; 414-416; 844-846",
+      "workflow_references": [
+        {
+          "type": "GitHub repository",
+          "url": "https://github.com/malikyousef/GediNET"
+        },
+        {
+          "type": "GitHub repository",
+          "url": "https://github.com/malikyousef/GediNET.git"
+        },
+        {
+          "type": "KNIME Hub workflow",
+          "url": "https://kni.me/w/3kH1SQV_mMUsMTS"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 70,
+      "title": "Screening Chemicals for Receptor-Mediated Toxicological and Pharmacological Endpoints: Using Public Data to Build Screening Tools within a KNIME Workflow",
+      "doi": "10.1002/minf.201400188",
+      "knime_version": null,
+      "workflow_artifact_status": "supplementary_workflow_reported",
+      "processed_text_file": "data/processed/articles/70_10.1002_minf.txt",
+      "evidence_extracted_text_lines": "389-395",
+      "workflow_references": [
+        {
+          "type": "article-reported supplementary workflow reference",
+          "url": "supplementary information via article DOI"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 80,
+      "title": "High content organelle trafficking enables disease state profiling as powerful tool for disease modelling",
+      "doi": "10.1038/sdata.2018.241",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/80_10.1038_sdata.2018.txt",
+      "evidence_extracted_text_lines": "573-574",
+      "workflow_references": [
+        {
+          "type": "figshare workflow archive",
+          "url": "Data Citation 1: KNIME workflow.zip"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from the rank 61-80 article text audit; workflow artifact retrieval was not attempted in this update."
       },
       "manual_knime_opening_tests": []
     }
