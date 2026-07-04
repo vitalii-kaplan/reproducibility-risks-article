@@ -31,13 +31,14 @@ and scripts in this repository are here to make those claims inspectable.
 
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
   records and collected on June 29, 2026, returned 963 article-type records.
-- A manual audit of the 40 most-cited KNIME-matching article records found that
-  influential papers often present KNIME through text, figures, or tool
-  mentions rather than downloadable workflow artifacts.
-- In that top-cited audit, eight records reported downloadable or linked KNIME
-  workflow files. Workflow artifacts were obtained for four article records;
-  five workflows were opened because the PAINS record contains separate RDKit
-  and Indigo workflows.
+- The top-cited article audit registry now covers the 60 most-cited
+  KNIME-matching article records. It found that influential papers often
+  present KNIME through text, figures, or tool mentions rather than
+  downloadable workflow artifacts.
+- In that 60-record registry, fifteen records reported downloadable or
+  linked KNIME workflow files. Workflow artifacts were obtained for four
+  article records; five workflows were opened because the PAINS record contains
+  separate RDKit and Indigo workflows.
 - In the current manual experiment, only the PAINS RDKit workflow executed
   successfully. The other opened workflows failed during execution, required
   missing packages or extensions, or could not be confidently executed from the

@@ -1,0 +1,403 @@
+{
+  "created_at": "2026-07-04",
+  "source_assessment": "data/processed/audit/knime_most_cited_article_assessments.json",
+  "selection_rule": "Records where article_audit_fields.flag_audit_fields.provides_downloadable_knime_workflow_files is true.",
+  "url_status_note": "References are normalized from article text and existing assessment notes. Newly added references were not downloaded or revalidated in this update.",
+  "records": [
+    {
+      "rank": 16,
+      "title": "KNIME Workflow to Assess PAINS Filters in SMARTS Format. Comparison of RDKit and Indigo Cheminformatics Libraries",
+      "doi": "10.1002/minf.201100076",
+      "knime_version": "2.3.4",
+      "workflow_artifact_status": "published_or_linked_in_text",
+      "processed_text_file": "data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt",
+      "evidence_extracted_text_lines": "58-68; 58-69",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "http://www.myexperiment.org/workflows/1841"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "http://www.myexperiment.org/workflows/2164"
+        }
+      ],
+      "download_result": {
+        "directory": "data/original/workflows/10.1002_minf.201100076",
+        "status": "downloaded_workflow_archives_manual",
+        "downloaded_files": [
+          "RDKit-pains-v4.zip",
+          "Indigo-pains-v2.zip"
+        ],
+        "workflow_files_found": [
+          "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime",
+          "Indigo-pains-v2.zip::Indigo-pains/workflow.knime"
+        ],
+        "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but the user manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "PAINS RDKit",
+          "artifact": "RDKit-pains-v4.zip",
+          "opened_in_knime": true,
+          "execution_result": "success",
+          "notes": "Opened and executed successfully in the current local KNIME environment. Screenshots show deprecated or legacy node labels, treated as qualitative evidence only.",
+          "screenshot_directory": "data/original/workflows/10.1002_minf.201100076/opened"
+        },
+        {
+          "workflow_name": "PAINS Indigo",
+          "artifact": "Indigo-pains-v2.zip",
+          "opened_in_knime": true,
+          "execution_result": "failed_missing_extension",
+          "notes": "Opened, but execution was blocked by a missing Indigo KNIME Integration node and related data-cell implementation.",
+          "screenshot_directory": "data/original/workflows/10.1002_minf.201100076/opened"
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "title": "A new semi-automated workflow for chemical data retrieval and quality checking for modeling applications",
+      "doi": "10.1186/s13321-018-0315-6",
+      "knime_version": "3.4",
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/s13321-018-0315-6.txt",
+      "evidence_extracted_text_lines": "202-207",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.1186_s13321-018-0315-6",
+        "status": "downloaded_workflow_files",
+        "downloaded_files": [
+          "github_data_curation_workflow_master_long.zip"
+        ],
+        "workflow_files_found": [
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf"
+        ],
+        "notes": "GitHub master archive downloaded after long retry and passed unzip integrity test. Earlier main/short attempts are retained as failed evidence files."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "Chemical data curation workflow",
+          "artifact": "DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "opened_in_knime": true,
+          "execution_result": "failed_execution_error",
+          "notes": "Opened, but execution failed inside a metanode during the manual test.",
+          "screenshot_directory": "data/original/workflows/10.1186_s13321-018-0315-6/opened"
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "title": "Identifying disease genes using machine learning and gene functional similarities, assessed through Gene Ontology",
+      "doi": "10.1371/journal.pone.0208626",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/journal_pone_0208626.txt",
+      "evidence_extracted_text_lines": "45-53",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.1371_journal.pone.0208626",
+        "status": "downloaded_workflow_archive",
+        "downloaded_files": [
+          "github_asd_genes_prediction_master.zip"
+        ],
+        "workflow_files_found": [
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/ASD_genes_prediction_workflow.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.knime"
+        ],
+        "notes": "GitHub archive downloaded and passed unzip integrity test. Inner workflow ZIP was extracted to a KNIME workflow directory."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "ASD genes prediction workflow",
+          "artifact": "ASD_genes_prediction_workflow",
+          "opened_in_knime": true,
+          "execution_result": "failed_missing_r_packages_or_functions",
+          "notes": "Opened, but execution failed in an R node because required R packages and functions were unavailable in the test environment.",
+          "screenshot_directory": "data/original/workflows/10.1371_journal.pone.0208626/opened"
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "title": "BitterSweetForest: A Random Forest Based Binary Classifier to Predict Bitterness and Sweetness of Chemical Compounds",
+      "doi": "10.3389/fchem.2018.00093",
+      "knime_version": null,
+      "workflow_artifact_status": "supplementary_workflow_reported",
+      "processed_text_file": "data/processed/articles/fchem_2018_00093.txt",
+      "evidence_extracted_text_lines": "821-822",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.3389_fchem.2018.00093",
+        "status": "failed_not_obtained",
+        "downloaded_files": [
+          "bioinformatics_charite_sweet.html",
+          "virtualtaste.html"
+        ],
+        "workflow_files_found": [],
+        "notes": "Original project page redirected to VirtualTaste; redirected page returned HTTP 404. No workflow archive was retrieved."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 25,
+      "title": "Molecular Filters in Medicinal Chemistry",
+      "doi": "10.3390/encyclopedia3020035",
+      "knime_version": "4.7",
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/encyclopedia3020035_um.txt",
+      "evidence_extracted_text_lines": "432-436",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.3390_encyclopedia3020035",
+        "status": "downloaded_workflow_files",
+        "downloaded_files": [
+          "gitlab_knime_medchem_filters_main.zip",
+          "knime_hub_marko_filtering.html",
+          "knime_hub_latest_xoK5.html"
+        ],
+        "workflow_files_found": [
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf"
+        ],
+        "notes": "GitLab archive downloaded and passed unzip integrity test. One KNIME Hub URL returned a page; the older generic KNIME Hub URL returned 404 JSON."
+      },
+      "manual_knime_opening_tests": [
+        {
+          "workflow_name": "Medicinal chemistry filters workflow",
+          "artifact": "Medicinal_chemistry_filters_0_21.knwf",
+          "opened_in_knime": true,
+          "execution_result": "not_confirmed_successful",
+          "notes": "Opened, but the manual test did not establish a successful end-to-end run; screenshots show unresolved or not-yet-configured workflow parts.",
+          "screenshot_directory": "data/original/workflows/10.3390_encyclopedia3020035/opened"
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "title": "“MS-Ready” structures for non-targeted high-resolution mass spectrometry screening studies",
+      "doi": "10.1186/s13321-018-0299-2",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/s13321-018-0299-2_osti.txt",
+      "evidence_extracted_text_lines": "168-170",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.1186_s13321-018-0299-2",
+        "status": "repository_downloaded_no_workflow_file_found",
+        "downloaded_files": [
+          "github_ms_ready_master.zip"
+        ],
+        "workflow_files_found": [],
+        "notes": "GitHub archive downloaded and passed unzip integrity test, but the extracted archive contains only LICENSE and README.md; no .knwf or workflow.knime file was found."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 29,
+      "title": "In-depth analysis of protein inference algorithms using multiple search engines and well-defined metrics",
+      "doi": "10.1016/j.jprot.2016.08.002",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/1-s2.0-S187439191630344X-main.txt",
+      "evidence_extracted_text_lines": "1024-1030",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.1016_j.jprot.2016.08.002",
+        "status": "failed_not_obtained",
+        "downloaded_files": [
+          "github_knime_omics_page.html"
+        ],
+        "workflow_files_found": [],
+        "notes": "Referenced https://github.com/KNIME-OMICS returned HTTP 404 Not Found; no workflow archive was retrieved."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 30,
+      "title": "Identifying natural compounds as multi-target-directed ligands against Alzheimer’s disease: an in silico approach",
+      "doi": "10.1080/07391102.2018.1456975",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/Identifying_natural_compounds_as_multi-target-directed_ligands_against_Alzheimer_s_disease_an_in_silico_approach.txt",
+      "evidence_extracted_text_lines": "80-83",
+      "workflow_references": [],
+      "download_result": {
+        "directory": "data/original/workflows/10.1080_07391102.2018.1456975",
+        "status": "failed_not_obtained",
+        "downloaded_files": [],
+        "workflow_files_found": [],
+        "notes": "Referenced http://teqip.jdvu.ac.in/QSAR_Tools/ failed DNS resolution both in sandbox and escalated retry; no workflow archive was retrieved."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 41,
+      "title": "maTE: discovering expressed interactions between microRNAs and their targets",
+      "doi": "10.1093/bioinformatics/btz204",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/bioinformatics_35_20_4020.txt",
+      "evidence_extracted_text_lines": "524-528",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "Bioinformatics online"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://malikyousef.com/"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 42,
+      "title": "Using Molecular Initiating Events to Develop a Structural Alert Based Screening Workflow for Nuclear Receptor Ligands Associated with Hepatic Steatosis",
+      "doi": "10.1021/acs.chemrestox.5b00480",
+      "knime_version": "3.2",
+      "workflow_artifact_status": "downloadable_workflow_reported",
+      "processed_text_file": "data/processed/articles/41_10.1021_acs.chemrestox.txt",
+      "evidence_extracted_text_lines": "223-232",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "http://cosmosspace.cosmostox.eu/app/login"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 44,
+      "title": "Free and open-source QSAR-ready workflow for automated standardization of chemical structures in support of QSAR modeling",
+      "doi": "10.1186/s13321-024-00814-3",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/44_10.txt",
+      "evidence_extracted_text_lines": "1263-1282",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://kni.me/w/5TRvnGfMJs_gTkcZu"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://github.com/NIEHS/QSAR-ready"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://hub.docker.com/r/kamelmansouri/qsar-ready"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://knime.niehs.nih.gov/knime/"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 46,
+      "title": "Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications",
+      "doi": "10.1016/j.jbusres.2021.08.036",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
+      "processed_text_file": "data/processed/articles/1-s2.0-S014829632100597X-main.txt",
+      "evidence_extracted_text_lines": "393-405",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "KNIME Hub workflow links in Table 2"
+        },
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://kni.me/w/szC3HhTNkE12-r6h"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 55,
+      "title": "Investigation of the Verhaar scheme for predicting acute aquatic toxicity: Improving predictions obtained from Toxtree ver. 2.6",
+      "doi": "10.1016/j.chemosphere.2015.06.009",
+      "knime_version": null,
+      "workflow_artifact_status": "supplementary_workflow_reported",
+      "processed_text_file": "data/processed/articles/54_10.1016_j.chemosphere.2015.06.txt",
+      "evidence_extracted_text_lines": "284-287",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "supplementary information via article DOI"
+        }
+      ],
+      "download_result": {
+        "status": "supplement_urls_identified_no_knime_workflow_file_confirmed",
+        "downloaded_files": [],
+        "workflow_files_found": [],
+        "notes": "The article says the KNIME workflow is available as supplementary information. Crossref identifies Elsevier PII S0045653515006104. The standard Elsevier supplement URLs mmc1.xlsx and mmc2.xlsx resolve as Excel files, but no direct KNIME workflow archive URL was confirmed in this pass."
+      },
+      "manual_knime_opening_tests": [],
+      "supplement_references_checked": [
+        "https://doi.org/10.1016/j.chemosphere.2015.06.009",
+        "https://www.sciencedirect.com/science/article/pii/S0045653515006104",
+        "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc1.xlsx",
+        "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc2.xlsx"
+      ]
+    },
+    {
+      "rank": 57,
+      "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
+      "doi": "10.1016/j.ntt.2020.106918",
+      "knime_version": null,
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/58_10.1016_j.ntt.2020.106918.txt",
+      "evidence_extracted_text_lines": "645-653",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://hub.knime.com/ search: spontaneous tail coilings detection in zebrafish"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    },
+    {
+      "rank": 59,
+      "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
+      "doi": "10.3390/pharmaceutics14101998",
+      "knime_version": "4.4.2",
+      "workflow_artifact_status": "downloadable_workflow_linked",
+      "processed_text_file": "data/processed/articles/59_10.3390_pharmaceutics14101998.txt",
+      "evidence_extracted_text_lines": "831-838",
+      "workflow_references": [
+        {
+          "type": "article-reported workflow reference",
+          "url": "https://pikairos.eu/download/Caco-2-permeability-prediction"
+        }
+      ],
+      "download_result": {
+        "status": "not_attempted_in_current_workflow_download_pass",
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+      },
+      "manual_knime_opening_tests": []
+    }
+  ]
+}

@@ -3,10 +3,12 @@
   "source_csv": {
     "openalex_articles": "data/processed/openalex/openalex_knime_articles.csv",
     "top_1_20_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
-    "download_attempts_21_40": "data/processed/audit/article_download_attempts_21-40.csv"
+    "download_attempts_21_40": "data/processed/audit/article_download_attempts_21-40.csv",
+    "top_1_60_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
+    "download_attempts_41_60": "data/processed/audit/article_download_attempts_41-60.csv"
   },
   "article_directory": "data/original/articles",
-  "scope": "Manual assessment of the forty most-cited OpenAlex article records matching KNIME in title or abstract.",
+  "scope": "Manual assessment of the sixty most-cited OpenAlex article records matching KNIME in title or abstract; records without local full text are retained as not assessed placeholders.",
   "method": {
     "input_files": "Downloaded PDF files supplied under data/original/articles.",
     "text_extraction": "PDFs were converted with pdftotext -layout for manual reading and keyword search.",
@@ -26,15 +28,16 @@
     "The article_audit_fields block was added from existing assessment notes and the OpenAlex top-cited CSV; article full texts were not reread for this restructuring pass.",
     "Linked workflow artifact retrievability is not newly revalidated here; values distinguish existing project-note evidence from URLs that were not checked in this pass.",
     "The article_audit_fields block is split into description_audit_fields for traceability and flag_audit_fields for statistics; flag_audit_fields now contains only presence flags, so true means the item/category is present and false means absent or unsupported by the current evidence.",
-    "flag_audit_support contains citation objects only for true presence flags; false flags intentionally have no support entry. Article-text support includes direct quote and article_section fields where an extracted-text line reference is available. Resource URLs and manual classifications use source labels."
+    "flag_audit_support contains citation objects only for true presence flags; false flags intentionally have no support entry. Article-text support includes direct quote and article_section fields where an extracted-text line reference is available. Resource URLs and manual classifications use source labels.",
+    "The assessment now contains a top-60 retrieval pool. Records without local full text are retained as not_assessed placeholders and should not be treated as completed article audits."
   ],
   "summary_counts": {
-    "openalex_top_cited_records": 40,
-    "articles_with_local_pdf_assessed": 35,
-    "articles_missing_local_pdf": 5,
-    "about_knime_platform_or_extension": 5,
-    "uses_knime_as_analysis_or_workflow_tool": 24,
-    "not_a_knime_use_case": 6
+    "openalex_top_cited_records": 60,
+    "articles_with_local_pdf_assessed": 49,
+    "articles_missing_local_pdf": 11,
+    "about_knime_platform_or_extension": 6,
+    "uses_knime_as_analysis_or_workflow_tool": 36,
+    "not_a_knime_use_case": 7
   },
   "articles": [
     {
@@ -1708,7 +1711,7 @@
           "provides_code_or_scripts": "no_public_code_found_in_pdf",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "linked_workflow_artifacts_retrievable": "retrievable_in_current_project_notes",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
           "evidence_notes": "This paper directly supports the study because it reports KNIME, node-library versions, workflow artifacts, inputs, and external workflow-hosting links. It is also a good candidate for current-KNIME import testing."
         },
         "flag_audit_fields": {
@@ -1828,24 +1831,9 @@
           ],
           "linked_workflow_artifacts_retrievable": [
             {
-              "note": "Linked workflow artifact retrievability classification: retrievable_in_current_project_notes",
-              "extracted_text_lines": "manual_assessment"
-            },
-            {
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/1841",
-              "extracted_text_lines": "linked_resources"
-            },
-            {
-              "note": "Resource URL recorded in assessment: http://www.myexperiment.org/workflows/2164",
-              "extracted_text_lines": "linked_resources"
-            },
-            {
-              "note": "This is one of the strongest workflow-artifact cases in the top-cited set.",
-              "extracted_text_lines": "manual_assessment:linked_resources"
-            },
-            {
-              "note": "The paper states that workflows are in the Supporting Information and available from myExperiment.",
-              "extracted_text_lines": "manual_assessment:workflow_artifact"
+              "extracted_text_lines": "project_workflow_download_registry",
+              "article_section": "Project workflow retrieval notes",
+              "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
         }
@@ -2451,7 +2439,7 @@
           "provides_code_or_scripts": "no_public_code_found_in_pdf",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "linked_workflow_artifacts_retrievable": "not_checked",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
           "evidence_notes": "The article reports a KNIME 3.4 workflow for chemical data retrieval and curation, gives a GitHub workflow link, shows the workflow in a figure, and names CDK/RDKit node dependencies."
         },
         "flag_audit_fields": {
@@ -2466,7 +2454,7 @@
           "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2538,6 +2526,13 @@
               "article_section": "Description of the workflow",
               "note": "The dependency sentence includes CDK and RDKit project URLs."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "extracted_text_lines": "project_workflow_download_registry",
+              "article_section": "Project workflow retrieval notes",
+              "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
+            }
           ]
         }
       },
@@ -2590,7 +2585,7 @@
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "no",
           "reports_extension_installation_source": "no",
-          "linked_workflow_artifacts_retrievable": "not_checked",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
           "evidence_notes": "The article provides a KNIME workflow and source code on GitHub for disease-gene prediction, describes the workflow architecture, and names the SFARI gene database as input data."
         },
         "flag_audit_fields": {
@@ -2605,7 +2600,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": false,
           "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2668,6 +2663,13 @@
               "quote": "Data Availability Statement: All code and results obtained with the model are available from our also developed a KNIME workflow with the proposed methodology which allows users to GitHub repository (https://github.com/Muh-Asif/ configure and execute it without requiring machine learning and programming skills. ASD-genes-prediction). Machine learning is an effective and reliable technique to decipher ASD mechanism by iden- Funding: This work was supported by the tifying novel disease genes, but this study further demonstrated that their performance can Portuguese Fundação para a Ciência e Tecnologia be improved by incorporating a quantitative measure of gene functional similarities. Source (SFRH/BD/52485/2014 to MA and DeST: Deep code and the workflow of the proposed methodology are available at https://github.com/ Semantic Tagger PTDC/CCI-BIO/28685/2017).",
               "article_section": "Automated workflow",
               "note": "The data availability statement says all code and results are available in GitHub."
+            }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "extracted_text_lines": "project_workflow_download_registry",
+              "article_section": "Project workflow retrieval notes",
+              "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
         }
@@ -2838,7 +2840,7 @@
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "no",
           "reports_extension_installation_source": "no",
-          "linked_workflow_artifacts_retrievable": "not_checked",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
           "evidence_notes": "The article uses a KNIME 4.7 workflow to test molecular filters, links KNIME Hub and GitLab implementations, and reports the sampled GDB-17 and ZINC input libraries."
         },
         "flag_audit_fields": {
@@ -2853,7 +2855,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": false,
           "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2908,6 +2910,13 @@
               "quote": "cation by Shoichet et al., where they employed typical filtering approaches such as analyze various chemical libraries and examine the effect of library size on the ch Encyclopedia 2023, 3 509",
               "article_section": "4. Impact on Chemical Space",
               "note": "The discussion points to a GitLab and KNIME Hub implementation of the filtering pipeline."
+            }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "extracted_text_lines": "project_workflow_download_registry",
+              "article_section": "Project workflow retrieval notes",
+              "note": "Workflow artifact retrieval is documented for this article in data/original/workflows/knime_downloadable_workflow_references.json."
             }
           ]
         }
@@ -4369,6 +4378,2066 @@
         }
       },
       "processed_text_file": "data/processed/articles/Comprehensive_study_of_data_analytics_tools_RapidMiner_Weka_R_tool_Knime.txt"
+    },
+    {
+      "rank": 41,
+      "title": "maTE: discovering expressed interactions between microRNAs and their targets",
+      "doi": "10.1093/bioinformatics/btz204",
+      "pdf_file": "data/original/articles/bioinformatics_35_20_4020.pdf",
+      "knime_role_manual": "downloadable_knime_workflow_for_bioinformatics_method",
+      "knime_usage_summary": "The article implements the maTE method as a KNIME workflow and reports that the workflow is downloadable.",
+      "workflow_artifact": {
+        "status": "downloadable_workflow_linked",
+        "summary": "downloadable workflow linked"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "Random Forest classifier",
+        "meta-nodes",
+        "loops",
+        "branching"
+      ],
+      "data_availability": "The article lists GEO datasets and supplementary data used in the study.",
+      "code_or_software_availability": "The article provides algorithm pseudocode, but no separate code repository was recorded.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [
+          "Bioinformatics online",
+          "https://malikyousef.com/"
+        ],
+        "software_urls": [],
+        "supplement_urls_or_dois": [
+          "Bioinformatics online supplementary material"
+        ],
+        "notes": "Workflow availability is reported through Bioinformatics online and the author website."
+      },
+      "reproducibility_relevance": "This is a KNIME workflow publication with a downloadable workflow and a workflow figure, but no KNIME version was found in the extracted text.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2924234733",
+      "publication_year": 2019,
+      "venue": "Bioinformatics",
+      "doi_or_url": "10.1093/bioinformatics/btz204",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2924234733",
+          "title": "maTE: discovering expressed interactions between microRNAs and their targets",
+          "year": "2019",
+          "venue": "Bioinformatics",
+          "doi_or_url": "10.1093/bioinformatics/btz204",
+          "knime_role_source_field": "downloadable_knime_workflow_for_bioinformatics_method",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "downloadable_workflow_linked",
+          "provides_input_data": "reported_public_sources",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_checked",
+          "evidence_notes": "This is a KNIME workflow publication with a downloadable workflow and a workflow figure, but no KNIME version was found in the extracted text."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/bioinformatics_35_20_4020.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "516-528",
+              "quote": "miRNAs are first ranked and then the best j miRNAs are used to\ntrain an RF classifier combining the j best miRNAs. The pseudo\ncode is available as Algorithm 2.\n\n2.2.3 Workflow\n\nThe algorithms we developed can be implemented in many systems.\n\nIn order to test our approach and provide a proof of principle as\n\nwell as an interface for users, we developed the approach using the\n\nKonstanz Information Miner (KNIME). The resulting KNIME",
+              "article_section": "2.2.3 Workflow",
+              "note": "The article says the approach was developed using KNIME."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "524-528",
+              "quote": "In order to test our approach and provide a proof of principle as\n\nwell as an interface for users, we developed the approach using the\n\nKonstanz Information Miner (KNIME). The resulting KNIME",
+              "article_section": "2.2.3 Workflow",
+              "note": "The article says the KNIME workflow is available for download."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "542-544",
+              "quote": "formed in the yellow and blue box. The green dots under the nodes\nindicate that the process has successfully succeeded.",
+              "article_section": "2.2.3 Workflow",
+              "note": "The article caption identifies Fig. 3 as the maTE KNIME workflow."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "528-536",
+              "quote": "Konstanz Information Miner (KNIME). The resulting KNIME\n\nworkflow (Fig. 3) is available for download from Bioinformatics on-\n\nline and https://malikyousef.com/. The workflow in Figure 3 consists\n\nof processing nodes and data connections (lines/edges). Data travel\n\nalong the edges through the workflow. For better readability and to",
+              "article_section": "2.2.3 Workflow",
+              "note": "The article describes processing nodes, data connections, meta-nodes, loops, and branching."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "330-333",
+              "quote": "2 Materials and methods                                                       GDS3837     0.97   0.96   0.96   0.05   63    0.76   0.99   0.88   0.04   79\n\n2.1 Data                                                                        Note: We consider the top two clusters for SVM-RCE and the top two\n2.1.1 Gene expression data                                                    miRNAs for the maTE.",
+              "article_section": "2.1 Data",
+              "note": "The article reports that ten human gene-expression datasets were downloaded from GEO."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/bioinformatics_35_20_4020.txt"
+    },
+    {
+      "rank": 42,
+      "title": "Using Molecular Initiating Events to Develop a Structural Alert Based Screening Workflow for Nuclear Receptor Ligands Associated with Hepatic Steatosis",
+      "doi": "10.1021/acs.chemrestox.5b00480",
+      "pdf_file": "data/original/articles/41_10.1021_acs.chemrestox.pdf",
+      "knime_role_manual": "knime_workflow_used_for_structural_alert_screening",
+      "knime_usage_summary": "The article develops a KNIME structural-alert workflow for screening nuclear receptor ligands.",
+      "workflow_artifact": {
+        "status": "downloadable_workflow_reported",
+        "summary": "downloadable workflow reported"
+      },
+      "knime_version_reported": [
+        "3.2"
+      ],
+      "nodes_or_components_reported": [
+        "CDK node",
+        "structural feature rules",
+        "descriptor calculations"
+      ],
+      "data_availability": "ChEMBL and PDB data sources are described; no direct downloadable input-data URL was recorded in the audit.",
+      "code_or_software_availability": "No separate code or script repository was reported in the assessed text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [
+          "http://cosmosspace.cosmostox.eu/app/login"
+        ],
+        "software_urls": [
+          "www.knime.org"
+        ],
+        "supplement_urls_or_dois": [],
+        "notes": "The article reports that the workflow is freely available from COSMOS Space at http://cosmosspace.cosmostox.eu/app/login."
+      },
+      "reproducibility_relevance": "KNIME is the implementation platform for a screening workflow; the article reports a version and named CDK-node dependency but does not provide a direct workflow URL in the extracted text.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2338423545",
+      "publication_year": 2016,
+      "venue": "Chemical Research in Toxicology",
+      "doi_or_url": "10.1021/acs.chemrestox.5b00480",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2338423545",
+          "title": "Using Molecular Initiating Events to Develop a Structural Alert Based Screening Workflow for Nuclear Receptor Ligands Associated with Hepatic Steatosis",
+          "year": "2016",
+          "venue": "Chemical Research in Toxicology",
+          "doi_or_url": "10.1021/acs.chemrestox.5b00480",
+          "knime_role_source_field": "knime_workflow_used_for_structural_alert_screening",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "3.2",
+          "workflow_artifact_status": "downloadable_workflow_reported",
+          "provides_input_data": "reported_source_databases",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "named_knime_node_library",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_checked",
+          "evidence_notes": "KNIME is the implementation platform for a screening workflow; the article reports a version and named CDK-node dependency but provides a COSMOS Space workflow URL in the extracted text."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": true,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/41_10.1021_acs.chemrestox.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "340-352",
+              "quote": "binding interactions), eccentric connectivity index (ECI, structural complexity), topical polar\n\nsurface area (TPSA, relative polarity) and the number of rotatable bonds (RB, molecular\n\nflexibility and entropy).\n\n\n       Development of Workflows\nKNIME (version 3.2) was used to build a structural feature-based workflow to screen for\n\nligands predicted to bind to NR that are associated with the onset of hepatic steatosis (Table",
+              "article_section": "Development of Workflows",
+              "note": "The article states that KNIME 3.2 was used to build the workflow."
+            }
+          ],
+          "reports_knime_version": [
+            {
+              "extracted_text_lines": "340-344",
+              "quote": "binding interactions), eccentric connectivity index (ECI, structural complexity), topical polar\n\nsurface area (TPSA, relative polarity) and the number of rotatable bonds (RB, molecular",
+              "article_section": "Development of Workflows",
+              "note": "The article reports KNIME version 3.2."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "223-232",
+              "quote": "workflow can be used for hazard assessment, screening of potential ligands for chemical\nleads or grouping. The workflow is freely available to use and download from COSMOS\nSpace (http://cosmosspace.cosmostox.eu/app/login).",
+              "article_section": "Introduction",
+              "note": "The article states that the workflow is freely available to use and download from COSMOS Space."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "349-369",
+              "quote": "KNIME (version 3.2) was used to build a structural feature-based workflow to screen for\n\nligands predicted to bind to NR that are associated with the onset of hepatic steatosis (Table\n\n1). The workflows executed rules based on physico-chemical properties and structural\n\nfeatures established through studying relevant pChEMBL values and the structural\n\ninformation within PDB. The main KNIME workflow is an amalgamation of eight smaller\n\nworkflows for each NR making screening chemicals fast and easy for users. Each of these\n\nindividual workflows is made up of two steps. The first calculates physico-chemical\n\nproperties of the chemicals being screened to identify if the chemicals are in the chemical\n\nspace defined previously (descriptor ranges applied). The second step runs the chemicals\n\nbeing screened against the structural features found to be essential for receptor binding that\n\nhave been developed for each NR. In summary the workflow firstly identifies if a compound",
+              "article_section": "Development of Workflows",
+              "note": "The article describes the main KNIME workflow and its component steps."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "243-254",
+              "quote": "METHODS\n\n       Identifying chemical structures with relevant NR binding data from ChEMBL\nThe 10 NR listed in Table 1 were searched for within the online ChEMBL database (Version\n\n3.9) using their names and standard nomenclature identifiers in order to find agonists.25 To\n\nidentify agonists, the names and / or nomenclature of the NRs, as reported in Table 1, were",
+              "article_section": "Identifying chemical structures with relevant NR binding data from ChEMBL",
+              "note": "The article reports ChEMBL data retrieval and downloaded CSV files used as input evidence."
+            }
+          ],
+          "reports_extension_or_plugin_dependencies": [
+            {
+              "extracted_text_lines": "312-320",
+              "quote": "these essential binding interactions with the NR binding site such as hydroxyl moiety group\n\nwere then drawn as SMILES strings and added to form the rules of the workflow. 27, 28, 30\n\n\n\n       Calculation of Molecular Descriptors\nMolecular properties and other descriptors for the agonists were calculated using the CDK",
+              "article_section": "Calculation of Molecular Descriptors",
+              "note": "The article reports descriptor calculation using the CDK node in KNIME."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/41_10.1021_acs.chemrestox.txt"
+    },
+    {
+      "rank": 43,
+      "title": "K-Means Clustering Data COVID-19",
+      "doi": "10.25105/jti.v10i3.8428",
+      "pdf_file": "data/original/articles/Cluster_Analysis_of_Covid-19_in_Indonesia_Using_K-.pdf",
+      "knime_role_manual": "rapidminer_covid_clustering_no_knime_evidence",
+      "knime_usage_summary": "The downloaded article reports K-Means clustering with RapidMiner and does not provide evidence of KNIME use in the extracted text.",
+      "workflow_artifact": {
+        "status": "not_applicable",
+        "summary": "not applicable"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Kaggle and Indonesian public data sources are reported.",
+      "code_or_software_availability": "No code or scripts were reported in the assessed text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [
+          "Rapid Miner"
+        ],
+        "supplement_urls_or_dois": [],
+        "notes": "No KNIME evidence found in the local text."
+      },
+      "reproducibility_relevance": "This is treated as a search false positive or non-KNIME use case.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W3112864390",
+      "publication_year": 2020,
+      "venue": "JURNAL TEKNIK INDUSTRI",
+      "doi_or_url": "10.25105/jti.v10i3.8428",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W3112864390",
+          "title": "K-Means Clustering Data COVID-19",
+          "year": "2020",
+          "venue": "JURNAL TEKNIK INDUSTRI",
+          "doi_or_url": "10.25105/jti.v10i3.8428",
+          "knime_role_source_field": "rapidminer_covid_clustering_no_knime_evidence",
+          "knime_article_relation": "not_a_knime_use_case",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_applicable",
+          "provides_input_data": "reported_source_website",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "This is treated as a search false positive or non-KNIME use case."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/Cluster_Analysis_of_Covid-19_in_Indonesia_Using_K-.txt"
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/Cluster_Analysis_of_Covid-19_in_Indonesia_Using_K-.txt"
+    },
+    {
+      "rank": 44,
+      "title": "Free and open-source QSAR-ready workflow for automated standardization of chemical structures in support of QSAR modeling",
+      "doi": "10.1186/s13321-024-00814-3",
+      "pdf_file": "data/original/articles/44_10.pdf",
+      "knime_role_manual": "qsar_ready_knime_workflow_public_artifact",
+      "knime_usage_summary": "The article presents a QSAR-ready chemical-structure standardization workflow built in KNIME and shared through KNIME Hub, GitHub, Docker, and KNIME Server.",
+      "workflow_artifact": {
+        "status": "downloadable_workflow_linked",
+        "summary": "downloadable workflow linked"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "nodes",
+        "metanodes",
+        "quickform widgets",
+        "KNIME Server API"
+      ],
+      "data_availability": "The article describes chemical datasets and public DSSTox/CompTox outputs.",
+      "code_or_software_availability": "The article links GitHub repositories and Docker resources.",
+      "linked_resources": {
+        "data_urls": [
+          "https://github.com/NIEHS/QSAR-ready",
+          "https://github.com/kmansouri/QSAR-ready"
+        ],
+        "code_urls": [
+          "https://github.com/NIEHS/QSAR-ready",
+          "https://github.com/kmansouri/QSAR-ready"
+        ],
+        "workflow_urls": [
+          "https://kni.me/w/5TRvnGfMJs_gTkcZu",
+          "https://github.com/NIEHS/QSAR-ready",
+          "https://hub.docker.com/r/kamelmansouri/qsar-ready",
+          "https://knime.niehs.nih.gov/knime/"
+        ],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "URLs are normalized from the article availability statement."
+      },
+      "reproducibility_relevance": "This is a direct public KNIME workflow artifact case, with workflow sharing routes and installation/dependency context reported.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W4391962651",
+      "publication_year": 2024,
+      "venue": "Journal of Cheminformatics",
+      "doi_or_url": "10.1186/s13321-024-00814-3",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W4391962651",
+          "title": "Free and open-source QSAR-ready workflow for automated standardization of chemical structures in support of QSAR modeling",
+          "year": "2024",
+          "venue": "Journal of Cheminformatics",
+          "doi_or_url": "10.1186/s13321-024-00814-3",
+          "knime_role_source_field": "qsar_ready_knime_workflow_public_artifact",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "downloadable_workflow_linked",
+          "provides_input_data": "direct_urls_reported",
+          "provides_code_or_scripts": "github_and_docker_reported",
+          "reports_extension_or_plugin_dependencies": "knime_extension_reported",
+          "reports_extension_installation_source": "extension_url_reported",
+          "linked_workflow_artifacts_retrievable": "not_checked",
+          "evidence_notes": "This is a direct public KNIME workflow artifact case, with workflow sharing routes and installation/dependency context reported."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": true,
+          "reports_extension_or_plugin_dependencies": true,
+          "reports_extension_installation_source": true,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/44_10.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "453-465",
+              "quote": "Sitzmann et al. [41].\n\nPage 5 of 18\n\nWorkflow development under KNIME\nSoftware to manage a QSAR-ready standardization\nworkflow of the complexity described above would be\na challenging task to develop from scratch using a pro-\ngramming language or custom scripts. For the widest\naccessibility and adoption, fully mature standardization\nsoftware requires a user interface to navigate and cus-\ntomize the different processes, in addition to the high\nlevel of flexibility necessary to navigate through the vari-",
+              "article_section": "Workflow development under KNIME",
+              "note": "The article explains why the workflow was developed in KNIME."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "1263-1282",
+              "quote": "KM developed the workflow and wrote the manuscript. AJW contributed\n\nthe improvement of the workflow and writing of the manuscript. JTMF,\n\nNC, TM, and VT tested the workflow and contributed to the evaluation\n\ntool and editing the manuscript. MK implemented the KNIME server for\n\nweb application. RJ, NK and AJW directed the project and contributed\n\nPage 16 of 18\n\nFunding\nNot applicable.\n\nAvailability of data and materials\nThe QSAR-ready workflow is available on the KNIME Hub at: https://​kni.​me/w/​\n5TRvn​GfMJs​gTkcZu. Users can also share KNIME workflows through GitHub, a\nweb-based platform for software version control and collaboration. The QSAR-\nready workflow is available on the NIEHS GitHub repository: https://​github.​",
+              "article_section": "Availability of data and materials",
+              "note": "The availability statement provides KNIME Hub, GitHub, Docker, and KNIME Server workflow routes."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "659-664",
+              "quote": "users can share them with other users in their organiza-\ntion, run them remotely, schedule them to run at specific\ntimes, and monitor their execution. The QSAR-ready\nworkflow is available on NIEHS’ KNIME server WebPor-\ntal at: knime.niehs.nih.gov/knime/.",
+              "article_section": "Workflow overview",
+              "note": "The article includes a figure caption for the KNIME workflow."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "665-679",
+              "quote": "Fig. 1 KNIME QSAR-ready chemical structure standardization work\n\nPage 7 of 18\n\nResults and discussion\nWorkflow overview\nThe QSAR-ready workflow described above, and illus-\ntrated in Fig. 1, comprises eight major steps: (1) input and\nstructure parsing, (2) inorganics filter, (3) salts, counte-\nrions and mixtures processing, (4) structure standardi-\nzation, (5) ring processing, (6) duplicates processing, (7)\n3-dimensional structure processing, (8) output. Each\nof these steps is annotated on the workflow with a dif-\nferent color and consists of several sub-steps executed\nby various nodes and metanodes. Additional notes and",
+              "article_section": "Workflow overview",
+              "note": "The article describes workflow steps, nodes, metanodes, and documentation."
+            }
+          ],
+          "provides_input_data_direct_url": [
+            {
+              "extracted_text_lines": "1263-1268",
+              "quote": "KM developed the workflow and wrote the manuscript. AJW contributed\n\nthe improvement of the workflow and writing of the manuscript. JTMF,\n\nNC, TM, and VT tested the workflow and contributed to the evaluation",
+              "article_section": "Availability of data and materials",
+              "note": "The article provides a repository URL associated with the workflow and resources."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "1263-1282",
+              "quote": "KM developed the workflow and wrote the manuscript. AJW contributed\n\nthe improvement of the workflow and writing of the manuscript. JTMF,\n\nNC, TM, and VT tested the workflow and contributed to the evaluation\n\ntool and editing the manuscript. MK implemented the KNIME server for\n\nweb application. RJ, NK and AJW directed the project and contributed\n\nPage 16 of 18\n\nFunding\nNot applicable.\n\nAvailability of data and materials\nThe QSAR-ready workflow is available on the KNIME Hub at: https://​kni.​me/w/​\n5TRvn​GfMJs​gTkcZu. Users can also share KNIME workflows through GitHub, a\nweb-based platform for software version control and collaboration. The QSAR-\nready workflow is available on the NIEHS GitHub repository: https://​github.​",
+              "article_section": "Availability of data and materials",
+              "note": "The availability statement describes shared workflow and associated resources."
+            }
+          ],
+          "provides_code_or_scripts": [
+            {
+              "extracted_text_lines": "633-647",
+              "quote": "Users can also share KNIME workflows through\nGitHub, a web-based platform for software version con-\ntrol and collaboration. This enables multiple users to\nwork on the same workflow simultaneously and track\nchanges over time. GitHub also supports integration with\nother tools such as continuous integration and deliv-\nery tools. The QSAR-ready workflow is available on the\nNIEHS GitHub repository: https://​github.​com/​NIEHS/​\nQSAR-​ready.\n   Another way to share KNIME workflows is through\nDocker containers. Docker is a platform for develop-\ning, shipping, and running applications using contain-\ners. By creating a container image that includes the\nKNIME workflow and all the dependencies required to\nrun it, users can share their workflows with others and",
+              "article_section": "Workflow development under KNIME",
+              "note": "The article reports the workflow and Docker file on GitHub."
+            }
+          ],
+          "reports_extension_or_plugin_dependencies": [
+            {
+              "extracted_text_lines": "584-588",
+              "quote": "knime.​com/).\nSetting up the workflow with flow and global variables\nis necessary before deploying to the KNIME server. These\nvariables specify the choices of the user through the dif-\nferent steps of the standardization process. However, for",
+              "article_section": "Workflow development under KNIME",
+              "note": "The article reports KNIME widgets extension use."
+            }
+          ],
+          "reports_extension_installation_source": [
+            {
+              "extracted_text_lines": "584-588",
+              "quote": "knime.​com/).\nSetting up the workflow with flow and global variables\nis necessary before deploying to the KNIME server. These\nvariables specify the choices of the user through the dif-\nferent steps of the standardization process. However, for",
+              "article_section": "Workflow development under KNIME",
+              "note": "The article provides the KNIME Hub extension URL for the required widgets."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/44_10.txt"
+    },
+    {
+      "rank": 45,
+      "title": "Oil-immersed Power Transformer Internal Fault Diagnosis Research Based on Probabilistic Neural Network",
+      "doi": "10.1016/j.procs.2016.04.276",
+      "pdf_file": "data/original/articles/1-s2.0-S187705091630309X-main.pdf",
+      "knime_role_manual": "knime_simulation_workflow_for_transformer_fault_diagnosis",
+      "knime_usage_summary": "The article uses KNIME as a simulation platform for a probabilistic-neural-network fault-diagnosis workflow.",
+      "workflow_artifact": {
+        "status": "described_in_text_only",
+        "summary": "described in text only"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "The article reports 500 UCI sample records.",
+      "code_or_software_availability": "No code or scripts were reported.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No downloadable workflow link found in extracted text."
+      },
+      "reproducibility_relevance": "The article reports a KNIME simulation workflow but gives no version or executable artifact.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2370500362",
+      "publication_year": 2016,
+      "venue": "Procedia Computer Science",
+      "doi_or_url": "10.1016/j.procs.2016.04.276",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2370500362",
+          "title": "Oil-immersed Power Transformer Internal Fault Diagnosis Research Based on Probabilistic Neural Network",
+          "year": "2016",
+          "venue": "Procedia Computer Science",
+          "doi_or_url": "10.1016/j.procs.2016.04.276",
+          "knime_role_source_field": "knime_simulation_workflow_for_transformer_fault_diagnosis",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_public_repository",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "The article reports a KNIME simulation workflow but gives no version or executable artifact."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/1-s2.0-S187705091630309X-main.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "229-236",
+              "quote": "3.2. simulation workﬂow setting\n\n          KNIME ,a data mining software,is used for simulation experiment and the simulation of fault diagnosis is realized\n       by constructing workﬂows.\n       The implementation steps as fellow:\n\n            • 500 oil-immersed transformer fault data for database are read;",
+              "article_section": "3.2 simulation workflow setting",
+              "note": "The article says KNIME was used for the simulation experiment."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "229-239",
+              "quote": "3.2. simulation workﬂow setting\n\n          KNIME ,a data mining software,is used for simulation experiment and the simulation of fault diagnosis is realized\n       by constructing workﬂows.\n       The implementation steps as fellow:\n\n            • 500 oil-immersed transformer fault data for database are read;\n            • With the normalization processing ,this data are divided into sample data and test data randomly;\n            • Probabilistic neural network learning is used to learn of the data, and the fault prediction model for failure\n              prediction is to be establish;",
+              "article_section": "3.2 simulation workflow setting",
+              "note": "The article lists implementation steps in the KNIME workflow."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "207-224",
+              "quote": "accuracy. The three-ratio of oil dissolved gas content are selected as input vectors of neural network. And the output\n       vectors are the types of transformer faults.\n\n       3.1. The sample data set\n\n         A total of 500 sample data is got from the UCI machine learning repository , which contains seven attributes :\n       CH4 , C2 H6 , C2 H4 , C2 H2 , H2 , CO, CO2 .\n\n\n       Table 1. Failure type and number:\n       Failure type                                                                number\n       Low temperature overheat                                                    54\n       hyperthermia and superheating                                               265\n       Low energy discharge                                                        125\n       high energy discharging                                                     24\n       Discharge and overheating                                                   32",
+              "article_section": "3.1 The sample data set",
+              "note": "The article reports that the sample data came from the UCI machine learning repository."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/1-s2.0-S187705091630309X-main.txt"
+    },
+    {
+      "rank": 46,
+      "title": "Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications",
+      "doi": "10.1016/j.jbusres.2021.08.036",
+      "pdf_file": "data/original/articles/1-s2.0-S014829632100597X-main.pdf",
+      "knime_role_manual": "knime_hub_workflow_repository_for_marketing_ml",
+      "knime_usage_summary": "The article develops and presents KNIME Hub marketing machine-learning projects and workflows.",
+      "workflow_artifact": {
+        "status": "downloadable_workflows_on_knime_hub",
+        "summary": "downloadable workflows on knime hub"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "nodes",
+        "components",
+        "metanodes",
+        "Twitter API Extension",
+        "SVM Learner",
+        "Random Forest Learner"
+      ],
+      "data_availability": "The article links example datasets such as Kaggle churn and sentiment datasets.",
+      "code_or_software_availability": "The article reports KNIME Hub workflow links rather than conventional source-code repositories.",
+      "linked_resources": {
+        "data_urls": [
+          "https://www.kaggle.com/becksddf/churn-in-telecoms-dataset"
+        ],
+        "code_urls": [],
+        "workflow_urls": [
+          "KNIME Hub workflow links in Table 2",
+          "https://kni.me/w/szC3HhTNkE12-r6h"
+        ],
+        "software_urls": [
+          "https://www.knime.com/downloads"
+        ],
+        "supplement_urls_or_dois": [],
+        "notes": "Table 2 and footnotes contain KNIME Hub workflow links; the audit did not revalidate each link."
+      },
+      "reproducibility_relevance": "The article is a KNIME Hub workflow-sharing case and reports workflow figures, datasets, and an extension dependency.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W3198526585",
+      "publication_year": 2021,
+      "venue": "Journal of Business Research",
+      "doi_or_url": "10.1016/j.jbusres.2021.08.036",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W3198526585",
+          "title": "Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications",
+          "year": "2021",
+          "venue": "Journal of Business Research",
+          "doi_or_url": "10.1016/j.jbusres.2021.08.036",
+          "knime_role_source_field": "knime_hub_workflow_repository_for_marketing_ml",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
+          "provides_input_data": "direct_urls_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "knime_extension_reported",
+          "reports_extension_installation_source": "knime_extension_install_menu_reported",
+          "linked_workflow_artifacts_retrievable": "not_checked",
+          "evidence_notes": "The article is a KNIME Hub workflow-sharing case and reports workflow figures, datasets, and an extension dependency."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": true,
+          "reports_extension_installation_source": true,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/1-s2.0-S014829632100597X-main.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "120-141",
+              "quote": "“Machine Learning and Marketing” and it includes a selection of five\ncurated projects, including one or more workflows (i.e., visual scripts) in\nthe marketing areas of customer churn, sentiment analysis, automated\nanalysis of images, SEO and customer experience. We call it a live re­\npository, because it is designed to grow overtime with the inclusion of\nnew workflows related to ML and marketing. The projects are hosted\nwithin the KNIME Hub, which is an active, collaborative, global com­\nmunity of data scientists. As its main advantages, this repository (1)\nrequires little code writing, which hastens the learning cycle for aca­\ndemics and students; (2) allows the implementation of a wide range of\nML tasks across different types of data; and (3) supports rapid integra­\ntion with other environments within KNIME, such as R, Python, Amazon\nAWS, or Google Cloud.\n    Third, we developed two detailed step-by-step guides (i.e., cases)\ndescribing the customer churn project, and one of the sentiment ana­\nlyses projects that relies on text mining and supervised machine\nlearning. These step-by-step guides contribute to fasten the learning\ncurve of new KNIME Analytics users and enthusiasts in ML. With these\nstep-by-step guides, users can identify the basic steps for executing their\nown ML projects in KNIME. For each case, we introduce key marketing\nissues and link them with pertinent marketing research, then we\ndescribe the data, and provide a detailed explanation of the steps",
+              "article_section": "Introduction",
+              "note": "The article says the authors created projects and workflows in KNIME Hub."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "393-405",
+              "quote": "retailer (Walmart), so the set of churn predictors, and thus the necessary\nshare their work in this hub.\n                                                                                      customer data, would differ too (Ascarza et al., 2018).\n    In Table 2, we list the projects’ descriptions, additions in KNIME (i.e.,\n                                                                                          For this example, we rely on a popular simulated telecom customer\nintegrations), relevant marketing literature, and links to the workflow.\n                                                                                      data set, used in previous research to compare alternative churn models\nUsers can find them on the KNIME Hub, download them to their own\n                                                                                      (Amin et al., 2019) and available at https://www.kaggle.com/becksddf/\n  2\n    Both metanodes and components help to clean up and organize workflow,\nyet components have several features that metanodes do not have as indicated\nin this link: https://www.knime.com/blog/metanode-or-component.",
+              "article_section": "2.3 Workflow repository for KNIME community: the KNIME Hub",
+              "note": "The article says users can find projects on KNIME Hub, download them, and access workflow resources."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "472-478",
+              "quote": "optimization (SEO)       words, keywords, and topics.       Twitter API\n\n*Users need a Twitter API (with credentials) through the Twitter developer’s pag\n**Users need a google vision API and download its JSON file with the service acc\n\n                                           Fig. 5. Training workflow to train an",
+              "article_section": "3.1.2 Practical implementation in KNIME",
+              "note": "The article includes a workflow figure caption and workflow discussion."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "474-590",
+              "quote": "*Users need a Twitter API (with credentials) through the Twitter developer’s pag\n**Users need a google vision API and download its JSON file with the service acc\n\n                                           Fig. 5. Training workflow to train an\n\n1. Reading the data. Files with data can be dragged and dropped into\n   the KNIME workflow. In this case, we use XLS and CSV files, but\n   KNIME supports almost any kind of file (e.g., parquet, json.). The File\n   Reader node might help troubleshoot any problems or uncommon\n   extensions for files.\n2. Data manipulation and preparation. The Joiner node matches two\n   tables using one or more columns shared by both tables (i.e., keys).\n\nJournal of Business Research 137 (2021) 393–410\n\nkflows: one for training and one for deployment.\nME      Dataset                 Relevant Marketing Literature      Link to Examples\n\nKaggle TELCOM           Amin et al. (2019), de Haan        https://kni.me/w/9cBJzpQEe\nchurn                   and Menichelli (2020)              ZyMtSNa\nhttps://kni.me/w/PRrwnq5\nkb6UYXJuP\nKaggle Airline          (Villarroel Ordenes et al.         https://kni.me/w/KvOyB7v\nTweets and live         (2019), Heitmann et al.            z9Dt1MZOQ\nscraping of tweets      (2020))                            https://kni.me/w/Qvn6ezk\nH4z9KaLn-\nME      Kaggle Airline          Heitmann et al., (2020)            https://kni.me/w/A5JrR6D\nras     Tweets                                                     A9zxLZD9m\nhttps://kni.me/w/C80at_Y\nXQ6PK-R19\nKaggle Airline          Alaparthi and Mishra (2021),       https://kni.me/w/3VGz0gd\nTweets                  Heitmann et al. (2020)             nmIy-DfT4\nhttps://kni.me/w/myYBJS_\nVRYmt8h2P\nKaggle Airline          Herhausen, Ludwig, Grewal,         https://kni.me/w/zHAUMcO\nTweets                  Wulf, and Schoegel (2019),         ElRy20qO1\nHeitmann et al. (2020)             https://kni.me/w/djkzPLAKh\nP-j3Y17\nBrand Instagram         Colors and labels: Li and Xie      https://kni.me/w/FEczzB1\nhon     posts                   (2020), smiles: Zhang et al.,      FQBnPrCQg\n(2020)\ning     Kaggle dogs vs. cats    Selfies: Hartmann et al. (in       https://kni.me/w/8XFC5Hm\nn                               press)), brand attributes: Liu     WmuLd6LW1https://kni.me\nnsion                           et al., (2020)                     /w/P8j6x0NqLsSZWkSa\nCustomer reviews        Netzer et al. (2019), Tirunillai   https://kni.me/w/zXa_WBQ\nnsion                           and Tellis (2014)                  gRZz4nqq6\nand    Tweets and SERPs        Cowley (2020), Hubspot             https://kni.me/w/tST9mpG\n(2020)                             cmDVL3y_P\n\ne https://developer.twitter.com/en/apply-for-access.\nount key https://cloud.google.com/vision/docs/setup.\n\nd test a random forest algorithm for churn prediction.\n\nUsers can specify how they want to join the data (inner, right, left,\nfull). With the Number to String node, users can convert the “Churn”\ncolumn into a string, to meet the data type required by the classifi­\ncation algorithm (in this case, nominal). Note that KNIME offers a\nseries of nodes to manipulate data (e.g., string to date or vice versa).\nAt this stage, it is important to obtain descriptive statistics using the\nData Explorer node (or else a Statistics node). In KNIME Analytics\n\n                                                                                        398\n\nF. Villarroel Ordenes and R. Silipo\n\n   Platform, some graphical nodes are dedicated to the creation of plots,\n   charts, tables, and other graphical items. As output, other than data,\n   these nodes produce an interactive view (right-click and select\n   “Interactive View”). The Data Explorer and Statistics nodes belong to\n   this group of graphical nodes. For example, opening the interactive\n   view of the Data Explorer reveals that the churn sample is unbal­\n   anced, and most observations pertain to non-churning customers\n   (over 85%)—a common problem in customer churn models (Zhu\n   et al., 2017) that can result in substantial misclassification of the\n   minority class (churner customers). We address the imbalance\n   problem in the next step. Finally, we use a Color Manager node, which\n   mainly serves an aesthetic purpose, by allowing users to assign colors\n   to specific rows, based on some criterion. In our case, churners are in\n   red and non-churners are in blue.\n3. Training, testing and cross-validation. Supervised ML often includes\n   cross-validation (Ma & Sun, 2020) to avoid overfitting, which might\n   result from the specific characteristics of the training and testing (i.\n   e., holdout) samples. To perform cross-validation, we would use the\n   X-Partitioner node, which splits the data into some desired number of\n   training and testing samples, and the X-Aggregator node, which col­\n   lects the results of each iteration. In this case, we used a cross-\n   validation value of five (in the node configuration of X-partitioner),\n   so the data set gets divided into five subsamples. In each iteration,\n   four parts are used for training (80% of the data), and one part is used\n   for testing (20% of the data).5 In addition, for each training set, we\n   first use the SMOTE node, which addresses the problem of the less\n   numerous minority class (churners). The SMOTE node oversamples\n   this minority class by creating synthetic minority class examples\n   (Chawla et al., 2002). Finally, for the training and testing algorithms,\n   we use a Random Forest Learner node, which produces a trained\n   model (grey square at the end of the node), then a Random Forest\n   Predictor node, which relies on the trained model to predict patterns\n   in the testing data. Random forest is a popular ensemble method in\n   marketing; each individual decision tree is built from a bootstrap of\n   the original data, and then a final prediction results from averaging\n   all the decision trees (Ma & Sun, 2020). We apply a random forest\n\n   model with 100 decision trees; though the data set for this project\n   arguably is too small for 100 decision trees, we use them mainly for\n\n   illustrative purposes. Users can try various other algorithms too (e.g.,\n\n   Decision Tree Learner and Predictor).\n\n4. The last part of the workflow measures the performance of the\n\n   trained random forest on all resulting predictions. The X-aggregator\n\n   node collects all predictions and produces the following additional\n\n   columns: probability of churn, probability of no churn, and predic­",
+              "article_section": "3.1.2 Practical implementation in KNIME",
+              "note": "The article describes workflow steps and named KNIME nodes."
+            }
+          ],
+          "provides_input_data_direct_url": [
+            {
+              "extracted_text_lines": "421-428",
+              "quote": "Fig. 4. Common data science techniques used in digital marketing and available in KNIME Analytics Platform.\n\n\nchurn-in-telecoms-dataset.4 In our effort to provide a broader overview                contains operational data such as the number of calls, minutes spent on\nof KNIME functionality, we split the data set into a CSV file, which                   the phone, and relative charges, and then an Excel file that lists the\n                                                                                       contract characteristics and churn flag (i.e., if the contract was termi­\n                                                                                       nated). Each customer can be identified in the data by area code and",
+              "article_section": "3.1.1 Customer data",
+              "note": "The article reports Kaggle dataset URLs used in the workflow case."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "393-399",
+              "quote": "retailer (Walmart), so the set of churn predictors, and thus the necessary\nshare their work in this hub.\n                                                                                      customer data, would differ too (Ascarza et al., 2018).\n    In Table 2, we list the projects’ descriptions, additions in KNIME (i.e.,\n                                                                                          For this example, we rely on a popular simulated telecom customer\nintegrations), relevant marketing literature, and links to the workflow.\n                                                                                      data set, used in previous research to compare alternative churn models",
+              "article_section": "2.3 Workflow repository for KNIME community: the KNIME Hub",
+              "note": "The article describes datasets used in the workflow cases and gives links."
+            }
+          ],
+          "reports_extension_or_plugin_dependencies": [
+            {
+              "extracted_text_lines": "820-825",
+              "quote": "can be configured as an integer or a weighted value, relative to the\n   total number of terms).10 Finally, the Document Vector node trans­\n   forms the bag of words into a table; each row is a single document,\n   and the word/terms appear in columns. The representation of doc­\n   uments as word vectors helps in using all or some of these vectors as\n   predictors by the ML algorithm. The conclusion of this metanode",
+              "article_section": "3.2.2 Practical implementation in KNIME",
+              "note": "The article reports the Twitter API Extension dependency."
+            }
+          ],
+          "reports_extension_installation_source": [
+            {
+              "extracted_text_lines": "820-825",
+              "quote": "can be configured as an integer or a weighted value, relative to the\n   total number of terms).10 Finally, the Document Vector node trans­\n   forms the bag of words into a table; each row is a single document,\n   and the word/terms appear in columns. The representation of doc­\n   uments as word vectors helps in using all or some of these vectors as\n   predictors by the ML algorithm. The conclusion of this metanode",
+              "article_section": "3.2.2 Practical implementation in KNIME",
+              "note": "The article says users can download the extension through File > Install KNIME Extensions."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/1-s2.0-S014829632100597X-main.txt"
+    },
+    {
+      "rank": 47,
+      "title": "CellProfiler and KNIME: Open Source Tools for High Content Screening",
+      "doi": "10.1007/978-1-62703-311-4_8",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2397016474",
+      "publication_year": 2013,
+      "venue": "Methods in molecular biology",
+      "doi_or_url": "10.1007/978-1-62703-311-4_8",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2397016474",
+          "title": "CellProfiler and KNIME: Open Source Tools for High Content Screening",
+          "year": "2013",
+          "venue": "Methods in molecular biology",
+          "doi_or_url": "10.1007/978-1-62703-311-4_8",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
+    },
+    {
+      "rank": 48,
+      "title": "A Perspective and a New Integrated Computational Strategy for Skin Sensitization Assessment",
+      "doi": "10.1021/acssuschemeng.7b04220",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2787568625",
+      "publication_year": 2018,
+      "venue": "ACS Sustainable Chemistry & Engineering",
+      "doi_or_url": "10.1021/acssuschemeng.7b04220",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2787568625",
+          "title": "A Perspective and a New Integrated Computational Strategy for Skin Sensitization Assessment",
+          "year": "2018",
+          "venue": "ACS Sustainable Chemistry & Engineering",
+          "doi_or_url": "10.1021/acssuschemeng.7b04220",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
+    },
+    {
+      "rank": 49,
+      "title": "Strategies for Big Data Clustering",
+      "doi": "10.1109/ictai.2014.115",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2064883676",
+      "publication_year": 2014,
+      "venue": "2014 IEEE 26th International Conference on Tools with Artificial Intelligence",
+      "doi_or_url": "10.1109/ictai.2014.115",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2064883676",
+          "title": "Strategies for Big Data Clustering",
+          "year": "2014",
+          "venue": "2014 IEEE 26th International Conference on Tools with Artificial Intelligence",
+          "doi_or_url": "10.1109/ictai.2014.115",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
+    },
+    {
+      "rank": 50,
+      "title": "Application of data mining in a cohort of Italian subjects undergoing myocardial perfusion imaging at an academic medical center",
+      "doi": "10.1016/j.cmpb.2020.105343",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2999645440",
+      "publication_year": 2020,
+      "venue": "Computer Methods and Programs in Biomedicine",
+      "doi_or_url": "10.1016/j.cmpb.2020.105343",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2999645440",
+          "title": "Application of data mining in a cohort of Italian subjects undergoing myocardial perfusion imaging at an academic medical center",
+          "year": "2020",
+          "venue": "Computer Methods and Programs in Biomedicine",
+          "doi_or_url": "10.1016/j.cmpb.2020.105343",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
+    },
+    {
+      "rank": 51,
+      "title": "A Study of a Health Resources Management Platform Integrating Neural Networks and DSS Telemedicine for Homecare Assistance",
+      "doi": "10.3390/info9070176",
+      "pdf_file": "data/original/articles/52_10.3390_info9070176.pdf",
+      "knime_role_manual": "knime_mlp_ann_workflow_for_remote_patient_monitoring",
+      "knime_usage_summary": "The article implements and tests an MLP-ANN prediction workflow in KNIME for a telemedicine/resource-management platform.",
+      "workflow_artifact": {
+        "status": "shown_and_described_no_downloadable_workflow_found",
+        "summary": "shown and described no downloadable workflow found"
+      },
+      "knime_version_reported": [
+        "3.5.3"
+      ],
+      "nodes_or_components_reported": [
+        "Excel Reader",
+        "MySQL DB connector",
+        "Python Source Node",
+        "Normalizer",
+        "Partitioning",
+        "RProp MLP Learner",
+        "Multilayer Perceptron Predictor",
+        "Line Plot",
+        "Numeric Scorer",
+        "Excel Writer"
+      ],
+      "data_availability": "The article describes an experimental physiological dataset, but no downloadable input dataset was recorded.",
+      "code_or_software_availability": "The article mentions scripts/connectors but does not report a public code repository.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "Workflow shown and described in the paper, with no downloadable workflow link found."
+      },
+      "reproducibility_relevance": "The article is a KNIME-use case with version and workflow-node detail, but without a downloadable workflow artifact.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2884970730",
+      "publication_year": 2018,
+      "venue": "Information",
+      "doi_or_url": "10.3390/info9070176",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2884970730",
+          "title": "A Study of a Health Resources Management Platform Integrating Neural Networks and DSS Telemedicine for Homecare Assistance",
+          "year": "2018",
+          "venue": "Information",
+          "doi_or_url": "10.3390/info9070176",
+          "knime_role_source_field": "knime_mlp_ann_workflow_for_remote_patient_monitoring",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "3.5.3",
+          "workflow_artifact_status": "shown_and_described_no_downloadable_workflow_found",
+          "provides_input_data": "dataset_described_no_public_url",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "The article is a KNIME-use case with version and workflow-node detail, but without a downloadable workflow artifact."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/52_10.3390_info9070176.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "372-383",
+              "quote": "2. Materials and Methods\n     In this section are described the main tools and frameworks adopted for the development of\nthe prototype platform. For the implementation of Android and iOS mobile applications on tablets,\nwhich collect data from medical devices, the study adopted the Firemonkey framework with Delphi\nXE10 as an integrated development environment (IDE). The control room applied the Codeigniter\nframework and Sublime Text as an IDE. The MySQL database (DB backend system) was implemented\nby means PyCharm and PhpMyAdmin tools. The CRM integrating the business process modeling\n(BPM) functionalities was developed using a Django (Python) platform and PyCharm/Eclipse and\nOxygen/PyDev IDE. A Tablet Rugged IP68 type with Android and connected via Bluetooth and WiFi\nmodality was used for data transmission linking medical devices. The function of the tablet interface\nwas to transmit medical data (compatibly with HL7 in Appendix C and ethernet standard protocols)",
+              "article_section": "3 Materials and Methods",
+              "note": "The article reports that KNIME Analytics Platform was used for the MLP-ANN workflow."
+            }
+          ],
+          "reports_knime_version": [
+            {
+              "extracted_text_lines": "382-383",
+              "quote": "modality was used for data transmission linking medical devices. The function of the tablet interface\nwas to transmit medical data (compatibly with HL7 in Appendix C and ethernet standard protocols)",
+              "article_section": "3 Materials and Methods",
+              "note": "The article reports KNIME Analytics Platform version 3.5.3."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "960-961",
+              "quote": "•    Draw randomly (partitioning): random sampling of all rows.\n          •    Number of hidden layers (RProp MLP Learner): number of hidden layers in the architecture of",
+              "article_section": "3.4 Experimental Dataset and MLP ANN Predictive Results",
+              "note": "The article caption identifies a KNIME graphical user interface figure."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "895-923",
+              "quote": "Table 3. Systolic and diastolic blood pressure risk classification.\n\n                           Category                       Systolic (mmHg)                   Diastolic (mmHg)\n                       Hypotension                                <90                               <60\n                          Normal                                 90–119                            60–79\n                   Stage 1 hypertension                         130–139                            80–89\n                   Stage 2 hypertension                           >140                              >90\n                    Hypertensive crisis                           ≥180                             ≥120\n\n\n     The experimentation focused on systolic values by applying the KNIME workflow of Figure 10.\nThe proposed workflow is suited for data pre-processing and data processing implementing an MLP\nANN algorithm. Different objects, named nodes, are connected in order to execute the training and the\ntesting phases. Below are described the function of each object:\n\n•     Input node (node 1): the input data are loaded in the local repository in order to be pre-processed\n      by means of an Excel Reader (XLS) node by a MySQL DB connector, or by a Phyton Source Node\n      connecting the Cassandra big data system.\n\nInformation 2018, 9, 176                                                                                12 of 20\n\n\n\n•     Normalizer (node 2): this node normalizes the values of the numeric columns of the systolic\n      values; the normalization represents the data pre-processing necessary to equilibrate data on an\n      unique scale, thus reducing data dispersion and errors during the followed data process.\n•     Partitioning (node 3): the input table is split into two partitions (i.e., row-wise), e.g., train and test\n      data. The two partitions are available at the two output ports.\n•     RProp MLP Learner (node 4): RProp performs a local adaptation of the weight-updates according",
+              "article_section": "3.4 Experimental Dataset and MLP ANN Predictive Results",
+              "note": "The article describes the KNIME workflow and named nodes."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "823-836",
+              "quote": "8. Control\n                             Control room:\n                                     room: architecture\n                                           architecture of\n                                                        of the\n                                                           the multilevel\n                                                               multilevel DSS\n                                                                          DSS system (t11<<t2t2≤ t≤3).t3 ).\n\n3.4. Experimental Dataset and MLP ANN Predictive Results\n    The experimental physiological dataset is made by different attributes such as heart rate (HR),\nmean arterial pressure (MAP), systolic (SYS) (mmHg), and diastolic (DIA) (mmHg) signals,\nconcerning measurements performed during two months (measurements acquired in different 36",
+              "article_section": "3.4 Experimental Dataset and MLP ANN Predictive Results",
+              "note": "The article describes the experimental physiological dataset attributes."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/52_10.3390_info9070176.txt"
+    },
+    {
+      "rank": 52,
+      "title": "Software review: the KNIME workflow environment and its applications in genetic programming and machine learning",
+      "doi": "10.1007/s10710-015-9247-3",
+      "pdf_file": "data/original/articles/51_10.pdf",
+      "knime_role_manual": "knime_software_review",
+      "knime_usage_summary": "The article reviews KNIME as a workflow environment and its applications rather than reporting a reproducible study workflow artifact.",
+      "workflow_artifact": {
+        "status": "not_applicable_platform_review",
+        "summary": "not applicable platform review"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "RDKit nodes",
+        "Tree Ensemble Learner",
+        "R nodes",
+        "Python metanode"
+      ],
+      "data_availability": "Not applicable; this is a software review.",
+      "code_or_software_availability": "Not applicable; this is a software review.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [
+          "www.knime.org"
+        ],
+        "supplement_urls_or_dois": [],
+        "notes": "About-KNIME record; deeper workflow-reporting audit not applied."
+      },
+      "reproducibility_relevance": "Useful background about KNIME workflow concepts, not a study workflow reporting case.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W1013989637",
+      "publication_year": 2015,
+      "venue": "Genetic Programming and Evolvable Machines",
+      "doi_or_url": "10.1007/s10710-015-9247-3",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W1013989637",
+          "title": "Software review: the KNIME workflow environment and its applications in genetic programming and machine learning",
+          "year": "2015",
+          "venue": "Genetic Programming and Evolvable Machines",
+          "doi_or_url": "10.1007/s10710-015-9247-3",
+          "knime_role_source_field": "knime_software_review",
+          "knime_article_relation": "about_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_applicable_platform_review",
+          "provides_input_data": "no",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "Useful background about KNIME workflow concepts, not a study workflow reporting case."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      },
+      "processed_text_file": "data/processed/articles/51_10.txt"
+    },
+    {
+      "rank": 53,
+      "title": "N-linked Glycan Micro-heterogeneity in Glycoproteins of Arabidopsis",
+      "doi": "10.1074/mcp.ra117.000165",
+      "pdf_file": "data/original/articles/56_10.1074_mcp.ra117.000165.pdf",
+      "knime_role_manual": "knime_used_for_mass_spectrometry_data_filtering",
+      "knime_usage_summary": "The article imports mass-spectrometry peptide-spectrum matches into KNIME for filtering during data analysis.",
+      "workflow_artifact": {
+        "status": "text_only_knime_analysis_step",
+        "summary": "text only knime analysis step"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Proteomics data are deposited in ProteomeXchange with dataset identifier PXD006270.",
+      "code_or_software_availability": "No code or scripts were reported.",
+      "linked_resources": {
+        "data_urls": [
+          "http://www.ebi.ac.uk/pride/archive/projects/PXD006270"
+        ],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "KNIME is used as an analysis/filtering tool; no workflow artifact is reported."
+      },
+      "reproducibility_relevance": "This is a KNIME-use case at analysis-step level, not a workflow-artifact publication.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2775038352",
+      "publication_year": 2017,
+      "venue": "Molecular & Cellular Proteomics",
+      "doi_or_url": "10.1074/mcp.ra117.000165",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2775038352",
+          "title": "N-linked Glycan Micro-heterogeneity in Glycoproteins of Arabidopsis",
+          "year": "2017",
+          "venue": "Molecular & Cellular Proteomics",
+          "doi_or_url": "10.1074/mcp.ra117.000165",
+          "knime_role_source_field": "knime_used_for_mass_spectrometry_data_filtering",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "text_only_knime_analysis_step",
+          "provides_input_data": "direct_repository_url_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "This is a KNIME-use case at analysis-step level, not a workflow-artifact publication."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/56_10.1074_mcp.ra117.000165.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "325-352",
+              "quote": "study is available in supplemental Table S1.\n\n   Spectral Data Interrogation—The spectral data were interrogated\nusing Byonic (Protein Metrics) version 2.6 through Proteome Discoverer™\n\nSoftware (Thermo Fisher Scientific) version 2.1 against The Arabidop-\nsis TAIR10 protein database (20) including standard contaminants\n(27,416 sequences). A threshold for fragment spectra was applied,\nwhere fragment ions less than 1% signal-to-noise were discarded.\nThe Byonic parameters were: cleavage site(s): RK, cleavage side\n\n(trypsin): C-terminal, digestion specificity: fully specific, missed cle\nages: 2, precursor mass tolerance: 5 ppm, fragment type: both HCD\nand ETD, fragment mass tolerance for HCD and ETD: 10 ppm and 20\nppm respectively, fixed modifications: Carbamidomethyl/⫹57.021464 @\nC and variable modifications using an in-house plant N-glycan data-\nbase (supplemental Table S2) @ N. Advanced settings included, the\n\ncharge states (3, 4, 5) apply to unassigned spectra and skip bad\nspectra; precursor isotope off by X is Too high (wide); maximum\nprecursor mass is 10,000; precursor and charge assignments is com-\npute from MS1; maximum # of precursors per scan is 2; smooth width\n\nMolecular & Cellular Proteomics 17.3\n\n(m/z) is 0.01; the peptide output options are automatic score cut; the\nprotein output options are protein 1% FDR (or 20 reverse count)\ncalculated using the target/decoy approach. Peptide spectrum",
+              "article_section": "Experimental procedures",
+              "note": "The article reports importing PSMs into KNIME for filtering."
+            }
+          ],
+          "provides_input_data_direct_url": [
+            {
+              "extracted_text_lines": "317-323",
+              "quote": "186.076 (GlcNAc, fragment 2), 204.0967 (GlcNAc) or 366.1396 (Man-\n\nGlcNAc). The mass spectrometry proteomics data have been depos-\nited to the ProteomeXchange Consortium via the PRIDE (19) partner\n\nrepository with the data set identifier PXD006270 (http://www.ebi.\nac.uk/pride/archive/projects/PXD006270). A key outlining the raw",
+              "article_section": "Data availability",
+              "note": "The article reports the ProteomeXchange dataset identifier and URL."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "317-323",
+              "quote": "186.076 (GlcNAc, fragment 2), 204.0967 (GlcNAc) or 366.1396 (Man-\n\nGlcNAc). The mass spectrometry proteomics data have been depos-\nited to the ProteomeXchange Consortium via the PRIDE (19) partner\n\nrepository with the data set identifier PXD006270 (http://www.ebi.\nac.uk/pride/archive/projects/PXD006270). A key outlining the raw",
+              "article_section": "Data availability",
+              "note": "The article reports deposited proteomics data and a mapping table."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/56_10.1074_mcp.ra117.000165.txt"
+    },
+    {
+      "rank": 54,
+      "title": "Prediction of Thyroid Disease Using Data Mining Techniques",
+      "doi": "",
+      "pdf_file": "data/original/articles/628-2272-1-PB.pdf",
+      "knime_role_manual": "knime_classification_models_for_thyroid_prediction",
+      "knime_usage_summary": "The article uses KNIME Analytics Platform 2.12.1 to build and test thyroid-disease classification models.",
+      "workflow_artifact": {
+        "status": "shown_and_described_no_downloadable_workflow_found",
+        "summary": "shown and described no downloadable workflow found"
+      },
+      "knime_version_reported": [
+        "2.12.1"
+      ],
+      "nodes_or_components_reported": [
+        "ARFF Reader",
+        "Partitioning",
+        "Naive Bayes Learner",
+        "Decision Tree Learner",
+        "Naive Bayes Predictor",
+        "Decision Tree Predictor",
+        "Scorer",
+        "Normalizer",
+        "Multilayer Perceptron",
+        "RBFNetwork",
+        "Weka Predictor"
+      ],
+      "data_availability": "The article reports UCI thyroid data and a Romanian thyroid dataset collected from tiroida.ro.",
+      "code_or_software_availability": "No code or scripts were reported.",
+      "linked_resources": {
+        "data_urls": [
+          "https://archive.ics.uci.edu/ml/datasets/thyroid-disease/"
+        ],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [
+          "https://www.knime.org/"
+        ],
+        "supplement_urls_or_dois": [],
+        "notes": "The paper includes a KNIME diagram but no downloadable workflow file."
+      },
+      "reproducibility_relevance": "This is a KNIME-use case with version and node detail, but no executable workflow artifact found in the text.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2509976270",
+      "publication_year": 2016,
+      "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+      "doi_or_url": "https://openalex.org/W2509976270",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2509976270",
+          "title": "Prediction of Thyroid Disease Using Data Mining Techniques",
+          "year": "2016",
+          "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+          "doi_or_url": "https://openalex.org/W2509976270",
+          "knime_role_source_field": "knime_classification_models_for_thyroid_prediction",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "2.12.1",
+          "workflow_artifact_status": "shown_and_described_no_downloadable_workflow_found",
+          "provides_input_data": "direct_url_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "This is a KNIME-use case with version and node detail, but no executable workflow artifact found in the text."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/628-2272-1-PB.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "134-147",
+              "quote": "with two possible values (0/1). The class attribute is categorical too, but it can take three possible\nvalues (1 – hypothyroidism, 2 – hyperthyroidism or 3 – normal). The software used to build and test\nthe data mining models is KNIME Analytics Platform 2.12.1 (KNIME, 2015). KNIME (Konstanz\n                                                       117\n\nBRAIN. Broad Research in Artificial Intelligence and Neuroscience\nVolume 7, Issue 3, August 2016, ISSN 2067-3957 (online), ISSN 2068 - 0473 (print)\n\nInformation Miner) is a user-friendly and comprehensive open-source data integration, processing,\nanalysis, and exploration platform that enables the user to visually create data flows (diagrams),\nselectively execute some or all the analysis steps, and later investigate and understand the results\nthrough interactive views on data and models (KNIME, 2015). According to a survey posted by\nGregory Piatetsky (Piatetsky, 2016), KNIME is on the list with the top 10 most popular tools in\n2016 as analytic data mining software. Also, the authors worked with other free data mining tools",
+              "article_section": "3. Experiments",
+              "note": "The article says KNIME Analytics Platform was used to build and test the models."
+            }
+          ],
+          "reports_knime_version": [
+            {
+              "extracted_text_lines": "134-135",
+              "quote": "with two possible values (0/1). The class attribute is categorical too, but it can take three possible\nvalues (1 – hypothyroidism, 2 – hyperthyroidism or 3 – normal). The software used to build and test",
+              "article_section": "3. Experiments",
+              "note": "The article reports KNIME Analytics Platform 2.12.1."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "147-161",
+              "quote": "2016 as analytic data mining software. Also, the authors worked with other free data mining tools\nsuch as Weka (Weka, 2016), but they focused on KNIME because this is a tool blending for Python,\nR, SQL, Java, Weka, and many more.\n        The proposed KNIME diagram representing the data mining models is given in Figure 3.\nThe nodes that constitute the model diagram are: ARFF Reader – the input node used to load the\ndata set in arff format, Partitioning – the node with the role of data set partition (for training and for\nthe validation of the classification model), Naive Bayes Learner and Decision Tree Learner – the\nnodes used to build the classification model, Naive Bayes Predictor and Decision Tree Predictor –\nthe nodes used to validate the model, Scorer – the node reports a confusion matrix and the\naccompanying quality measures in its view, Normalizer – the data set are normalized to be able to\napply the neural network models, Multilayer Perceptron and RBFNetwork – the nodes\ncorresponding to the neural network classification models, Weka Predictor – a node implemented in\nWeka to validate the models.",
+              "article_section": "3. Experiments",
+              "note": "The article says the proposed KNIME diagram is shown in Figure 3."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "147-155",
+              "quote": "2016 as analytic data mining software. Also, the authors worked with other free data mining tools\nsuch as Weka (Weka, 2016), but they focused on KNIME because this is a tool blending for Python,\nR, SQL, Java, Weka, and many more.\n        The proposed KNIME diagram representing the data mining models is given in Figure 3.\nThe nodes that constitute the model diagram are: ARFF Reader – the input node used to load the\ndata set in arff format, Partitioning – the node with the role of data set partition (for training and for\nthe validation of the classification model), Naive Bayes Learner and Decision Tree Learner – the\nnodes used to build the classification model, Naive Bayes Predictor and Decision Tree Predictor –\nthe nodes used to validate the model, Scorer – the node reports a confusion matrix and the",
+              "article_section": "3. Experiments",
+              "note": "The article lists the nodes constituting the KNIME model diagram."
+            }
+          ],
+          "provides_input_data_direct_url": [
+            {
+              "extracted_text_lines": "448-458",
+              "quote": "Prerana, Sehgal, P., & Taneja, K. (2015). Predictive Data Mining for Diagnosis of Thyroid Disease\n      using Neural Network, International Journal of Research in Management, Science &\n      Technology (E-ISSN: 2321-3264), Vol. 3, No. 2.\nMargret, J., Lakshmipathi, B., & Kumar, S.A. (2012). Diagnosis of Thyroid Disorders using\n      Decision Tree Splitting Rules, International Journal of Computer Applications (0975 – 8887)\n      Volume 44– No. 8.\nChang, C.Y., Tsai, M.F., & Shao-JerChen (2008). Classification of the Thyroid Nodules Using\n      Support Vector Machines, International joint conference on Neural, Networks, pp 3093- 3098.\nUpadhayay, A., Shukla, S., & Kumar, S. (2013), Empirical Comparison by data mining\n      Classification algorithms (C 4.5 & C 5.0) for thyroid cancer data set, International Journal of\n      Computer Science & Communication Networks,Vol 3(1), 64-68, ISSN:2249-5789.",
+              "article_section": "References",
+              "note": "The article references the UCI thyroid-disease dataset URL."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "120-123",
+              "quote": "3. Experiments and results\n        Experiment A.\n        The authors used for their experiments a data set (UCI, 2016) containing 756 records about\npersons with thyroid dysfunctions. The classification model has 22 attributes; the class attribute is",
+              "article_section": "3. Experiments",
+              "note": "The article describes the UCI thyroid-disease dataset used in the experiments."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/628-2272-1-PB.txt"
+    },
+    {
+      "rank": 55,
+      "title": "Investigation of the Verhaar scheme for predicting acute aquatic toxicity: Improving predictions obtained from Toxtree ver. 2.6",
+      "doi": "10.1016/j.chemosphere.2015.06.009",
+      "pdf_file": "data/original/articles/54_10.1016_j.chemosphere.2015.06.pdf",
+      "knime_role_manual": "knime_post_processing_filter_for_toxicity_scheme",
+      "knime_usage_summary": "The article implements a post-processing filter as a KNIME workflow after Toxtree processing.",
+      "workflow_artifact": {
+        "status": "supplementary_workflow_reported",
+        "summary": "supplementary workflow reported"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "Structure Filter node"
+      ],
+      "data_availability": "The article reports datasets and supplementary information used for the analysis.",
+      "code_or_software_availability": "No code or scripts were reported.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [
+          "supplementary information via article DOI"
+        ],
+        "software_urls": [
+          "http://Toxtree.sourceforge.net",
+          "www.knime.org"
+        ],
+        "supplement_urls_or_dois": [
+          "https://doi.org/10.1016/j.chemosphere.2015.06.009",
+          "https://www.sciencedirect.com/science/article/pii/S0045653515006104",
+          "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc1.xlsx",
+          "https://ars.els-cdn.com/content/image/1-s2.0-S0045653515006104-mmc2.xlsx"
+        ],
+        "notes": "The article says the KNIME workflow is available as supplementary information. Crossref identifies Elsevier PII S0045653515006104. The standard Elsevier supplement URLs mmc1.xlsx and mmc2.xlsx resolve as Excel files, but no direct KNIME workflow archive URL was confirmed in this pass."
+      },
+      "reproducibility_relevance": "The article reports a supplementary KNIME workflow, but the current check found only Elsevier supplementary Excel files at the obvious attachment URLs; a direct KNIME workflow archive URL was not confirmed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W1961307031",
+      "publication_year": 2015,
+      "venue": "Chemosphere",
+      "doi_or_url": "10.1016/j.chemosphere.2015.06.009",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W1961307031",
+          "title": "Investigation of the Verhaar scheme for predicting acute aquatic toxicity: Improving predictions obtained from Toxtree ver. 2.6",
+          "year": "2015",
+          "venue": "Chemosphere",
+          "doi_or_url": "10.1016/j.chemosphere.2015.06.009",
+          "knime_role_source_field": "knime_post_processing_filter_for_toxicity_scheme",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "supplementary_workflow_reported",
+          "provides_input_data": "supplementary_data_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "The article reports a supplementary KNIME workflow, but the current check found only Elsevier supplementary Excel files at the obvious attachment URLs; a direct KNIME workflow archive URL was not confirmed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/54_10.1016_j.chemosphere.2015.06.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "190-193",
+              "quote": "166   Class 1 (narcosis or baseline toxicity); Class 2 (less inert compounds); Class 3 (unspecific reactivity);\n167   Class 4 (compounds and groups of compounds acting by a specific mechanism); Class 5 (Not possible\n168   to classify according to rules). The first four classes directly relate to the Verhaar classes described\n169   above whereas Class 5 can be considered as “out of domain”.",
+              "article_section": "2.2 Software",
+              "note": "The article says a KNIME workflow was developed as a post-processing filter."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "284-287",
+              "quote": "The above mentioned additions and alterations to the scheme were implemented through a KNIME\nworkflow employed after processing the compounds through Toxtree v2.6. A schematic\nrepresentation of the workflow is presented in Figure 2 (the KNIME workflow is available as\nsupplementary information).",
+              "article_section": "Results and discussion",
+              "note": "The article states that the KNIME workflow is available as supplementary information."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "375-378",
+              "quote": "276   one nitro substituent, and/or one to three chlorine substituents, and/or alkyl substituents. However, all\n277   phenols can be contain a dipole and therefore could act as polar narcotics unless they are electrophilic\n278   or have the ability to act via a specific mechanism (e.g. respiratory uncoupler of oxidative\n279   phosphorylation). In addition, while examining the unclassified compounds it became apparent that",
+              "article_section": "Results and discussion",
+              "note": "The article says a schematic representation of the workflow is presented in Figure 2."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "226-229",
+              "quote": "195   used for each compound to assess whether it was truly out of the domain of the model, or if it should\n196   have been classifiable using an existing rule. The definitions of the rules used in this process were\n197   those found in Toxtree software under the menu ‘Method | View decision tree’ along with the more\n198   in-depth perspective offered by the original Verhaar publication (Verhaar et al., 1992). Where three or",
+              "article_section": "2.3 Data analysis",
+              "note": "The article describes a modified rule implemented in KNIME using a Structure Filter node."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "128-171",
+              "quote": "111   2. Methods\n\n112   2.1 Datasets\n\n113   The data used to assess the performance of the Verhaar scheme as implemented in Toxtree ver. 2.6\n114   were acquired from the supplementary information of Enoch et al (2008). The same data were used so\n115   that a direct comparison could be made between Toxtree versions 1.5 (as used by Enoch et al, 2008)\n116   and 2.6 (see below). The supplementary information comprised two datasets: a set of 408 compounds\n117   tested using Pimephales promelas and assigned to mechanisms of action (Russom et al., 1997) and a\n118   set of 250 compounds tested using Tetrahymena pyriformis and also assigned mechanisms of action\n119   (Schultz et al., 1997). The information included: compound names; SMILES strings; toxicity values\n120   (LC50 and IGC50 respectively); assigned mechanism of action (details below); expected Verhaar\n121   scheme class (based on assigned mechanism); and Toxtree v1.5 classification. It was assumed that all\n122   information provided was correct; no quality analysis was performed on the data and Toxtree v1.5\n123   predictions were not repeated. However it was noted that 23 compounds from the T. pyriformis\n124   dataset had been recorded against Class 3, whereas their mechanism was actually Class 4. This\n125   typographical error was corrected before the data were used.\n\n126   The P. promelas dataset included compounds exhibiting the following mechanisms of toxicity:\n127   baseline narcosis (239 chemicals); polar narcosis (36 chemicals); reactive via electrophilic\n128   mechanisms (96 chemicals); respiratory uncoupling (12 chemicals); acetylcholinesterase inhibition\n129   (16 chemicals); and central nervous system seizure (9 chemicals). A combination of the assessment of\n130   whether a chemical exhibited excess toxicity (compared to that which would be predicted if the\n131   chemical was a baseline narcotic) together with the presence of structural features known to cause\n132   excess toxicity and experimental analysis (behavioural, dose–response and toxicodynamic profiling)\n133   was used previously to assign mechanisms of action (Russom et al., 1997).\n\n134   The T. pyriformis dataset included compounds exhibiting the following mechanisms of toxicity: polar\n135   narcosis (173 chemicals); reactive via electrophilic mechanisms (27 chemicals); reactive via pro-\n136   electrophilic mechanisms (i.e. metabolic activation is required; 27 chemicals); respiratory uncoupling\n137   (19 chemicals); and pro-redox cycling (4 chemicals). These mechanisms were previously assigned\n138   based on clusters of chemicals identified in a 3D toxic response surface (energy of the Lowest\n139   Unoccupied Molecular Orbital (ELUMO), logarithm of the octanol:water partition coefficient (logP) and\n140   the inverse logarithm of the 50% Inhibitory Growth Concentration (log IGC50-1)). Clusters of\n141   chemicals were observed within broad ranges of ELUMO values, where chemicals with lower ELUMO\n142   values were classified as potential soft electrophiles, whilst chemicals with higher E LUMO values were\n143   classified as polar narcotics. The metabolically converted pro-electrophiles, weak acid respiratory\n144   uncouplers and pro-redox cyclers were assigned based on the presence of known structural features\n145   and ELUMO values (Schultz et al., 1997). As this dataset did not contain any baseline, non-polar\n146   narcotics additional data were included from another publication to ensure all mechanistic categories\n147   were represented in both species (Ellison et al., 2008). The data from Ellison et al (2008) comprised\n148   the toxicity (log IGC50-1), log P, SMILES and CAS numbers of 64 alcohols and 23 ketones which are\n149   accepted to act as baseline narcotics (Könemann, 1981; Veith et al., 1983), and had been tested in the",
+              "article_section": "2.1 Datasets",
+              "note": "The article describes the datasets and reports the full compilation as supplementary information."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/54_10.1016_j.chemosphere.2015.06.txt"
+    },
+    {
+      "rank": 56,
+      "title": "Comparative Study of Data Mining Tools",
+      "doi": "",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2334920380",
+      "publication_year": 2014,
+      "venue": "Journal of Advanced Database Management & Systems",
+      "doi_or_url": "https://openalex.org/W2334920380",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2334920380",
+          "title": "Comparative Study of Data Mining Tools",
+          "year": "2014",
+          "venue": "Journal of Advanced Database Management & Systems",
+          "doi_or_url": "https://openalex.org/W2334920380",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
+    },
+    {
+      "rank": 57,
+      "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
+      "doi": "10.1016/j.ntt.2020.106918",
+      "pdf_file": "data/original/articles/58_10.1016_j.ntt.2020.106918.pdf",
+      "knime_role_manual": "knime_stc_counting_workflow_for_zebrafish_embryo_assay",
+      "knime_usage_summary": "The article establishes an automated STC-counting workflow in KNIME and reports that it is available on KNIME Hub.",
+      "workflow_artifact": {
+        "status": "downloadable_workflow_linked",
+        "summary": "downloadable workflow linked"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "R-snippet node",
+        "dcpR package"
+      ],
+      "data_availability": "The article reports experimental STC data and supporting information.",
+      "code_or_software_availability": "The article reports an R script embedded in KNIME but does not provide standalone code files in the text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [
+          "https://hub.knime.com/ search: spontaneous tail coilings detection in zebrafish"
+        ],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "The article says the workflow can be found on KNIME Hub by search phrase."
+      },
+      "reproducibility_relevance": "This is a KNIME workflow-use case with a publicly searchable KNIME Hub workflow and R-package dependency context.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W3045845943",
+      "publication_year": 2020,
+      "venue": "Neurotoxicology and Teratology",
+      "doi_or_url": "10.1016/j.ntt.2020.106918",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W3045845943",
+          "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
+          "year": "2020",
+          "venue": "Neurotoxicology and Teratology",
+          "doi_or_url": "10.1016/j.ntt.2020.106918",
+          "knime_role_source_field": "knime_stc_counting_workflow_for_zebrafish_embryo_assay",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "downloadable_workflow_linked",
+          "provides_input_data": "experimental_data_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "r_node_and_package_reported",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "This is a KNIME workflow-use case with a publicly searchable KNIME Hub workflow and R-package dependency context."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": true,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/58_10.1016_j.ntt.2020.106918.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "239-241",
+              "quote": "105   The aim of the present study was to investigate the influence of experimental parameters on the STC\n\n106   response and to develop an optimized STC test for screening neuroactive compounds. We optimized",
+              "article_section": "Introduction",
+              "note": "The article says the authors created an automated workflow in KNIME."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "645-653",
+              "quote": "12\n\n                                                  5\n\n                                                 4.5",
+              "article_section": "4.1.12 Transferability",
+              "note": "The article says the KNIME workflow is freely available on KNIME Hub."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "454-470",
+              "quote": "197   implemented by placing 10 embryos in a group within the same dish (10 embryos per dish and 2 replicates\n\n198   per dish). STC measurement was conducted between 24 – 25 hpf.\n\n\n199   2.6     Image analysis parameters\n\n\n200   To optimize the image analysis of STC in KNIME®, we investigated the influence of parameters like\n\n201   threshold (thrs) and the so called smoothing parameter (spar) used for identification of peaks within the\n\n202   R-snippet node in KNIME®. Threshold is the value beyond which the STC counts as one. Any response\n\n203   below this value was attributed to noise. The higher the threshold, the lower the sensitivity. Smoothing\n\n204   parameter is responsible for the smoothing of the response peak signal. Smoothing removes small peaks",
+              "article_section": "2.6 Optimization of image analysis",
+              "note": "The article describes R-snippet node and embedded R script workflow parameters."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "320-332",
+              "quote": "6\n\n141   pyraclostrobin, hexaconazole, daunorubicin-hydrochloride, DMSO and 3,4-dichloroaniline. Exposure\n\n142   concentrations are given in SI Table S1 and these were selected based on mortality data from published\n\n143   literature or in-house unpublished mortality data. Briefly, twenty fertilized embryos (1-3 hpf) were\n\n144   exposed in 20 mL of diluted stock solution or ISO water as control, within a 60 mm glass crystallization\n\n145   dish covered with a watchmaker glass. A solvent control was used when the substance was dissolved in",
+              "article_section": "2.3 Chemical exposure",
+              "note": "The article reports supporting-information concentrations and data sources used for experiments."
+            }
+          ],
+          "reports_extension_or_plugin_dependencies": [
+            {
+              "extracted_text_lines": "454-470",
+              "quote": "197   implemented by placing 10 embryos in a group within the same dish (10 embryos per dish and 2 replicates\n\n198   per dish). STC measurement was conducted between 24 – 25 hpf.\n\n\n199   2.6     Image analysis parameters\n\n\n200   To optimize the image analysis of STC in KNIME®, we investigated the influence of parameters like\n\n201   threshold (thrs) and the so called smoothing parameter (spar) used for identification of peaks within the\n\n202   R-snippet node in KNIME®. Threshold is the value beyond which the STC counts as one. Any response\n\n203   below this value was attributed to noise. The higher the threshold, the lower the sensitivity. Smoothing\n\n204   parameter is responsible for the smoothing of the response peak signal. Smoothing removes small peaks",
+              "article_section": "2.6 Optimization of image analysis",
+              "note": "The article reports the R-snippet node and dcpR package embedded in KNIME."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/58_10.1016_j.ntt.2020.106918.txt"
+    },
+    {
+      "rank": 58,
+      "title": "Big data for smart cities with KNIME a real experience in the SmartSantander testbed",
+      "doi": "10.1002/spe.2274",
+      "pdf_file": "data/original/articles/Softw Pract Exp - 2014 - Jara - Big data for smart cities with KNIME a real experience in the SmartSantander testbed.pdf",
+      "knime_role_manual": "knime_big_data_workflows_for_smartsantander",
+      "knime_usage_summary": "The article uses KNIME workflows for SmartSantander big-data analytics and reports downloadable models/data sets.",
+      "workflow_artifact": {
+        "status": "shown_or_described_downloadable_models_and_data_reported",
+        "summary": "shown or described downloadable models and data reported"
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [
+        "String to Date node",
+        "Java Snippets nodes",
+        "JPython script node",
+        "OSM Map to Image",
+        "Java Edit Variable",
+        "Image Port Writer"
+      ],
+      "data_availability": "The article reports SmartSantander sensor data and a Dropbox link for models and data sets.",
+      "code_or_software_availability": "The article describes script nodes but does not report standalone code files.",
+      "linked_resources": {
+        "data_urls": [
+          "https://www.dropbox.com/sh/wi97e419xrk4kkh/y0zAnv7DWP"
+        ],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "The article reports downloadable models and data sets; it does not explicitly call the Dropbox contents workflow files in the extracted text."
+      },
+      "reproducibility_relevance": "The paper gives workflow figures and node descriptions; downloadable workflow-file availability remains conservative because the text says models and data sets, not KNIME workflow files.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W1895379397",
+      "publication_year": 2014,
+      "venue": "Software Practice and Experience",
+      "doi_or_url": "10.1002/spe.2274",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W1895379397",
+          "title": "Big data for smart cities with KNIME a real experience in the SmartSantander testbed",
+          "year": "2014",
+          "venue": "Software Practice and Experience",
+          "doi_or_url": "10.1002/spe.2274",
+          "knime_role_source_field": "knime_big_data_workflows_for_smartsantander",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "shown_or_described_downloadable_models_and_data_reported",
+          "provides_input_data": "direct_url_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "The paper gives workflow figures and node descriptions; downloadable workflow-file availability remains conservative because the text says models and data sets, not KNIME workflow files."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/Softw_Pract_Exp_-_2014_-_Jara_-_Big_data_for_smart_cities_with_KNIME_a_real_experience_in_the_SmartSantander_testbed.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "205-208",
+              "quote": "big data and smart cities integration will be driven by real problems, and for that purpose, we need to\nfacilitate tools for the expression (modelling), evaluation (execution) and deployment (operational\nmodel) phases.\n   For this purpose, we are using KNIME platform [15]. We have chosen this platform because it",
+              "article_section": "2. Big data for smart cities",
+              "note": "The article states that the authors use the KNIME platform."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "348-364",
+              "quote": "various point of time.\n   The following subsections present our experiences for each one of the stages from the data\nmanipulation to the knowledge discovery, going through the data analytics.\n\n4.1. Data reading, cleaning, selection, transformation and integration\nThe first big challenge for big data management in smart cities is the huge data manipulation\nrequired. Figure 4 presents the workflow in KNIME with the KDD process‡\n\n\n\n‡\n    It has started reading the data from files, although it is also supported direct query to REST Services, but since\n    SmartSantander services are limited to 10 000 records, it is required to store them for long-term analysis.\n\nCopyright © 2014 John Wiley & Sons, Ltd.                                      Softw. Pract. Exper. 2015; 45:1145–1160\n                                                                                                     DOI: 10.1002/spe",
+              "article_section": "5. Knowledge discovery from data",
+              "note": "The article presents a KNIME workflow figure."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "368-384",
+              "quote": "Figure 4. KNIME workflow for knowledge discovery from data process during the first week of December\n                                             2013.\n\n   The data cleaning process is focused on removing noise, inconsistent data and format adaptation.\nKNIME offers multiple nodes to rename columns, change type (e.g., string to number, string to date)\nand other more useful ones such as the sorter data.\n   For example, in the SmartSantander testbed, the String to Date node has been used to round off\nthe time, because every sensor is monitored every minute, but they are not synchronized at the same\nsecond. Therefore, this offers different dates for data that belong to the same minute range. For that\nreason, this node has been used in order to make feasible the data aggregation of all the measures\nfrom the different sensors for each sampling period.\n   In addition, for the data selection, complementary to the basic operations, KNIME offers Java\nSnippets nodes. They allow to manipulate the data at a row level, it allows to build new columns\nbased on the data from other ones and remove some rows based on some rule. For example, we have",
+              "article_section": "5. Knowledge discovery from data",
+              "note": "The article describes named KNIME nodes used in the workflow."
+            }
+          ],
+          "provides_input_data_direct_url": [
+            {
+              "extracted_text_lines": "642-645",
+              "quote": "tracking information from personal platforms such as smart phone. Thereby, it could be extrapolated\nto traffic forecast.\n   The ongoing work is focused on the data characterization, that is, produce a description sum-\nmarizing the characteristics of the human dynamic by traffic density and other factors in order to",
+              "article_section": "Reference models and experiences for KNIME",
+              "note": "The article provides a Dropbox link for models and data sets."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "642-645",
+              "quote": "tracking information from personal platforms such as smart phone. Thereby, it could be extrapolated\nto traffic forecast.\n   The ongoing work is focused on the data characterization, that is, produce a description sum-\nmarizing the characteristics of the human dynamic by traffic density and other factors in order to",
+              "article_section": "Reference models and experiences for KNIME",
+              "note": "The article reports downloadable models and data sets."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/Softw_Pract_Exp_-_2014_-_Jara_-_Big_data_for_smart_cities_with_KNIME_a_real_experience_in_the_SmartSantander_testbed.txt"
+    },
+    {
+      "rank": 59,
+      "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
+      "doi": "10.3390/pharmaceutics14101998",
+      "pdf_file": "data/original/articles/59_10.3390_pharmaceutics14101998.pdf",
+      "knime_role_manual": "knime_caco2_prediction_workflow",
+      "knime_usage_summary": "The article develops a Caco-2 permeability prediction workflow on KNIME Analytics Platform 4.4.2 and reports a free workflow download.",
+      "workflow_artifact": {
+        "status": "downloadable_workflow_linked",
+        "summary": "downloadable workflow linked"
+      },
+      "knime_version_reported": [
+        "4.4.2"
+      ],
+      "nodes_or_components_reported": [
+        "RDKit Descriptor",
+        "RDKit Fingerprint",
+        "RDKit KNIME Integration",
+        "Indigo KNIME Integration"
+      ],
+      "data_availability": "Training and validation datasets are supplied in an XLSX file as supplemental information.",
+      "code_or_software_availability": "The article provides a workflow download URL, but no separate source-code repository was recorded.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [
+          "https://pikairos.eu/download/Caco-2-permeability-prediction"
+        ],
+        "software_urls": [
+          "https://www.knime.com/download-previous-versions"
+        ],
+        "supplement_urls_or_dois": [
+          "supplemental information"
+        ],
+        "notes": "The article gives a direct workflow download URL and KNIME/update-site details."
+      },
+      "reproducibility_relevance": "This is a KNIME workflow publication with version, downloadable workflow, data, and extension/update-site information.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W4296614628",
+      "publication_year": 2022,
+      "venue": "Pharmaceutics",
+      "doi_or_url": "10.3390/pharmaceutics14101998",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W4296614628",
+          "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
+          "year": "2022",
+          "venue": "Pharmaceutics",
+          "doi_or_url": "10.3390/pharmaceutics14101998",
+          "knime_role_source_field": "knime_caco2_prediction_workflow",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "4.4.2",
+          "workflow_artifact_status": "downloadable_workflow_linked",
+          "provides_input_data": "supplementary_data_reported",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "knime_extensions_reported",
+          "reports_extension_installation_source": "update_sites_reported",
+          "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
+          "evidence_notes": "This is a KNIME workflow publication with version, downloadable workflow, data, and extension/update-site information."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": true,
+          "reports_extension_installation_source": true,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {
+          "full_text_accessible": [
+            {
+              "extracted_text_lines": "processed_text_file",
+              "note": "Extracted article text available: data/processed/articles/59_10.3390_pharmaceutics14101998.txt"
+            }
+          ],
+          "uses_knime": [
+            {
+              "extracted_text_lines": "139-141",
+              "quote": "2. Materials and Methods\n                               2.1. Computational Tool\n                                    In this study, KNIME Analytics Platform version 4.4.2 [21] and its free community",
+              "article_section": "2.1 Computational Tool",
+              "note": "The article reports that KNIME was used to develop the automated workflow."
+            }
+          ],
+          "reports_knime_version": [
+            {
+              "extracted_text_lines": "139-141",
+              "quote": "2. Materials and Methods\n                               2.1. Computational Tool\n                                    In this study, KNIME Analytics Platform version 4.4.2 [21] and its free community",
+              "article_section": "2.1 Computational Tool",
+              "note": "The article reports KNIME Analytics Platform version 4.4.2."
+            }
+          ],
+          "provides_downloadable_knime_workflow_files": [
+            {
+              "extracted_text_lines": "831-838",
+              "quote": "Se: 0.67\n                                                                                                                             22 (BCS)               Sp: 1\n                                                                                                                                                  Acc: 0.82\n                                            * For studies where sensitivity (Se), specificity (Sp) or accuracy (Acc) values for the classification of\n                                            permeability/extent of metabolism were not explicitly stated, statistics were calculated from the con‐\n\nPharmaceutics 2022, 14, 1998                                                                                               16 of 21",
+              "article_section": "3.6 Automated Platform for In Silico Caco-2 Permeability Prediction",
+              "note": "The article provides a direct workflow download URL."
+            }
+          ],
+          "provides_workflow_screenshots_or_figures": [
+            {
+              "extracted_text_lines": "408-413",
+              "quote": "matrix for all these variables was computed and the number of variables was recursively\n                               reduced by eliminating the correlated variables with a lower ratio of occurrences. An av‐\n                               erage of 15 shortlisted variables were selected using this algorithm.",
+              "article_section": "3.3 Model development",
+              "note": "The article includes a modeling and validation workflow figure."
+            }
+          ],
+          "describes_workflow_or_nodes_in_text": [
+            {
+              "extracted_text_lines": "166-180",
+              "quote": "mance, an additional list of 100 commercial drugs was included as the external set [25].\n\n                               2.3. Chemical and Experimental Data Curation\n                                    Recommended good practices for data curation were followed to ensure a correct\n                               molecular representation and eliminate unreliable samples [26]. The curation workflow\n                               was split into three main steps: cleaning of chemical structures, standardization of the\n                               molecular representation, and treatment of duplicates. The final goal was to obtain a cu‐\n                               rated set made of unique molecules, ensuring the correctness of chemical representations\n                               before duplicate filtering and considering the variability of the target property during du‐\n                               plicate analysis (see Figure A1 in the Appendix A).\n\n                               2.4. Physicochemical and Structural Descriptors\n                                    The calculation scheme was based only on the 2D structure; therefore, stereoisomers\n                               of the same molecule were considered duplicates and removed in the previous steps.\n                               Physicochemical properties, MOE‐type and Kappa descriptors, and Morgan fingerprints",
+              "article_section": "2.3 Chemical and Experimental Data Curation",
+              "note": "The article describes KNIME workflow steps and named RDKit nodes."
+            }
+          ],
+          "reports_input_data_availability": [
+            {
+              "extracted_text_lines": "899-901",
+              "quote": "",
+              "article_section": "Data Availability Statement",
+              "note": "The article reports that training and validation datasets are supplied in supplemental information."
+            }
+          ],
+          "reports_extension_or_plugin_dependencies": [
+            {
+              "extracted_text_lines": "901-905",
+              "quote": "Supplementary Materials: The following supporting information can be downloaded at:\n                               www.mdpi.com/article/10.3390/pharmaceutics14101998/s1, Table S1: Final list of most important\n                               variables sorted by number of occurrences, Figure S1: Frequency distribution histograms for slogP,\n                               MW, HBD, HBA, RBN, and TPSA, Figure S2: Comparison of the molecular space of cleaned and",
+              "article_section": "Data Availability Statement",
+              "note": "The article reports RDKit and Indigo KNIME Integration dependencies."
+            }
+          ],
+          "reports_extension_installation_source": [
+            {
+              "extracted_text_lines": "901-907",
+              "quote": "Supplementary Materials: The following supporting information can be downloaded at:\n                               www.mdpi.com/article/10.3390/pharmaceutics14101998/s1, Table S1: Final list of most important\n                               variables sorted by number of occurrences, Figure S1: Frequency distribution histograms for slogP,\n                               MW, HBD, HBA, RBN, and TPSA, Figure S2: Comparison of the molecular space of cleaned and\n                               reliable sets, Figure S3: Regression plots for external and reliable validation sets, Figure S4: Correla‐\n                               tion matrix of five most important variables.",
+              "article_section": "Data Availability Statement",
+              "note": "The article reports KNIME update sites for the extensions."
+            }
+          ]
+        }
+      },
+      "processed_text_file": "data/processed/articles/59_10.3390_pharmaceutics14101998.txt"
+    },
+    {
+      "rank": 60,
+      "title": "Protein Inference Using PIA Workflows and PSI Standard File Formats",
+      "doi": "10.1021/acs.jproteome.8b00723",
+      "pdf_file": "",
+      "knime_role_manual": "not_assessed_no_local_full_text",
+      "knime_usage_summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "workflow_artifact": {
+        "status": "not_assessed",
+        "summary": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "knime_version_reported": [],
+      "nodes_or_components_reported": [],
+      "data_availability": "Not assessed; no local full text.",
+      "code_or_software_availability": "Not assessed; no local full text.",
+      "linked_resources": {
+        "data_urls": [],
+        "code_urls": [],
+        "workflow_urls": [],
+        "software_urls": [],
+        "supplement_urls_or_dois": [],
+        "notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+      },
+      "reproducibility_relevance": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed.",
+      "evidence": [],
+      "article_identifier": "https://openalex.org/W2950896755",
+      "publication_year": 2018,
+      "venue": "Journal of Proteome Research",
+      "doi_or_url": "10.1021/acs.jproteome.8b00723",
+      "article_audit_fields": {
+        "description_audit_fields": {
+          "article_identifier": "https://openalex.org/W2950896755",
+          "title": "Protein Inference Using PIA Workflows and PSI Standard File Formats",
+          "year": "2018",
+          "venue": "Journal of Proteome Research",
+          "doi_or_url": "10.1021/acs.jproteome.8b00723",
+          "knime_role_source_field": "not_assessed_no_local_full_text",
+          "knime_article_relation": "not_assessed",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_assessed",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "not_assessed",
+          "reports_extension_or_plugin_dependencies": "not_assessed",
+          "reports_extension_installation_source": "not_assessed",
+          "linked_workflow_artifacts_retrievable": "not_assessed",
+          "evidence_notes": "No local full text was available for this audit pass; detailed KNIME workflow reporting fields were not assessed."
+        },
+        "flag_audit_fields": {
+          "full_text_accessible": false,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
+        "flag_audit_support": {}
+      }
     }
   ],
   "article_audit_schema": {

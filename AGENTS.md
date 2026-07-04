@@ -66,10 +66,10 @@ workflow diagram or a platform mention. Authors need to publish executable
 workflow artifacts, version information, data, and extension context. At the
 same time, KNIME evolves: nodes can become deprecated, hidden, migrated,
 removed, or dependent on third-party extensions that are difficult to recover.
-The current paper investigates this claim using OpenAlex bibliometrics, manual
-assessment of the 40 most-cited KNIME-matching article records, current-KNIME
-opening and execution attempts for retrievable workflows, and longitudinal
-repository mining of KNIME node metadata.
+The current paper investigates this claim using OpenAlex bibliometrics, a
+top-60 article audit registry with not-assessed placeholders for missing full
+texts, current-KNIME opening and execution attempts for retrievable workflows,
+and longitudinal repository mining of KNIME node metadata.
 
 ## Core Research Questions
 
@@ -148,9 +148,15 @@ Create directories only when they are needed. Keep generated files out of versio
 - The current OpenAlex query uses title-and-abstract search for `KNIME` and
   `type:article`, collected on June 29, 2026. The processed result contains
   963 article-type records.
-- The top-cited article audit uses the 40 most-cited records from the processed
-  OpenAlex result. Thirty-five records were assessed from full text; five were
-  not available at the time of assessment.
+- The top-cited article audit registry uses the 60 most-cited records from the
+  processed OpenAlex result. Forty-nine records currently have local PDFs and
+  processed one-column text; eleven records are retained as not-assessed
+  placeholders because no local full text is available.
+- Current local article retrieval for ranks 41-60 is recorded in
+  `data/processed/audit/article_download_attempts_41-60.csv`: 14 of 20 records
+  have local PDFs, including one user-provided record without DOI. The six
+  records still not downloaded in that rank range are ranks 47, 48, 49, 50, 56,
+  and 60 in the current OpenAlex top-60 order.
 - The top-cited article assessment file
   `data/processed/audit/knime_most_cited_article_assessments.json` now has
   an explicit `article_audit_fields` block for each record. The block is split
@@ -234,8 +240,8 @@ Create directories only when they are needed. Keep generated files out of versio
   `AGENTS.md` rather than the public-facing `README.md`.
 - The empirical expansion priority is to increase the scale of article and
   workflow evidence, not to restart the paper. Continue assessing
-  KNIME-related article records beyond the current 40-record sample as time allows, and
-  use only the number actually completed by the deadline.
+  KNIME-related article records beyond the current top-60 audit registry as
+  time allows, and use only the number actually completed by the deadline.
 - For every retrievable KNIME workflow found during article assessment, record
   the source article, workflow source URL, retrieval date, package or file name,
   available workflow metadata, node identifiers or factory classes where
@@ -249,23 +255,23 @@ Create directories only when they are needed. Keep generated files out of versio
   records, full-text accessibility, KNIME-use articles, KNIME version reporting,
   downloadable workflow files, workflow screenshots or text descriptions, input
   data, code/scripts, and extension or plugin information.
-- Current 40-record top-cited audit counts used in the article tables are:
-  - all top-cited records: 40
-  - assessed from full text: 35
-  - not assessed from full text: 5
-  - about KNIME: 5
-  - not a KNIME use case: 6
-  - uses KNIME: 24
-  - workflow or nodes described in text: 19
-  - workflow screenshots or figures: 11
-  - reports KNIME version: 7
-  - downloadable KNIME workflow files: 8
-  - extension/plugin dependencies reported: 6
-  - extension installation source reported: 3
+- Current 60-record structured audit counts used in the article tables are:
+  - all top-cited records: 60
+  - assessed from full text: 49
+  - not assessed from full text: 11
+  - about KNIME: 6
+  - not a KNIME use case: 7
+  - uses KNIME: 36
+  - workflow or nodes described in text: 30
+  - workflow screenshots or figures: 19
+  - reports KNIME version: 11
+  - downloadable KNIME workflow files: 15
+  - extension/plugin dependencies reported: 11
+  - extension installation source reported: 6
   - linked workflow artifacts retrieved in the workflow experiment: 4 article records
-  - code or scripts reported: 9
-  - reports input-data availability: 17
-  - direct input-data resource: 9
+  - code or scripts reported: 10
+  - reports input-data availability: 29
+  - direct input-data resource: 14
   Keep these counts synchronized with `article/article.tex` and
   `data/processed/audit/knime_most_cited_article_assessments.json` when the
   audit changes.

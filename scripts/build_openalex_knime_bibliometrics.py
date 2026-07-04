@@ -249,7 +249,7 @@ def main() -> int:
         compact_rows,
         key=lambda row: (int(row["cited_by_count"]), str(row["publication_year"])),
         reverse=True,
-    )[:20]
+    )[:60]
     likely_workflow = [
         row for row in compact_rows if row["likely_uses_knime_workflow_platform"]
     ]
