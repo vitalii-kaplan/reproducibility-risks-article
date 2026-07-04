@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build article audit table CSVs from structured audit flags.
+"""Build the top-cited article audit summary table from structured audit flags.
 
-The manuscript keeps the rendered tables in LaTeX, but the counts should come
-from the audit JSON. This script computes the table rows from per-article
-``flag_audit_fields`` and description-level classification fields, writes CSV
-sources under ``article/tables/``, and compares the generated values with the
-current LaTeX tables.
+The manuscript keeps the rendered table in LaTeX, but the counts should come
+from the audit JSON. This script computes the Table 3 rows from per-article
+``flag_audit_fields`` and description-level classification fields, writes the
+CSV source under ``article/tables/``, and compares the generated values with
+the current LaTeX table.
 """
 
 from __future__ import annotations
@@ -50,7 +50,7 @@ TOP_FLAG_ROWS: tuple[tuple[str, str, str], ...] = (
     ),
     ("Reports KNIME version", "reports_knime_version", "Specific KNIME version value found"),
     (
-        "Downloadable KNIME workflow files",
+        "Reports downloadable workflows",
         "provides_downloadable_knime_workflow_files",
         "Executable workflow files provided or linked",
     ),
@@ -63,11 +63,6 @@ TOP_FLAG_ROWS: tuple[tuple[str, str, str], ...] = (
         "Reports extension installation source",
         "reports_extension_installation_source",
         "Update site, project URL, or installation source reported",
-    ),
-    (
-        "Linked workflow artifacts retrieved",
-        "linked_workflow_artifacts_retrievable",
-        "Linked KNIME workflow artifacts obtained in project notes",
     ),
     (
         "Provides code or scripts",
@@ -84,17 +79,6 @@ TOP_FLAG_ROWS: tuple[tuple[str, str, str], ...] = (
         "provides_input_data_direct_url",
         "Direct data URL or resource pointer recorded",
     ),
-)
-
-KNIME_USE_ROWS: tuple[tuple[str, str], ...] = (
-    ("Uses KNIME", "uses_knime"),
-    ("Workflow or nodes described in text", "describes_workflow_or_nodes_in_text"),
-    ("Workflow screenshots or figures", "provides_workflow_screenshots_or_figures"),
-    ("Reports KNIME version", "reports_knime_version"),
-    ("Downloadable KNIME workflow files", "provides_downloadable_knime_workflow_files"),
-    ("Reports extension/plugin dependencies", "reports_extension_or_plugin_dependencies"),
-    ("Reports extension installation source", "reports_extension_installation_source"),
-    ("Linked workflow artifacts retrieved", "linked_workflow_artifacts_retrievable"),
 )
 
 
@@ -182,15 +166,6 @@ def build_top_table(articles: list[dict[str, Any]]) -> list[TableRow]:
         count = flag_count(articles, flag_name)
         rows.append(TableRow(label, count, pct(count, total), interpretation))
 
-    return rows
-
-
-def build_knime_use_table(articles: list[dict[str, Any]]) -> list[TableRow]:
-    denominator = flag_count(articles, "uses_knime")
-    rows = []
-    for label, flag_name in KNIME_USE_ROWS:
-        count = flag_count(articles, flag_name)
-        rows.append(TableRow(label, count, pct(count, denominator)))
     return rows
 
 
@@ -329,15 +304,12 @@ def main() -> int:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     top_rows = build_top_table(articles)
-    knime_use_rows = build_knime_use_table(articles)
 
     top_csv = args.output_dir / "top_cited_article_audit_summary.csv"
-    knime_use_csv = args.output_dir / "knime_use_workflow_reporting_signals.csv"
     comparison_csv = args.output_dir / "article_audit_table_comparison.csv"
     summary_check_csv = args.output_dir / "article_audit_summary_count_check.csv"
 
     write_table(top_csv, top_rows, include_interpretation=True)
-    write_table(knime_use_csv, knime_use_rows, include_interpretation=False)
     write_summary_count_check(summary_check_csv, data, articles)
 
     article_tex = args.article.read_text(encoding="utf-8")
@@ -349,13 +321,6 @@ def main() -> int:
             parse_article_table(article_tex, "tab:top-cited-assessment"),
         )
     )
-    comparison_rows.extend(
-        compare_rows(
-            "knime_use_workflow_reporting_signals",
-            knime_use_rows,
-            parse_article_table(article_tex, "tab:knime-use-assessment"),
-        )
-    )
     write_comparison(comparison_csv, comparison_rows)
 
     mismatches = [
@@ -364,7 +329,6 @@ def main() -> int:
         if row["count_match"] != "True" or row["share_match"] != "True"
     ]
     print(f"Wrote {top_csv}")
-    print(f"Wrote {knime_use_csv}")
     print(f"Wrote {comparison_csv}")
     print(f"Wrote {summary_check_csv}")
     if mismatches:

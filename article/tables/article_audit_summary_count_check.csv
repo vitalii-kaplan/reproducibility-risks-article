@@ -6,7 +6,6 @@ reports_knime_version,15,15,True
 provides_downloadable_knime_workflow_files,22,22,True
 reports_extension_or_plugin_dependencies,20,20,True
 reports_extension_installation_source,11,11,True
-linked_workflow_artifacts_retrievable,7,7,True
 provides_code_or_scripts,15,15,True
 reports_input_data_availability,41,41,True
 provides_input_data_direct_url,20,20,True

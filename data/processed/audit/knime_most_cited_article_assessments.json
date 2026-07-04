@@ -6659,8 +6659,8 @@
           "provides_code_or_scripts": "software_repository_reported",
           "reports_extension_or_plugin_dependencies": "r_scripts_and_openms_nodes_reported",
           "reports_extension_installation_source": "no",
-          "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
-          "evidence_notes": "This is a KNIME workflow publication with source/release availability and example-data context, but no workflow retrieval/opening attempt has been recorded yet."
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
+          "evidence_notes": "This is a KNIME workflow publication with source/release availability and example-data context, and the workflow artifact was later retrieved in the local workflow inventory."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
@@ -6674,7 +6674,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6738,6 +6738,14 @@
               "article_section": "2.1 Data processing",
               "note": "The article reports R/XCMS and OpenMS node integration options."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "data/original/workflows/knime_downloadable_workflow_references.json",
+              "workflow_directory": "data/original/workflows/10.1007_s11306-018-1349-5",
+              "artifact": "KniMet-master.zip",
+              "note": "Workflow archive downloaded from the recorded software release; the archive contains KniMet-master/KniMet.knwf."
+            }
           ]
         }
       }
@@ -6784,7 +6792,7 @@
         ],
         "notes": "Article text reports example workflows, a myExperiment workflow, and supplementary data."
       },
-      "reproducibility_relevance": "This is a KNIME extension/workflow publication with version, code/update mechanism, example workflows, and a myExperiment workflow link, but no retrieval/opening attempt has been recorded yet.",
+      "reproducibility_relevance": "This is a KNIME extension/workflow publication with version, code/update mechanism, example workflows, and a myExperiment workflow link. The myExperiment workflow archive was later obtained manually and recorded in the local workflow inventory.",
       "evidence": [],
       "article_identifier": "https://openalex.org/W2154592269",
       "publication_year": 2011,
@@ -6806,8 +6814,8 @@
           "provides_code_or_scripts": "source_and_compiled_code_reported",
           "reports_extension_or_plugin_dependencies": "knime_update_mechanism_reported",
           "reports_extension_installation_source": "knime_update_mechanism_reported",
-          "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
-          "evidence_notes": "This is a KNIME extension/workflow publication with version, code/update mechanism, example workflows, and a myExperiment workflow link, but no retrieval/opening attempt has been recorded yet."
+          "linked_workflow_artifacts_retrievable": "retrieved_manual_local_artifact",
+          "evidence_notes": "This is a KNIME extension/workflow publication with version, code/update mechanism, example workflows, and a myExperiment workflow link. The myExperiment workflow archive was later obtained manually and recorded in the local workflow inventory."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
@@ -6821,7 +6829,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6901,6 +6909,14 @@
               "article_section": "Availability",
               "note": "The article reports the KNIME update mechanism as the source for code/extension delivery."
             }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "data/original/workflows/knime_downloadable_workflow_references.json",
+              "workflow_directory": "data/original/workflows/10.1093_bioinformatics_btr478",
+              "artifact": "NGS_sample_workflow_with_data-v1.zip",
+              "note": "User manually downloaded the myExperiment workflow archive. The ZIP contains a KNIME workflow directory with workflow.knime."
+            }
           ]
         }
       }
@@ -6975,7 +6991,7 @@
           "provides_code_or_scripts": "source_code_repository_reported",
           "reports_extension_or_plugin_dependencies": "knime_extensions_reported",
           "reports_extension_installation_source": "update_sites_reported",
-          "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry_partial",
           "evidence_notes": "This is a KNIME workflow/integration article with multiple public KNIME Hub workflows, data links, and extension installation context, but no retrieval/opening attempt has been recorded yet."
         },
         "flag_audit_fields": {
@@ -6990,7 +7006,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -7069,6 +7085,14 @@
               "quote": "format. The areas of the tissue that contain DAB stain were\nidentified through a trainable pixel classification scheme. To\nachieve this, the image is split into its three individual channels\nand processed with a series of ImageJ functions to generate an\nimage that reflects the DAB pixel values after subtraction of\nbackground signal from the other three channels. In the pixel",
               "article_section": "Biological Use Case No. 2",
               "note": "The article reports adding a nightly software site before opening the workflow."
+            }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "data/original/workflows/knime_downloadable_workflow_references.json",
+              "workflow_directory": "data/original/workflows/10.3389_fcomp.2020.00008",
+              "artifact": "six KNIME Hub .knwf files",
+              "note": "Six KNIME Hub workflow artifacts were downloaded; one recorded KNIME Hub short link was stale or unavailable."
             }
           ]
         }
@@ -7695,7 +7719,7 @@
           "provides_code_or_scripts": "no",
           "reports_extension_or_plugin_dependencies": "python_and_r_scripts_reported",
           "reports_extension_installation_source": "no",
-          "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
           "evidence_notes": "This is a KNIME workflow publication with downloadable workflow links and data availability, but no retrieval/opening attempt has been recorded yet."
         },
         "flag_audit_fields": {
@@ -7710,7 +7734,7 @@
           "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": false,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -7773,6 +7797,14 @@
               "quote": "\n                                            on the testing dataset represented by those genes, and the performance statistics are recorded. We have reported\n                                            the performance of j = 1,…,10.\n                                               In our implementation, many RF classifiers are trained on randomly selected data using 90% data for train-",
               "article_section": "Implementation of GediNET",
               "note": "The article reports using Python and R scripts inside the KNIME workflow."
+            }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "data/original/workflows/knime_downloadable_workflow_references.json",
+              "workflow_directory": "data/original/workflows/10.1038_s41598-022-24421-0",
+              "artifact": "github_GediNET_master.zip",
+              "note": "GitHub workflow archive downloaded and found to contain GediNET_v1.knwf and ProcessGEO_data.knwf; the recorded KNIME Hub short link was unavailable."
             }
           ]
         }
@@ -8816,8 +8848,8 @@
           "provides_code_or_scripts": "figshare_knime_workflow_zip_reported",
           "reports_extension_or_plugin_dependencies": "fiji_trackmate_dependency_reported",
           "reports_extension_installation_source": "plugin_url_reported",
-          "linked_workflow_artifacts_retrievable": "not_checked_in_this_pass",
-          "evidence_notes": "The article uses a FIJI/KNIME pipeline and deposits the default KNIME workflow in Figshare. Workflow artifact retrieval/opening was not attempted in this update."
+          "linked_workflow_artifacts_retrievable": "retrieved_in_project_workflow_registry",
+          "evidence_notes": "The article uses a FIJI/KNIME pipeline and deposits the default KNIME workflow in Figshare. The workflow artifact was later retrieved in the local workflow inventory."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
@@ -8831,7 +8863,7 @@
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true,
-          "linked_workflow_artifacts_retrievable": false
+          "linked_workflow_artifacts_retrievable": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -8902,6 +8934,14 @@
               "quote": "                               to possible noise and bias of individual parameters. To this end, we performed unsupervised clustering of\n                               the multiparametric data sets in KNIME. To avoid high dependencies on single parameters,\n                               normalization of data is necessary prior to clustering, a requirement already fulﬁlled with the parameter\n                               Z-score calculation above. Thus, we used the entire Z-score signature of all parameters above for\n                               clustering in KNIME with the “Hierarchical clustering” node, which uses a bottom-up strategy. We used\n                               the Euclidean average distance to agglomerate data and calculate the dendrograms (Figs 2d, 3c, 4d).\n\n                               Code availability",
               "article_section": "Code availability",
               "note": "The article gives a plugin URL."
+            }
+          ],
+          "linked_workflow_artifacts_retrievable": [
+            {
+              "source": "data/original/workflows/knime_downloadable_workflow_references.json",
+              "workflow_directory": "data/original/workflows/10.1038_sdata.2018.241",
+              "artifact": "KNIME workflow.zip",
+              "note": "Figshare workflow archive downloaded; the ZIP contains a KNIME workflow directory with workflow.knime and nested workflow.knime files."
             }
           ]
         }
@@ -8982,7 +9022,7 @@
     "provides_code_or_scripts": 15,
     "reports_extension_or_plugin_dependencies": 20,
     "reports_extension_installation_source": 11,
-    "linked_workflow_artifacts_retrievable": 7
+    "linked_workflow_artifacts_retrievable": 12
   },
   "article_text_source": {
     "directory": "data/processed/articles",

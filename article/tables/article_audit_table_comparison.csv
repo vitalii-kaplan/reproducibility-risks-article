@@ -8,18 +8,9 @@ top_cited_article_audit_summary,Uses KNIME,51,51,True,63.7,63.7,True
 top_cited_article_audit_summary,Workflow or nodes described in text,44,44,True,55.0,55.0,True
 top_cited_article_audit_summary,Workflow screenshots or figures,30,30,True,37.5,37.5,True
 top_cited_article_audit_summary,Reports KNIME version,15,15,True,18.8,18.8,True
-top_cited_article_audit_summary,Downloadable KNIME workflow files,22,22,True,27.5,27.5,True
+top_cited_article_audit_summary,Reports downloadable workflows,22,22,True,27.5,27.5,True
 top_cited_article_audit_summary,Reports extension/plugin dependencies,20,20,True,25.0,25.0,True
 top_cited_article_audit_summary,Reports extension installation source,11,11,True,13.8,13.8,True
-top_cited_article_audit_summary,Linked workflow artifacts retrieved,7,7,True,8.8,8.8,True
 top_cited_article_audit_summary,Provides code or scripts,15,15,True,18.8,18.8,True
 top_cited_article_audit_summary,Reports input-data availability,41,41,True,51.2,51.2,True
 top_cited_article_audit_summary,Direct input-data resource,20,20,True,25.0,25.0,True
-knime_use_workflow_reporting_signals,Uses KNIME,51,51,True,100.0,100.0,True
-knime_use_workflow_reporting_signals,Workflow or nodes described in text,44,44,True,86.3,86.3,True
-knime_use_workflow_reporting_signals,Workflow screenshots or figures,30,30,True,58.8,58.8,True
-knime_use_workflow_reporting_signals,Reports KNIME version,15,15,True,29.4,29.4,True
-knime_use_workflow_reporting_signals,Downloadable KNIME workflow files,22,22,True,43.1,43.1,True
-knime_use_workflow_reporting_signals,Reports extension/plugin dependencies,20,20,True,39.2,39.2,True
-knime_use_workflow_reporting_signals,Reports extension installation source,11,11,True,21.6,21.6,True
-knime_use_workflow_reporting_signals,Linked workflow artifacts retrieved,7,7,True,13.7,13.7,True

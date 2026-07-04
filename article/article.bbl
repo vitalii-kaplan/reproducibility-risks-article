@@ -9,6 +9,13 @@ Berthold, M.R., Cebron, N., Dill, F., Gabriel, T.R., K{\"o}tter, T., Meinl, T.,
   information miner. In: Data Analysis, Machine Learning and Applications, pp.
   319--326. Springer (2008). \doi{10.1007/978-3-540-78246-9_38}
 
+\bibitem{Dietz2020ImageJKNIME}
+Dietz, C., Rueden, C.T., Helfrich, S., Dobson, E.T.A., Horn, M., Eglinger, J.,
+  Evans, E.L., McLean, D.T., Novitskaya, T., Ricke, W.A., Sherer, N.M.,
+  Zijlstra, A., Berthold, M.R., Eliceiri, K.W.: Integration of the {ImageJ}
+  ecosystem in {KNIME} analytics platform. Frontiers in Computer Science
+  \textbf{2}, ~8 (2020). \doi{10.3389/fcomp.2020.00008}
+
 \bibitem{Fu2025GIScienceKNIME}
 Fu, X., Liu, L., Guan, W.W., Kalra, Y., Bao, S., K{\"o}tter, T., Sturm, K.:
   Advancing replicable and reproducible {GIScience}: an approach with {KNIME}.
@@ -65,6 +72,12 @@ Kaplan, V.: {reproducibility-risks-article}: Replication repository for {KNIME}
 Kurtzer, G.M., Sochat, V., Bauer, M.W.: Singularity: Scientific containers for
   mobility of compute. PLOS ONE  \textbf{12}(5),  e0177459 (2017).
   \doi{10.1371/journal.pone.0177459}
+
+\bibitem{Pal2018OrganelleKNIME}
+Pal, A., Gla{\ss}, H., Naumann, M., Kreiter, N., Japtok, J., Sczech, R.,
+  Hermann, A.: High content organelle trafficking enables disease state
+  profiling as powerful tool for disease modelling. Scientific Data
+  \textbf{5}(1),  180241 (2018). \doi{10.1038/sdata.2018.241}
 
 \bibitem{Priem2022OpenAlex}
 Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly
