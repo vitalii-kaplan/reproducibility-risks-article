@@ -25,7 +25,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--manifest",
-        default="data/processed/audit/article_text_column_normalization_manifest.csv",
+        default="data/processed/audit/logs/article_text_column_normalization_manifest.csv",
         type=Path,
         help="CSV manifest describing detected layouts and converted pages.",
     )

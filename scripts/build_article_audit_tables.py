@@ -306,8 +306,10 @@ def main() -> int:
     top_rows = build_top_table(articles)
 
     top_csv = args.output_dir / "top_cited_article_audit_summary.csv"
-    comparison_csv = args.output_dir / "article_audit_table_comparison.csv"
-    summary_check_csv = args.output_dir / "article_audit_summary_count_check.csv"
+    logs_dir = args.output_dir / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    comparison_csv = logs_dir / "article_audit_table_comparison.csv"
+    summary_check_csv = logs_dir / "article_audit_summary_count_check.csv"
 
     write_table(top_csv, top_rows, include_interpretation=True)
     write_summary_count_check(summary_check_csv, data, articles)

@@ -121,7 +121,9 @@ def node_state(rows: list[dict[str, str]]) -> dict[str, dict[str, object]]:
 
 
 def count_checkout_manifest(snapshot_dir: Path) -> tuple[int, int]:
-    manifests = sorted(snapshot_dir.glob("checkout*.csv"))
+    manifests = sorted((snapshot_dir / "logs").glob("checkout*.csv"))
+    if not manifests:
+        manifests = sorted(snapshot_dir.glob("checkout*.csv"))
     if not manifests:
         return 0, 0
     rows = read_csv(manifests[0])

@@ -25,7 +25,7 @@ DEFAULT_WORKFLOW_REFERENCES = Path("data/original/workflows/knime_downloadable_w
 DEFAULT_TABLE3 = Path("article/tables/top_cited_article_audit_summary.csv")
 DEFAULT_ARTICLE = Path("article/article.tex")
 DEFAULT_OUTPUT = Path("article/tables/knime_use_workflow_reporting_signals.csv")
-DEFAULT_COMPARISON = Path("article/tables/knime_use_workflow_reporting_table_comparison.csv")
+DEFAULT_COMPARISON = Path("article/tables/logs/knime_use_workflow_reporting_table_comparison.csv")
 
 TABLE4_LABELS: tuple[tuple[str, str], ...] = (
     ("Uses KNIME", "uses_knime"),

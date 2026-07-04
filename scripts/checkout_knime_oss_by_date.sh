@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
   printf 'Usage: %s SOURCE_ROOT YYYY-MM-DD [MANIFEST_CSV]\n' "$(basename "$0")" >&2
   printf 'Checkout each Git repository below SOURCE_ROOT to the latest commit at or before the date.\n' >&2
-  printf 'Default MANIFEST_CSV: data/original/knime_snapshots/YYYY-MM-DD/checkout_YYYY-MM-DD.csv\n' >&2
+  printf 'Default MANIFEST_CSV: data/original/knime_snapshots/YYYY-MM-DD/logs/checkout_YYYY-MM-DD.csv\n' >&2
 }
 
 require_command() {
@@ -25,7 +25,7 @@ fi
 
 source_root="${1%/}"
 target_date="$2"
-manifest="${3:-data/original/knime_snapshots/${target_date}/checkout_${target_date}.csv}"
+manifest="${3:-data/original/knime_snapshots/${target_date}/logs/checkout_${target_date}.csv}"
 before="${target_date} 23:59:59"
 
 require_command git

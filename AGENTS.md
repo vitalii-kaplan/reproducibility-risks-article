@@ -159,14 +159,15 @@ Create directories only when they are needed. Keep generated files out of versio
   full text and processed one-column text; sixteen records are retained as
   not-assessed placeholders because no local full text is available.
 - Current local article retrieval for ranks 41-60 is recorded in
-  `data/processed/audit/article_download_attempts_41-60.csv`: 14 of 20 records
-  have local PDFs, including one user-provided record without DOI. The six
-  records still not downloaded in that rank range are ranks 47, 48, 49, 50, 56,
-  and 60 in the current OpenAlex top-60 order.
+  `data/processed/audit/logs/article_download_attempts_41-60.csv`: 14 of 20
+  records have local PDFs, including one user-provided record without DOI. The
+  six records still not downloaded in that rank range are ranks 47, 48, 49, 50,
+  56, and 60 in the current OpenAlex top-60 order.
 - Current local article retrieval for ranks 61-80 is recorded in
-  `data/processed/audit/article_download_attempts_61-80.csv`. Fifteen of those
-  20 records currently have local PDFs or full text; ranks 67, 72, 74, 76, and
-  79 are retained as not-assessed placeholders in the expanded 80-record audit.
+  `data/processed/audit/logs/article_download_attempts_61-80.csv`. Fifteen of
+  those 20 records currently have local PDFs or full text; ranks 67, 72, 74,
+  76, and 79 are retained as not-assessed placeholders in the expanded
+  80-record audit.
 - The top-cited article assessment file
   `data/processed/audit/knime_most_cited_article_assessments.json` now has
   an explicit `article_audit_fields` block for each record. The block is split
@@ -246,7 +247,7 @@ Create directories only when they are needed. Keep generated files out of versio
   `scripts/normalize_article_text_columns.py` to convert sustained two-column
   pages to one-column order when possible. This directory is ignored by Git
   because it is generated; keep extraction and normalization manifests under
-  `data/processed/audit/`. Keep these generated-directory details in
+  `data/processed/audit/logs/`. Keep these generated-directory details in
   `AGENTS.md` rather than the public-facing `README.md`.
 - The empirical expansion priority is to increase the scale of article and
   workflow evidence, not to restart the paper. Continue assessing
@@ -267,8 +268,9 @@ Create directories only when they are needed. Keep generated files out of versio
   data, code/scripts, and extension or plugin information.
 - Use `scripts/build_article_audit_tables.py` to generate the Table 3 CSV
   source from `flag_audit_fields` and relation fields. The generated CSVs live
-  under `article/tables/`: `top_cited_article_audit_summary.csv`,
-  `article_audit_table_comparison.csv`, and
+  under `article/tables/`: `top_cited_article_audit_summary.csv`. Comparison
+  and summary-check outputs live under `article/tables/logs/`:
+  `article_audit_table_comparison.csv` and
   `article_audit_summary_count_check.csv`. Run
   `python3 scripts/build_article_audit_tables.py --fail-on-mismatch` after
   changing the audit JSON or Table 3.
@@ -282,9 +284,16 @@ Create directories only when they are needed. Keep generated files out of versio
   `data/original/workflows/knime_downloadable_workflow_references.json`,
   specifically
   `summary_counts.downloaded_with_workflow_files_or_workflow_directory`. The
-  script also writes `knime_use_workflow_reporting_table_comparison.csv`. Run
+  script also writes
+  `article/tables/logs/knime_use_workflow_reporting_table_comparison.csv`. Run
   `python3 scripts/build_knime_use_workflow_reporting_table.py --fail-on-mismatch`
   after changing Table 3, Table 4, the audit JSON, or the workflow inventory.
+- Generated logs, manifests, download-attempt files, and table comparison/check
+  outputs belong in a `logs/` subdirectory of the corresponding evidence or
+  output directory. Current examples are `data/processed/audit/logs/`,
+  `article/tables/logs/`, per-snapshot
+  `data/original/knime_snapshots/<snapshot-date>/logs/`, and per-workflow
+  `data/original/workflows/<doi-safe-directory>/logs/` for HTTP header traces.
 - Current 80-record structured audit counts used in the article tables are:
   - expanded audit records: 80
   - assessed from full text: 64
@@ -373,7 +382,11 @@ Create directories only when they are needed. Keep generated files out of versio
 - Use `scripts/collect_knime_node_snapshot.py` as the canonical KNIME source extractor. Older count-only scripts are obsolete because the study needs per-node records and cross-snapshot transitions, not only aggregate deprecated-node counts.
 - For KNIME source mining, parse structured XML rather than grepping strings. Treat only case-insensitive `deprecated="true"` as a deprecation marker, and keep `hidden="true"` separate from deprecation.
 - Exclude generated/build and repository-control directories during source walks, especially `.git`, `target`, `bin`, and `.metadata`.
-- Keep snapshot-specific outputs self-contained under `data/original/knime_snapshots/<snapshot-date>/`, including the checkout manifest, `plugin_nodes.csv`, `node_descriptions.csv`, `factory_class_mappers.csv`, `migration_rules.csv`, and `summary.csv`.
+- Keep snapshot-specific outputs self-contained under
+  `data/original/knime_snapshots/<snapshot-date>/`, including checkout
+  manifests under `logs/` and the per-snapshot `plugin_nodes.csv`,
+  `node_descriptions.csv`, `factory_class_mappers.csv`, `migration_rules.csv`,
+  and `summary.csv`.
 - Treat `data/processed/knime_snapshots/knime_node_snapshot_summary.csv` as a derived cross-snapshot table. The authoritative evidence is the per-record snapshot data.
 - Transition columns in `data/processed/knime_snapshots/knime_node_snapshot_summary.csv` compare adjacent chronological snapshots. The node identity key is `factory_class` when present; otherwise it falls back to `plugin_xml:element:category_path`. Treat these transition counts as metadata-level approximations.
 - Current date-based snapshots cover 2018-04-03, 2019-01-01, 2019-12-05, 2020-01-01, 2021-01-01, 2022-01-01, 2023-01-01, 2023-02-22, 2024-01-01, 2025-01-01, 2026-01-01, 2026-03-03, and 2026-06-28.

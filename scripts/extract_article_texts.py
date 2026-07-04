@@ -34,7 +34,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--manifest",
-        default="data/processed/audit/article_text_extraction_manifest.csv",
+        default="data/processed/audit/logs/article_text_extraction_manifest.csv",
         type=Path,
         help="CSV manifest describing the extraction result for each PDF.",
     )

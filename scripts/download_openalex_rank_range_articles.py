@@ -101,7 +101,7 @@ def main() -> int:
     parser.add_argument("--end", type=int, required=True, help="1-based rank end")
     parser.add_argument("--works", default="data/original/openalex/works.jsonl")
     parser.add_argument("--out-dir", default="data/original/articles")
-    parser.add_argument("--manifest-dir", default="data/processed/audit")
+    parser.add_argument("--manifest-dir", default="data/processed/audit/logs")
     parser.add_argument("--timeout", type=int, default=45)
     args = parser.parse_args()
 

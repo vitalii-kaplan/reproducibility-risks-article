@@ -3,9 +3,9 @@
   "source_csv": {
     "openalex_articles": "data/processed/openalex/openalex_knime_articles.csv",
     "top_1_20_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
-    "download_attempts_21_40": "data/processed/audit/article_download_attempts_21-40.csv",
+    "download_attempts_21_40": "data/processed/audit/logs/article_download_attempts_21-40.csv",
     "top_1_60_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
-    "download_attempts_41_60": "data/processed/audit/article_download_attempts_41-60.csv"
+    "download_attempts_41_60": "data/processed/audit/logs/article_download_attempts_41-60.csv"
   },
   "article_directory": "data/original/articles",
   "scope": "Manual assessment of the original sixty most-cited OpenAlex article records matching KNIME in title or abstract, plus citation ranks 61-80. Records without local full text are retained as not-assessed placeholders. Updated on 2026-07-04 with five workflow-reference records from ranks 61, 62, 63, 69, and 70 after local full-text conversion. Updated on 2026-07-04 with ten additional rank 61-80 full-text records: 64, 65, 66, 68, 71, 73, 75, 77, 78, and 80. Updated on 2026-07-04 with not-assessed placeholders for rank 61-80 records without local full text: 67, 72, 74, 76, and 79.",
