@@ -66,11 +66,11 @@ workflow diagram or a platform mention. Authors need to publish executable
 workflow artifacts, version information, data, and extension context. At the
 same time, KNIME evolves: nodes can become deprecated, hidden, migrated,
 removed, or dependent on third-party extensions that are difficult to recover.
-The current paper investigates this claim using OpenAlex bibliometrics, a
+The current paper investigates this claim using OpenAlex bibliometrics, an
 80-record expanded top-cited article audit registry with not-assessed
-placeholders for missing original top-60 full texts, current-KNIME opening and
-execution attempts for retrievable workflows, and longitudinal repository
-mining of KNIME node metadata.
+placeholders for records without local full text, current-KNIME opening and
+execution attempts for retrievable workflows, and longitudinal repository mining
+of KNIME node metadata.
 
 ## Core Research Questions
 
@@ -107,6 +107,10 @@ mining of KNIME node metadata.
 - Keep paper claims traceable to a source, dataset, script, or explicit manual assessment note.
 - When assessing a paper, record both the evidence and the absence of evidence, for example whether the paper mentions a KNIME version or provides a downloadable workflow.
 - Keep writing concise and suitable for an 11-page LNCS short paper.
+- Keep `README.md` as a public GitHub front page for readers: current high-level
+  findings, repository map, key files, rebuild basics, and scope limits. Do not
+  move detailed internal audit rules, raw extraction details, or agent workflow
+  notes from `AGENTS.md` into `README.md`.
 
 ## Suggested Repository Layout
 
@@ -346,6 +350,12 @@ Create directories only when they are needed. Keep generated files out of versio
   artifacts or workflow directories, workflows from all 12 were opened in the
   manual subset, and four article records had at least one workflow execute
   successfully.
+- The reader-facing `README.md` should summarize the current 80-record audit as
+  64 records assessed from full text, 16 not assessed, 51 KNIME-use records, 22
+  records reporting downloadable or linked workflows, 12 article records with
+  obtained workflow artifacts or workflow directories, and four article records
+  with at least one successfully executed workflow. Keep it concise and avoid
+  exposing the full internal audit schema there.
 - The final bibliography pass checked DOI-bearing entries in `article.bbl`
   against DOI registry resolution and Crossref metadata where available. The
   applied metadata corrections are:
