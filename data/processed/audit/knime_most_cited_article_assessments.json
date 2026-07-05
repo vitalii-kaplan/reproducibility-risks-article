@@ -5199,8 +5199,8 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "local_workflow_artifact",
-              "artifact_path": "data/original/workflows/10.1016_j.jbusres.2021.08.036/Webinar Pricing Analytics_English.knwf",
-              "screenshot_directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036/opened",
+              "artifact_path": "data/original/workflows/46_10.1016_j.jbusres.2021.08.036/Webinar Pricing Analytics_English.knwf",
+              "screenshot_directory": "data/original/workflows/46_10.1016_j.jbusres.2021.08.036/opened",
               "note": "User-downloaded workflow opened and executed successfully in the local KNIME environment; screenshots were added on 2026-07-04."
             }
           ]
@@ -6238,8 +6238,8 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "local_workflow_artifact",
-              "artifact_path": "data/original/workflows/10.1016_j.ntt.2020.106918/Spontaneous tail coilings-measurement.knwf",
-              "screenshot_directory": "data/original/workflows/10.1016_j.ntt.2020.106918/opened",
+              "artifact_path": "data/original/workflows/57_10.1016_j.ntt.2020.106918/Spontaneous tail coilings-measurement.knwf",
+              "screenshot_directory": "data/original/workflows/57_10.1016_j.ntt.2020.106918/opened",
               "note": "User-downloaded workflow opened in the local KNIME environment; screenshots were added on 2026-07-04."
             }
           ]
@@ -6523,8 +6523,8 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "local_workflow_artifact",
-              "artifact_path": "data/original/workflows/10.3390_pharmaceutics14101998/20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
-              "screenshot_directory": "data/original/workflows/10.3390_pharmaceutics14101998/opened",
+              "artifact_path": "data/original/workflows/59_10.3390_pharmaceutics14101998/20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+              "screenshot_directory": "data/original/workflows/59_10.3390_pharmaceutics14101998/opened",
               "note": "User-downloaded workflow opened in the local KNIME environment; screenshots were added on 2026-07-04."
             }
           ]
@@ -6746,7 +6746,7 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "data/original/workflows/knime_downloadable_workflow_references.json",
-              "workflow_directory": "data/original/workflows/10.1007_s11306-018-1349-5",
+              "workflow_directory": "data/original/workflows/61_10.1007_s11306-018-1349-5",
               "artifact": "KniMet-master.zip",
               "note": "Workflow archive downloaded from the recorded software release; the archive contains KniMet-master/KniMet.knwf."
             }
@@ -6917,7 +6917,7 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "data/original/workflows/knime_downloadable_workflow_references.json",
-              "workflow_directory": "data/original/workflows/10.1093_bioinformatics_btr478",
+              "workflow_directory": "data/original/workflows/62_10.1093_bioinformatics_btr478",
               "artifact": "NGS_sample_workflow_with_data-v1.zip",
               "note": "User manually downloaded the myExperiment workflow archive. The ZIP contains a KNIME workflow directory with workflow.knime."
             }
@@ -7094,7 +7094,7 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "data/original/workflows/knime_downloadable_workflow_references.json",
-              "workflow_directory": "data/original/workflows/10.3389_fcomp.2020.00008",
+              "workflow_directory": "data/original/workflows/63_10.3389_fcomp.2020.00008",
               "artifact": "six KNIME Hub .knwf files",
               "note": "Six KNIME Hub workflow artifacts were downloaded; one recorded KNIME Hub short link was stale or unavailable."
             }
@@ -7806,7 +7806,7 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "data/original/workflows/knime_downloadable_workflow_references.json",
-              "workflow_directory": "data/original/workflows/10.1038_s41598-022-24421-0",
+              "workflow_directory": "data/original/workflows/69_10.1038_s41598-022-24421-0",
               "artifact": "github_GediNET_master.zip",
               "note": "GitHub workflow archive downloaded and found to contain GediNET_v1.knwf and ProcessGEO_data.knwf; the recorded KNIME Hub short link was unavailable."
             }
@@ -8943,7 +8943,7 @@
           "linked_workflow_artifacts_retrievable": [
             {
               "source": "data/original/workflows/knime_downloadable_workflow_references.json",
-              "workflow_directory": "data/original/workflows/10.1038_sdata.2018.241",
+              "workflow_directory": "data/original/workflows/80_10.1038_sdata.2018.241",
               "artifact": "KNIME workflow.zip",
               "note": "Figshare workflow archive downloaded; the ZIP contains a KNIME workflow directory with workflow.knime and nested workflow.knime files."
             }

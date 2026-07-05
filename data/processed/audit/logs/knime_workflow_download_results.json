@@ -8,7 +8,7 @@
     {
       "rank": 16,
       "doi": "10.1002/minf.201100076",
-      "directory": "data/original/workflows/10.1002_minf.201100076",
+      "directory": "data/original/workflows/16_10.1002_minf.201100076",
       "status": "downloaded_workflow_archives_manual",
       "downloaded_files": "RDKit-pains-v4.zip; Indigo-pains-v2.zip",
       "workflow_files_found": "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime; Indigo-pains-v2.zip::Indigo-pains/workflow.knime",
@@ -17,7 +17,7 @@
     {
       "rank": 22,
       "doi": "10.1186/s13321-018-0315-6",
-      "directory": "data/original/workflows/10.1186_s13321-018-0315-6",
+      "directory": "data/original/workflows/22_10.1186_s13321-018-0315-6",
       "status": "downloaded_workflow_files",
       "downloaded_files": "github_data_curation_workflow_master_long.zip",
       "workflow_files_found": "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf; extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf",
@@ -26,7 +26,7 @@
     {
       "rank": 23,
       "doi": "10.1371/journal.pone.0208626",
-      "directory": "data/original/workflows/10.1371_journal.pone.0208626",
+      "directory": "data/original/workflows/23_10.1371_journal.pone.0208626",
       "status": "downloaded_workflow_archive",
       "downloaded_files": "github_asd_genes_prediction_master.zip",
       "workflow_files_found": "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/ASD_genes_prediction_workflow.zip; extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.knime",
@@ -35,7 +35,7 @@
     {
       "rank": 24,
       "doi": "10.3389/fchem.2018.00093",
-      "directory": "data/original/workflows/10.3389_fchem.2018.00093",
+      "directory": "data/original/workflows/24_10.3389_fchem.2018.00093",
       "status": "failed_not_obtained",
       "downloaded_files": "bioinformatics_charite_sweet.html; virtualtaste.html",
       "workflow_files_found": "",
@@ -44,7 +44,7 @@
     {
       "rank": 25,
       "doi": "10.3390/encyclopedia3020035",
-      "directory": "data/original/workflows/10.3390_encyclopedia3020035",
+      "directory": "data/original/workflows/25_10.3390_encyclopedia3020035",
       "status": "downloaded_workflow_files",
       "downloaded_files": "gitlab_knime_medchem_filters_main.zip; knime_hub_marko_filtering.html; knime_hub_latest_xoK5.html",
       "workflow_files_found": "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf; extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf",
@@ -53,7 +53,7 @@
     {
       "rank": 26,
       "doi": "10.1186/s13321-018-0299-2",
-      "directory": "data/original/workflows/10.1186_s13321-018-0299-2",
+      "directory": "data/original/workflows/26_10.1186_s13321-018-0299-2",
       "status": "repository_downloaded_no_workflow_file_found",
       "downloaded_files": "github_ms_ready_master.zip",
       "workflow_files_found": "",
@@ -62,7 +62,7 @@
     {
       "rank": 29,
       "doi": "10.1016/j.jprot.2016.08.002",
-      "directory": "data/original/workflows/10.1016_j.jprot.2016.08.002",
+      "directory": "data/original/workflows/29_10.1016_j.jprot.2016.08.002",
       "status": "failed_not_obtained",
       "downloaded_files": "github_knime_omics_page.html",
       "workflow_files_found": "",
@@ -71,7 +71,7 @@
     {
       "rank": 30,
       "doi": "10.1080/07391102.2018.1456975",
-      "directory": "data/original/workflows/10.1080_07391102.2018.1456975",
+      "directory": "data/original/workflows/30_10.1080_07391102.2018.1456975",
       "status": "failed_not_obtained",
       "downloaded_files": "",
       "workflow_files_found": "",
@@ -80,7 +80,7 @@
     {
       "rank": 46,
       "doi": "10.1016/j.jbusres.2021.08.036",
-      "directory": "data/original/workflows/10.1016_j.jbusres.2021.08.036",
+      "directory": "data/original/workflows/46_10.1016_j.jbusres.2021.08.036",
       "status": "downloaded_workflow_file_manual",
       "downloaded_files": "Webinar Pricing Analytics_English.knwf",
       "workflow_files_found": "Webinar Pricing Analytics_English.knwf",
@@ -89,7 +89,7 @@
     {
       "rank": 57,
       "doi": "10.1016/j.ntt.2020.106918",
-      "directory": "data/original/workflows/10.1016_j.ntt.2020.106918",
+      "directory": "data/original/workflows/57_10.1016_j.ntt.2020.106918",
       "status": "downloaded_workflow_file_manual",
       "downloaded_files": "Spontaneous tail coilings-measurement.knwf",
       "workflow_files_found": "Spontaneous tail coilings-measurement.knwf",
@@ -98,7 +98,7 @@
     {
       "rank": 59,
       "doi": "10.3390/pharmaceutics14101998",
-      "directory": "data/original/workflows/10.3390_pharmaceutics14101998",
+      "directory": "data/original/workflows/59_10.3390_pharmaceutics14101998",
       "status": "downloaded_workflow_file_manual",
       "downloaded_files": "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
       "workflow_files_found": "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
