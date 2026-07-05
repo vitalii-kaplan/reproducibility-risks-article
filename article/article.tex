@@ -36,7 +36,7 @@ descriptions, or tool mentions rather than downloadable workflow artifacts. In
 the 100-record article audit registry, twenty-eight records report
 downloadable or linked KNIME workflow files. Recorded retrieval attempts
 obtained workflow artifacts for twelve article records. Workflows from those
-twelve records opened in a current local KNIME environment; four article
+twelve records opened in a current local KNIME environment. Four article
 records had at least one workflow execute successfully.
 Repository mining gives the source-evolution context: deprecated ordinary
 nodes increased from 14.83\% of registered ordinary nodes in the 2018 source
@@ -78,7 +78,7 @@ unavailable. The structured audit reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
 weak link. Twenty-eight records report downloadable or linked KNIME workflow
 files, but workflow artifacts were obtained for only twelve article records in
-the recorded retrieval attempts; other links were stale, blocked, incomplete,
+the recorded retrieval attempts. Other links were stale, blocked, incomplete,
 or did not lead to a confirmed KNIME workflow artifact. Workflows from all
 twelve obtained article records opened in the tested local KNIME environment,
 and four article records had at least one workflow execute successfully. For
@@ -221,14 +221,14 @@ by \texttt{cited\_by\_count} in descending order and selected the 100
 most-cited records. Open-access papers were downloaded directly. Papers that
 required access through a publisher were downloaded where institutional
 subscription access was available or were added manually when a local copy was
-available. Not all 100 papers could be downloaded; records without local full
+available. Not all 100 papers could be downloaded. Records without local full
 text were retained as not-assessed placeholders so that the denominator stayed
 visible.
 
 Downloaded PDFs were converted to plain text with
 \path{scripts/extract_article_texts.py}. Where extracted text followed a
 two-column reading order, we normalized it to a one-column reading copy with
-\path{scripts/normalize_article_text_columns.py}; this step used script output
+\path{scripts/normalize_article_text_columns.py}. This step used script output
 and LLM-assisted correction checks. We then processed the article text into a
 structured audit stored in
 \path{data/processed/audit/knime_most_cited_article_assessments.json}. Each
@@ -635,13 +635,11 @@ final case-study claims require manual full-text and artifact assessment.
 
 \subsection{Top-Cited Article Assessment}
 
-We built a top-cited retrieval pool from OpenAlex records matching
-\texttt{KNIME}. The statistics in this subsection use the 100-record structured
-audit registry. The purpose of this part of the study is to ask whether
-KNIME-matching papers preserve the evidence needed to open and reproduce a
-KNIME-based workflow: full text, KNIME-use role, version information, workflow
-files, workflow figures or textual descriptions, data, code, and extension
-context.
+The purpose of this part of the study is to ask whether KNIME-matching papers
+preserve the evidence needed to open and reproduce a KNIME-based workflow:
+full text, KNIME-use role, version information, workflow files, workflow
+figures or textual descriptions, data, code, and extension context. The
+statistics in this subsection use the 100-record structured audit registry.
 
 The audit separates background and platform papers about KNIME itself from
 workflow-reporting KNIME use cases. Eight of the 100 records are about KNIME
@@ -666,7 +664,7 @@ dependencies, and nineteen report an installation source. Data and code signals
 are more common than retrievable workflow-artifact evidence: fifty-five records
 report input-data availability, twenty-three provide a direct input-data
 resource, and seventeen provide code or scripts. In this study, we do not
-verify data availability itself; we only record whether the article text
+verify data availability itself. We only record whether the article text
 reports it. The
 same limitation applies to code or script availability.
 This pattern is important because a reader may find data or code without being
@@ -677,10 +675,10 @@ extension context.
 \scriptsize
 \renewcommand{\arraystretch}{1.18}
 \begin{longtable}{|%
-  >{\raggedright\arraybackslash}p{0.46\textwidth}|
+  >{\raggedright\arraybackslash}p{0.34\textwidth}|
   r|
   r|
-  >{\raggedright\arraybackslash}p{0.25\textwidth}|}
+  >{\raggedright\arraybackslash}p{0.37\textwidth}|}
 \caption{Flag summary for the top-cited article audit. Shares use all
 100 records in the registry as the denominator.}
 \label{tab:top-cited-assessment}\\
@@ -767,7 +765,7 @@ successfully: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration,
 and high-content organelle trafficking
 \cite{Saubern2011PAINS,VillarroelOrdenes2021KNIMEHub,Dietz2020ImageJKNIME,Pal2018OrganelleKNIME}.
 The remaining opened article records did not execute successfully in this
-manual check. This does not show that those workflows are unreproducible; they
+manual check. This does not show that those workflows are unreproducible. They
 may require additional configuration, dependencies, or repair before a
 successful run. Across the opened workflows, the screenshots also show
 deprecated or legacy nodes, but we treat this as qualitative compatibility
@@ -800,44 +798,44 @@ recorded artifact retrieval outcomes.}
 PAINS workflows, DOI \path{10.1002/minf.201100076} &
 \textbf{X} &
 Automated myExperiment page and download requests returned HTTP 403 HTML, but
-the user manually obtained both RDKit and Indigo workflow ZIP archives; both
+the user manually obtained both RDKit and Indigo workflow ZIP archives. Both
 contain \texttt{workflow.knime} files. \\
 2 &
 Chemical data curation workflow, DOI \path{10.1186/s13321-018-0315-6} &
 \textbf{X} &
 GitHub master archive was downloaded after retry and passed ZIP integrity
-checking; KNIME workflow files were found in the archive. \\
+checking. KNIME workflow files were found in the archive. \\
 3 &
 ASD genes prediction workflow, DOI \path{10.1371/journal.pone.0208626} &
 \textbf{X} &
-GitHub archive passed ZIP integrity checking; an inner KNIME workflow archive
+GitHub archive passed ZIP integrity checking. An inner KNIME workflow archive
 was extracted to a workflow directory. \\
 4 &
 Bitterness/sweetness classifier workflow, DOI \path{10.3389/fchem.2018.00093} &
 \textbf{-} &
 The original project page redirected to VirtualTaste, and the redirected page
-returned HTTP 404; no workflow archive was retrieved. \\
+returned HTTP 404. No workflow archive was retrieved. \\
 5 &
 Medicinal chemistry filters workflow, DOI \path{10.3390/encyclopedia3020035} &
 \textbf{X} &
 GitLab archive passed ZIP integrity checking and contained KNIME workflow
-files; one KNIME Hub URL returned a page, while an older generic Hub URL
+files. One KNIME Hub URL returned a page, while an older generic Hub URL
 returned 404 JSON. \\
 6 &
 MS-ready structures repository, DOI \path{10.1186/s13321-018-0299-2} &
 \textbf{-} &
 The GitHub archive passed ZIP integrity checking, but the extracted repository
-contained only \texttt{LICENSE} and \texttt{README.md}; no \texttt{.knwf} or
+contained only \texttt{LICENSE} and \texttt{README.md}. No \texttt{.knwf} or
 \texttt{workflow.knime} file was found. \\
 7 &
 KNIME-OMICS reference, DOI \path{10.1016/j.jprot.2016.08.002} &
 \textbf{-} &
-The referenced GitHub organization page returned HTTP 404; no workflow archive
+The referenced GitHub organization page returned HTTP 404. No workflow archive
 was retrieved. \\
 8 &
 QSAR tools workflow, DOI \path{10.1080/07391102.2018.1456975} &
 \textbf{-} &
-The referenced \path{teqip.jdvu.ac.in/QSAR_Tools/} URL failed DNS resolution;
+The referenced \path{teqip.jdvu.ac.in/QSAR_Tools/} URL failed DNS resolution.
 no workflow archive was retrieved. \\
 9 &
 Webinar Pricing Analytics workflow, DOI \path{10.1016/j.jbusres.2021.08.036} &
@@ -847,7 +845,7 @@ opening screenshots. \\
 10 &
 Verhaar scheme workflow, DOI \path{10.1016/j.chemosphere.2015.06.009} &
 \textbf{-} &
-The article reports a supplementary KNIME workflow; standard Elsevier
+The article reports a supplementary KNIME workflow. Standard Elsevier
 supplement URLs resolved as Excel files, but no direct KNIME workflow archive
 URL was confirmed. \\
 11 &
@@ -863,41 +861,41 @@ opening screenshots. \\
 13 &
 KniMet workflow, DOI \path{10.1007/s11306-018-1349-5} &
 \textbf{X} &
-The Zenodo DOI resolved to record 1196407; \texttt{KniMet-master.zip} was
+The Zenodo DOI resolved to record 1196407. \texttt{KniMet-master.zip} was
 downloaded and contains \texttt{KniMet.knwf}. \\
 14 &
 NGS sample workflow, DOI \path{10.1093/bioinformatics/btr478} &
 \textbf{X} &
 The user manually downloaded the myExperiment archive after automated requests
-were blocked by HTTP 403; the ZIP contains a KNIME workflow directory with
+were blocked by HTTP 403. The ZIP contains a KNIME workflow directory with
 saved data. \\
 15 &
 ImageJ ecosystem workflows, DOI \path{10.3389/fcomp.2020.00008} &
 \textbf{X} &
 Six KNIME Hub artifact metadata endpoints returned signed URLs and the
-corresponding \texttt{.knwf} files were downloaded; one recorded reference
+corresponding \texttt{.knwf} files were downloaded. One recorded reference
 appears stale or unavailable. \\
 16 &
 Multi-template matching repository, DOI \path{10.1186/s12859-020-3363-7} &
 \textbf{-} &
 The GitHub archive was downloaded, but it contained documentation/images only
-and no \texttt{.knwf}, \texttt{workflow.knime}, or KNIME workflow archive; a
+and no \texttt{.knwf}, \texttt{workflow.knime}, or KNIME workflow archive. A
 guessed NodePit URL returned HTTP 404. \\
 17 &
 GediNET workflows, DOI \path{10.1038/s41598-022-24421-0} &
 \textbf{X} &
-GitHub master archive was downloaded and contains two \texttt{.knwf} files;
+GitHub master archive was downloaded and contains two \texttt{.knwf} files.
 the recorded KNIME Hub short link could not be retrieved. \\
 18 &
 Nuclear receptor ligand workflow, DOI \path{10.1002/minf.201400188} &
 \textbf{-} &
 The article reports supplementary workflow material, but Wiley article and
-guessed supplementary download endpoints returned Cloudflare challenge pages;
+guessed supplementary download endpoints returned Cloudflare challenge pages.
 Crossref metadata did not expose a supplementary workflow URL. \\
 19 &
 High-content organelle trafficking workflow, DOI \path{10.1038/sdata.2018.241} &
 \textbf{X} &
-The figshare collection DOI resolved through the figshare API; the default
+The figshare collection DOI resolved through the figshare API. The default
 KNIME workflow file was downloaded as \texttt{KNIME workflow.zip}. \\
 \end{longtable}
 \endgroup

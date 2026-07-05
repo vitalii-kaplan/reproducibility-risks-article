@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex article"] 1783239309.90487 "article.aux" "article.bbl" "article" 1783239310.99232 0
+["bibtex article"] 1783240687.85235 "article.aux" "article.bbl" "article" 1783240688.8784 0
   "./references.bib" 1783179480.25998 10883 370e0078323827835a851ab3bd610f92 ""
   "./splncs04.bst" 1782898237.30583 32146 aadf770ded437d161532035219ea6f45 ""
-  "article.aux" 1783239310.68125 6344 0d41bef19375b3188fdf2cca5dd9b7f7 "pdflatex"
+  "article.aux" 1783240688.56909 6344 d603f9f312f02f163153252e5da2214c "pdflatex"
   (generated)
   "article.bbl"
   "article.blg"
   (rewritten before read)
-["pdflatex"] 1783239310.03335 "article.tex" "article.pdf" "article" 1783239310.99247 0
+["pdflatex"] 1783240687.95061 "article.tex" "article.pdf" "article" 1783240688.87853 0
   "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1783188856.57995 294 c709f8171e909c2832b2b4469444f964 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -181,9 +181,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739209689 5466570 e8651e7fa7bb054fee9a07d3f37faf28 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739209844 3352639 2aa689c226d5667ed0ad838dc122ce61 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "article.aux" 1783239310.68125 6344 0d41bef19375b3188fdf2cca5dd9b7f7 "pdflatex"
-  "article.bbl" 1783239310.03145 5576 83a60c9ae246f2fabe9332280f386749 "bibtex article"
-  "article.tex" 1783239297.1369 55840 598859c3ad9da8257de83c44a6a89bf7 ""
+  "article.aux" 1783240688.56909 6344 d603f9f312f02f163153252e5da2214c "pdflatex"
+  "article.bbl" 1783240687.9465 5576 83a60c9ae246f2fabe9332280f386749 "bibtex article"
+  "article.tex" 1783240682.51354 55757 091578d0ee84d7e8a31d5c64dbc0daad ""
   "llncs.cls" 1782898237.30583 43405 543b73320c367b0229b3cdfcddaedc46 ""
   (generated)
   "article.aux"
