@@ -28,19 +28,16 @@ In this paper, we study how visual workflows are reported in scientific
 publications and how incomplete workflow preservation can make older studies
 harder to reproduce as workflow platforms evolve. We use KNIME as a case
 study, combining OpenAlex bibliometrics, a 100-record top-cited article audit
-registry,
-a manual compatibility test using current KNIME,
-and repository-level mining of KNIME node metadata. OpenAlex
-shows that KNIME is visible across a broad
-scientific literature, while the article assessment shows that influential
-studies often report KNIME through figures, descriptions, or tool mentions
-rather than downloadable workflow artifacts. In the 100-record article audit
-registry, twenty-eight records report downloadable or linked KNIME workflow
-files. We
-could obtain workflow artifacts for twelve article records. In the manual
-compatibility-test subset, workflows from those twelve article records were
-opened in a current local KNIME environment; four article records had at least
-one workflow execute successfully.
+registry, workflow retrieval and current-KNIME opening/execution checks, and
+repository-level mining of KNIME node metadata. OpenAlex shows that KNIME is
+visible across a broad scientific literature, while the article assessment
+shows that influential studies often report KNIME through figures,
+descriptions, or tool mentions rather than downloadable workflow artifacts. In
+the 100-record article audit registry, twenty-eight records report
+downloadable or linked KNIME workflow files. Recorded retrieval attempts
+obtained workflow artifacts for twelve article records. Workflows from those
+twelve records opened in a current local KNIME environment; four article
+records had at least one workflow execute successfully.
 Repository mining gives the source-evolution context: deprecated ordinary
 nodes increased from 14.83\% of registered ordinary nodes in the 2018 source
 baseline to 33.33\% in the June 28, 2026 local source snapshot. Together,
@@ -77,39 +74,38 @@ as executable artifacts or only reported through descriptions and figures.
 
 Our top-cited article collection covers the 100 most-cited KNIME-matching
 records, with not-assessed placeholders retained where local full text is
-unavailable. The completed structured audit subset reported in
+unavailable. The structured audit reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. In the 100-record article audit registry, twenty-eight records
-report downloadable or linked KNIME workflow files. Current retrieval results
-were mixed: workflow artifacts were obtained for twelve article records, while
-some links were stale, blocked, incomplete, or not attempted in the current
-download pass. In the manual opening subset, workflows from twelve article
-records were opened, and four article records had at least one workflow execute
-successfully in the tested local environment. For other influential studies,
-the strongest workflow evidence is usually weaker than an executable artifact.
-Several records present screenshots or figures of connected KNIME nodes, or
-describe workflow steps in text, without preserving all executable workflow
-context.
+weak link. Twenty-eight records report downloadable or linked KNIME workflow
+files, but workflow artifacts were obtained for only twelve article records in
+the recorded retrieval attempts; other links were stale, blocked, incomplete,
+or did not lead to a confirmed KNIME workflow artifact. Workflows from all
+twelve obtained article records opened in the tested local KNIME environment,
+and four article records had at least one workflow execute successfully. For
+other influential studies, the strongest workflow evidence is usually weaker
+than an executable artifact. Several records present screenshots or figures of
+connected KNIME nodes, or describe workflow steps in text, without preserving
+all executable workflow context.
 
 These reporting practices are risky because KNIME continues to evolve. A
 workflow that was executable when a paper was written may later depend on nodes
 that are deprecated, hidden, migrated, removed, or supplied by third-party
-extensions that are no longer easy to install. This paper therefore studies
-two connected forms of evidence: how KNIME workflows are reported in
-scientific articles, and how the KNIME source-code ecosystem changes around
-those workflows. We combine OpenAlex bibliometrics, top-cited article
-retrieval and assessment, current-version workflow opening and execution
-attempts, and repository-level mining of KNIME node metadata. The goal is to
-show why publication practice and source-code evolution must be considered
-together when evaluating long-term reproducibility of KNIME-based studies.
+extensions that are no longer easy to install. This paper therefore connects
+publication evidence with platform-evolution evidence. We combine OpenAlex
+bibliometrics, top-cited article retrieval and assessment, workflow-artifact
+retrieval and current-version execution attempts, and repository-level mining
+of KNIME node metadata. The goal is to show why publication practice and
+source-code evolution must be considered together when evaluating long-term
+reproducibility of KNIME-based studies.
 
 The rest of the paper is organized as follows. Section~2 reviews related work
 on computational reproducibility, open-source workflow systems, environment
 preservation, and platform evolution. Section~3 presents the methods before
 the data because the study depends on how the bibliometric records, article
 assessments, and repository snapshots were collected. Section~4 describes the
-resulting datasets. Section~5 reports the bibliometric, article-assessment,
-manual compatibility-test, and repository-mining results. Section~6 discusses
+resulting datasets. Section~5 reports the bibliometric, article-audit,
+workflow-retrieval, manual compatibility-test, and repository-mining results.
+Section~6 discusses
 the implications, limitations, and future extensions of the study.
 
 \section{Literature Review}
@@ -662,15 +658,16 @@ Table~\ref{tab:top-cited-assessment} summarizes the statistics-ready flags in
 the structured audit file. Sixty-seven records use KNIME as a workflow, tool,
 interface, or implementation context. Fifty-nine records contain textual
 workflow or node descriptions, and thirty-seven show workflow screenshots or
-figures. Twenty-eight records report downloadable or linked KNIME workflow files. Current
-retrieval attempts have so far obtained workflow artifacts for twelve of these
-article records. Version and dependency reporting remain limited: eighteen
+figures. Twenty-eight records report downloadable or linked KNIME workflow
+files, and the recorded retrieval attempts obtained workflow artifacts for
+twelve of these article records. Version and dependency reporting remain limited: eighteen
 records report a KNIME version, thirty report KNIME extension or plugin
 dependencies, and nineteen report an installation source. Data and code signals
 are more common than retrievable workflow-artifact evidence: fifty-five records
 report input-data availability, twenty-three provide a direct input-data
-resource, and seventeen provide code or scripts. In this study, we do not verify data
-availability itself; we only record whether the article text reports it. The
+resource, and seventeen provide code or scripts. In this study, we do not
+verify data availability itself; we only record whether the article text
+reports it. The
 same limitation applies to code or script availability.
 This pattern is important because a reader may find data or code without being
 able to recover the actual KNIME workflow, node settings, KNIME version, or
@@ -747,27 +744,35 @@ Articles with successfully downloaded workflows & 12 & 17.9\% \\
 \end{longtable}
 \endgroup
 
-Among the 28 article records that report
-downloadable or linked KNIME workflow files, workflow artifacts or workflow
-directories were obtained for 12 article records. The remaining reported
-workflow references could not be retrieved for several reasons, most often
-obsolete URLs. One additional downloaded repository did not contain a KNIME
-workflow file. The purpose was limited: we checked whether linked artifacts
-could be obtained, whether a current local KNIME installation could open them,
-and whether execution completed without manual repair. Workflows from all 12
-obtained article records opened in the local KNIME environment (KNIME 5.8.3
-LTS). Four article records had at least one workflow execute successfully:
-PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration, and
-high-content organelle trafficking
+Among the 28 article records that report downloadable or linked KNIME workflow
+files, Table~\ref{tab:workflow-retrieval-results} summarizes the 19 records
+for which we recorded an artifact-retrieval outcome. In this table, the
+\emph{Success} column marks whether a KNIME workflow artifact was actually
+obtained: \textbf{X} means that a workflow file, archive, or workflow
+directory was retrieved, while \textbf{-} means that no KNIME workflow artifact
+was obtained or confirmed. Workflow artifacts or workflow directories were
+obtained for 12 article records. The remaining recorded retrieval attempts
+failed because links were obsolete, blocked, unresolved, or led to repositories
+or supplements that did not contain a confirmed KNIME workflow file.
+
+Table~\ref{tab:workflow-opening-results} then reports the manual current-KNIME
+opening and execution checks for those 12 downloaded article records. Here, the
+\emph{Success} column has a stricter meaning: \textbf{X} means that at least
+one workflow for the article opened and executed successfully in the tested
+environment, while \textbf{-} means that the workflow opened but did not have a
+confirmed successful end-to-end run, or failed during execution. Workflows from
+all 12 obtained article records opened in the local KNIME environment (KNIME
+5.8.3 LTS). Four article records had at least one workflow execute
+successfully: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration,
+and high-content organelle trafficking
 \cite{Saubern2011PAINS,VillarroelOrdenes2021KNIMEHub,Dietz2020ImageJKNIME,Pal2018OrganelleKNIME}.
 The remaining opened article records did not execute successfully in this
 manual check. This does not show that those workflows are unreproducible; they
 may require additional configuration, dependencies, or repair before a
-successful run.
-Across the opened workflows, the screenshots also show
+successful run. Across the opened workflows, the screenshots also show
 deprecated or legacy nodes, but we treat this as qualitative compatibility
-evidence here rather than counting visible deprecated nodes. The screenshots are
-archived under each workflow directory's \texttt{opened/} subdirectory in
+evidence here rather than counting visible deprecated nodes. The screenshots
+are archived under each workflow directory's \texttt{opened/} subdirectory in
 \path{data/original/workflows/}.
 
 \begingroup
@@ -775,76 +780,216 @@ archived under each workflow directory's \texttt{opened/} subdirectory in
 \renewcommand{\arraystretch}{1.18}
 \begin{longtable}{|%
   >{\centering\arraybackslash}p{0.04\textwidth}|
-  >{\raggedright\arraybackslash}p{0.25\textwidth}|
-  >{\raggedright\arraybackslash}p{0.22\textwidth}|
-  >{\raggedright\arraybackslash}p{0.39\textwidth}|}
-\caption{Manual workflow retrieval, opening, and execution results for article
-records with downloaded workflow artifacts in the 80-record audit, plus one
-downloaded repository that did not contain a KNIME workflow file.}
-\label{tab:workflow-opening-results}\\
+  >{\raggedright\arraybackslash}p{0.23\textwidth}|
+  >{\centering\arraybackslash}p{0.09\textwidth}|
+  >{\raggedright\arraybackslash}p{0.54\textwidth}|}
+\caption{Workflow retrieval results for article records with attempted or
+recorded artifact retrieval outcomes.}
+\label{tab:workflow-retrieval-results}\\
 \toprule
-\# & Article record & Retrieval result & Manual KNIME result \\
+\# & Article record & Success & Retrieval note \\
 \midrule
 \endfirsthead
 \toprule
-\# & Article record & Retrieval result & Manual KNIME result \\
+\# & Article record & Success & Retrieval note \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
 1 &
 PAINS workflows, DOI \path{10.1002/minf.201100076} &
-Manual RDKit and Indigo workflow ZIPs obtained after automated myExperiment
-download returned HTTP 403. &
-At article-record level, at least one workflow opened and executed
-successfully. The separate Indigo workflow opened but was blocked by a missing
-Indigo KNIME Integration node. \\
+\textbf{X} &
+Automated myExperiment page and download requests returned HTTP 403 HTML, but
+the user manually obtained both RDKit and Indigo workflow ZIP archives; both
+contain \texttt{workflow.knime} files. \\
 2 &
 Chemical data curation workflow, DOI \path{10.1186/s13321-018-0315-6} &
-GitHub archive obtained; KNIME workflow files found. &
-Opened, but execution failed inside a metanode during the manual test. \\
+\textbf{X} &
+GitHub master archive was downloaded after retry and passed ZIP integrity
+checking; KNIME workflow files were found in the archive. \\
 3 &
 ASD genes prediction workflow, DOI \path{10.1371/journal.pone.0208626} &
-GitHub archive obtained; inner KNIME workflow archive extracted. &
-Opened, but execution failed in an R node because required R packages and
-functions were unavailable in the test environment. \\
+\textbf{X} &
+GitHub archive passed ZIP integrity checking; an inner KNIME workflow archive
+was extracted to a workflow directory. \\
+4 &
+Bitterness/sweetness classifier workflow, DOI \path{10.3389/fchem.2018.00093} &
+\textbf{-} &
+The original project page redirected to VirtualTaste, and the redirected page
+returned HTTP 404; no workflow archive was retrieved. \\
+5 &
+Medicinal chemistry filters workflow, DOI \path{10.3390/encyclopedia3020035} &
+\textbf{X} &
+GitLab archive passed ZIP integrity checking and contained KNIME workflow
+files; one KNIME Hub URL returned a page, while an older generic Hub URL
+returned 404 JSON. \\
+6 &
+MS-ready structures repository, DOI \path{10.1186/s13321-018-0299-2} &
+\textbf{-} &
+The GitHub archive passed ZIP integrity checking, but the extracted repository
+contained only \texttt{LICENSE} and \texttt{README.md}; no \texttt{.knwf} or
+\texttt{workflow.knime} file was found. \\
+7 &
+KNIME-OMICS reference, DOI \path{10.1016/j.jprot.2016.08.002} &
+\textbf{-} &
+The referenced GitHub organization page returned HTTP 404; no workflow archive
+was retrieved. \\
+8 &
+QSAR tools workflow, DOI \path{10.1080/07391102.2018.1456975} &
+\textbf{-} &
+The referenced \path{teqip.jdvu.ac.in/QSAR_Tools/} URL failed DNS resolution;
+no workflow archive was retrieved. \\
+9 &
+Webinar Pricing Analytics workflow, DOI \path{10.1016/j.jbusres.2021.08.036} &
+\textbf{X} &
+The user manually downloaded the KNIME workflow file and added local KNIME
+opening screenshots. \\
+10 &
+Verhaar scheme workflow, DOI \path{10.1016/j.chemosphere.2015.06.009} &
+\textbf{-} &
+The article reports a supplementary KNIME workflow; standard Elsevier
+supplement URLs resolved as Excel files, but no direct KNIME workflow archive
+URL was confirmed. \\
+11 &
+Spontaneous tail coiling workflow, DOI \path{10.1016/j.ntt.2020.106918} &
+\textbf{X} &
+The user manually downloaded the KNIME workflow file and added local KNIME
+opening screenshots. \\
+12 &
+Caco-2 permeability prediction workflow, DOI \path{10.3390/pharmaceutics14101998} &
+\textbf{X} &
+The user manually downloaded the KNIME workflow file and added local KNIME
+opening screenshots. \\
+13 &
+KniMet workflow, DOI \path{10.1007/s11306-018-1349-5} &
+\textbf{X} &
+The Zenodo DOI resolved to record 1196407; \texttt{KniMet-master.zip} was
+downloaded and contains \texttt{KniMet.knwf}. \\
+14 &
+NGS sample workflow, DOI \path{10.1093/bioinformatics/btr478} &
+\textbf{X} &
+The user manually downloaded the myExperiment archive after automated requests
+were blocked by HTTP 403; the ZIP contains a KNIME workflow directory with
+saved data. \\
+15 &
+ImageJ ecosystem workflows, DOI \path{10.3389/fcomp.2020.00008} &
+\textbf{X} &
+Six KNIME Hub artifact metadata endpoints returned signed URLs and the
+corresponding \texttt{.knwf} files were downloaded; one recorded reference
+appears stale or unavailable. \\
+16 &
+Multi-template matching repository, DOI \path{10.1186/s12859-020-3363-7} &
+\textbf{-} &
+The GitHub archive was downloaded, but it contained documentation/images only
+and no \texttt{.knwf}, \texttt{workflow.knime}, or KNIME workflow archive; a
+guessed NodePit URL returned HTTP 404. \\
+17 &
+GediNET workflows, DOI \path{10.1038/s41598-022-24421-0} &
+\textbf{X} &
+GitHub master archive was downloaded and contains two \texttt{.knwf} files;
+the recorded KNIME Hub short link could not be retrieved. \\
+18 &
+Nuclear receptor ligand workflow, DOI \path{10.1002/minf.201400188} &
+\textbf{-} &
+The article reports supplementary workflow material, but Wiley article and
+guessed supplementary download endpoints returned Cloudflare challenge pages;
+Crossref metadata did not expose a supplementary workflow URL. \\
+19 &
+High-content organelle trafficking workflow, DOI \path{10.1038/sdata.2018.241} &
+\textbf{X} &
+The figshare collection DOI resolved through the figshare API; the default
+KNIME workflow file was downloaded as \texttt{KNIME workflow.zip}. \\
+\end{longtable}
+\endgroup
+
+\begingroup
+\scriptsize
+\renewcommand{\arraystretch}{1.18}
+\begin{longtable}{|%
+  >{\centering\arraybackslash}p{0.04\textwidth}|
+  >{\raggedright\arraybackslash}p{0.25\textwidth}|
+  >{\centering\arraybackslash}p{0.09\textwidth}|
+  >{\raggedright\arraybackslash}p{0.51\textwidth}|}
+\caption{Manual opening and execution results for downloaded KNIME workflow
+artifacts.}
+\label{tab:workflow-opening-results}\\
+\toprule
+\# & Article record & Success & Manual KNIME result \\
+\midrule
+\endfirsthead
+\toprule
+\# & Article record & Success & Manual KNIME result \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 &
+PAINS workflows, DOI \path{10.1002/minf.201100076} &
+\textbf{X} &
+RDKit and Indigo workflow ZIPs were tested. At article-record level, at least
+one workflow opened and executed successfully. The separate Indigo workflow
+opened but was blocked by a missing Indigo KNIME Integration node. \\
+2 &
+Chemical data curation workflow, DOI \path{10.1186/s13321-018-0315-6} &
+\textbf{-} &
+The CompTox rebuilt workflow file opened, but execution failed inside a
+metanode during the manual test. \\
+3 &
+ASD genes prediction workflow, DOI \path{10.1371/journal.pone.0208626} &
+\textbf{-} &
+The extracted ASD genes prediction workflow opened, but execution failed in an
+R node because required R packages and functions were unavailable in the test
+environment. \\
 4 &
 Medicinal chemistry filters workflow, DOI \path{10.3390/encyclopedia3020035} &
-GitLab archive obtained; KNIME workflow files found. &
-Opened, but the manual test did not establish a successful end-to-end run; the
-available evidence shows unresolved or not-yet-configured workflow parts. \\
+\textbf{-} &
+The medicinal chemistry filters workflow file opened, but a successful
+end-to-end execution was not established in the available notes. \\
 5 &
 Webinar Pricing Analytics workflow, DOI \path{10.1016/j.jbusres.2021.08.036} &
-Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
-Opened and executed successfully in the current local KNIME environment. \\
+\textbf{X} &
+The Webinar Pricing Analytics workflow file opened and executed successfully
+in the current local KNIME environment. \\
 6 &
 Spontaneous tail coiling workflow, DOI \path{10.1016/j.ntt.2020.106918} &
-Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
-Opened, but the available notes do not establish a successful end-to-end run. \\
+\textbf{-} &
+The spontaneous tail coiling measurement workflow file opened in the current
+local KNIME environment, but a successful end-to-end execution was not
+established in the available notes. \\
 7 &
 Caco-2 permeability prediction workflow, DOI \path{10.3390/pharmaceutics14101998} &
-Manual KNIME workflow file obtained from the rank 41--60 audit expansion. &
-Opened, but the available notes do not establish a successful end-to-end run. \\
+\textbf{-} &
+The manual Caco-2 prediction \texttt{.knwf} file opened in the current local
+KNIME environment, but a successful end-to-end execution was not established
+in the available notes. \\
 8 &
 KniMet workflow, DOI \path{10.1007/s11306-018-1349-5} &
-Zenodo archive obtained; \texttt{KniMet.knwf} found. &
-Opened, but the available notes do not establish a successful end-to-end run. \\
+\textbf{-} &
+The KniMet workflow from the Zenodo archive opened in the current local KNIME
+environment, but successful execution was not established in the available
+notes. \\
 9 &
 NGS sample workflow, DOI \path{10.1093/bioinformatics/btr478} &
-Manual myExperiment workflow ZIP obtained; workflow directory found. &
-Opened, but the available notes do not establish a successful end-to-end run. \\
+\textbf{-} &
+The NGS sample workflow archive with saved data opened in the current local
+KNIME environment, but successful execution was not established in the
+available notes. \\
 10 &
 ImageJ ecosystem workflows, DOI \path{10.3389/fcomp.2020.00008} &
-Six KNIME Hub workflow files obtained; one recorded Hub link was stale. &
-Opened and executed normally after additional plugin installation. \\
+\textbf{X} &
+Six downloaded KNIME Hub \texttt{.knwf} files opened and executed normally in
+the user environment after installing additional required KNIME/ImageJ-related
+plugins. \\
 11 &
 GediNET workflows, DOI \path{10.1038/s41598-022-24421-0} &
-GitHub archive obtained; two KNIME workflow files found. &
-Opened, but the available notes do not establish a successful end-to-end run. \\
+\textbf{-} &
+The GediNET GitHub archive opened in the current local KNIME environment, but
+successful execution was not established in the available notes. \\
 12 &
 High-content organelle trafficking workflow, DOI \path{10.1038/sdata.2018.241} &
-Figshare workflow ZIP obtained; workflow directory found. &
-Opened and executed normally after additional plugin installation. \\
+\textbf{X} &
+\texttt{KNIME workflow.zip} opened and executed normally in the user
+environment after installing additional required plugins. \\
 \end{longtable}
 \endgroup
 
@@ -965,20 +1110,20 @@ how often uploaded or executed workflows use deprecated nodes. That question
 requires workflow-level corpora and execution traces beyond repository
 metadata.
 
-Taken together, the three evidence streams give the intended picture of the
-study. First, KNIME is visible in a broad and sustained scientific literature.
-Second, influential papers that use or mention KNIME rarely provide the full
+Taken together, the evidence gives the intended picture of the study. First,
+KNIME is visible in a broad and sustained scientific literature. Second,
+influential papers that use or mention KNIME rarely provide the full
 workflow-preservation package needed for later reproduction: executable
-workflow files, KNIME versions, extension context, data, and code. In the
-workflow-level experiment, 12 article records yielded workflow artifacts or
-workflow directories, workflows from all 12 opened in the current local KNIME
-environment, and four article records had at least one workflow execute
-successfully. Third,
-KNIME's source metadata continues to evolve, and roughly one third of ordinary
-registered nodes are marked deprecated in recent source snapshots. The result
-is not a claim that all KNIME workflows fail. The result is a reproducibility
-risk: as KNIME evolves, papers that preserve only workflow images or textual
-descriptions become harder to diagnose, migrate, and reproduce.
+workflow files, KNIME versions, extension context, data, and code. Third, the
+workflow experiment shows the practical consequence of this gap: 12 article
+records yielded workflow artifacts or workflow directories, workflows from all
+12 opened in the current local KNIME environment, and four article records had
+at least one workflow execute successfully. Fourth, KNIME's source metadata
+continues to evolve, and roughly one third of ordinary registered nodes are
+marked deprecated in recent source snapshots. The result is not a claim that
+all KNIME workflows fail. The result is a reproducibility risk: as KNIME
+evolves, papers that preserve only workflow images or textual descriptions
+become harder to diagnose, migrate, and reproduce.
 
 \section{Discussion}
 
@@ -989,9 +1134,9 @@ benchmark. We do not estimate the failure rate of all published KNIME
 workflows. Instead, we show a reproducibility risk pattern: KNIME is used in a
 visible scientific literature, influential papers often do not publish
 executable workflow artifacts, successful current-version execution was
-confirmed for four of twelve article records with opened workflows in the
-manual experiment, and the
-KNIME node ecosystem has accumulated a substantial deprecated-node surface.
+confirmed for four of twelve downloaded article records in the manual
+experiment, and the KNIME node ecosystem has accumulated a substantial
+deprecated-node surface.
 
 The results suggest three practical implications. First, a published workflow
 image is not an executable artifact. Several highly cited papers provide
