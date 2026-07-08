@@ -109,27 +109,28 @@
     },
     {
       "step": 6,
-      "name": "Create or update structured article assessment",
-      "script": null,
-      "make_target": null,
-      "network_required": false,
+      "name": "Generate structured article assessment candidates",
+      "script": "scripts/generate_article_audit_assessments_with_llm.py",
+      "make_target": "llm-article-assessments",
+      "network_required": true,
       "input": [
         "data/processed/openalex/openalex_knime_most_cited.csv",
         "data/processed/articles/*.txt",
         "data/processed/audit/knime_article_audit_questions.json",
-        "manual article reading and resource inspection"
-      ],
-      "output": [
+        "data/processed/audit/llm_article_assessment_prompt.json",
         "data/processed/audit/knime_most_cited_article_assessments.json"
       ],
-      "handoff_to_next": "manual",
-      "manual_action_required": [
-        "Assess each article using the audit questions.",
-        "Record description_audit_fields, flag_audit_fields, and evidence notes.",
-        "Keep false, unclear, not_checked, and not_assessed states as description values rather than positive flags.",
-        "Do not add true article-text flags without quote-backed support."
+      "output": [
+        "data/processed/audit/logs/llm_article_assessment_candidates.jsonl",
+        "data/processed/audit/knime_most_cited_article_assessments.json when APPLY_LLM_ARTICLE_ASSESSMENTS=--apply"
       ],
-      "notes": "This is the main human-assessment step. It is the current boundary between deterministic scripts and manual judgment."
+      "handoff_to_next": "llm_automatic",
+      "manual_action_required": [
+        "Run a small pilot first, for example LIMIT=1 or RANK=<rank>, before a full paid run.",
+        "Review data/processed/audit/logs/llm_article_assessment_candidates.jsonl for unsupported true flags, weak quotes, and wrong enum choices.",
+        "Use APPLY_LLM_ARTICLE_ASSESSMENTS=--apply only after reviewing candidates or when intentionally rebuilding selected records."
+      ],
+      "notes": "This step turns the old manual article-reading boundary into an LLM-assisted structured-assessment generator. The script sends article metadata, resource hints, and selected line-referenced excerpts to the LLM, then asks for description_audit_fields, flag_audit_fields, flag_audit_support, linked_resources, confidence, and review status. By default it writes a JSONL candidate file and does not overwrite the main audit. Use LIMIT and RANK to control cost and test individual records."
     },
     {
       "step": 7,

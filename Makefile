@@ -52,10 +52,15 @@ LLM_MODEL ?= gpt-4.1-mini
 LLM_TEMPERATURE ?= 0
 LLM_ENV_FILE ?= .env
 LLM_PROMPT ?= data/processed/audit/llm_support_validation_prompt.json
+LLM_ARTICLE_ASSESSMENT_PROMPT ?= data/processed/audit/llm_article_assessment_prompt.json
+LLM_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/logs/llm_article_assessment_candidates.jsonl
 LLM_DECISION_LOG ?= data/processed/audit/logs/llm_support_validation_decisions.jsonl
 LLM_APPLY_REJECTIONS ?=
 RESET_FLAGS_FROM_DESCRIPTIONS ?=
 APPLY_FLAG_REMOVALS ?=
+APPLY_LLM_ARTICLE_ASSESSMENTS ?=
+LIMIT ?= 0
+RANK ?=
 
 # KNIME source-mining parameters. Override KNIME_OSS_ROOT for your local clone.
 KNIME_OSS_ROOT ?= ../2026-06-knime-oss
@@ -80,6 +85,7 @@ help: ## Show target descriptions and important parameters.
 	@printf '  LLM_MODE=%s LLM_MODEL=%s          audit-support LLM mode/model\n' "$(LLM_MODE)" "$(LLM_MODEL)"
 	@printf '  LLM_APPLY_REJECTIONS=%s           empty logs LLM decisions without applying rejections\n' "$(LLM_APPLY_REJECTIONS)"
 	@printf '  APPLY_FLAG_REMOVALS=%s            empty preserves audited positive flags\n' "$(APPLY_FLAG_REMOVALS)"
+	@printf '  LIMIT=%s RANK=%s                  optional LLM article-assessment subset\n' "$(LIMIT)" "$(RANK)"
 
 .PHONY: all
 all: openalex-bibliometrics article-texts audit-tables knime-snapshot-summary article ## Rebuild local derived outputs that do not require network access.
@@ -171,6 +177,21 @@ refresh-audit-support: ## Refresh quote/provenance support in the structured art
 	  --assessment "$(ASSESSMENT)" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)"
+
+.PHONY: llm-article-assessments
+llm-article-assessments: ## Generate LLM candidates for article_audit_fields. Network access required.
+	$(PYTHON) scripts/generate_article_audit_assessments_with_llm.py \
+	  --model "$(LLM_MODEL)" \
+	  --temperature "$(LLM_TEMPERATURE)" \
+	  --env-file "$(LLM_ENV_FILE)" \
+	  --prompt "$(LLM_ARTICLE_ASSESSMENT_PROMPT)" \
+	  --assessment "$(ASSESSMENT)" \
+	  --questions "$(AUDIT_QUESTIONS)" \
+	  --text-dir "$(ARTICLE_TEXT_DIR)" \
+	  --output "$(LLM_ARTICLE_ASSESSMENT_OUTPUT)" \
+	  --limit "$(LIMIT)" \
+	  $(if $(RANK),--rank "$(RANK)",) \
+	  $(APPLY_LLM_ARTICLE_ASSESSMENTS)
 
 .PHONY: article-audit-tables
 article-audit-tables: ## Build Table 3 CSV and comparison/check logs from the audit JSON.

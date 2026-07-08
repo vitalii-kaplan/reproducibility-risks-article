@@ -224,3 +224,4 @@ data/original/articles/
 # Generated article text extracted from local PDFs
 data/processed/articles/
 data/processed/audit/logs/llm_support_validation_decisions.jsonl
+data/processed/audit/logs/llm_article_assessment_candidates.jsonl
