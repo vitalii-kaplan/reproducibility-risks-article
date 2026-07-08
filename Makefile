@@ -25,7 +25,7 @@ OPENALEX_PER_PAGE ?= 200
 OPENALEX_MAILTO ?=
 OPENALEX_SLEEP ?= 0.2
 OPENALEX_MAX_PAGES ?= 0
-OPENALEX_MOST_CITED_LIMIT ?= 80
+OPENALEX_MOST_CITED_LIMIT ?= 100
 OPENALEX_RAW_DIR ?= data/original/openalex
 OPENALEX_WORKS ?= data/original/openalex/works.jsonl
 OPENALEX_PROCESSED_DIR ?= data/processed/openalex
@@ -47,6 +47,11 @@ WORKFLOW_REFERENCES ?= data/processed/audit/knime_downloadable_workflow_referenc
 ARTICLE_TEX ?= article/article.tex
 ARTICLE_TABLE_DIR ?= article/tables
 FAIL_ON_MISMATCH ?= --fail-on-mismatch
+LLM_MODE ?= off
+LLM_MODEL ?= gpt-4.1-mini
+LLM_TEMPERATURE ?= 0
+LLM_ENV_FILE ?= .env
+LLM_PROMPT ?= data/processed/audit/llm_support_validation_prompt.json
 
 # KNIME source-mining parameters. Override KNIME_OSS_ROOT for your local clone.
 KNIME_OSS_ROOT ?= ../2026-06-knime-oss
@@ -68,6 +73,7 @@ help: ## Show target descriptions and important parameters.
 	@printf '  OPENALEX_MAILTO=%s                optional email for OpenAlex polite pool\n' "$(OPENALEX_MAILTO)"
 	@printf '  OPENALEX_MOST_CITED_LIMIT=%s      citation-ranked OpenAlex subset size\n' "$(OPENALEX_MOST_CITED_LIMIT)"
 	@printf '  FAIL_ON_MISMATCH=%s               pass empty to allow table mismatches\n' "$(FAIL_ON_MISMATCH)"
+	@printf '  LLM_MODE=%s LLM_MODEL=%s          audit-support LLM mode/model\n' "$(LLM_MODE)" "$(LLM_MODEL)"
 
 .PHONY: all
 all: openalex-bibliometrics article-texts audit-tables knime-snapshot-summary article ## Rebuild local derived outputs that do not require network access.
@@ -147,6 +153,11 @@ article-texts: extract-texts normalize-texts ## Extract and normalize article te
 .PHONY: refresh-audit-support
 refresh-audit-support: ## Refresh quote/provenance support in the structured article audit.
 	$(PYTHON) scripts/refresh_article_audit_support.py \
+	  --llm-mode "$(LLM_MODE)" \
+	  --llm-model "$(LLM_MODEL)" \
+	  --llm-temperature "$(LLM_TEMPERATURE)" \
+	  --llm-env-file "$(LLM_ENV_FILE)" \
+	  --llm-prompt "$(LLM_PROMPT)" \
 	  --assessment "$(ASSESSMENT)" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)"

@@ -29,12 +29,12 @@ claims can be inspected and updated.
 
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
   records and collected on June 29, 2026, returned 963 article-type records.
-- The expanded top-cited audit covers 80 KNIME-matching article records. Of
-  these, 64 were assessed from full text and 16 remain not assessed because no
+- The expanded top-cited audit covers 100 KNIME-matching article records. Of
+  these, 82 have local full text or PDFs and 18 remain not assessed because no
   local full text was available.
-- In the 80-record audit, 51 records use KNIME as a workflow, tool, interface,
+- In the 100-record audit, 67 records use KNIME as a workflow, tool, interface,
   or implementation context.
-- Twenty-two records report downloadable or linked KNIME workflow files.
+- Twenty-eight records report downloadable or linked KNIME workflow files.
   Workflow artifacts or workflow directories were obtained for 12 article
   records.
 - Workflows from all 12 obtained article records opened in the local KNIME

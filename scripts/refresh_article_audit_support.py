@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +16,10 @@ from typing import Any
 DEFAULT_ASSESSMENT = Path("data/processed/audit/knime_most_cited_article_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
+DEFAULT_ENV_FILE = Path(".env")
+DEFAULT_LLM_PROMPT = Path("data/processed/audit/llm_support_validation_prompt.json")
+DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
+OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
 MAX_REJECTED_CANDIDATE_QUOTES = 5
 
 
@@ -84,6 +91,38 @@ def slugify(value: str) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--llm-mode",
+        choices=["off", "validate-support"],
+        default="off",
+        help=(
+            "Use an LLM for selected support-validation decisions. "
+            "'off' preserves the deterministic regex/heuristic workflow."
+        ),
+    )
+    parser.add_argument(
+        "--llm-model",
+        default=os.environ.get("OPENAI_MODEL", DEFAULT_OPENAI_MODEL),
+        help="OpenAI model used when --llm-mode is not off.",
+    )
+    parser.add_argument(
+        "--llm-temperature",
+        type=float,
+        default=0.0,
+        help="Temperature for LLM support validation. Use 0 for maximum repeatability.",
+    )
+    parser.add_argument(
+        "--llm-env-file",
+        type=Path,
+        default=DEFAULT_ENV_FILE,
+        help="Optional .env file containing OPENAI_API_KEY.",
+    )
+    parser.add_argument(
+        "--llm-prompt",
+        type=Path,
+        default=DEFAULT_LLM_PROMPT,
+        help="JSON prompt/protocol file for LLM support validation.",
+    )
     parser.add_argument("--assessment", type=Path, default=DEFAULT_ASSESSMENT)
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--text-dir", type=Path, default=DEFAULT_TEXT_DIR)
@@ -99,6 +138,136 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
     with path.open("w", encoding="utf-8") as handle:
         json.dump(data, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
+
+
+def load_env_file(path: Path) -> None:
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+class LLMSupportValidator:
+    def __init__(
+        self,
+        *,
+        model: str,
+        temperature: float,
+        api_key: str,
+        questions: dict[str, Any],
+        prompt: dict[str, Any],
+    ) -> None:
+        self.model = model
+        self.temperature = temperature
+        self.api_key = api_key
+        self.questions = questions
+        self.prompt = prompt
+        self.cache: dict[tuple[str, str, str], bool] = {}
+        self.calls = 0
+
+    def validate(
+        self,
+        flag: str,
+        item: dict[str, str],
+        deterministic_result: bool,
+    ) -> bool:
+        quote = item.get("quote", "").strip()
+        if not quote:
+            return deterministic_result
+
+        key = (flag, quote, item.get("article_section", ""))
+        if key in self.cache:
+            return self.cache[key]
+
+        question = self.questions.get("flag_questions", {}).get(flag, {}).get(
+            "question", ""
+        )
+        payload = {
+            "model": self.model,
+            "temperature": self.temperature,
+            "response_format": {"type": "json_object"},
+            "messages": [
+                {
+                    "role": "system",
+                    "content": self.prompt["system_instruction"],
+                },
+                {
+                    "role": "user",
+                    "content": json.dumps(
+                        {
+                            "task": self.prompt.get(
+                                "user_task",
+                                "Decide whether the quote supports the audit flag.",
+                            ),
+                            "decision_rule": self.prompt.get("decision_rule", ""),
+                            "flag": flag,
+                            "audit_question": question,
+                            "article_section": item.get("article_section", ""),
+                            "quote": quote,
+                            "deterministic_validator_result": deterministic_result,
+                            "required_json_schema": self.prompt[
+                                "required_json_schema"
+                            ],
+                        },
+                        ensure_ascii=False,
+                    ),
+                },
+            ],
+        }
+        request = urllib.request.Request(
+            OPENAI_CHAT_COMPLETIONS_URL,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                data = json.load(response)
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"OpenAI API HTTP {exc.code}: {detail}") from exc
+        except urllib.error.URLError as exc:
+            raise RuntimeError(f"OpenAI API request failed: {exc.reason}") from exc
+
+        self.calls += 1
+        content = data["choices"][0]["message"]["content"]
+        parsed = json.loads(content)
+        supported = bool(parsed.get("supported"))
+        self.cache[key] = supported
+        return supported
+
+
+def build_llm_validator(
+    args: argparse.Namespace,
+    questions: dict[str, Any],
+) -> LLMSupportValidator | None:
+    if args.llm_mode == "off":
+        return None
+    load_env_file(args.llm_env_file)
+    api_key = os.environ.get("OPENAI_API_KEY", "")
+    if not api_key:
+        raise SystemExit(
+            "OPENAI_API_KEY is required when --llm-mode is not off. "
+            "Put it in .env or export it in the environment."
+        )
+    prompt = load_json(args.llm_prompt)
+    return LLMSupportValidator(
+        model=args.llm_model,
+        temperature=args.llm_temperature,
+        api_key=api_key,
+        questions=questions,
+        prompt=prompt,
+    )
 
 
 def rename_line_keys(value: Any) -> None:
@@ -495,7 +664,23 @@ def validates_true_flag(flag: str, item: dict[str, str]) -> bool:
     return True
 
 
-def find_support(lines: list[str], flag: str, limit: int = 2) -> list[dict[str, str]]:
+def support_item_is_valid(
+    flag: str,
+    item: dict[str, str],
+    llm_validator: LLMSupportValidator | None,
+) -> bool:
+    deterministic_result = validates_true_flag(flag, item)
+    if llm_validator is None:
+        return deterministic_result
+    return llm_validator.validate(flag, item, deterministic_result)
+
+
+def find_support(
+    lines: list[str],
+    flag: str,
+    llm_validator: LLMSupportValidator | None,
+    limit: int = 2,
+) -> list[dict[str, str]]:
     patterns = [re.compile(pattern, re.IGNORECASE) for pattern in FLAG_PATTERNS.get(flag, [])]
     support: list[dict[str, str]] = []
     seen_ranges: set[str] = set()
@@ -532,7 +717,7 @@ def find_support(lines: list[str], flag: str, limit: int = 2) -> list[dict[str, 
                 "note": f"Extracted text evidence: {snippet}",
             }
         )
-        if not validates_true_flag(flag, support[-1]):
+        if not support_item_is_valid(flag, support[-1], llm_validator):
             support.pop()
             rejected_candidates += 1
             if rejected_candidates > MAX_REJECTED_CANDIDATE_QUOTES and not support:
@@ -544,7 +729,11 @@ def find_support(lines: list[str], flag: str, limit: int = 2) -> list[dict[str, 
 
 
 def find_linked_resource_support(
-    lines: list[str], urls: list[str], flag: str, limit: int = 2
+    lines: list[str],
+    urls: list[str],
+    flag: str,
+    llm_validator: LLMSupportValidator | None,
+    limit: int = 2,
 ) -> list[dict[str, str]]:
     support: list[dict[str, str]] = []
     compact_lines = [resource_key(line) for line in lines]
@@ -563,7 +752,7 @@ def find_linked_resource_support(
                 "article_section": article_section_for_line(lines, label) or "Unknown",
                 "note": f"Extracted text evidence for linked resource {url}: {snippet}",
             }
-            if validates_true_flag(flag, item):
+            if support_item_is_valid(flag, item, llm_validator):
                 support.append(item)
             break
         if len(support) >= limit:
@@ -572,7 +761,10 @@ def find_linked_resource_support(
 
 
 def find_version_value_support(
-    lines: list[str], version_values: str, limit: int = 2
+    lines: list[str],
+    version_values: str,
+    llm_validator: LLMSupportValidator | None,
+    limit: int = 2,
 ) -> list[dict[str, str]]:
     values = [
         value.strip()
@@ -599,7 +791,9 @@ def find_version_value_support(
                     "note": f"Extracted text evidence for reported KNIME version {value}: {snippet}",
                 }
             )
-            if not validates_true_flag("reports_knime_version", support[-1]):
+            if not support_item_is_valid(
+                "reports_knime_version", support[-1], llm_validator
+            ):
                 support.pop()
                 continue
             break
@@ -669,6 +863,7 @@ def enrich_support_with_citations(
 def remove_invalid_quote_support(
     support: dict[str, list[dict[str, str]]],
     flags: dict[str, Any],
+    llm_validator: LLMSupportValidator | None,
 ) -> None:
     for flag, items in list(support.items()):
         if flag == "full_text_accessible":
@@ -677,7 +872,7 @@ def remove_invalid_quote_support(
             item
             for item in items
             if (
-                ("quote" in item and validates_true_flag(flag, item))
+                "quote" in item and support_item_is_valid(flag, item, llm_validator)
                 or (flag == "linked_workflow_artifacts_retrievable" and "quote" not in item)
             )
         ]
@@ -758,6 +953,7 @@ def main() -> int:
     args = parse_args()
     assessment = load_json(args.assessment)
     questions = load_json(args.questions)
+    llm_validator = build_llm_validator(args, questions)
     rename_line_keys(assessment)
     flag_names = list(questions["flag_questions"].keys())
 
@@ -816,6 +1012,7 @@ def main() -> int:
                     lines,
                     article.get("linked_resources", {}).get("data_urls", []),
                     flag,
+                    llm_validator,
                 )
             elif flag == "reports_knime_version":
                 candidates = find_version_value_support(
@@ -823,26 +1020,29 @@ def main() -> int:
                     audit.get("description_audit_fields", {}).get(
                         "knime_version_values", ""
                     ),
+                    llm_validator,
                 )
                 if not candidates:
-                    candidates = find_support(lines, flag)
+                    candidates = find_support(lines, flag, llm_validator)
             elif flag == "provides_code_or_scripts":
                 candidates = find_linked_resource_support(
                     lines,
                     article.get("linked_resources", {}).get("code_urls", []),
                     flag,
+                    llm_validator,
                 )
                 if not candidates:
-                    candidates = find_support(lines, flag)
+                    candidates = find_support(lines, flag, llm_validator)
             else:
-                candidates = find_support(lines, flag)
+                candidates = find_support(lines, flag, llm_validator)
             if candidates:
                 text_backed_flags += 1
 
             valid_support = [
                 item
                 for item in dedupe_support([*candidates, *existing_non_text])
-                if "quote" not in item or validates_true_flag(flag, item)
+                if "quote" not in item
+                or support_item_is_valid(flag, item, llm_validator)
             ]
             if not valid_support:
                 flags[flag] = False
@@ -851,7 +1051,7 @@ def main() -> int:
             support[flag] = valid_support
 
         citation_enriched_items += enrich_support_with_citations(support, lines)
-        remove_invalid_quote_support(support, flags)
+        remove_invalid_quote_support(support, flags, llm_validator)
         audit["flag_audit_support"] = {
             flag: items for flag, items in support.items() if flags.get(flag) is True
         }
@@ -873,6 +1073,11 @@ def main() -> int:
         f"found text-backed support for {text_backed_flags} positive flags; "
         f"added direct citation fields to {citation_enriched_items} support items."
     )
+    if llm_validator is not None:
+        print(
+            f"LLM mode {args.llm_mode}: made {llm_validator.calls} "
+            f"support-validation API calls with model {args.llm_model}."
+        )
     return 0
 
 

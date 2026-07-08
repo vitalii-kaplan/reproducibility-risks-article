@@ -1,0 +1,19 @@
+{
+  "name": "article_audit_support_validation",
+  "version": "2026-07-08",
+  "mode": "quote_only_evidence_validation",
+  "system_instruction": "You validate evidence for a structured scientific-paper audit. Return only JSON. Be conservative: answer supported=true only when the quote directly supports the audit flag. Do not infer from general background knowledge. If the quote is vague, about a different concept, or only a keyword match, answer false.",
+  "user_task": "Decide whether the quote supports the audit flag.",
+  "decision_rule": "supported=true only if the quote directly answers the audit question for the specified flag.",
+  "required_json_schema": {
+    "supported": "boolean",
+    "reason": "short string"
+  },
+  "input_fields": [
+    "flag",
+    "audit_question",
+    "article_section",
+    "quote",
+    "deterministic_validator_result"
+  ]
+}

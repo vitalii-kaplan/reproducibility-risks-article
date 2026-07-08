@@ -1,0 +1,307 @@
+{
+  "name": "KNIME publication and workflow reproducibility audit script chain",
+  "purpose": "Formal workflow index for the audit process, from OpenAlex article collection through article-audit table generation and KNIME source-mining summaries.",
+  "updated_at": "2026-07-08",
+  "handoff_terms": {
+    "automatic": "The next step consumes files written by this step without required manual editing.",
+    "semi_automatic": "The script produces or consumes an intermediate state that may require manual action, such as institutional article download, human article assessment, workflow retrieval, or manual KNIME opening/execution checks.",
+    "llm_automatic": "The script runs automatically after deterministic preprocessing, but uses an LLM for bounded judgment tasks that previously required human review.",
+    "manual": "The step is not currently represented by a deterministic script and must be performed or edited by a human before the next scripted step is meaningful."
+  },
+  "article_audit_chain": [
+    {
+      "step": 1,
+      "name": "Collect OpenAlex KNIME article records",
+      "script": "scripts/collect_openalex_knime_works.py",
+      "make_target": "openalex-collect",
+      "network_required": true,
+      "input": [
+        "OpenAlex /works API",
+        "parameters: search=KNIME, search-param=search.title_and_abstract, filter=type:article"
+      ],
+      "output": [
+        "data/original/openalex/metadata.json",
+        "data/original/openalex/works.jsonl",
+        "data/original/openalex/works.csv",
+        "data/original/openalex/pages/page_*.json"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Raw OpenAlex records are the source for bibliometric summaries and rank-based article download attempts."
+    },
+    {
+      "step": 2,
+      "name": "Build OpenAlex bibliometric summaries and most-cited seed table",
+      "script": "scripts/build_openalex_knime_bibliometrics.py",
+      "make_target": "openalex-bibliometrics",
+      "network_required": false,
+      "input": [
+        "data/original/openalex/works.jsonl"
+      ],
+      "output": [
+        "data/processed/openalex/openalex_knime_articles.csv",
+        "data/processed/openalex/openalex_knime_summary.json",
+        "data/processed/openalex/openalex_knime_by_year.csv",
+        "data/processed/openalex/openalex_knime_by_source.csv",
+        "data/processed/openalex/openalex_knime_by_domain.csv",
+        "data/processed/openalex/openalex_knime_by_field.csv",
+        "data/processed/openalex/openalex_knime_by_subfield.csv",
+        "data/processed/openalex/openalex_knime_by_primary_topic.csv",
+        "data/processed/openalex/openalex_knime_most_cited.csv",
+        "data/processed/openalex/openalex_knime_most_cited.md"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "The current Makefile default writes the top 100 citation-ranked seed table, matching the current structured assessment scope."
+    },
+    {
+      "step": 3,
+      "name": "Attempt article PDF downloads by citation-rank range",
+      "script": "scripts/download_openalex_rank_range_articles.py",
+      "make_target": "download-rank-range",
+      "network_required": true,
+      "input": [
+        "data/original/openalex/works.jsonl",
+        "rank range parameters: START, END"
+      ],
+      "output": [
+        "data/original/articles/*.pdf",
+        "data/processed/audit/logs/article_download_attempts_<START>-<END>.csv"
+      ],
+      "handoff_to_next": "semi_automatic",
+      "manual_action_required": [
+        "Inspect failed, non-PDF, or paywalled download attempts.",
+        "Download articles manually where institutional access is available and lawful.",
+        "Place manually obtained PDFs under data/original/articles/.",
+        "Preserve download-attempt manifests under data/processed/audit/logs/."
+      ],
+      "notes": "This step is semi-automatic because OpenAlex links do not always provide retrievable PDFs and some articles require university subscription access."
+    },
+    {
+      "step": 4,
+      "name": "Extract raw text from local article PDFs",
+      "script": "scripts/extract_article_texts.py",
+      "make_target": "extract-texts",
+      "network_required": false,
+      "input": [
+        "data/original/articles/*.pdf"
+      ],
+      "output": [
+        "data/processed/articles/raw/*.txt",
+        "data/processed/audit/logs/article_text_extraction_manifest.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Uses pdftotext -layout. Use extract-texts-all to regenerate all raw text files."
+    },
+    {
+      "step": 5,
+      "name": "Normalize extracted article text into reading order",
+      "script": "scripts/normalize_article_text_columns.py",
+      "make_target": "normalize-texts",
+      "network_required": false,
+      "input": [
+        "data/processed/articles/raw/*.txt"
+      ],
+      "output": [
+        "data/processed/articles/*.txt",
+        "data/processed/audit/logs/article_text_column_normalization_manifest.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Normalizes sustained two-column pages to one-column reading order where possible. Use normalize-texts-all to regenerate all processed text files."
+    },
+    {
+      "step": 6,
+      "name": "Create or update structured article assessment",
+      "script": null,
+      "make_target": null,
+      "network_required": false,
+      "input": [
+        "data/processed/openalex/openalex_knime_most_cited.csv",
+        "data/processed/articles/*.txt",
+        "data/processed/audit/knime_article_audit_questions.json",
+        "manual article reading and resource inspection"
+      ],
+      "output": [
+        "data/processed/audit/knime_most_cited_article_assessments.json"
+      ],
+      "handoff_to_next": "manual",
+      "manual_action_required": [
+        "Assess each article using the audit questions.",
+        "Record description_audit_fields, flag_audit_fields, and evidence notes.",
+        "Keep false, unclear, not_checked, and not_assessed states as description values rather than positive flags.",
+        "Do not add true article-text flags without quote-backed support."
+      ],
+      "notes": "This is the main human-assessment step. It is the current boundary between deterministic scripts and manual judgment."
+    },
+    {
+      "step": 7,
+      "name": "Refresh quote-backed article-audit support",
+      "script": "scripts/refresh_article_audit_support.py",
+      "make_target": "refresh-audit-support",
+      "network_required": false,
+      "network_required_when": "LLM_MODE=validate-support",
+      "input": [
+        "data/processed/audit/knime_most_cited_article_assessments.json",
+        "data/processed/audit/knime_article_audit_questions.json",
+        "data/processed/audit/llm_support_validation_prompt.json",
+        "data/processed/articles/*.txt"
+      ],
+      "output": [
+        "data/processed/audit/knime_most_cited_article_assessments.json"
+      ],
+      "handoff_to_next": "llm_automatic",
+      "manual_action_required": [
+        "Run with LLM_MODE=validate-support to ask the LLM whether candidate quotes directly support each audit flag.",
+        "Review changed support objects after large changes or before final paper claims."
+      ],
+      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected."
+    },
+    {
+      "step": 8,
+      "name": "Create or update workflow-reference inventory",
+      "script": null,
+      "make_target": null,
+      "network_required": true,
+      "input": [
+        "data/processed/audit/knime_most_cited_article_assessments.json",
+        "data/processed/audit/knime_downloadable_workflow_references.json"     
+      ],
+      "output": [
+        "data/processed/audit/knime_downloadable_workflow_references.json",
+        "data/original/workflows/<article-or-doi-safe-directory>/",
+        "data/original/workflows/<article-or-doi-safe-directory>/logs/",
+        "data/original/workflows/<article-or-doi-safe-directory>/opened/"
+      ],
+      "handoff_to_next": "semi_automatic",
+      "manual_action_required": [
+        "Retrieve workflow archives, workflow directories, repository snapshots, or supplements where possible.",
+        "Record failed or not-attempted retrievals.",
+        "Open retrieved workflows in the local current KNIME environment.",
+        "Record import/opening outcome, execution outcome, screenshots, missing extensions, missing data, and other failure notes."
+      ],
+      "notes": "Human semi-automatic work: first inspect data/processed/audit/knime_downloadable_workflow_references.json. For each record, use workflow_references, supplement_references_checked, evidence_extracted_text_lines, and processed_text_file to understand where the article reported a workflow or supplement. If more context is needed, open the matching record in data/processed/audit/knime_most_cited_article_assessments.json and inspect linked_resources.workflow_urls, linked_resources.supplement_urls_or_dois, linked_resources.notes, workflow_artifact_status, and evidence_notes. Then follow the recorded URLs manually in a browser or with a download tool: publisher supplements, repositories such as GitHub or Zenodo, KNIME Hub pages, older workflow portals such as myExperiment, and project websites. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update download_result with the retrieval status, downloaded_files, workflow_files_found, failed_references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual_knime_opening_tests with opened_in_knime, execution_result, artifact, screenshot_directory, and notes. If nothing is obtained, record the reason explicitly rather than deleting the reference."
+    },
+    {
+      "step": 9,
+      "name": "Build article-audit summary table source",
+      "script": "scripts/build_article_audit_tables.py",
+      "make_target": "article-audit-tables",
+      "network_required": false,
+      "input": [
+        "data/processed/audit/knime_most_cited_article_assessments.json",
+        "article/article.tex"
+      ],
+      "output": [
+        "article/tables/top_cited_article_audit_summary.csv",
+        "article/tables/logs/article_audit_table_comparison.csv",
+        "article/tables/logs/article_audit_summary_count_check.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Use --fail-on-mismatch when table values should match the manuscript exactly."
+    },
+    {
+      "step": 10,
+      "name": "Build KNIME-use workflow-reporting table source",
+      "script": "scripts/build_knime_use_workflow_reporting_table.py",
+      "make_target": "knime-use-table",
+      "network_required": false,
+      "input": [
+        "data/processed/audit/knime_most_cited_article_assessments.json",
+        "data/processed/audit/knime_downloadable_workflow_references.json",
+        "article/tables/top_cited_article_audit_summary.csv",
+        "article/article.tex"
+      ],
+      "output": [
+        "article/tables/knime_use_workflow_reporting_signals.csv",
+        "article/tables/logs/knime_use_workflow_reporting_table_comparison.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Uses the workflow inventory summary count for articles with successfully downloaded workflows."
+    }
+  ],
+  "knime_source_mining_chain": [
+    {
+      "step": 1,
+      "name": "Clone KNIME OSS repositories",
+      "script": "scripts/clone_knime_oss_repos.sh",
+      "make_target": "clone-knime-oss",
+      "network_required": true,
+      "input": [
+        "public KNIME Git repositories",
+        "KNIME_OSS_ROOT target directory"
+      ],
+      "output": [
+        "local KNIME_OSS_ROOT clone directory"
+      ],
+      "handoff_to_next": "semi_automatic",
+      "manual_action_required": [
+        "Verify that the clone completed and that all expected repositories are present.",
+        "Keep local clone path outside this repository unless intentionally vendoring evidence."
+      ],
+      "notes": "This step depends on network and external GitHub availability."
+    },
+    {
+      "step": 2,
+      "name": "Checkout KNIME repositories by snapshot date",
+      "script": "scripts/checkout_knime_oss_by_date.sh",
+      "make_target": "checkout-knime-snapshot",
+      "network_required": false,
+      "input": [
+        "local KNIME_OSS_ROOT clone directory",
+        "SNAPSHOT_DATE"
+      ],
+      "output": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/logs/checkout_<SNAPSHOT_DATE>.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Checks out each repository to the requested date and writes a checkout manifest."
+    },
+    {
+      "step": 3,
+      "name": "Collect KNIME node metadata snapshot",
+      "script": "scripts/collect_knime_node_snapshot.py",
+      "make_target": "collect-knime-snapshot",
+      "network_required": false,
+      "input": [
+        "local KNIME_OSS_ROOT clone directory checked out at SNAPSHOT_DATE"
+      ],
+      "output": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Parses structured XML metadata rather than grepping source text."
+    },
+    {
+      "step": 4,
+      "name": "Build cross-snapshot KNIME node summary",
+      "script": "scripts/build_knime_node_snapshot_summary.py",
+      "make_target": "knime-snapshot-summary",
+      "network_required": false,
+      "input": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
+      ],
+      "output": [
+        "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Builds derived longitudinal counts and transition approximations across snapshot directories."
+    }
+  ],
+  "final_table_outputs": [
+    "article/tables/top_cited_article_audit_summary.csv",
+    "article/tables/knime_use_workflow_reporting_signals.csv",
+    "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
+  ],
+  "out_of_scope_for_current_scripts": [
+    "Final VWRS weighting function f(A, I, E, M, D, X, C, R)",
+    "Fully automatic article PDF retrieval through institutional subscription access",
+    "Fully automatic workflow artifact retrieval from every article-specific repository or portal",
+    "Fully automatic KNIME workflow execution and repair"
+  ]
+}
