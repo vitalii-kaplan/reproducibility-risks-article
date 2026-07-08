@@ -41,7 +41,7 @@ END ?= 80
 DOWNLOAD_TIMEOUT ?= 45
 
 # Article-audit and table parameters.
-ASSESSMENT ?= data/processed/audit/knime_most_cited_article_assessments.json
+ASSESSMENT ?= data/processed/audit/article_assessments.json
 AUDIT_QUESTIONS ?= data/processed/audit/knime_article_audit_questions.json
 WORKFLOW_REFERENCES ?= data/processed/audit/knime_downloadable_workflow_references.json
 ARTICLE_TEX ?= article/article.tex
@@ -53,13 +53,14 @@ LLM_TEMPERATURE ?= 0
 LLM_ENV_FILE ?= .env
 LLM_PROMPT ?= data/processed/audit/llm_support_validation_prompt.json
 LLM_ARTICLE_ASSESSMENT_PROMPT ?= data/processed/audit/llm_article_assessment_prompt.json
-LLM_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/logs/llm_article_assessment_candidates.jsonl
+LLM_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_assessments.json
+DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_deterministic_assessments.json
+DETERMINISTIC_LIMIT ?= 0
 LLM_DECISION_LOG ?= data/processed/audit/logs/llm_support_validation_decisions.jsonl
 LLM_APPLY_REJECTIONS ?=
 RESET_FLAGS_FROM_DESCRIPTIONS ?=
 APPLY_FLAG_REMOVALS ?=
-APPLY_LLM_ARTICLE_ASSESSMENTS ?=
-LIMIT ?= 0
+LIMIT ?= 10
 RANK ?=
 
 # KNIME source-mining parameters. Override KNIME_OSS_ROOT for your local clone.
@@ -178,20 +179,30 @@ refresh-audit-support: ## Refresh quote/provenance support in the structured art
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)"
 
+.PHONY: deterministic-article-assessments
+deterministic-article-assessments: ## Generate deterministic article_audit_fields candidates without network or LLM.
+	$(PYTHON) scripts/generate_article_audit_assessments_deterministic.py \
+	  --seed-csv "$(OPENALEX_PROCESSED_DIR)/openalex_knime_most_cited.csv" \
+	  --questions "$(AUDIT_QUESTIONS)" \
+	  --text-dir "$(ARTICLE_TEXT_DIR)" \
+	  --workflow-references "$(WORKFLOW_REFERENCES)" \
+	  --output "$(DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT)" \
+	  --limit "$(DETERMINISTIC_LIMIT)" \
+	  $(if $(RANK),--rank "$(RANK)",)
+
 .PHONY: llm-article-assessments
-llm-article-assessments: ## Generate LLM candidates for article_audit_fields. Network access required.
+llm-article-assessments: ## Fill undefined deterministic article_audit_fields with LLM calls. Network access required.
 	$(PYTHON) scripts/generate_article_audit_assessments_with_llm.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
 	  --prompt "$(LLM_ARTICLE_ASSESSMENT_PROMPT)" \
-	  --assessment "$(ASSESSMENT)" \
+	  --input-assessment "$(DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT)" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
 	  --output "$(LLM_ARTICLE_ASSESSMENT_OUTPUT)" \
 	  --limit "$(LIMIT)" \
-	  $(if $(RANK),--rank "$(RANK)",) \
-	  $(APPLY_LLM_ARTICLE_ASSESSMENTS)
+	  $(if $(RANK),--rank "$(RANK)",)
 
 .PHONY: article-audit-tables
 article-audit-tables: ## Build Table 3 CSV and comparison/check logs from the audit JSON.

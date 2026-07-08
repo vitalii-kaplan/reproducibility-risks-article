@@ -1,7 +1,7 @@
 {
   "created_at": "2026-07-03",
   "purpose": "Question guide for extracting article-level KNIME workflow reporting evidence into article_audit_fields.",
-  "assessment_file": "data/processed/audit/knime_most_cited_article_assessments.json",
+  "assessment_file": "data/processed/audit/article_assessments.json",
   "principles": [
     "Use description_audit_fields for traceability labels, source identifiers, and conservative textual classifications.",
     "For records where knime_article_relation is about_knime, keep descriptive metadata but leave flag_audit_fields and flag_audit_support empty because these background/platform articles are not part of the deeper workflow-reporting audit.",

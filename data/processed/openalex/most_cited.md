@@ -642,3 +642,163 @@ Query: OpenAlex `/works`, `search.title_and_abstract=KNIME`, `filter=type:articl
 - Source: Scientific Data
 - Link: https://doi.org/10.1038/sdata.2018.241
 - Heuristic role: `ambiguous_match`
+
+## 81. A knowledge-based expert rule system for predicting mutagenicity (Ames test) of aromatic amines and azo compounds
+
+- Year: 2016
+- Citations: 34
+- Source: Toxicology
+- Link: https://doi.org/10.1016/j.tox.2016.09.008
+- Heuristic role: `ambiguous_match`
+
+## 82. Machine Learning and Regression Analysis to Model the Length of Hospital Stay in Patients with Femur Fracture
+
+- Year: 2022
+- Citations: 33
+- Source: Bioengineering
+- Link: https://doi.org/10.3390/bioengineering9040172
+- Heuristic role: `uses_knime_as_tool`
+
+## 83. Improving Prosthetic Selection and Predicting BMD from Biometric Measurements in Patients Receiving Total Hip Arthroplasty
+
+- Year: 2020
+- Citations: 33
+- Source: Diagnostics
+- Link: https://doi.org/10.3390/diagnostics10100815
+- Heuristic role: `uses_knime_as_tool`
+
+## 84. Selectivity profiling of BCRP versus P-gp inhibition: from automated collection of polypharmacology data to multi-label learning
+
+- Year: 2016
+- Citations: 32
+- Source: Journal of Cheminformatics
+- Link: https://doi.org/10.1186/s13321-016-0121-y
+- Heuristic role: `uses_knime_as_tool`
+
+## 85. Big data and sentiment analysis using KNIME: Online reviews vs. social media
+
+- Year: 2014
+- Citations: 32
+- Source: 2014 37th International Convention on Information and Communication Technology, Electronics and Microelectronics (MIPRO)
+- Link: https://doi.org/10.1109/mipro.2014.6859797
+- Heuristic role: `about_knime_or_extension`
+
+## 86. TeachOpenCADD-KNIME: A Teaching Platform for Computer-Aided Drug Design Using KNIME Workflows
+
+- Year: 2019
+- Citations: 31
+- Source: Journal of Chemical Information and Modeling
+- Link: https://doi.org/10.1021/acs.jcim.9b00662
+- Heuristic role: `about_knime_or_extension`
+
+## 87. Prediction of the skin sensitising potential and potency of compounds via mechanism-based binary and ternary classification models
+
+- Year: 2019
+- Citations: 31
+- Source: Toxicology in Vitro
+- Link: https://doi.org/10.1016/j.tiv.2019.01.004
+- Heuristic role: `ambiguous_match`
+
+## 88. Flood Simulations Using a Sensor Network and Support Vector Machine Model
+
+- Year: 2023
+- Citations: 30
+- Source: Water
+- Link: https://doi.org/10.3390/w15112004
+- Heuristic role: `ambiguous_match`
+
+## 89. Applying predictive analytics in identifying students at risk: A case study
+
+- Year: 2016
+- Citations: 30
+- Source: South African Journal of Higher Education
+- Link: https://doi.org/10.20853/30-2-583
+- Heuristic role: `ambiguous_match`
+
+## 90. ADME Prediction with KNIME: In silico aqueous solubility models based on supervised recursive machine learning approaches
+
+- Year: 2020
+- Citations: 29
+- Source: ADMET & DMPK
+- Link: https://doi.org/10.5599/admet.852
+- Heuristic role: `about_knime_or_extension`
+
+## 91. Neural Networks for Automated Smart Health Platforms oriented on Heart Predictive Diagnostic Big Data Systems
+
+- Year: 2018
+- Citations: 29
+- Source: 2018 AEIT International Annual Conference
+- Link: https://doi.org/10.23919/aeit.2018.8577362
+- Heuristic role: `uses_knime_as_tool`
+
+## 92. Computational analysis of microarray gene expression profiles of lung cancer
+
+- Year: 2016
+- Citations: 29
+- Source: Biopolymers and Cell
+- Link: https://doi.org/10.7124/bc.00090f
+- Heuristic role: `ambiguous_match`
+
+## 93. Multiscale modelling approaches for assessing cosmetic ingredients safety
+
+- Year: 2016
+- Citations: 29
+- Source: Toxicology
+- Link: https://doi.org/10.1016/j.tox.2016.05.026
+- Heuristic role: `uses_knime_as_tool`
+
+## 94. Computational QSAR model combined molecular descriptors and fingerprints to predict HDAC1 inhibitors
+
+- Year: 2018
+- Citations: 28
+- Source: médecine/sciences
+- Link: https://doi.org/10.1051/medsci/201834f110
+- Heuristic role: `ambiguous_match`
+
+## 95. KNIME an Open Source Solution for Predictive Analytics in the Geosciences [Software and Data Sets]
+
+- Year: 2015
+- Citations: 28
+- Source: IEEE Geoscience and Remote Sensing Magazine
+- Link: https://doi.org/10.1109/mgrs.2015.2496160
+- Heuristic role: `about_knime_or_extension`
+
+## 96. A Predictive Model Implemented in KNIME Based on Learning Analytics for Timely Decision Making in Virtual Learning Environments
+
+- Year: 2021
+- Citations: 27
+- Source: International Journal of Information and Education Technology
+- Link: https://doi.org/10.18178/ijiet.2022.12.2.1591
+- Heuristic role: `about_knime_or_extension`
+
+## 97. Data mining tools -a case study for network intrusion detection
+
+- Year: 2020
+- Citations: 27
+- Source: Multimedia Tools and Applications
+- Link: https://doi.org/10.1007/s11042-020-09916-0
+- Heuristic role: `ambiguous_match`
+
+## 98. From in vitro to in vivo: Integration of the virtual cell based assay with physiologically based kinetic modelling
+
+- Year: 2017
+- Citations: 27
+- Source: Toxicology in Vitro
+- Link: https://doi.org/10.1016/j.tiv.2017.06.015
+- Heuristic role: `uses_knime_as_tool`
+
+## 99. The integration of Open3DTOOLS into the RDKit and KNIME
+
+- Year: 2014
+- Citations: 27
+- Source: Journal of Cheminformatics
+- Link: https://doi.org/10.1186/1758-2946-6-s1-p8
+- Heuristic role: `about_knime_or_extension`
+
+## 100. Knime4Bio: a set of custom nodes for the interpretation of next-generation sequencing data with KNIME
+
+- Year: 2011
+- Citations: 27
+- Source: Bioinformatics
+- Link: https://doi.org/10.1093/bioinformatics/btr554
+- Heuristic role: `about_knime_or_extension`

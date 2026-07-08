@@ -71,7 +71,7 @@ AGENTS.md                Detailed maintenance notes for future project updates
 
 - `article/article.pdf`: current generated paper PDF.
 - `article/article.tex`: main paper source.
-- `data/processed/audit/knime_most_cited_article_assessments.json`: structured
+- `data/processed/audit/article_assessments.json`: structured
   article audit.
 - `data/original/workflows/knime_downloadable_workflow_references.json`:
   workflow-link records, retrieval outcomes, and manual KNIME opening results.

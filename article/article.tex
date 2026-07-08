@@ -231,7 +231,7 @@ two-column reading order, we normalized it to a one-column reading copy with
 \path{scripts/normalize_article_text_columns.py}. This step used script output
 and LLM-assisted correction checks. We then processed the article text into a
 structured audit stored in
-\path{data/processed/audit/knime_most_cited_article_assessments.json}. Each
+\path{data/processed/audit/article_assessments.json}. Each
 record contains descriptive metadata, full-text access status, the article's
 relation to KNIME, and reproducibility-relevant flags for version reporting,
 workflow artifacts, workflow figures or text descriptions, input data, code,
@@ -409,7 +409,7 @@ and text-conversion manifests are stored under
 stored under \path{data/processed/articles/}.
 
 The main assessment file is
-\path{data/processed/audit/knime_most_cited_article_assessments.json}. Each
+\path{data/processed/audit/article_assessments.json}. Each
 record stores the OpenAlex rank, article metadata, full-text access status,
 KNIME role, reported KNIME version, workflow-artifact status, data and code
 availability, linked resources visible in the paper, quote-backed support for

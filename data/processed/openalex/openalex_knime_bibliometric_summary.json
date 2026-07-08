@@ -1,7 +1,7 @@
 {
   "source_file": "data/original/openalex/works.jsonl",
   "total_articles": 963,
-  "most_cited_limit": 80,
+  "most_cited_limit": 100,
   "year_min": "1975",
   "year_max": "2026",
   "top_venues": [

@@ -1,17 +1,19 @@
 {
   "name": "article_audit_field_assessment",
   "version": "2026-07-08",
-  "mode": "article_excerpt_to_structured_audit_candidate",
-  "system_instruction": "You are creating a structured audit candidate for a scientific article that may mention or use KNIME. Return only JSON. Use only the supplied metadata, resource hints, and article excerpts. Do not use outside knowledge. Be conservative: true flags require direct support in the supplied excerpts or explicit resource hints. If evidence is missing, use false flags and not_assessed, no, unclear, or not_applicable description values as appropriate.",
-  "user_task": "Classify the article for KNIME workflow reproducibility reporting and produce article_audit_fields.",
+  "mode": "deterministic_candidate_undefined_field_fill",
+  "system_instruction": "You are filling undefined fields in a deterministic article_audit_fields candidate for a scientific article that may mention or use KNIME. Return only JSON. Use only the supplied OpenAlex metadata, deterministic candidate, resource hints, undefined field list, and line-referenced article excerpts. You cannot see the existing curated audit file and must not rely on outside knowledge. Preserve already-defined deterministic values. Fill only fields listed as undefined when the supplied evidence supports a value. Conservative evidence rules matter more than guessing. True flags require direct support in the supplied excerpts. If evidence is missing for a requested field, use false flags and not_assessed, no, unclear, or not_applicable description values as appropriate.",
+  "user_task": "Fill the undefined fields in the deterministic KNIME workflow reproducibility assessment candidate and produce article_audit_fields compatible with the curated assessment schema.",
   "evidence_rules": [
     "For every true flag except full_text_accessible, include at least one support object with extracted_text_lines, quote, article_section, and note.",
     "The quote must be copied from the supplied excerpts and must directly support the flag.",
-    "Do not mark linked_workflow_artifacts_retrievable true from article text alone. That flag requires current project retrieval evidence. If the article links a workflow but retrieval has not been checked, use not_checked and false.",
+    "Do not mark linked_workflow_artifacts_retrievable true from article text alone. That flag requires current project retrieval evidence, which is not available in this task. If the article links a workflow but retrieval has not been checked, use not_checked and false.",
     "Do not treat a workflow figure as a downloadable workflow file.",
     "Do not treat code availability as input-data availability unless the quote separately reports data availability.",
     "Do not treat a generic list of data-mining tools as uses_knime unless the article's own study uses, evaluates, or implements KNIME.",
-    "Articles about KNIME itself should use knime_article_relation=about_knime and empty flag_audit_fields except full_text_accessible may be true only if local text exists.",
+    "Articles primarily about KNIME itself, KNIME extensions, KNIME architecture, or KNIME platform functionality should use knime_article_relation=about_knime and empty flag_audit_fields.",
+    "Articles that only compare or list KNIME as one of several tools, without using KNIME for a concrete study workflow, should use knime_article_relation=not_a_knime_use_case.",
+    "Articles that use KNIME for a scientific or engineering analysis, implementation, workflow, interface, or empirical comparison should use knime_article_relation=uses_knime.",
     "When uncertain, prefer a weaker description value and false flag."
   ],
   "allowed_description_values": {

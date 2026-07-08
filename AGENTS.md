@@ -177,14 +177,14 @@ Create directories only when they are needed. Keep generated files out of versio
   76, and 79 are retained as not-assessed placeholders in the expanded
   audit.
 - The top-cited article assessment file
-  `data/processed/audit/knime_most_cited_article_assessments.json` now has
+  `data/processed/audit/article_assessments.json` now has
   an explicit `article_audit_fields` block for each record. The block is split
   into `description_audit_fields` for traceability and `flag_audit_fields` for
   statistics, with `article_audit_schema` and `article_audit_summary_counts` at
   the top level. Use `flag_audit_fields` for article-level workflow-presentation
   statistics before reinterpreting prose notes.
 - The creation process for
-  `data/processed/audit/knime_most_cited_article_assessments.json` is now
+  `data/processed/audit/article_assessments.json` is now
   described in the Methods subsection "Top-Cited Article Assessment" in
   `article/article.tex`. Keep that method description synchronized with the
   audit JSON, `knime_article_audit_questions.json`, and the support-refresh
@@ -285,7 +285,7 @@ Create directories only when they are needed. Keep generated files out of versio
 - Use `scripts/build_knime_use_workflow_reporting_table.py` to generate the
   Table 4 CSV source, `knime_use_workflow_reporting_signals.csv`, from
   `top_cited_article_audit_summary.csv` and
-  `data/processed/audit/knime_most_cited_article_assessments.json`. The
+  `data/processed/audit/article_assessments.json`. The
   "Articles with successfully downloaded workflows" row is a workflow-retrieval
   outcome read
   from
@@ -303,7 +303,7 @@ Create directories only when they are needed. Keep generated files out of versio
   `data/original/knime_snapshots/<snapshot-date>/logs/`, and per-workflow
   `data/original/workflows/<doi-safe-directory>/logs/` for HTTP header traces.
 - Current 100-record structured audit counts in
-  `data/processed/audit/knime_most_cited_article_assessments.json` are:
+  `data/processed/audit/article_assessments.json` are:
   - expanded audit records: 100
   - local full text available: 82
   - not assessed from full text: 18
@@ -322,7 +322,7 @@ Create directories only when they are needed. Keep generated files out of versio
   - direct input-data resource: 23
   Keep these counts synchronized with `article/article.tex`,
   `article/tables/*.csv`, and
-  `data/processed/audit/knime_most_cited_article_assessments.json` when the
+  `data/processed/audit/article_assessments.json` when the
   audit changes.
 - Linked workflow artifact retrievability is tracked in the project workflow
   inventory rather than in Table 3 or Table 4. The current workflow inventory

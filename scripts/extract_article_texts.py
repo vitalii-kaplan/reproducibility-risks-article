@@ -5,9 +5,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import subprocess
 from pathlib import Path
+
+
+TEXT_METADATA_PREFIX = "# article_text_metadata: "
 
 
 def slugify(value: str) -> str:
@@ -61,6 +65,17 @@ def read_existing_manifest(path: Path) -> dict[str, dict[str, str]]:
             for row in csv.DictReader(handle)
             if row.get("pdf_file")
         }
+
+
+def write_text_metadata_header(path: Path, metadata: dict[str, str]) -> None:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    lines = text.splitlines()
+    if lines and lines[0].startswith(TEXT_METADATA_PREFIX):
+        text = "\n".join(lines[1:])
+        if text:
+            text += "\n"
+    header = TEXT_METADATA_PREFIX + json.dumps(metadata, ensure_ascii=False, sort_keys=True)
+    path.write_text(header + "\n" + text, encoding="utf-8")
 
 
 def main() -> int:
@@ -125,6 +140,15 @@ def main() -> int:
             failures += 1
             output.unlink(missing_ok=True)
         else:
+            write_text_metadata_header(
+                output,
+                {
+                    "source_pdf": pdf.as_posix(),
+                    "raw_text_file": output.as_posix(),
+                    "text_stage": "raw_pdftotext_layout",
+                    "text_extractor": args.pdftotext,
+                },
+            )
             processed += 1
 
         rows.append(

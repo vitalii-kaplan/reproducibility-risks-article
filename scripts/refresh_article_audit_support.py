@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_ASSESSMENT = Path("data/processed/audit/knime_most_cited_article_assessments.json")
+DEFAULT_ASSESSMENT = Path("data/processed/audit/article_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")

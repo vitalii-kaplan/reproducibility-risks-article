@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Generate LLM article-audit assessment candidates from extracted article text."""
+"""Fill undefined deterministic article-audit fields with bounded LLM calls."""
 
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import re
@@ -14,12 +15,14 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_ASSESSMENT = Path("data/processed/audit/knime_most_cited_article_assessments.json")
+DEFAULT_INPUT = Path("data/processed/audit/article_deterministic_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")
 DEFAULT_PROMPT = Path("data/processed/audit/llm_article_assessment_prompt.json")
-DEFAULT_OUTPUT = Path("data/processed/audit/logs/llm_article_assessment_candidates.jsonl")
+DEFAULT_OUTPUT = Path(
+    "data/processed/audit/article_llm_assessments.json"
+)
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
 
@@ -72,7 +75,12 @@ FLAG_NAMES = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--assessment", type=Path, default=DEFAULT_ASSESSMENT)
+    parser.add_argument(
+        "--input-assessment",
+        type=Path,
+        default=DEFAULT_INPUT,
+        help="Deterministic assessment JSON whose undefined fields should be filled.",
+    )
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--text-dir", type=Path, default=DEFAULT_TEXT_DIR)
     parser.add_argument("--prompt", type=Path, default=DEFAULT_PROMPT)
@@ -98,8 +106,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--limit",
         type=int,
-        default=0,
-        help="Maximum number of articles to assess in this run. 0 means no limit.",
+        default=10,
+        help="Maximum number of deterministic assessment records to process in this run. 0 means no limit.",
     )
     parser.add_argument(
         "--max-excerpts",
@@ -112,14 +120,6 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=22000,
         help="Approximate maximum excerpt text characters sent to the LLM per article.",
-    )
-    parser.add_argument(
-        "--apply",
-        action="store_true",
-        help=(
-            "Apply generated article_audit_fields to the assessment JSON. "
-            "Default only writes candidate records to --output."
-        ),
     )
     return parser.parse_args()
 
@@ -155,19 +155,79 @@ def slugify(value: str) -> str:
     return slug or "article"
 
 
+def normalize_doi(value: str) -> str:
+    value = value.strip()
+    value = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", value, flags=re.IGNORECASE)
+    return value.lower()
+
+
+def token_set(value: str) -> set[str]:
+    return {token for token in re.findall(r"[a-z0-9]+", value.lower()) if len(token) >= 4}
+
+
+def doi_match_tokens(doi: str) -> set[str]:
+    tokens = token_set(doi)
+    compact_doi = re.sub(r"[^a-z0-9]+", "", doi.lower())
+    if compact_doi:
+        tokens.add(compact_doi)
+        if len(compact_doi) >= 4:
+            tokens.add(compact_doi[-4:])
+        if len(compact_doi) >= 5:
+            tokens.add(compact_doi[-5:])
+    return tokens
+
+
+def title_match_score(title_tokens: set[str], path: Path) -> int:
+    stem_tokens = token_set(path.stem)
+    score = len(title_tokens & stem_tokens) * 3
+    try:
+        head = " ".join(path.read_text(encoding="utf-8", errors="replace").splitlines()[:80])
+    except OSError:
+        return score
+    head_tokens = token_set(head)
+    return score + len(title_tokens & head_tokens) * 2
+
+
 def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | None:
-    processed = article.get("processed_text_file")
-    if processed:
-        candidate = Path(processed)
-        if candidate.exists():
-            return candidate
-    pdf_file = article.get("pdf_file")
-    if not pdf_file:
+    existing = article.get("processed_text_file") or article.get("source_text_file")
+    if existing:
+        path = Path(str(existing))
+        if path.exists():
+            return path
+
+    files = [path for path in text_dir.glob("*.txt") if path.is_file()]
+    if not files:
         return None
-    candidate = text_dir / f"{slugify(Path(pdf_file).stem)}.txt"
-    if candidate.exists():
-        return candidate
-    return None
+
+    doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or ""))
+    title = str(article.get("title", ""))
+    title_tokens = token_set(title)
+    doi_tokens = doi_match_tokens(doi)
+    rank = str(article.get("rank", ""))
+
+    best_path: Path | None = None
+    best_score = 0
+    for path in files:
+        stem = path.stem.lower()
+        stem_tokens = token_set(stem)
+        score = 0
+        if rank and stem.startswith(f"{rank}_"):
+            score += 8
+        if doi:
+            doi_slug = slugify(doi).lower()
+            if doi_slug and doi_slug in stem:
+                score += 80
+            for token in doi_tokens:
+                if token in stem:
+                    score += 15
+        score += title_match_score(title_tokens, path)
+        if title and slugify(title).lower()[:35] in stem:
+            score += 25
+        if score > best_score:
+            best_score = score
+            best_path = path
+
+    return best_path if best_score >= 12 else None
 
 
 def compact(value: str) -> str:
@@ -241,72 +301,79 @@ def build_excerpts(
     return excerpts
 
 
-def empty_not_assessed_candidate(article: dict[str, Any]) -> dict[str, Any]:
-    desc = {
-        "article_identifier": str(article.get("article_identifier", "")),
-        "title": str(article.get("title", "")),
-        "year": str(article.get("publication_year", "")),
-        "venue": str(article.get("venue", "")),
-        "doi_or_url": str(article.get("doi_or_url") or article.get("doi") or ""),
-        "knime_role_source_field": "not_assessed_no_local_text",
-        "knime_article_relation": "not_assessed",
-        "knime_version_values": "",
-        "workflow_artifact_status": "not_assessed",
-        "provides_input_data": "not_assessed",
-        "provides_code_or_scripts": "not_assessed",
-        "reports_extension_or_plugin_dependencies": "not_assessed",
-        "reports_extension_installation_source": "not_assessed",
-        "linked_workflow_artifacts_retrievable": "not_assessed",
-        "evidence_notes": "No local processed article text was available for LLM assessment.",
-    }
+def undefined_targets(article: dict[str, Any]) -> dict[str, list[str]]:
+    audit = article.get("article_audit_fields", {})
+    desc = audit.get("description_audit_fields", {})
+    flags = audit.get("flag_audit_fields", {})
     return {
-        "description_audit_fields": desc,
-        "flag_audit_fields": {flag: False for flag in FLAG_NAMES},
-        "flag_audit_support": {},
-        "linked_resources": article.get("linked_resources", {}),
-        "confidence": "low",
-        "needs_human_review": True,
+        "description_audit_fields": [
+            key for key, value in desc.items() if value == "undefined"
+        ],
+        "flag_audit_fields": [
+            key for key, value in flags.items() if value == "undefined"
+        ],
     }
 
 
-def normalize_candidate(candidate: dict[str, Any], article: dict[str, Any]) -> dict[str, Any]:
-    desc = candidate.setdefault("description_audit_fields", {})
-    desc.setdefault("article_identifier", str(article.get("article_identifier", "")))
-    desc.setdefault("title", str(article.get("title", "")))
-    desc.setdefault("year", str(article.get("publication_year", "")))
-    desc.setdefault("venue", str(article.get("venue", "")))
-    desc.setdefault("doi_or_url", str(article.get("doi_or_url") or article.get("doi") or ""))
-    desc.setdefault("knime_role_source_field", "llm_assessed")
-    desc.setdefault("knime_version_values", "")
-    desc.setdefault("evidence_notes", "")
+def has_undefined_targets(targets: dict[str, list[str]]) -> bool:
+    return any(targets.values())
 
-    flags = candidate.setdefault("flag_audit_fields", {})
-    for flag in FLAG_NAMES:
-        flags[flag] = bool(flags.get(flag, False))
 
-    relation = desc.get("knime_article_relation")
-    if relation == "about_knime":
-        candidate["flag_audit_fields"] = {}
-        candidate["flag_audit_support"] = {}
-    else:
-        support = candidate.setdefault("flag_audit_support", {})
-        if flags.get("full_text_accessible") and "full_text_accessible" not in support:
-            support["full_text_accessible"] = [
-                {
-                    "extracted_text_lines": "processed_text_file",
-                    "article_section": "Local text",
-                    "quote": "",
-                    "note": "Processed article text was available to the LLM assessment script.",
-                }
-            ]
-        for flag, value in list(flags.items()):
-            if value and flag != "full_text_accessible" and not support.get(flag):
-                flags[flag] = False
-                candidate["needs_human_review"] = True
-    candidate.setdefault("linked_resources", article.get("linked_resources", {}))
-    candidate.setdefault("confidence", "low")
-    candidate.setdefault("needs_human_review", True)
-    return candidate
+def merge_unique(existing: list[Any], incoming: list[Any]) -> list[Any]:
+    merged = list(existing)
+    seen = {json.dumps(item, sort_keys=True, ensure_ascii=False) for item in merged}
+    for item in incoming:
+        marker = json.dumps(item, sort_keys=True, ensure_ascii=False)
+        if marker not in seen:
+            seen.add(marker)
+            merged.append(item)
+    return merged
+
+
+def merge_llm_fill(
+    article: dict[str, Any],
+    candidate: dict[str, Any],
+    targets: dict[str, list[str]],
+) -> tuple[dict[str, Any], int]:
+    updated = copy.deepcopy(article)
+    filled = 0
+    audit = updated.setdefault("article_audit_fields", {})
+    desc = audit.setdefault("description_audit_fields", {})
+    flags = audit.setdefault("flag_audit_fields", {})
+    support = audit.setdefault("flag_audit_support", {})
+
+    candidate_desc = candidate.get("description_audit_fields", {})
+    for field in targets["description_audit_fields"]:
+        value = candidate_desc.get(field)
+        if value not in (None, "", "undefined"):
+            desc[field] = value
+            filled += 1
+
+    candidate_flags = candidate.get("flag_audit_fields", {})
+    candidate_support = candidate.get("flag_audit_support", {})
+    for field in targets["flag_audit_fields"]:
+        value = candidate_flags.get(field)
+        if isinstance(value, bool):
+            flags[field] = value
+            filled += 1
+            if value is True and candidate_support.get(field):
+                support[field] = merge_unique(support.get(field, []), candidate_support[field])
+
+    if candidate.get("linked_resources"):
+        resources = updated.setdefault("linked_resources", {})
+        for key, value in candidate["linked_resources"].items():
+            if isinstance(value, list):
+                resources[key] = merge_unique(resources.get(key, []), value)
+            elif key not in resources or not resources.get(key):
+                resources[key] = value
+
+    updated["llm_fill"] = {
+        "confidence": candidate.get("confidence", "low"),
+        "needs_human_review": bool(candidate.get("needs_human_review", True)),
+        "filled_undefined_fields": filled,
+        "requested_targets": targets,
+    }
+    return updated, filled
 
 
 class OpenAIArticleAssessor:
@@ -326,7 +393,13 @@ class OpenAIArticleAssessor:
         self.questions = questions
         self.calls = 0
 
-    def assess(self, article: dict[str, Any], excerpts: list[dict[str, str]]) -> dict[str, Any]:
+    def assess(
+        self,
+        article: dict[str, Any],
+        excerpts: list[dict[str, str]],
+        targets: dict[str, list[str]],
+    ) -> dict[str, Any]:
+        audit = article.get("article_audit_fields", {})
         payload = {
             "model": self.model,
             "temperature": self.temperature,
@@ -337,7 +410,12 @@ class OpenAIArticleAssessor:
                     "role": "user",
                     "content": json.dumps(
                         {
-                            "task": self.prompt["user_task"],
+                            "task": (
+                                self.prompt["user_task"]
+                                + " Fill only the fields listed in undefined_fields_to_fill. "
+                                + "Preserve already-defined deterministic values unless they are needed as context. "
+                                + "Return the usual schema, but values for fields not listed may be omitted."
+                            ),
                             "evidence_rules": self.prompt["evidence_rules"],
                             "allowed_description_values": self.prompt[
                                 "allowed_description_values"
@@ -355,6 +433,15 @@ class OpenAIArticleAssessor:
                                 or article.get("doi")
                                 or "",
                             },
+                            "deterministic_candidate": {
+                                "description_audit_fields": audit.get(
+                                    "description_audit_fields", {}
+                                ),
+                                "flag_audit_fields": audit.get("flag_audit_fields", {}),
+                                "flag_audit_support": audit.get("flag_audit_support", {}),
+                                "linked_resources": article.get("linked_resources", {}),
+                            },
+                            "undefined_fields_to_fill": targets,
                             "resource_hints": article.get("linked_resources", {}),
                             "article_excerpts": excerpts,
                         },
@@ -417,15 +504,26 @@ def selected_articles(articles: list[dict[str, Any]], ranks: list[int] | None, l
 
 def main() -> int:
     args = parse_args()
-    assessment = load_json(args.assessment)
+    input_assessment = load_json(args.input_assessment)
+    input_articles = input_assessment.get("articles", [])
     questions = load_json(args.questions)
     prompt = load_json(args.prompt)
-    load_env_file(args.env_file)
-    api_key = os.environ.get("OPENAI_API_KEY", "")
-    if not api_key:
-        raise SystemExit(
-            "OPENAI_API_KEY is required. Put it in .env or export it in the environment."
-        )
+    articles = selected_articles(input_articles, args.rank, args.limit)
+
+    calls_needed = any(
+        has_undefined_targets(undefined_targets(article))
+        and text_path_for_article(article, args.text_dir) is not None
+        for article in articles
+    )
+    if calls_needed:
+        load_env_file(args.env_file)
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key:
+            raise SystemExit(
+                "OPENAI_API_KEY is required. Put it in .env or export it in the environment."
+            )
+    else:
+        api_key = "not-used"
 
     assessor = OpenAIArticleAssessor(
         api_key=api_key,
@@ -434,67 +532,76 @@ def main() -> int:
         prompt=prompt,
         questions=questions,
     )
+    written = 0
+    skipped_no_undefined = 0
+    skipped_no_text = 0
+    total_fields_filled = 0
+    result_articles: list[dict[str, Any]] = []
+    for article in articles:
+        targets = undefined_targets(article)
+        if not has_undefined_targets(targets):
+            result_articles.append(article)
+            skipped_no_undefined += 1
+            written += 1
+            continue
+
+        text_path = text_path_for_article(article, args.text_dir)
+        if text_path is None:
+            skipped = copy.deepcopy(article)
+            skipped["llm_fill"] = {
+                "confidence": "low",
+                "needs_human_review": True,
+                "filled_undefined_fields": 0,
+                "requested_targets": targets,
+                "skip_reason": "no local processed text available for LLM fill",
+            }
+            result_articles.append(skipped)
+            skipped_no_text += 1
+            written += 1
+            continue
+        else:
+            lines = text_path.read_text(encoding="utf-8", errors="replace").splitlines()
+            excerpts = build_excerpts(
+                lines,
+                max_excerpts=args.max_excerpts,
+                max_chars=args.max_chars,
+            )
+            candidate = assessor.assess(article, excerpts, targets)
+
+        filled_article, filled_count = merge_llm_fill(article, candidate, targets)
+        filled_article["llm_fill"]["model"] = args.model
+        filled_article["llm_fill"]["temperature"] = args.temperature
+        result_articles.append(filled_article)
+        total_fields_filled += filled_count
+        written += 1
+
+    result = {
+        "created_by": Path(__file__).as_posix(),
+        "source_assessment": args.input_assessment.as_posix(),
+        "text_dir": args.text_dir.as_posix(),
+        "prompt": args.prompt.as_posix(),
+        "model": args.model,
+        "temperature": args.temperature,
+        "scope": {
+            "limit": args.limit,
+            "ranks": args.rank or [],
+            "records_written": written,
+            "llm_api_calls": assessor.calls,
+            "records_skipped_no_undefined_fields": skipped_no_undefined,
+            "records_skipped_no_local_text": skipped_no_text,
+            "undefined_fields_filled": total_fields_filled,
+        },
+        "article_audit_summary_counts": summary_counts(result_articles),
+        "articles": result_articles,
+    }
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    articles = selected_articles(assessment["articles"], args.rank, args.limit)
-    written = 0
-    applied = 0
-    with args.output.open("w", encoding="utf-8") as output:
-        for article in articles:
-            text_path = text_path_for_article(article, args.text_dir)
-            if text_path is None:
-                candidate = empty_not_assessed_candidate(article)
-                source_text_file = None
-            else:
-                lines = text_path.read_text(encoding="utf-8", errors="replace").splitlines()
-                excerpts = build_excerpts(
-                    lines,
-                    max_excerpts=args.max_excerpts,
-                    max_chars=args.max_chars,
-                )
-                candidate = assessor.assess(article, excerpts)
-                source_text_file = text_path.as_posix()
+    write_json(args.output, result)
 
-            candidate = normalize_candidate(candidate, article)
-            record = {
-                "rank": article.get("rank"),
-                "article_identifier": article.get("article_identifier", ""),
-                "title": article.get("title", ""),
-                "source_text_file": source_text_file,
-                "model": args.model if source_text_file else None,
-                "temperature": args.temperature if source_text_file else None,
-                "llm_assessment": candidate,
-            }
-            json.dump(record, output, ensure_ascii=False)
-            output.write("\n")
-            written += 1
-
-            if args.apply:
-                article["article_audit_fields"] = {
-                    "description_audit_fields": candidate["description_audit_fields"],
-                    "flag_audit_fields": candidate["flag_audit_fields"],
-                    "flag_audit_support": candidate.get("flag_audit_support", {}),
-                }
-                article["linked_resources"] = candidate.get(
-                    "linked_resources", article.get("linked_resources", {})
-                )
-                if source_text_file:
-                    article["processed_text_file"] = source_text_file
-                    article["manual_assessment_status"] = "llm_assessed_from_local_text"
-                applied += 1
-
-    if args.apply:
-        assessment["article_audit_summary_counts"] = summary_counts(assessment["articles"])
-        write_json(args.assessment, assessment)
-
-    print(
-        f"Wrote {written} LLM article-assessment candidate records to {args.output}."
-    )
+    print(f"Wrote {written} LLM-filled article-assessment records to {args.output}.")
     print(f"LLM article-assessment API calls: {assessor.calls}.")
-    if args.apply:
-        print(f"Applied {applied} candidate assessments to {args.assessment}.")
-    else:
-        print("Main assessment JSON was not modified. Use --apply to update it.")
+    print(f"Undefined fields filled: {total_fields_filled}.")
+    print("Curated assessment JSON was not read or modified.")
     return 0
 
 

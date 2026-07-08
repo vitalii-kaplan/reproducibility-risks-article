@@ -5,8 +5,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import statistics
 from pathlib import Path
+
+
+TEXT_METADATA_PREFIX = "# article_text_metadata: "
 
 
 def parse_args() -> argparse.Namespace:
@@ -71,6 +75,23 @@ def read_existing_manifest(path: Path) -> dict[str, dict[str, str]]:
             for row in csv.DictReader(handle)
             if row.get("source_text_file")
         }
+
+
+def split_text_metadata_header(text: str) -> tuple[dict[str, str], str]:
+    first_line, separator, rest = text.partition("\n")
+    if not first_line.startswith(TEXT_METADATA_PREFIX):
+        return {}, text
+    raw_metadata = first_line[len(TEXT_METADATA_PREFIX) :]
+    try:
+        metadata = json.loads(raw_metadata)
+    except json.JSONDecodeError:
+        metadata = {}
+    return metadata, rest if separator else ""
+
+
+def add_text_metadata_header(text: str, metadata: dict[str, str]) -> str:
+    header = TEXT_METADATA_PREFIX + json.dumps(metadata, ensure_ascii=False, sort_keys=True)
+    return header + "\n" + text
 
 
 def has_text(value: str) -> bool:
@@ -265,6 +286,7 @@ def main() -> int:
             rows.append(
                 {
                     "source_text_file": source.as_posix(),
+                    "source_pdf": existing_row.get("source_pdf", ""),
                     "normalized_text_file": target.as_posix(),
                     "layout": "existing",
                     "pages": "",
@@ -277,6 +299,7 @@ def main() -> int:
             continue
 
         text = source.read_text(encoding="utf-8", errors="replace")
+        metadata, text = split_text_metadata_header(text)
         normalized, stats = normalize_text(
             text,
             min_gap=args.min_gap,
@@ -284,16 +307,25 @@ def main() -> int:
             min_converted_page_share=args.min_converted_page_share,
             min_converted_pages=args.min_converted_pages,
         )
-        target.write_text(normalized, encoding="utf-8")
         layout = (
             "two_column_normalized"
             if stats["normalized"]
             else "one_column_or_complex_layout"
         )
+        metadata = {
+            **metadata,
+            "source_text_file": source.as_posix(),
+            "normalized_text_file": target.as_posix(),
+            "text_stage": "processed_reading_order",
+            "normalization_layout": layout,
+        }
+        normalized = add_text_metadata_header(normalized, metadata)
+        target.write_text(normalized, encoding="utf-8")
         processed += 1
         rows.append(
             {
                 "source_text_file": source.as_posix(),
+                "source_pdf": metadata.get("source_pdf", ""),
                 "normalized_text_file": target.as_posix(),
                 "layout": layout,
                 "pages": str(stats["pages"]),
@@ -308,6 +340,7 @@ def main() -> int:
             handle,
             fieldnames=[
                 "source_text_file",
+                "source_pdf",
                 "normalized_text_file",
                 "layout",
                 "pages",

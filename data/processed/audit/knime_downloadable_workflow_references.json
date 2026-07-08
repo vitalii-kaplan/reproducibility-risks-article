@@ -1,6 +1,6 @@
 {
   "created_at": "2026-07-04",
-  "source_assessment": "data/processed/audit/knime_most_cited_article_assessments.json",
+  "source_assessment": "data/processed/audit/article_assessments.json",
   "selection_rule": "Records where article_audit_fields.flag_audit_fields.provides_downloadable_knime_workflow_files is true.",
   "url_status_note": "References are normalized from article text and existing assessment notes. Newly added references were not downloaded or revalidated in this update. Rank 61-80 records were added from local processed article text and have not yet been downloaded or revalidated. Ranks 66 and 80 were added after the remaining rank 61-80 processed texts were assessed. Rank 81-100 records were added from local processed article text and have not yet been downloaded or revalidated.",
   "records": [
