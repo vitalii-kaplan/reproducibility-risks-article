@@ -2,9 +2,59 @@
   "name": "article_audit_support_validation",
   "version": "2026-07-08",
   "mode": "quote_only_evidence_validation",
-  "system_instruction": "You validate evidence for a structured scientific-paper audit. Return only JSON. Be conservative: answer supported=true only when the quote directly supports the audit flag. Do not infer from general background knowledge. If the quote is vague, about a different concept, or only a keyword match, answer false.",
+  "system_instruction": "You validate evidence for a structured scientific-paper audit of KNIME workflow reproducibility reporting. Return only JSON. Judge only the supplied quote and article section. Do not use outside knowledge. Do not assume that a paper provides an artifact, data, code, version, plugin information, or retrievable workflow unless the quote directly says so. A KNIME keyword match alone is not enough.",
   "user_task": "Decide whether the quote supports the audit flag.",
-  "decision_rule": "supported=true only if the quote directly answers the audit question for the specified flag.",
+  "decision_rule": "supported=true only if the quote directly answers the audit question for the specified flag and satisfies the flag_acceptance_rule. If the quote is only background, a reference-list entry, a generic software mention, or evidence for a different flag, return supported=false.",
+  "flag_acceptance_rules": {
+    "uses_knime": {
+      "support": "The quote says the study, method, tool, experiment, comparison, model, or workflow used, implemented, integrated, or evaluated KNIME.",
+      "reject": "Reject a generic list of data-mining tools unless it is clear the article's own study used or evaluated KNIME."
+    },
+    "reports_knime_version": {
+      "support": "The quote names KNIME and gives a concrete KNIME version or Analytics Platform/Desktop version number.",
+      "reject": "Reject version numbers for unrelated software, Java, Eclipse, plugins, datasets, or article versions."
+    },
+    "provides_downloadable_knime_workflow_files": {
+      "support": "The quote says a KNIME workflow, workflow archive, workflow file, supplement, repository, myExperiment item, KNIME Hub item, or similar workflow artifact is available, downloadable, deposited, or provided.",
+      "reject": "Reject quotes that only show or describe a workflow, mention KNIME, or say code/data are available without a KNIME workflow artifact."
+    },
+    "provides_workflow_screenshots_or_figures": {
+      "support": "The quote is a figure/table/caption or text that clearly says a KNIME workflow, pipeline, model, or nodes are shown in a figure, screenshot, scheme, supplementary figure, or flowchart.",
+      "reject": "Reject ordinary method text that describes a workflow but does not indicate that it is visually shown."
+    },
+    "describes_workflow_or_nodes_in_text": {
+      "support": "The quote describes KNIME workflow steps, nodes, modules, components, algorithms inside the KNIME workflow, data flow, inputs/outputs, or processing stages.",
+      "reject": "Reject quotes that only say KNIME was used without describing workflow structure, steps, nodes, modules, or processing."
+    },
+    "provides_input_data_direct_url": {
+      "support": "The quote gives a direct URL or repository/location for input data used by the study.",
+      "reject": "Reject URLs for software, documentation, code, publisher pages, or generic resources that are not input data."
+    },
+    "reports_input_data_availability": {
+      "support": "The quote says the study data, dataset, records, structures, filters, benchmark data, supplementary data, or input resources are available, obtained from a named source, deposited, or provided.",
+      "reject": "Reject generic statements about data mining or datasets unless they refer to this study's actual input data."
+    },
+    "provides_code_or_scripts": {
+      "support": "The quote says code, source code, scripts, macros, software source, repository, GitHub, or program files for the study are available.",
+      "reject": "Reject executable workflow availability unless code/scripts are also explicitly mentioned."
+    },
+    "reports_extension_or_plugin_dependencies": {
+      "support": "The quote names a KNIME extension, plugin, node package, library dependency, or external tool dependency used by the workflow, such as RDKit, Indigo, CDK, ChemAxon, R, Python, ImageJ/FIJI plugins, or update-site components.",
+      "reject": "Reject generic KNIME platform mentions without dependency/plugin/extension information."
+    },
+    "reports_extension_installation_source": {
+      "support": "The quote gives an installation source, update site, repository, project URL, community contribution site, or explicit place to obtain an extension/plugin/dependency.",
+      "reject": "Reject quotes that only name a dependency without saying where or how to obtain/install it."
+    },
+    "linked_workflow_artifacts_retrievable": {
+      "support": "This flag is normally validated from the project workflow inventory, not from article text. Only return true if the supplied item is explicit project-inventory evidence that a workflow artifact was retrieved.",
+      "reject": "Reject article-text quotes, availability statements, or links that do not prove the project actually retrieved the workflow artifact."
+    },
+    "full_text_accessible": {
+      "support": "The project has extracted article text for this record.",
+      "reject": "Do not infer full-text accessibility from article wording."
+    }
+  },
   "required_json_schema": {
     "supported": "boolean",
     "reason": "short string"
@@ -14,6 +64,7 @@
     "audit_question",
     "article_section",
     "quote",
-    "deterministic_validator_result"
+    "deterministic_validator_result",
+    "flag_acceptance_rule"
   ]
 }

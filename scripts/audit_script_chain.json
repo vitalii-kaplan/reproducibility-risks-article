@@ -145,14 +145,17 @@
         "data/processed/articles/*.txt"
       ],
       "output": [
-        "data/processed/audit/knime_most_cited_article_assessments.json"
+        "data/processed/audit/knime_most_cited_article_assessments.json",
+        "data/processed/audit/logs/llm_support_validation_decisions.jsonl when LLM_MODE=validate-support"
       ],
       "handoff_to_next": "llm_automatic",
       "manual_action_required": [
         "Run with LLM_MODE=validate-support to ask the LLM whether candidate quotes directly support each audit flag.",
-        "Review changed support objects after large changes or before final paper claims."
+        "Review data/processed/audit/logs/llm_support_validation_decisions.jsonl, especially records where llm_supported differs from deterministic_validator_result.",
+        "Use LLM_APPLY_REJECTIONS=--llm-apply-rejections only after reviewing disagreements and accepting that LLM false decisions should remove candidate quote support.",
+        "Use RESET_FLAGS_FROM_DESCRIPTIONS=--reset-flags-from-descriptions and APPLY_FLAG_REMOVALS=--apply-flag-removals only for an intentional classification rebuild, not for routine support refresh."
       ],
-      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected."
+      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. By default, LLM decisions are logged for audit rather than applied as destructive edits; the existing audited flags are preserved. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected."
     },
     {
       "step": 8,

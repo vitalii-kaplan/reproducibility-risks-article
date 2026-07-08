@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -18,6 +19,9 @@ DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.jso
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")
 DEFAULT_LLM_PROMPT = Path("data/processed/audit/llm_support_validation_prompt.json")
+DEFAULT_LLM_DECISION_LOG = Path(
+    "data/processed/audit/logs/llm_support_validation_decisions.jsonl"
+)
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
 MAX_REJECTED_CANDIDATE_QUOTES = 5
@@ -123,6 +127,40 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_LLM_PROMPT,
         help="JSON prompt/protocol file for LLM support validation.",
     )
+    parser.add_argument(
+        "--llm-decision-log",
+        type=Path,
+        default=DEFAULT_LLM_DECISION_LOG,
+        help=(
+            "JSONL file that records every uncached LLM support-validation "
+            "decision when --llm-mode is not off."
+        ),
+    )
+    parser.add_argument(
+        "--llm-apply-rejections",
+        action="store_true",
+        help=(
+            "Apply LLM false decisions to candidate quote selection. By default, "
+            "LLM decisions are logged for review and deterministic validation "
+            "continues to control audit edits."
+        ),
+    )
+    parser.add_argument(
+        "--reset-flags-from-descriptions",
+        action="store_true",
+        help=(
+            "Rebuild flag_audit_fields from description_audit_fields before "
+            "refreshing support. By default, existing audited flags are preserved."
+        ),
+    )
+    parser.add_argument(
+        "--apply-flag-removals",
+        action="store_true",
+        help=(
+            "Set positive flags to false when no valid support is found. By "
+            "default, unsupported or disputed flags are preserved for manual review."
+        ),
+    )
     parser.add_argument("--assessment", type=Path, default=DEFAULT_ASSESSMENT)
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--text-dir", type=Path, default=DEFAULT_TEXT_DIR)
@@ -163,13 +201,16 @@ class LLMSupportValidator:
         api_key: str,
         questions: dict[str, Any],
         prompt: dict[str, Any],
+        apply_rejections: bool,
     ) -> None:
         self.model = model
         self.temperature = temperature
         self.api_key = api_key
         self.questions = questions
         self.prompt = prompt
-        self.cache: dict[tuple[str, str, str], bool] = {}
+        self.apply_rejections = apply_rejections
+        self.cache: dict[tuple[str, str, str], dict[str, Any]] = {}
+        self.decisions: list[dict[str, Any]] = []
         self.calls = 0
 
     def validate(
@@ -184,11 +225,17 @@ class LLMSupportValidator:
 
         key = (flag, quote, item.get("article_section", ""))
         if key in self.cache:
-            return self.cache[key]
+            cached = self.cache[key]
+            return (
+                bool(cached["llm_supported"])
+                if self.apply_rejections
+                else deterministic_result
+            )
 
         question = self.questions.get("flag_questions", {}).get(flag, {}).get(
             "question", ""
         )
+        acceptance_rules = self.prompt.get("flag_acceptance_rules", {}).get(flag, {})
         payload = {
             "model": self.model,
             "temperature": self.temperature,
@@ -212,6 +259,7 @@ class LLMSupportValidator:
                             "article_section": item.get("article_section", ""),
                             "quote": quote,
                             "deterministic_validator_result": deterministic_result,
+                            "flag_acceptance_rule": acceptance_rules,
                             "required_json_schema": self.prompt[
                                 "required_json_schema"
                             ],
@@ -240,11 +288,38 @@ class LLMSupportValidator:
             raise RuntimeError(f"OpenAI API request failed: {exc.reason}") from exc
 
         self.calls += 1
+        if self.calls % 25 == 0:
+            print(
+                f"LLM support-validation calls completed: {self.calls}",
+                file=sys.stderr,
+                flush=True,
+            )
         content = data["choices"][0]["message"]["content"]
         parsed = json.loads(content)
-        supported = bool(parsed.get("supported"))
-        self.cache[key] = supported
-        return supported
+        decision = {
+            "flag": flag,
+            "audit_question": question,
+            "article_section": item.get("article_section", ""),
+            "extracted_text_lines": item.get("extracted_text_lines", ""),
+            "quote": quote,
+            "deterministic_validator_result": deterministic_result,
+            "llm_supported": bool(parsed.get("supported")),
+            "llm_reason": str(parsed.get("reason", "")),
+            "model": self.model,
+            "temperature": self.temperature,
+        }
+        self.cache[key] = decision
+        self.decisions.append(decision)
+        return decision["llm_supported"] if self.apply_rejections else deterministic_result
+
+    def write_decision_log(self, path: Path) -> None:
+        if not self.decisions:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("w", encoding="utf-8") as handle:
+            for decision in self.decisions:
+                json.dump(decision, handle, ensure_ascii=False)
+                handle.write("\n")
 
 
 def build_llm_validator(
@@ -267,6 +342,7 @@ def build_llm_validator(
         api_key=api_key,
         questions=questions,
         prompt=prompt,
+        apply_rejections=args.llm_apply_rejections,
     )
 
 
@@ -864,7 +940,10 @@ def remove_invalid_quote_support(
     support: dict[str, list[dict[str, str]]],
     flags: dict[str, Any],
     llm_validator: LLMSupportValidator | None,
+    apply_flag_removals: bool,
 ) -> None:
+    if not apply_flag_removals:
+        return
     for flag, items in list(support.items()):
         if flag == "full_text_accessible":
             continue
@@ -880,7 +959,7 @@ def remove_invalid_quote_support(
             support[flag] = valid_items
         else:
             support.pop(flag, None)
-            if flag != "linked_workflow_artifacts_retrievable":
+            if apply_flag_removals and flag != "linked_workflow_artifacts_retrievable":
                 flags[flag] = False
 
 
@@ -933,19 +1012,24 @@ def reset_candidate_flags_from_descriptions(audit: dict[str, Any]) -> None:
     )
 
 
-def summary_counts(articles: list[dict[str, Any]], flag_names: list[str]) -> dict[str, int]:
+def summary_counts(articles: list[dict[str, Any]], flag_names: list[str]) -> dict[str, Any]:
     counts = {flag: 0 for flag in flag_names}
+    counts["total_records"] = len(articles)
+    relation_counts: dict[str, int] = {}
     for article in articles:
         audit = article.get("article_audit_fields", {})
         relation = (
             audit.get("description_audit_fields", {}).get("knime_article_relation", "")
         )
+        if relation:
+            relation_counts[relation] = relation_counts.get(relation, 0) + 1
         if relation == "about_knime":
             continue
         flags = audit.get("flag_audit_fields", {})
         for flag in flag_names:
             if flags.get(flag) is True:
                 counts[flag] += 1
+    counts["knime_article_relation_counts"] = relation_counts
     return counts
 
 
@@ -981,7 +1065,8 @@ def main() -> int:
         if text_path is None:
             continue
 
-        reset_candidate_flags_from_descriptions(audit)
+        if args.reset_flags_from_descriptions:
+            reset_candidate_flags_from_descriptions(audit)
         lines = text_path.read_text(encoding="utf-8", errors="replace").split("\n")
 
         flags = audit.setdefault("flag_audit_fields", {})
@@ -1002,9 +1087,10 @@ def main() -> int:
             existing_non_text = [
                 item for item in old_support.get(flag, []) if keep_non_text_support(item)
             ]
+            existing_support = old_support.get(flag, [])
 
             if flag == "linked_workflow_artifacts_retrievable":
-                support[flag] = dedupe_support(existing_non_text)
+                support[flag] = dedupe_support(existing_non_text or existing_support)
                 continue
 
             if flag == "provides_input_data_direct_url":
@@ -1045,27 +1131,48 @@ def main() -> int:
                 or support_item_is_valid(flag, item, llm_validator)
             ]
             if not valid_support:
-                flags[flag] = False
+                if args.apply_flag_removals:
+                    flags[flag] = False
+                elif existing_support:
+                    support[flag] = existing_support
                 continue
 
             support[flag] = valid_support
 
         citation_enriched_items += enrich_support_with_citations(support, lines)
-        remove_invalid_quote_support(support, flags, llm_validator)
+        remove_invalid_quote_support(
+            support, flags, llm_validator, args.apply_flag_removals
+        )
         audit["flag_audit_support"] = {
             flag: items for flag, items in support.items() if flags.get(flag) is True
         }
 
-    assessment["article_text_source"] = {
-        "directory": args.text_dir.as_posix(),
-        "raw_directory": "data/processed/articles/raw",
-        "method": "Raw text is generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout; processed reading files are generated with scripts/normalize_article_text_columns.py.",
-        "articles_with_extracted_text": updated_articles,
-        "line_reference_semantics": "extracted_text_lines refer to processed text files under data/processed/articles, not original PDF page lines.",
-    }
+    article_text_source = dict(assessment.get("article_text_source", {}))
+    processed_text_file_count = len(list(args.text_dir.glob("*.txt")))
+    article_text_source.update(
+        {
+            "directory": args.text_dir.as_posix(),
+            "raw_directory": article_text_source.get(
+                "raw_directory", "data/processed/articles/raw"
+            ),
+            "method": article_text_source.get(
+                "method",
+                "Raw text is generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout; processed reading files are generated with scripts/normalize_article_text_columns.py.",
+            ),
+            "articles_with_extracted_text": processed_text_file_count,
+            "articles_matched_to_audit_records": updated_articles,
+            "line_reference_semantics": article_text_source.get(
+                "line_reference_semantics",
+                "extracted_text_lines refer to processed one-column text files under data/processed/articles, not original PDF page lines.",
+            ),
+        }
+    )
+    assessment["article_text_source"] = article_text_source
     assessment["article_audit_summary_counts"] = summary_counts(
         assessment["articles"], flag_names
     )
+    if llm_validator is not None:
+        llm_validator.write_decision_log(args.llm_decision_log)
 
     write_json(args.assessment, assessment)
     print(
@@ -1078,6 +1185,12 @@ def main() -> int:
             f"LLM mode {args.llm_mode}: made {llm_validator.calls} "
             f"support-validation API calls with model {args.llm_model}."
         )
+        print(f"LLM decisions written to {args.llm_decision_log}.")
+        if not args.llm_apply_rejections:
+            print(
+                "LLM decisions were logged only; deterministic validation controlled "
+                "audit edits. Use --llm-apply-rejections to apply LLM false decisions."
+            )
     return 0
 
 
