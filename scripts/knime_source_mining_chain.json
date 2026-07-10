@@ -1,0 +1,93 @@
+{
+  "name": "KNIME source mining script chain",
+  "purpose": "Formal workflow index for KNIME source-repository mining, from local OSS repository cloning through cross-snapshot node metadata summaries.",
+  "updated_at": "2026-07-08",
+  "handoff_terms": {
+    "automatic": "The next step consumes files written by this step without required manual editing.",
+    "semi_automatic": "The script produces or consumes an intermediate state that may require manual action, such as verifying a local clone or checkout state.",
+    "manual": "The step is not currently represented by a deterministic script and must be performed or edited by a human before the next scripted step is meaningful."
+  },
+  "knime_source_mining_chain": [
+    {
+      "step": 1,
+      "name": "Clone KNIME OSS repositories",
+      "script": "scripts/clone_knime_oss_repos.sh",
+      "make_target": "clone-knime-oss",
+      "network_required": true,
+      "input": [
+        "public KNIME Git repositories",
+        "KNIME_OSS_ROOT target directory"
+      ],
+      "output": [
+        "local KNIME_OSS_ROOT clone directory"
+      ],
+      "handoff_to_next": "semi_automatic",
+      "manual_action_required": [
+        "Verify that the clone completed and that all expected repositories are present.",
+        "Keep local clone path outside this repository unless intentionally vendoring evidence."
+      ],
+      "notes": "This step depends on network and external GitHub availability."
+    },
+    {
+      "step": 2,
+      "name": "Checkout KNIME repositories by snapshot date",
+      "script": "scripts/checkout_knime_oss_by_date.sh",
+      "make_target": "checkout-knime-snapshot",
+      "network_required": false,
+      "input": [
+        "local KNIME_OSS_ROOT clone directory",
+        "SNAPSHOT_DATE"
+      ],
+      "output": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/logs/checkout_<SNAPSHOT_DATE>.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Checks out each repository to the requested date and writes a checkout manifest."
+    },
+    {
+      "step": 3,
+      "name": "Collect KNIME node metadata snapshot",
+      "script": "scripts/collect_knime_node_snapshot.py",
+      "make_target": "collect-knime-snapshot",
+      "network_required": false,
+      "input": [
+        "local KNIME_OSS_ROOT clone directory checked out at SNAPSHOT_DATE"
+      ],
+      "output": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Parses structured XML metadata rather than grepping source text."
+    },
+    {
+      "step": 4,
+      "name": "Build cross-snapshot KNIME node summary",
+      "script": "scripts/build_knime_node_snapshot_summary.py",
+      "make_target": "knime-snapshot-summary",
+      "network_required": false,
+      "input": [
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
+        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
+      ],
+      "output": [
+        "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Builds derived longitudinal counts and transition approximations across snapshot directories."
+    }
+  ],
+  "final_outputs": [
+    "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
+  ],
+  "out_of_scope_for_current_scripts": [
+    "Fully automatic KNIME workflow execution and repair",
+    "Automatic repair of missing, deprecated, migrated, or extension-dependent KNIME workflow nodes"
+  ]
+}

@@ -364,7 +364,7 @@ def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | Non
     if not pdf_file:
         return None
     stem = Path(pdf_file).stem
-    candidate = text_dir / f"{slugify(stem)}.txt"
+    candidate = text_dir / f"{slugify(stem)}.html"
     if candidate.exists():
         return candidate
     return None
@@ -1148,22 +1148,19 @@ def main() -> int:
         }
 
     article_text_source = dict(assessment.get("article_text_source", {}))
-    processed_text_file_count = len(list(args.text_dir.glob("*.txt")))
+    processed_text_file_count = len(list(args.text_dir.glob("*.html")))
     article_text_source.update(
         {
             "directory": args.text_dir.as_posix(),
-            "raw_directory": article_text_source.get(
-                "raw_directory", "data/processed/articles/raw"
-            ),
             "method": article_text_source.get(
                 "method",
-                "Raw text is generated from local PDFs with scripts/extract_article_texts.py using pdftotext -layout; processed reading files are generated with scripts/normalize_article_text_columns.py.",
+                "Processed article files are generated from local PDFs with GROBID using scripts/extract_article_grobid_html.py.",
             ),
             "articles_with_extracted_text": processed_text_file_count,
             "articles_matched_to_audit_records": updated_articles,
             "line_reference_semantics": article_text_source.get(
                 "line_reference_semantics",
-                "extracted_text_lines refer to processed one-column text files under data/processed/articles, not original PDF page lines.",
+                "extracted_text_lines refer to processed GROBID HTML files under data/processed/articles, not original PDF page lines.",
             ),
         }
     )

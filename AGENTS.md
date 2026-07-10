@@ -164,7 +164,7 @@ Create directories only when they are needed. Keep generated files out of versio
   `OPENALEX_MOST_CITED_LIMIT`.
 - The top-cited article audit registry now contains 100 records, including all
   records from citation ranks 1-100. Eighty-two records currently have local
-  PDFs or full text and processed one-column text; eighteen records are retained as
+  PDFs or full text and processed GROBID HTML; eighteen records are retained as
   not-assessed placeholders because no local full text is available.
 - Current local article retrieval for ranks 41-60 is recorded in
   `data/processed/audit/logs/article_download_attempts_41-60.csv`: 14 of 20
@@ -221,12 +221,11 @@ Create directories only when they are needed. Keep generated files out of versio
   Article-text support should include `extracted_text_lines`, `quote`,
   `article_section`, and `note`. The `quote` field is direct wording from the
   extracted article text; `note` is the audit explanation. The line references
-  point to processed reading files under `data/processed/articles/`, not to
-  intrinsic PDF line numbers. Raw `pdftotext -layout` output is preserved under
-  `data/processed/articles/raw/`. Reuse extracted-text line references where
-  available; use source labels such as `linked_resources`, `local_pdf`,
-  `article_audit_fields`, or `manual_assessment` for resource values and manual
-  classification notes.
+  point to processed article files under `data/processed/articles/`, not to
+  intrinsic PDF line numbers. Current processed article files are GROBID HTML.
+  Reuse extracted-text line references where available; use source labels such
+  as `linked_resources`, `local_pdf`, `article_audit_fields`, or
+  `manual_assessment` for resource values and manual classification notes.
   False flags intentionally have no support entry. Keep it in sync when
   changing any flag value.
 - For article-text flags, a `true` value requires direct quote support. After
@@ -249,14 +248,17 @@ Create directories only when they are needed. Keep generated files out of versio
 - Do not silently upgrade `not_checked_in_this_pass`, `unclear`, or
   `reported_without_direct_url` values to stronger claims unless new evidence
   is recorded and the relevant quote support is added.
-- Raw article text extracted from local PDFs belongs under
-  `data/processed/articles/raw/`, one text file per article/PDF. Processed
-  reading copies belong under `data/processed/articles/`; use
-  `scripts/normalize_article_text_columns.py` to convert sustained two-column
-  pages to one-column order when possible. This directory is ignored by Git
-  because it is generated; keep extraction and normalization manifests under
-  `data/processed/audit/logs/`. Keep these generated-directory details in
-  `AGENTS.md` rather than the public-facing `README.md`.
+- Processed article text is GROBID-derived semantic HTML under
+  `data/processed/articles/*.html`, with source TEI XML under
+  `data/processed/articles/grobid_tei/*.tei.xml`. Generate these files with
+  `scripts/extract_article_grobid_html.py` or `make article-grobid-html-all`
+  after starting a local GROBID service:
+  `docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-crf`.
+  The manifest is
+  `data/processed/audit/logs/article_grobid_html_manifest.csv`.
+- The parser comparison and rationale are recorded in
+  `PDF_parser_comparison.md`. The 83-file GROBID run produced 83 HTML files,
+  83 TEI XML files, and no failed records.
 - The empirical expansion priority is now lower than formalizing the framework,
   evidence model, and score dimensions. Continue assessing KNIME-related article
   records beyond the current 100-record audit registry only if time allows, and

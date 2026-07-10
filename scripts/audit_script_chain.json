@@ -1,7 +1,7 @@
 {
   "name": "KNIME publication and workflow reproducibility audit script chain",
-  "purpose": "Formal workflow index for the audit process, from OpenAlex article collection through article-audit table generation and KNIME source-mining summaries.",
-  "updated_at": "2026-07-08",
+  "purpose": "Formal workflow index for the article and workflow audit process, from OpenAlex article collection through article-audit table generation.",
+  "updated_at": "2026-07-09",
   "handoff_terms": {
     "automatic": "The next step consumes files written by this step without required manual editing.",
     "semi_automatic": "The script produces or consumes an intermediate state that may require manual action, such as institutional article download, human article assessment, workflow retrieval, or manual KNIME opening/execution checks.",
@@ -77,45 +77,32 @@
     },
     {
       "step": 4,
-      "name": "Extract raw text from local article PDFs",
-      "script": "scripts/extract_article_texts.py",
-      "make_target": "extract-texts",
+      "name": "Extract semantic article HTML with GROBID",
+      "script": "scripts/extract_article_grobid_html.py",
+      "make_target": "article-grobid-html",
       "network_required": false,
+      "local_service_required": "GROBID at http://localhost:8070",
       "input": [
-        "data/original/articles/*.pdf"
+        "data/original/articles/*.pdf",
+        "local GROBID service: docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-crf"
       ],
       "output": [
-        "data/processed/articles/raw/*.txt",
-        "data/processed/audit/logs/article_text_extraction_manifest.csv"
+        "data/processed/articles/*.html",
+        "data/processed/articles/grobid_tei/*.tei.xml",
+        "data/processed/audit/logs/article_grobid_html_manifest.csv"
       ],
       "handoff_to_next": "automatic",
-      "notes": "Uses pdftotext -layout. Use extract-texts-all to regenerate all raw text files."
+      "notes": "The only article parser in the current pipeline. Uses GROBID processFulltextDocument to create TEI XML, then renders semantic HTML with title, abstract, body sections, paragraphs, and bibliography. The full local run processed 83 PDFs with 0 failures. Use article-grobid-html-all to regenerate all outputs."
     },
     {
       "step": 5,
-      "name": "Normalize extracted article text into reading order",
-      "script": "scripts/normalize_article_text_columns.py",
-      "make_target": "normalize-texts",
-      "network_required": false,
-      "input": [
-        "data/processed/articles/raw/*.txt"
-      ],
-      "output": [
-        "data/processed/articles/*.txt",
-        "data/processed/audit/logs/article_text_column_normalization_manifest.csv"
-      ],
-      "handoff_to_next": "automatic",
-      "notes": "Normalizes sustained two-column pages to one-column reading order where possible. Use normalize-texts-all to regenerate all processed text files."
-    },
-    {
-      "step": 6,
       "name": "Generate structured article assessment candidates",
-      "script": "scripts/generate_article_audit_assessments_deterministic.py",
+      "script": "scripts/audit_assessments_deterministic.py",
       "make_target": "deterministic-article-assessments",
       "network_required": false,
       "input": [
         "data/processed/openalex/openalex_knime_most_cited.csv",
-        "data/processed/articles/*.txt",
+        "data/processed/articles/*.html",
         "data/processed/audit/knime_article_audit_questions.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
@@ -127,17 +114,39 @@
         "Review data/processed/audit/article_deterministic_assessments.json for over-detected regex matches, undefined fields, and mismatches with the curated audit.",
         "Do not overwrite data/processed/audit/article_assessments.json from this step; use the generated file as a deterministic comparison and review artifact."
       ],
-      "notes": "This step creates a deterministic candidate assessment without network access and without reading the curated assessment JSON. The script reads the OpenAlex seed table, processed article text with source-PDF metadata headers, audit questions, and the workflow-reference inventory. It writes a standalone JSON file with article_audit_fields, linked_resources, source pdf_file values, and undefined values where deterministic rules cannot decide. Use DETERMINISTIC_LIMIT and RANK to test subsets."
+      "notes": "This step creates a deterministic candidate assessment without network access and without reading the curated assessment JSON. The script reads the OpenAlex seed table, processed article HTML with source-PDF metadata, audit questions, and the workflow-reference inventory. It writes a standalone JSON file with article_audit_fields, linked_resources, source pdf_file values, and undefined values where deterministic rules cannot decide. Use DETERMINISTIC_LIMIT and RANK to test subsets."
+    },
+    {
+      "step": 6,
+      "name": "Classify linked resource URL types with LLM",
+      "script": "scripts/audit_assessments_llm_url.py",
+      "make_target": "llm-url-assessments",
+      "network_required": true,
+      "input": [
+        "data/processed/audit/article_deterministic_assessments.json",
+        "data/processed/articles/*.html",
+        "data/processed/audit/article_llm_url_prompts.json"
+      ],
+      "output": [
+        "data/processed/audit/article_llm_url_assessments.json"
+      ],
+      "handoff_to_next": "llm_automatic",
+      "manual_action_required": [
+        "Run a small pilot first, for example LIMIT=1 or RANK=<rank>, before a full paid run.",
+        "Review data/processed/audit/article_llm_url_assessments.json for URL type assignments that are unsupported by article text.",
+        "Do not open or fetch URLs for this step; the LLM must classify URL types only from article text evidence."
+      ],
+      "notes": "This step reads linked_resources from the deterministic assessment and asks the LLM only to replace linked_resources[*].type values that are undefined. It sends article metadata, URL lists, and paragraph-local article context from the processed article representation. It does not call the URLs under audit and does not change article_audit_fields."
     },
     {
       "step": 7,
       "name": "Fill undefined deterministic article assessment fields with LLM",
-      "script": "scripts/generate_article_audit_assessments_with_llm.py",
+      "script": "scripts/audit_assessments_llm.py",
       "make_target": "llm-article-assessments",
       "network_required": true,
       "input": [
-        "data/processed/audit/article_deterministic_assessments.json",
-        "data/processed/articles/*.txt",
+        "data/processed/audit/article_llm_url_assessments.json",
+        "data/processed/articles/*.html",
         "data/processed/audit/knime_article_audit_questions.json",
         "data/processed/audit/llm_article_assessment_prompt.json"
       ],
@@ -150,7 +159,7 @@
         "Review data/processed/audit/article_llm_assessments.json for filled fields that are unsupported, weakly supported, or inconsistent with deterministic evidence.",
         "Do not overwrite data/processed/audit/article_assessments.json from this step; use the generated file as an LLM-filled comparison and review artifact."
       ],
-      "notes": "This step reads the deterministic candidate assessment and asks the LLM only to fill fields that are still marked undefined. The script sends article metadata, the current deterministic article_audit_fields, the list of undefined target fields, resource hints, audit questions, prompt rules, and selected line-referenced excerpts. Already-defined deterministic values are preserved. The output remains a standalone candidate file for review."
+      "notes": "This step reads the URL-typed candidate assessment and asks the LLM only to fill article_audit_fields that are still marked undefined. The script sends article metadata, the current deterministic article_audit_fields, the list of undefined target fields, URL/resource hints, audit questions, prompt rules, and selected line-referenced excerpts. Already-defined deterministic and URL-type values are preserved. The output remains a standalone candidate file for review."
     },
     {
       "step": 8,
@@ -163,7 +172,7 @@
         "data/processed/audit/article_assessments.json",
         "data/processed/audit/knime_article_audit_questions.json",
         "data/processed/audit/llm_support_validation_prompt.json",
-        "data/processed/articles/*.txt"
+        "data/processed/articles/*.html"
       ],
       "output": [
         "data/processed/audit/article_assessments.json",
@@ -176,7 +185,7 @@
         "Use LLM_APPLY_REJECTIONS=--llm-apply-rejections only after reviewing disagreements and accepting that LLM false decisions should remove candidate quote support.",
         "Use RESET_FLAGS_FROM_DESCRIPTIONS=--reset-flags-from-descriptions and APPLY_FLAG_REMOVALS=--apply-flag-removals only for an intentional classification rebuild, not for routine support refresh."
       ],
-      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. By default, LLM decisions are logged for audit rather than applied as destructive edits; the existing audited flags are preserved. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected."
+      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. By default, LLM decisions are logged for audit rather than applied as destructive edits; the existing audited flags are preserved. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected. Current processed article input is GROBID HTML."
     },
     {
       "step": 9,
@@ -186,7 +195,7 @@
       "network_required": true,
       "input": [
         "data/processed/audit/article_assessments.json",
-        "data/processed/audit/knime_downloadable_workflow_references.json"     
+        "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
       "output": [
         "data/processed/audit/knime_downloadable_workflow_references.json",
@@ -241,86 +250,9 @@
       "notes": "Uses the workflow inventory summary count for articles with successfully downloaded workflows."
     }
   ],
-  "knime_source_mining_chain": [
-    {
-      "step": 1,
-      "name": "Clone KNIME OSS repositories",
-      "script": "scripts/clone_knime_oss_repos.sh",
-      "make_target": "clone-knime-oss",
-      "network_required": true,
-      "input": [
-        "public KNIME Git repositories",
-        "KNIME_OSS_ROOT target directory"
-      ],
-      "output": [
-        "local KNIME_OSS_ROOT clone directory"
-      ],
-      "handoff_to_next": "semi_automatic",
-      "manual_action_required": [
-        "Verify that the clone completed and that all expected repositories are present.",
-        "Keep local clone path outside this repository unless intentionally vendoring evidence."
-      ],
-      "notes": "This step depends on network and external GitHub availability."
-    },
-    {
-      "step": 2,
-      "name": "Checkout KNIME repositories by snapshot date",
-      "script": "scripts/checkout_knime_oss_by_date.sh",
-      "make_target": "checkout-knime-snapshot",
-      "network_required": false,
-      "input": [
-        "local KNIME_OSS_ROOT clone directory",
-        "SNAPSHOT_DATE"
-      ],
-      "output": [
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/logs/checkout_<SNAPSHOT_DATE>.csv"
-      ],
-      "handoff_to_next": "automatic",
-      "notes": "Checks out each repository to the requested date and writes a checkout manifest."
-    },
-    {
-      "step": 3,
-      "name": "Collect KNIME node metadata snapshot",
-      "script": "scripts/collect_knime_node_snapshot.py",
-      "make_target": "collect-knime-snapshot",
-      "network_required": false,
-      "input": [
-        "local KNIME_OSS_ROOT clone directory checked out at SNAPSHOT_DATE"
-      ],
-      "output": [
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
-      ],
-      "handoff_to_next": "automatic",
-      "notes": "Parses structured XML metadata rather than grepping source text."
-    },
-    {
-      "step": 4,
-      "name": "Build cross-snapshot KNIME node summary",
-      "script": "scripts/build_knime_node_snapshot_summary.py",
-      "make_target": "knime-snapshot-summary",
-      "network_required": false,
-      "input": [
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/plugin_nodes.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/node_descriptions.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/factory_class_mappers.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/migration_rules.csv",
-        "data/original/knime_snapshots/<SNAPSHOT_DATE>/summary.csv"
-      ],
-      "output": [
-        "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
-      ],
-      "handoff_to_next": "automatic",
-      "notes": "Builds derived longitudinal counts and transition approximations across snapshot directories."
-    }
-  ],
   "final_table_outputs": [
     "article/tables/top_cited_article_audit_summary.csv",
-    "article/tables/knime_use_workflow_reporting_signals.csv",
-    "data/processed/knime_snapshots/knime_node_snapshot_summary.csv"
+    "article/tables/knime_use_workflow_reporting_signals.csv"
   ],
   "out_of_scope_for_current_scripts": [
     "Final VWRS weighting function f(A, I, E, M, D, X, C, R)",

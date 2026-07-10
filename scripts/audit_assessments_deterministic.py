@@ -11,11 +11,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import html
 import json
 import re
+import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 
 DEFAULT_SEED_CSV = Path("data/processed/openalex/openalex_knime_most_cited.csv")
@@ -30,14 +33,58 @@ DEFAULT_OUTPUT = Path(
 
 UNDEFINED = "undefined"
 TEXT_METADATA_PREFIX = "# article_text_metadata: "
+HTML_METADATA_RE = re.compile(
+    r'<script[^>]+id=["\']article-html-metadata["\'][^>]*>(.*?)</script>',
+    re.IGNORECASE | re.DOTALL,
+)
+HTML_COMMENT_METADATA_RE = re.compile(
+    r"<!--\s*article_html_metadata:\s*(.*?)\s*-->",
+    re.IGNORECASE | re.DOTALL,
+)
+HTML_META_RE = re.compile(
+    r'<meta\s+name=["\']article:([^"\']+)["\']\s+content=["\']([^"\']*)["\']\s*/?>',
+    re.IGNORECASE,
+)
+EXCLUDED_OPENALEX_SEED_FIELDS = {
+    "has_fulltext",
+    "has_pdf",
+    "knime_role",
+    "likely_uses_knime_workflow_platform",
+    "classification_reason",
+}
+COMMON_URL_TLDS = {
+    "ac",
+    "at",
+    "au",
+    "be",
+    "biz",
+    "ca",
+    "ch",
+    "cn",
+    "co",
+    "com",
+    "de",
+    "edu",
+    "es",
+    "eu",
+    "fi",
+    "fr",
+    "gov",
+    "info",
+    "io",
+    "it",
+    "jp",
+    "ly",
+    "me",
+    "net",
+    "nl",
+    "nz",
+    "org",
+    "uk",
+    "us",
+}
 
 DESCRIPTION_FIELDS = [
-    "article_identifier",
-    "title",
-    "year",
-    "venue",
-    "doi_or_url",
-    "knime_role_source_field",
     "knime_article_relation",
     "knime_version_values",
     "workflow_artifact_status",
@@ -45,7 +92,6 @@ DESCRIPTION_FIELDS = [
     "provides_code_or_scripts",
     "reports_extension_or_plugin_dependencies",
     "reports_extension_installation_source",
-    "linked_workflow_artifacts_retrievable",
     "evidence_notes",
 ]
 
@@ -61,11 +107,11 @@ FLAG_NAMES = [
     "provides_code_or_scripts",
     "reports_extension_or_plugin_dependencies",
     "reports_extension_installation_source",
-    "linked_workflow_artifacts_retrievable",
 ]
 
-URL_RE = re.compile(r"https?://[^\s)\]}>\"']+", re.IGNORECASE)
+URL_RE = re.compile(r"https?://[^\s<>\[\])\]}>\"']+", re.IGNORECASE)
 VERSION_RE = re.compile(r"\bKNIME(?: Analytics Platform)?\s*(?:version|v\.?|ver\.?)?\s*(\d+(?:\.\d+){1,3})\b", re.IGNORECASE)
+URL_INVISIBLE_CHARS_RE = re.compile(r"[\u00ad\u200b\u200c\u200d\ufeff]")
 
 DIRECT_USE_RE = re.compile(
     r"\b(?:used|using|implemented|performed|built|designed|developed|adopted|created|constructed|processed|analysed|analyzed|executed|modelled|modeled)\b.{0,120}\bKNIME\b|"
@@ -138,11 +184,25 @@ def text_metadata(path: Path | None) -> dict[str, Any]:
     if path is None:
         return {}
     try:
-        first_line = path.open(encoding="utf-8", errors="replace").readline().rstrip("\n")
+        text = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return {}
+    first_line = text.splitlines()[0] if text.splitlines() else ""
     if not first_line.startswith(TEXT_METADATA_PREFIX):
-        return {}
+        for pattern in (HTML_METADATA_RE, HTML_COMMENT_METADATA_RE):
+            match = pattern.search(text[:6000])
+            if not match:
+                continue
+            try:
+                metadata = json.loads(html.unescape(match.group(1).strip()))
+            except json.JSONDecodeError:
+                continue
+            return metadata if isinstance(metadata, dict) else {}
+        meta_fields = {
+            key: html.unescape(value)
+            for key, value in HTML_META_RE.findall(text[:6000])
+        }
+        return meta_fields
     try:
         metadata = json.loads(first_line[len(TEXT_METADATA_PREFIX) :])
     except json.JSONDecodeError:
@@ -191,7 +251,7 @@ def title_match_score(title_tokens: set[str], path: Path) -> int:
 
 
 def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | None:
-    files = [path for path in text_dir.glob("*.txt") if path.is_file()]
+    files = [path for path in text_dir.glob("*.html") if path.is_file()]
     if not files:
         return None
     doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or ""))
@@ -277,45 +337,141 @@ def all_urls(lines: list[str]) -> list[str]:
 def url_contexts(lines: list[str]) -> list[tuple[str, str]]:
     contexts: list[tuple[str, str]] = []
     for index, line in enumerate(lines):
-        for url in URL_RE.findall(line):
-            context = compact(" ".join(lines[max(0, index - 2) : min(len(lines), index + 3)]))
-            contexts.append((url.rstrip(".,;:"), context))
+        context = clean_url_text(compact(" ".join(lines[max(0, index - 2) : min(len(lines), index + 3)])))
+        candidates = [line]
+        seen_in_line: set[str] = set()
+        for candidate in candidates:
+            for url in URL_RE.findall(clean_url_text(candidate)):
+                if url in seen_in_line:
+                    continue
+                seen_in_line.add(url)
+                contexts.append((url, context))
     return contexts
 
 
-def classify_url(url: str, context: str) -> str:
-    haystack = f"{url} {context}".lower()
-    if any(token in haystack for token in ["kni.me/w/", "hub.knime", "myexperiment", ".knwf", "workflow"]):
-        return "workflow_urls"
-    if any(token in haystack for token in ["github", "gitlab", "source code", "code availability", "script"]):
-        return "code_urls"
-    if any(token in haystack for token in ["uci", "figshare", "zenodo", "dryad", "dataset", "data availability", "training and test data", "input data"]):
-        return "data_urls"
-    if any(token in haystack for token in ["knime.com/download", "update site", "nodepit", "software", "download"]):
-        return "software_urls"
-    if "doi.org" in haystack or "supplement" in haystack:
-        return "supplement_urls_or_dois"
-    return "software_urls"
+def clean_url_text(value: str) -> str:
+    return URL_INVISIBLE_CHARS_RE.sub("", value)
 
 
-def linked_resources_from_text(lines: list[str], workflow_record: dict[str, Any] | None) -> dict[str, Any]:
-    resources: dict[str, Any] = {
-        "data_urls": [],
-        "code_urls": [],
-        "workflow_urls": [],
-        "software_urls": [],
-        "supplement_urls_or_dois": [],
-        "notes": "",
-    }
-    for url, context in url_contexts(lines):
-        bucket = classify_url(url, context)
-        if url not in resources[bucket]:
-            resources[bucket].append(url)
-    if workflow_record:
-        for ref in workflow_record.get("workflow_references", []):
-            url = ref.get("url", "")
-            if url and url not in resources["workflow_urls"]:
-                resources["workflow_urls"].append(url)
+def normalized_url(raw_url: str, context: str = "") -> str | None:
+    url = clean_url_text(raw_url).strip().rstrip(",;:")
+    if url.endswith("-"):
+        return None
+    if url.endswith("."):
+        without_dot = url.rstrip(".")
+        try:
+            parsed_without_dot = urlparse(without_dot)
+        except ValueError:
+            return None
+        suffix = parsed_without_dot.netloc.lower().rsplit(".", 1)[-1]
+        if suffix in COMMON_URL_TLDS:
+            url = url.rstrip(".")
+        else:
+            continuation = re.search(
+                rf"{re.escape(url)}\s+([A-Za-z0-9][A-Za-z0-9._~:/?#\[\]@!$&'()*+,;=%-]+)",
+                context,
+            )
+            if continuation:
+                url = f"{url}{continuation.group(1).rstrip('.,;:])')}"
+            else:
+                url = url.rstrip(".")
+    url = re.sub(r"\.[A-Z][A-Za-z]+$", "", url)
+    try:
+        parsed = urlparse(url)
+    except ValueError:
+        return None
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    host = parsed.netloc.lower()
+    if "." not in host:
+        return None
+    if host in {"www.knime", "www.mdpi", "www.pubmedcentral.nih", "www.ncbi.nlm.nih"}:
+        return None
+    suffix = host.rsplit(".", 1)[-1]
+    if suffix not in COMMON_URL_TLDS:
+        return None
+    if len(suffix) < 2 or not suffix.isalpha():
+        return None
+    if parsed.path.count("(") != parsed.path.count(")"):
+        return None
+    if host in {"doi.org", "dx.doi.org"} and re.fullmatch(r"/10\.\d+/?", parsed.path):
+        return None
+    return url
+
+
+def tei_url(raw_url: str) -> str | None:
+    url = clean_url_text(html.unescape(raw_url)).strip().rstrip(".,;:")
+    if url.endswith("-"):
+        return None
+    try:
+        parsed = urlparse(url)
+    except ValueError:
+        return None
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    if "." not in parsed.netloc:
+        return None
+    return url
+
+
+def unique_normalized_urls_from_tei(path: Path) -> list[str]:
+    urls: list[str] = []
+    seen: set[str] = set()
+    try:
+        root = ET.parse(path).getroot()
+    except (OSError, ET.ParseError):
+        return urls
+    content_roots = [
+        element
+        for query in (
+            ".//{http://www.tei-c.org/ns/1.0}profileDesc/{http://www.tei-c.org/ns/1.0}abstract",
+            ".//{http://www.tei-c.org/ns/1.0}text/{http://www.tei-c.org/ns/1.0}body",
+            ".//{http://www.tei-c.org/ns/1.0}text/{http://www.tei-c.org/ns/1.0}back",
+            ".//{http://www.tei-c.org/ns/1.0}listBibl/{http://www.tei-c.org/ns/1.0}biblStruct",
+        )
+        for element in root.findall(query)
+    ]
+    for content_root in content_roots:
+        for element in content_root.iter():
+            tag = element.tag.rsplit("}", 1)[-1]
+            target = element.attrib.get("target", "")
+            if tag in {"ref", "ptr"} and target.startswith(("http://", "https://")):
+                values = [target]
+            else:
+                values = list(element.attrib.values())
+                if element.text:
+                    values.append(element.text)
+            if element.tail:
+                values.append(element.tail)
+            for value in values:
+                for raw_url in URL_RE.findall(html.unescape(value)):
+                    cleaned = tei_url(raw_url)
+                    seen_key = cleaned.lower() if cleaned else ""
+                    if cleaned and seen_key not in seen:
+                        seen.add(seen_key)
+                        urls.append(cleaned)
+    return urls
+
+def linked_resources_from_sources(
+    lines: list[str],
+    tei_path: Path | None,
+    workflow_record: dict[str, Any] | None,
+) -> list[dict[str, str]]:
+    resources: list[dict[str, str]] = []
+    seen: set[str] = set()
+    source_urls: list[str] = []
+    if tei_path and tei_path.exists():
+        source_urls = unique_normalized_urls_from_tei(tei_path)
+    if not source_urls:
+        for url, context in url_contexts(lines):
+            cleaned = normalized_url(url, context)
+            if cleaned:
+                source_urls.append(cleaned)
+    for cleaned in source_urls:
+        seen_key = cleaned.lower()
+        if seen_key not in seen:
+            seen.add(seen_key)
+            resources.append({"url": cleaned, "type": UNDEFINED})
     return resources
 
 
@@ -335,6 +491,9 @@ def load_seed_articles(path: Path) -> list[dict[str, Any]]:
         rows = list(csv.DictReader(handle))
     articles: list[dict[str, Any]] = []
     for index, row in enumerate(rows, start=1):
+        openalex_seed_fields = {
+            key: value for key, value in row.items() if key not in EXCLUDED_OPENALEX_SEED_FIELDS
+        }
         articles.append(
             {
                 "rank": index,
@@ -344,7 +503,7 @@ def load_seed_articles(path: Path) -> list[dict[str, Any]]:
                 "venue": row.get("source", ""),
                 "doi_or_url": normalize_doi(row.get("doi", "")),
                 "doi": normalize_doi(row.get("doi", "")),
-                "openalex_seed_fields": row,
+                "openalex_seed_fields": openalex_seed_fields,
             }
         )
     return articles
@@ -405,22 +564,18 @@ def audit_article(
     lines = text_path.read_text(encoding="utf-8", errors="replace").splitlines() if text_path else None
     metadata = text_metadata(text_path)
     pdf_file = metadata.get("source_pdf") or UNDEFINED
+    tei_file = metadata.get("tei_file") or ""
+    tei_path = Path(tei_file) if tei_file else None
     relation = determine_relation(article, lines)
 
     desc = {field: UNDEFINED for field in DESCRIPTION_FIELDS}
     desc.update(
         {
-            "article_identifier": article.get("article_identifier", ""),
-            "title": article.get("title", ""),
-            "year": str(article.get("publication_year", "")),
-            "venue": article.get("venue", ""),
-            "doi_or_url": article.get("doi_or_url", ""),
-            "knime_role_source_field": article.get("openalex_seed_fields", {}).get("knime_role", UNDEFINED),
             "knime_article_relation": relation,
         }
     )
 
-    resources = linked_resources_from_text(lines or [], workflow_record)
+    resources = linked_resources_from_sources(lines or [], tei_path, workflow_record)
     flags: dict[str, bool | str] = {flag: UNDEFINED for flag in FLAG_NAMES}
     support: dict[str, list[dict[str, str]]] = {}
 
@@ -432,7 +587,6 @@ def audit_article(
                 "provides_code_or_scripts": "not_assessed",
                 "reports_extension_or_plugin_dependencies": "not_assessed",
                 "reports_extension_installation_source": "not_assessed",
-                "linked_workflow_artifacts_retrievable": "not_assessed",
                 "evidence_notes": "No local processed article text was matched by the deterministic script.",
             }
         )
@@ -445,7 +599,6 @@ def audit_article(
                 "provides_code_or_scripts": "not_applicable",
                 "reports_extension_or_plugin_dependencies": "not_applicable",
                 "reports_extension_installation_source": "not_applicable",
-                "linked_workflow_artifacts_retrievable": "not_applicable_no_linked_workflow_artifact",
                 "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty.",
             }
         )
@@ -521,26 +674,8 @@ def audit_article(
             DATA_AVAILABILITY_RE,
             note="Deterministic text pattern found input-data availability evidence.",
         )
-        data_urls = resources["data_urls"]
-        flags["reports_input_data_availability"] = true_or_undefined(data_support or data_urls)
-        flags["provides_input_data_direct_url"] = true_or_undefined(data_urls)
-        if data_urls:
-            add_support(
-                support,
-                "provides_input_data_direct_url",
-                first_match_support(
-                    lines,
-                    re.compile(re.escape(data_urls[0]), re.IGNORECASE),
-                    note=f"Deterministic URL classification marked this as an input-data URL: {data_urls[0]}",
-                    resource_url=data_urls[0],
-                )
-                or {
-                    "extracted_text_lines": "linked_resources",
-                    "article_section": "Resource extraction",
-                    "quote": "",
-                    "note": f"Deterministic URL classification marked this as an input-data URL: {data_urls[0]}",
-                },
-            )
+        flags["reports_input_data_availability"] = true_or_undefined(data_support)
+        flags["provides_input_data_direct_url"] = UNDEFINED
         add_support(support, "reports_input_data_availability", data_support)
         desc["provides_input_data"] = "yes" if flags["reports_input_data_availability"] is True else UNDEFINED
 
@@ -549,7 +684,7 @@ def audit_article(
             CODE_RE,
             note="Deterministic text pattern found code, script, software, or repository evidence.",
         )
-        flags["provides_code_or_scripts"] = true_or_undefined(code_support or resources["code_urls"])
+        flags["provides_code_or_scripts"] = true_or_undefined(code_support)
         add_support(support, "provides_code_or_scripts", code_support)
         desc["provides_code_or_scripts"] = "yes" if flags["provides_code_or_scripts"] is True else UNDEFINED
 
@@ -571,56 +706,29 @@ def audit_article(
         add_support(support, "reports_extension_installation_source", install_support)
         desc["reports_extension_installation_source"] = "yes" if install_support else UNDEFINED
 
-        if workflow_record:
-            workflow_files = workflow_record.get("download_result", {}).get("workflow_files_found", [])
-            retrievable = bool(workflow_files)
-            flags["linked_workflow_artifacts_retrievable"] = retrievable
-            desc["linked_workflow_artifacts_retrievable"] = (
-                "retrieved_in_project_workflow_registry" if retrievable else "not_retrieved_in_project_workflow_registry"
-            )
-            if retrievable:
-                add_support(
-                    support,
-                    "linked_workflow_artifacts_retrievable",
-                    {
-                        "extracted_text_lines": "workflow_inventory",
-                        "article_section": "Workflow inventory",
-                        "quote": "",
-                        "note": "Workflow-reference inventory records obtained KNIME workflow files or workflow directories.",
-                    },
-                )
-        else:
-            desc["linked_workflow_artifacts_retrievable"] = UNDEFINED
-
         desc["evidence_notes"] = (
             "Deterministic candidate generated from OpenAlex metadata, processed article text, "
-            "URL extraction, and workflow-reference inventory. Undefined fields require manual or LLM review."
+            "URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
         )
+
+    processed_text_file = text_path.as_posix() if text_path else None
+    meta = {
+        "article_identifier": article["article_identifier"],
+        "pdf_file": pdf_file,
+        "tei_file": tei_file or UNDEFINED,
+        "processed_text_file": processed_text_file,
+        "openalex_seed_fields": article.get("openalex_seed_fields", {}),
+    }
 
     return {
         "rank": article["rank"],
-        "title": article["title"],
-        "doi": article["doi_or_url"],
-        "pdf_file": pdf_file,
-        "workflow_artifact": {
-            "status": desc["workflow_artifact_status"],
-            "summary": desc["workflow_artifact_status"],
-        },
-        "knime_version_reported": [] if desc["knime_version_values"] in ("", UNDEFINED) else desc["knime_version_values"].split("; "),
-        "nodes_or_components_reported": [],
+        "meta": meta,
         "linked_resources": resources,
-        "reproducibility_relevance": desc["evidence_notes"],
-        "evidence": [],
-        "article_identifier": article["article_identifier"],
-        "publication_year": article["publication_year"],
-        "venue": article["venue"],
-        "doi_or_url": article["doi_or_url"],
         "article_audit_fields": {
             "description_audit_fields": desc,
             "flag_audit_fields": flags,
             "flag_audit_support": support,
         },
-        "processed_text_file": text_path.as_posix() if text_path else None,
     }
 
 
@@ -648,15 +756,15 @@ def summary_counts(articles: list[dict[str, Any]]) -> dict[str, Any]:
 def schema_from_questions(questions: dict[str, Any]) -> dict[str, Any]:
     return {
         "description_audit_fields": {
-            "description": "Same field group as the curated assessment. Deterministic candidates use 'undefined' when a field cannot be derived from seed metadata, article text, or workflow-reference inventory.",
-            "fields": list(questions.get("description_questions", {}).keys()) or DESCRIPTION_FIELDS,
+            "description": "Deterministic non-bibliographic assessment fields. Bibliographic metadata and OpenAlex role fields are stored once under each article's meta object.",
+            "fields": DESCRIPTION_FIELDS,
         },
         "flag_audit_fields": {
-            "description": "Same flag names as the curated assessment. This candidate file may use the string 'undefined' where deterministic rules cannot decide true or false.",
-            "fields": list(questions.get("flag_questions", {}).keys()) or FLAG_NAMES,
+            "description": "Deterministic article-level flags. Later workflow retrieval, opening, and execution fields are excluded from this candidate file.",
+            "fields": FLAG_NAMES,
         },
         "flag_audit_support": {
-            "description": "Map from true deterministic flags to direct quote or inventory support objects.",
+            "description": "Map from true deterministic flags to direct quote or article-level workflow-reference support objects.",
         },
     }
 
@@ -686,20 +794,20 @@ def main() -> int:
             "data/processed/audit/article_assessments.json."
         ),
         "method": {
-            "input_files": "OpenAlex seed CSV, processed article text, audit questions, and workflow-reference inventory.",
-            "text_extraction": "Uses existing processed one-column article text under data/processed/articles.",
+            "input_files": "OpenAlex seed CSV, processed GROBID article HTML, audit questions, and workflow-reference inventory.",
+            "text_extraction": "Uses existing processed GROBID article HTML under data/processed/articles.",
             "assessment_focus": [
                 "bibliographic metadata from OpenAlex",
                 "direct regex-supported text evidence",
-                "URLs classified by nearby text context",
-                "workflow artifact retrieval status from the workflow-reference inventory",
+                "URLs normalized and validated from article text",
+                "article-level downloadable or linked workflow evidence from text and the workflow-reference inventory",
             ],
         },
         "limitations": [
             "No LLM is called.",
             "The curated assessment JSON is not read.",
             "Undefined means the deterministic rules cannot decide from the available inputs.",
-            "False is used only for local full-text absence, non-use classification, or workflow retrievability where the workflow inventory records no obtained workflow files.",
+            "False is used only for local full-text absence or non-use classification.",
             "Regex matches can over-detect generic software, repository, or extension mentions and should be reviewed before replacing curated audit values.",
         ],
         "articles": articles,
@@ -707,8 +815,10 @@ def main() -> int:
         "article_audit_summary_counts": summary_counts(articles),
         "article_text_source": {
             "directory": args.text_dir.as_posix(),
-            "articles_with_extracted_text": sum(1 for article in articles if article.get("processed_text_file")),
-            "line_reference_semantics": "extracted_text_lines refer to processed one-column text files under data/processed/articles.",
+            "articles_with_extracted_text": sum(
+                1 for article in articles if article.get("meta", {}).get("processed_text_file")
+            ),
+            "line_reference_semantics": "extracted_text_lines refer to processed GROBID HTML files under data/processed/articles.",
         },
     }
 

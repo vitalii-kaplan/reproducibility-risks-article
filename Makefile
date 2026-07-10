@@ -30,12 +30,12 @@ OPENALEX_RAW_DIR ?= data/original/openalex
 OPENALEX_WORKS ?= data/original/openalex/works.jsonl
 OPENALEX_PROCESSED_DIR ?= data/processed/openalex
 
-# Article PDF/text processing parameters.
+# Article PDF processing parameters.
 ARTICLE_PDF_DIR ?= data/original/articles
-ARTICLE_TEXT_RAW_DIR ?= data/processed/articles/raw
 ARTICLE_TEXT_DIR ?= data/processed/articles
+ARTICLE_GROBID_TEI_DIR ?= data/processed/articles/grobid_tei
+GROBID_URL ?= http://localhost:8070
 AUDIT_LOG_DIR ?= data/processed/audit/logs
-PDFTOTEXT ?= pdftotext
 START ?= 61
 END ?= 80
 DOWNLOAD_TIMEOUT ?= 45
@@ -53,7 +53,10 @@ LLM_TEMPERATURE ?= 0
 LLM_ENV_FILE ?= .env
 LLM_PROMPT ?= data/processed/audit/llm_support_validation_prompt.json
 LLM_ARTICLE_ASSESSMENT_PROMPT ?= data/processed/audit/llm_article_assessment_prompt.json
+LLM_ARTICLE_ASSESSMENT_INPUT ?= $(LLM_URL_ASSESSMENT_OUTPUT)
 LLM_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_assessments.json
+LLM_URL_ASSESSMENT_PROMPT ?= data/processed/audit/article_llm_url_prompts.json
+LLM_URL_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_url_assessments.json
 DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_deterministic_assessments.json
 DETERMINISTIC_LIMIT ?= 0
 LLM_DECISION_LOG ?= data/processed/audit/logs/llm_support_validation_decisions.jsonl
@@ -87,9 +90,10 @@ help: ## Show target descriptions and important parameters.
 	@printf '  LLM_APPLY_REJECTIONS=%s           empty logs LLM decisions without applying rejections\n' "$(LLM_APPLY_REJECTIONS)"
 	@printf '  APPLY_FLAG_REMOVALS=%s            empty preserves audited positive flags\n' "$(APPLY_FLAG_REMOVALS)"
 	@printf '  LIMIT=%s RANK=%s                  optional LLM article-assessment subset\n' "$(LIMIT)" "$(RANK)"
+	@printf '  GROBID_URL=%s                     local GROBID service URL\n' "$(GROBID_URL)"
 
 .PHONY: all
-all: openalex-bibliometrics article-texts audit-tables knime-snapshot-summary article ## Rebuild local derived outputs that do not require network access.
+all: openalex-bibliometrics article-grobid-html audit-tables knime-snapshot-summary article ## Rebuild local derived outputs that do not require network access.
 
 .PHONY: article
 article: ## Build article/article.pdf with latexmk.
@@ -128,40 +132,35 @@ download-rank-range: ## Try to download article PDFs for ranks START-END. Networ
 	  --manifest-dir "$(AUDIT_LOG_DIR)" \
 	  --timeout "$(DOWNLOAD_TIMEOUT)"
 
-.PHONY: extract-texts
-extract-texts: ## Extract raw article text for PDFs missing text output.
-	$(PYTHON) scripts/extract_article_texts.py \
+.PHONY: article-grobid-html
+article-grobid-html: ## Extract GROBID TEI and render semantic article HTML. Requires local GROBID service.
+	$(PYTHON) scripts/extract_article_grobid_html.py \
 	  --input-dir "$(ARTICLE_PDF_DIR)" \
-	  --output-dir "$(ARTICLE_TEXT_RAW_DIR)" \
-	  --manifest "$(AUDIT_LOG_DIR)/article_text_extraction_manifest.csv" \
-	  --pdftotext "$(PDFTOTEXT)"
+	  --output-dir "$(ARTICLE_TEXT_DIR)" \
+	  --tei-dir "$(ARTICLE_GROBID_TEI_DIR)" \
+	  --manifest "$(AUDIT_LOG_DIR)/article_grobid_html_manifest.csv" \
+	  --grobid-url "$(GROBID_URL)"
 
-.PHONY: extract-texts-all
-extract-texts-all: ## Re-extract raw article text for all local PDFs.
-	$(PYTHON) scripts/extract_article_texts.py \
+.PHONY: article-grobid-html-all
+article-grobid-html-all: ## Regenerate all GROBID TEI and semantic article HTML. Requires local GROBID service.
+	$(PYTHON) scripts/extract_article_grobid_html.py \
 	  --input-dir "$(ARTICLE_PDF_DIR)" \
-	  --output-dir "$(ARTICLE_TEXT_RAW_DIR)" \
-	  --manifest "$(AUDIT_LOG_DIR)/article_text_extraction_manifest.csv" \
-	  --pdftotext "$(PDFTOTEXT)" \
+	  --output-dir "$(ARTICLE_TEXT_DIR)" \
+	  --tei-dir "$(ARTICLE_GROBID_TEI_DIR)" \
+	  --manifest "$(AUDIT_LOG_DIR)/article_grobid_html_manifest.csv" \
+	  --grobid-url "$(GROBID_URL)" \
 	  --all
 
-.PHONY: normalize-texts
-normalize-texts: ## Normalize raw article text into one-column reading order where possible.
-	$(PYTHON) scripts/normalize_article_text_columns.py \
-	  --input-dir "$(ARTICLE_TEXT_RAW_DIR)" \
+.PHONY: article-grobid-html-from-tei
+article-grobid-html-from-tei: ## Regenerate semantic article HTML from existing GROBID TEI files.
+	$(PYTHON) scripts/extract_article_grobid_html.py \
+	  --input-dir "$(ARTICLE_PDF_DIR)" \
 	  --output-dir "$(ARTICLE_TEXT_DIR)" \
-	  --manifest "$(AUDIT_LOG_DIR)/article_text_column_normalization_manifest.csv"
-
-.PHONY: normalize-texts-all
-normalize-texts-all: ## Re-normalize all raw article text files.
-	$(PYTHON) scripts/normalize_article_text_columns.py \
-	  --input-dir "$(ARTICLE_TEXT_RAW_DIR)" \
-	  --output-dir "$(ARTICLE_TEXT_DIR)" \
-	  --manifest "$(AUDIT_LOG_DIR)/article_text_column_normalization_manifest.csv" \
-	  --all
-
-.PHONY: article-texts
-article-texts: extract-texts normalize-texts ## Extract and normalize article text using incremental defaults.
+	  --tei-dir "$(ARTICLE_GROBID_TEI_DIR)" \
+	  --manifest "$(AUDIT_LOG_DIR)/article_grobid_html_manifest.csv" \
+	  --grobid-url "$(GROBID_URL)" \
+	  --all \
+	  --reuse-existing-tei
 
 .PHONY: refresh-audit-support
 refresh-audit-support: ## Refresh quote/provenance support in the structured article audit.
@@ -181,7 +180,7 @@ refresh-audit-support: ## Refresh quote/provenance support in the structured art
 
 .PHONY: deterministic-article-assessments
 deterministic-article-assessments: ## Generate deterministic article_audit_fields candidates without network or LLM.
-	$(PYTHON) scripts/generate_article_audit_assessments_deterministic.py \
+	$(PYTHON) scripts/audit_assessments_deterministic.py \
 	  --seed-csv "$(OPENALEX_PROCESSED_DIR)/openalex_knime_most_cited.csv" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
@@ -190,14 +189,27 @@ deterministic-article-assessments: ## Generate deterministic article_audit_field
 	  --limit "$(DETERMINISTIC_LIMIT)" \
 	  $(if $(RANK),--rank "$(RANK)",)
 
+.PHONY: llm-url-assessments
+llm-url-assessments: ## Classify linked_resources URL types with LLM calls. Network access required.
+	$(PYTHON) scripts/audit_assessments_llm_url.py \
+	  --model "$(LLM_MODEL)" \
+	  --temperature "$(LLM_TEMPERATURE)" \
+	  --env-file "$(LLM_ENV_FILE)" \
+	  --prompt "$(LLM_URL_ASSESSMENT_PROMPT)" \
+	  --input-assessment "$(DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT)" \
+	  --text-dir "$(ARTICLE_TEXT_DIR)" \
+	  --output "$(LLM_URL_ASSESSMENT_OUTPUT)" \
+	  --limit "$(LIMIT)" \
+	  $(if $(RANK),--rank "$(RANK)",)
+
 .PHONY: llm-article-assessments
 llm-article-assessments: ## Fill undefined deterministic article_audit_fields with LLM calls. Network access required.
-	$(PYTHON) scripts/generate_article_audit_assessments_with_llm.py \
+	$(PYTHON) scripts/audit_assessments_llm.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
 	  --prompt "$(LLM_ARTICLE_ASSESSMENT_PROMPT)" \
-	  --input-assessment "$(DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT)" \
+	  --input-assessment "$(LLM_ARTICLE_ASSESSMENT_INPUT)" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
 	  --output "$(LLM_ARTICLE_ASSESSMENT_OUTPUT)" \

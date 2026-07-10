@@ -189,18 +189,24 @@ def title_match_score(title_tokens: set[str], path: Path) -> int:
 
 
 def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | None:
-    existing = article.get("processed_text_file") or article.get("source_text_file")
+    meta = article.get("meta", {})
+    existing = (
+        meta.get("processed_text_file")
+        or article.get("processed_text_file")
+        or article.get("source_text_file")
+    )
     if existing:
         path = Path(str(existing))
         if path.exists():
             return path
 
-    files = [path for path in text_dir.glob("*.txt") if path.is_file()]
+    files = [path for pattern in ("*.html", "*.txt") for path in text_dir.glob(pattern) if path.is_file()]
     if not files:
         return None
 
-    doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or ""))
-    title = str(article.get("title", ""))
+    seed = meta.get("openalex_seed_fields", {})
+    doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or seed.get("doi") or ""))
+    title = str(article.get("title") or seed.get("title") or "")
     title_tokens = token_set(title)
     doi_tokens = doi_match_tokens(doi)
     rank = str(article.get("rank", ""))
@@ -319,6 +325,22 @@ def has_undefined_targets(targets: dict[str, list[str]]) -> bool:
     return any(targets.values())
 
 
+def normalize_implied_absences(article: dict[str, Any]) -> dict[str, Any]:
+    updated = copy.deepcopy(article)
+    audit = updated.get("article_audit_fields", {})
+    desc = audit.get("description_audit_fields", {})
+    flags = audit.get("flag_audit_fields", {})
+    if (
+        desc.get("knime_version_values") == "undefined"
+        and (
+            flags.get("reports_knime_version") is False
+            or desc.get("knime_article_relation") == "about_knime"
+        )
+    ):
+        desc["knime_version_values"] = ""
+    return updated
+
+
 def merge_unique(existing: list[Any], incoming: list[Any]) -> list[Any]:
     merged = list(existing)
     seen = {json.dumps(item, sort_keys=True, ensure_ascii=False) for item in merged}
@@ -359,14 +381,6 @@ def merge_llm_fill(
             if value is True and candidate_support.get(field):
                 support[field] = merge_unique(support.get(field, []), candidate_support[field])
 
-    if candidate.get("linked_resources"):
-        resources = updated.setdefault("linked_resources", {})
-        for key, value in candidate["linked_resources"].items():
-            if isinstance(value, list):
-                resources[key] = merge_unique(resources.get(key, []), value)
-            elif key not in resources or not resources.get(key):
-                resources[key] = value
-
     updated["llm_fill"] = {
         "confidence": candidate.get("confidence", "low"),
         "needs_human_review": bool(candidate.get("needs_human_review", True)),
@@ -400,6 +414,8 @@ class OpenAIArticleAssessor:
         targets: dict[str, list[str]],
     ) -> dict[str, Any]:
         audit = article.get("article_audit_fields", {})
+        meta = article.get("meta", {})
+        seed = meta.get("openalex_seed_fields", {})
         payload = {
             "model": self.model,
             "temperature": self.temperature,
@@ -425,12 +441,13 @@ class OpenAIArticleAssessor:
                             "required_json_schema": self.prompt["required_json_schema"],
                             "article_metadata": {
                                 "rank": article.get("rank"),
-                                "article_identifier": article.get("article_identifier", ""),
-                                "title": article.get("title", ""),
-                                "year": article.get("publication_year", ""),
-                                "venue": article.get("venue", ""),
+                                "article_identifier": meta.get("article_identifier", ""),
+                                "title": seed.get("title", ""),
+                                "year": seed.get("publication_year", ""),
+                                "venue": seed.get("source", ""),
                                 "doi_or_url": article.get("doi_or_url")
                                 or article.get("doi")
+                                or seed.get("doi")
                                 or "",
                             },
                             "deterministic_candidate": {
@@ -538,6 +555,7 @@ def main() -> int:
     total_fields_filled = 0
     result_articles: list[dict[str, Any]] = []
     for article in articles:
+        article = normalize_implied_absences(article)
         targets = undefined_targets(article)
         if not has_undefined_targets(targets):
             result_articles.append(article)

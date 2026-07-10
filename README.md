@@ -21,6 +21,8 @@ workflow platform with a long public development history.
   workflow artifacts that could be obtained.
 - KNIME source-repository mining outputs about node metadata and deprecation.
 - Scripts used to reproduce the main tables and data summaries.
+- GROBID-derived semantic HTML/TEI article extractions used for structured
+  article-text inspection.
 
 The paper is the main narrative. The data and scripts are included so the
 claims can be inspected and updated.
@@ -58,6 +60,7 @@ article/tables/          CSV tables used by the paper
 data/original/           Source evidence included in the repository
 data/original/workflows/ Retrieved workflow artifacts and opening screenshots
 data/processed/audit/    Structured article-audit data
+data/processed/articles/ GROBID-derived semantic article HTML and TEI XML
 data/processed/openalex/ Processed OpenAlex bibliometric outputs
 data/processed/knime_snapshots/
                          Processed KNIME repository-mining outputs
@@ -73,6 +76,10 @@ AGENTS.md                Detailed maintenance notes for future project updates
 - `article/article.tex`: main paper source.
 - `data/processed/audit/article_assessments.json`: structured
   article audit.
+- `data/processed/articles/*.html`: semantic article HTML rendered from GROBID
+  TEI XML.
+- `data/processed/articles/grobid_tei/*.tei.xml`: GROBID TEI XML extracted
+  from local article PDFs.
 - `data/original/workflows/knime_downloadable_workflow_references.json`:
   workflow-link records, retrieval outcomes, and manual KNIME opening results.
 - `article/tables/top_cited_article_audit_summary.csv`: article-audit summary
@@ -103,8 +110,16 @@ latexmk -pdf -interaction=nonstopmode article.tex
 ```
 
 The main analysis scripts are in `scripts/`. Most use only the Python standard
-library. Some collection steps require network access, and paper text
-extraction requires external command-line tools such as Poppler's `pdftotext`.
+library. Some collection steps require network access. Article extraction uses
+GROBID for semantic TEI/HTML output.
+
+Run GROBID locally before regenerating semantic article HTML:
+
+```sh
+docker run --rm --init --ulimit core=0 -p 8070:8070 grobid/grobid:0.9.0-crf
+curl http://localhost:8070/api/isalive
+make article-grobid-html-all
+```
 
 The most commonly regenerated outputs are:
 

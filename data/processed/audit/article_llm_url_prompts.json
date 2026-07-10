@@ -1,0 +1,64 @@
+{
+  "name": "article_linked_resource_url_typing",
+  "version": "2026-07-09.7",
+  "mode": "url_type_from_local_html_block_only",
+  "system_instruction": "You classify URLs found in a scientific article. Return only JSON. Use only the supplied local HTML text block for each URL. Do not open, fetch, browse, infer from external knowledge, rely on the live content of any URL, or use the rest of the article to override the supplied block. If the supplied block does not explain the purpose of a URL, use type=unclear.",
+  "user_task": "For each supplied URL, assign one conservative type based only on the local HTML text block in which that URL appears.",
+  "limitations": [
+    "No URL calls are allowed.",
+    "Classify each URL independently.",
+    "Use only the local HTML text block supplied for that URL.",
+    "Do not classify a URL by guessing from the domain alone unless the paragraph states its role.",
+    "A DOI URL for the article itself should usually be other_publication unless the paragraph explicitly says it is data, code, supplement, or workflow.",
+    "A GitHub, Zenodo, Figshare, publisher, or project URL is not automatically code, third_party_software, data, or workflow. Use the paragraph.",
+    "Use code only when the paragraph says the URL points to code, scripts, notebooks, models, project repository, or implementation produced for or released with the audited article/study.",
+    "Use third_party_software when the paragraph says the URL points to an external tool, package, platform, library, application, software download, update site, or software project that the audited article uses, cites, compares, or depends on.",
+    "If a URL appears only in references or bibliography and does not support the audited article's resources, still classify the kind of object named by that reference entry.",
+    "If a reference entry names a software tool, code library, package, platform, application, or software project page, use third_party_software unless the paragraph clearly says it is code produced for the audited article.",
+    "If a reference entry names documentation, a tutorial, a manual, examples, or an informational project page rather than software itself, use documentation.",
+    "Do not use a generic citation/reference bucket. Distinguish whether the URL points to a publication, article code, third-party software/tool, workflow artifact, dataset, documentation/project page, supplement, or another object.",
+    "If the URL itself appears incomplete, truncated, or syntactically broken in the supplied input, use malformed_url.",
+    "The extracted_text_lines value may be an html_block_N label rather than a PDF line number.",
+    "The supplied paragraph/context is sentence-bounded: it should not begin or end in the middle of a sentence.",
+    "If the supplied block contains several URLs, classify the requested URL, not nearby URLs.",
+    "If evidence in the supplied block is ambiguous, use unclear."
+  ],
+  "allowed_types": [
+    "workflow",
+    "dataset",
+    "code",
+    "third_party_software",
+    "supplement",
+    "documentation",
+    "other_publication",
+    "other",
+    "malformed_url",
+    "unclear"
+  ],
+  "type_definitions": {
+    "workflow": "The article text says the URL points to a KNIME workflow, workflow archive, KNIME Hub workflow, myExperiment workflow, workflow repository item, or equivalent executable workflow artifact.",
+    "dataset": "The article text says the URL points to input data, datasets, training/test data, benchmark data, raw/processed data, or a data repository record.",
+    "code": "The article text says the URL points to code, scripts, notebooks, models, a repository, or implementation produced for, released with, or directly supporting the audited article/study.",
+    "third_party_software": "The article text says the URL points to an external tool, package, library, platform, application, software download page, update site, or software project that is used, cited, compared, or depended on by the audited article/study.",
+    "supplement": "The article text says the URL points to supplementary material, supporting information, additional files, or publisher supplements.",
+    "documentation": "The article text says the URL points to documentation, general project information, examples, tutorials, manuals, instructions, a non-software project page, or an informational website.",
+    "other_publication": "The URL identifies a publication, article DOI, publisher landing page, PubMed/PubMed Central record, book, report, preprint, bibliography entry, or another cited scholarly/publication object.",
+    "other": "The article text identifies the URL role, but none of the specific categories fit and it is not a publication.",
+    "malformed_url": "The URL is incomplete, truncated, malformed, or not exactly locatable in the generated article HTML text.",
+    "unclear": "The supplied article text does not provide enough evidence to assign a specific type."
+  },
+  "required_json_schema": {
+    "linked_resources": [
+      {
+        "url": "exact URL copied from the input URL list",
+        "type": "one allowed type",
+        "evidence": {
+        "extracted_text_lines": "html_block_N or line range copied from the supplied URL context, or empty string if unclear",
+        "quote": "short direct quote from the supplied URL context, or empty string if unclear",
+        "note": "short explanation for the type based only on the supplied URL context"
+        },
+        "confidence": "low, medium, or high"
+      }
+    ]
+  }
+}
