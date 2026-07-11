@@ -1,6 +1,6 @@
 {
   "created_at": "2026-07-04",
-  "source_assessment": "data/processed/audit/article_assessments.json",
+  "source_assessment": "data/processed/audit/old_article_assessments.json",
   "selection_rule": "Records where article_audit_fields.flag_audit_fields.provides_downloadable_knime_workflow_files is true.",
   "url_status_note": "References are normalized from article text and existing assessment notes. Newly added references were not downloaded or revalidated in this update. Rank 61-80 records were added from local processed article text and have not yet been downloaded or revalidated. Ranks 66 and 80 were added after the remaining rank 61-80 processed texts were assessed. Rank 81-100 records were added from local processed article text and have not yet been downloaded or revalidated.",
   "records": [
@@ -10,7 +10,7 @@
       "doi": "10.1002/minf.201100076",
       "knime_version": "2.3.4",
       "workflow_artifact_status": "published_or_linked_in_text",
-      "processed_text_file": "data/processed/articles/Molecular_Informatics_-_2011_-_Saubern_-_KNIME_Workflow_to_Assess_PAINS_Filters_in_SMARTS_Format_Comparison_of_RDKit_and.txt",
+      "processed_text_file": "data/processed/articles/10.1002_minf.201100076.html",
       "evidence_extracted_text_lines": "58-68; 58-69",
       "workflow_references": [
         {
@@ -52,7 +52,7 @@
       "doi": "10.1186/s13321-018-0315-6",
       "knime_version": "3.4",
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/s13321-018-0315-6.txt",
+      "processed_text_file": "data/processed/articles/10.1186_s13321-018-0315-6.html",
       "evidence_extracted_text_lines": "202-207",
       "workflow_references": [],
       "download_result": {
@@ -84,7 +84,7 @@
       "doi": "10.1371/journal.pone.0208626",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/journal_pone_0208626.txt",
+      "processed_text_file": "data/processed/articles/10.1371_journal.pone.0208626.html",
       "evidence_extracted_text_lines": "45-53",
       "workflow_references": [],
       "download_result": {
@@ -116,7 +116,7 @@
       "doi": "10.3389/fchem.2018.00093",
       "knime_version": null,
       "workflow_artifact_status": "supplementary_workflow_reported",
-      "processed_text_file": "data/processed/articles/fchem_2018_00093.txt",
+      "processed_text_file": "data/processed/articles/10.3389_fchem.2018.00093.html",
       "evidence_extracted_text_lines": "821-822",
       "workflow_references": [],
       "download_result": {
@@ -137,7 +137,7 @@
       "doi": "10.3390/encyclopedia3020035",
       "knime_version": "4.7",
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/encyclopedia3020035_um.txt",
+      "processed_text_file": "data/processed/articles/10.3390_encyclopedia3020035.html",
       "evidence_extracted_text_lines": "432-436",
       "workflow_references": [],
       "download_result": {
@@ -171,7 +171,7 @@
       "doi": "10.1186/s13321-018-0299-2",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/s13321-018-0299-2_osti.txt",
+      "processed_text_file": "data/processed/articles/10.1186_s13321-018-0299-2.html",
       "evidence_extracted_text_lines": "168-170",
       "workflow_references": [],
       "download_result": {
@@ -191,7 +191,7 @@
       "doi": "10.1016/j.jprot.2016.08.002",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/1-s2.0-S187439191630344X-main.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.jprot.2016.08.002.html",
       "evidence_extracted_text_lines": "1024-1030",
       "workflow_references": [],
       "download_result": {
@@ -211,7 +211,7 @@
       "doi": "10.1080/07391102.2018.1456975",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/Identifying_natural_compounds_as_multi-target-directed_ligands_against_Alzheimer_s_disease_an_in_silico_approach.txt",
+      "processed_text_file": "data/processed/articles/10.1080_07391102.2018.1456975.html",
       "evidence_extracted_text_lines": "80-83",
       "workflow_references": [],
       "download_result": {
@@ -229,7 +229,7 @@
       "doi": "10.1093/bioinformatics/btz204",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/bioinformatics_35_20_4020.txt",
+      "processed_text_file": "data/processed/articles/10.1093_bioinformatics_btz204.html",
       "evidence_extracted_text_lines": "524-528",
       "workflow_references": [
         {
@@ -253,7 +253,7 @@
       "doi": "10.1021/acs.chemrestox.5b00480",
       "knime_version": "3.2",
       "workflow_artifact_status": "downloadable_workflow_reported",
-      "processed_text_file": "data/processed/articles/41_10.1021_acs.chemrestox.txt",
+      "processed_text_file": "data/processed/articles/10.1021_acs.chemrestox.5b00480.html",
       "evidence_extracted_text_lines": "223-232",
       "workflow_references": [
         {
@@ -273,7 +273,7 @@
       "doi": "10.1186/s13321-024-00814-3",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/44_10.txt",
+      "processed_text_file": "data/processed/articles/10.1186_s13321-024-00814-3.html",
       "evidence_extracted_text_lines": "1263-1282",
       "workflow_references": [
         {
@@ -305,7 +305,7 @@
       "doi": "10.1016/j.jbusres.2021.08.036",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
-      "processed_text_file": "data/processed/articles/1-s2.0-S014829632100597X-main.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.jbusres.2021.08.036.html",
       "evidence_extracted_text_lines": "393-405",
       "workflow_references": [
         {
@@ -345,7 +345,7 @@
       "doi": "10.1016/j.chemosphere.2015.06.009",
       "knime_version": null,
       "workflow_artifact_status": "supplementary_workflow_reported",
-      "processed_text_file": "data/processed/articles/54_10.1016_j.chemosphere.2015.06.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.chemosphere.2015.06.009.html",
       "evidence_extracted_text_lines": "284-287",
       "workflow_references": [
         {
@@ -373,7 +373,7 @@
       "doi": "10.1016/j.ntt.2020.106918",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/58_10.1016_j.ntt.2020.106918.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.ntt.2020.106918.html",
       "evidence_extracted_text_lines": "645-653",
       "workflow_references": [
         {
@@ -409,7 +409,7 @@
       "doi": "10.3390/pharmaceutics14101998",
       "knime_version": "4.4.2",
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/59_10.3390_pharmaceutics14101998.txt",
+      "processed_text_file": "data/processed/articles/10.3390_pharmaceutics14101998.html",
       "evidence_extracted_text_lines": "831-838",
       "workflow_references": [
         {
@@ -445,7 +445,7 @@
       "doi": "10.1007/s11306-018-1349-5",
       "knime_version": null,
       "workflow_artifact_status": "software_release_reference",
-      "processed_text_file": "data/processed/articles/61_10.txt",
+      "processed_text_file": "data/processed/articles/10.1007_s11306-018-1349-5.html",
       "evidence_extracted_text_lines": "21-25; 301-304",
       "workflow_references": [
         {
@@ -481,7 +481,7 @@
       "doi": "10.1093/bioinformatics/btr478",
       "knime_version": null,
       "workflow_artifact_status": "published_or_linked_in_text",
-      "processed_text_file": "data/processed/articles/bioinformatics_27_20_2907.txt",
+      "processed_text_file": "data/processed/articles/10.1093_bioinformatics_btr478.html",
       "evidence_extracted_text_lines": "31-36; 94-98",
       "workflow_references": [
         {
@@ -521,7 +521,7 @@
       "doi": "10.3389/fcomp.2020.00008",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
-      "processed_text_file": "data/processed/articles/63_10.3389_fcomp.2020.txt",
+      "processed_text_file": "data/processed/articles/10.3389_fcomp.2020.00008.html",
       "evidence_extracted_text_lines": "544-570; 1149-1152; 1179-1184; 1208-1216; 1237-1240; 1428-1434",
       "workflow_references": [
         {
@@ -598,7 +598,7 @@
       "doi": "10.1186/s12859-020-3363-7",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/66_10.1186_s12859-020-3363-7_counter.txt",
+      "processed_text_file": "data/processed/articles/10.1186_s12859-020-3363-7.html",
       "evidence_extracted_text_lines": "24-30",
       "workflow_references": [
         {
@@ -627,7 +627,7 @@
       "doi": "10.1038/s41598-022-24421-0",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/69_10.txt",
+      "processed_text_file": "data/processed/articles/10.1038_s41598-022-24421-0.html",
       "evidence_extracted_text_lines": "25-27; 414-416; 844-846",
       "workflow_references": [
         {
@@ -679,7 +679,7 @@
       "doi": "10.1002/minf.201400188",
       "knime_version": null,
       "workflow_artifact_status": "supplementary_workflow_reported",
-      "processed_text_file": "data/processed/articles/70_10.1002_minf.txt",
+      "processed_text_file": "data/processed/articles/10.1002_minf.201400188.html",
       "evidence_extracted_text_lines": "389-395",
       "workflow_references": [
         {
@@ -702,7 +702,7 @@
       "doi": "10.1038/sdata.2018.241",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/80_10.1038_sdata.2018.txt",
+      "processed_text_file": "data/processed/articles/10.1038_sdata.2018.241.html",
       "evidence_extracted_text_lines": "573-574",
       "workflow_references": [
         {
@@ -740,7 +740,7 @@
       "doi": "10.1016/j.tox.2016.09.008",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/1-s2.0-S0300483X16302141-main.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.tox.2016.09.008.html",
       "evidence_extracted_text_lines": "429-437; 456-462",
       "workflow_references": [
         {
@@ -760,7 +760,7 @@
       "doi": "10.1186/s13321-016-0121-y",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/85_10.txt",
+      "processed_text_file": "data/processed/articles/10.1186_s13321-016-0121-y.html",
       "evidence_extracted_text_lines": "690-700",
       "workflow_references": [
         {
@@ -780,7 +780,7 @@
       "doi": "10.1021/acs.jcim.9b00662",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/teachopencadd-knime-a-teaching-platform-for-computer-aided-drug-design-using-knime-workflows.txt",
+      "processed_text_file": "data/processed/articles/10.1021_acs.jcim.9b00662.html",
       "evidence_extracted_text_lines": "36-51; 60",
       "workflow_references": [
         {
@@ -808,7 +808,7 @@
       "doi": "10.1016/j.tox.2016.05.026",
       "knime_version": null,
       "workflow_artifact_status": "linked_workflow_portal_reported",
-      "processed_text_file": "data/processed/articles/1-s2.0-S0300483X16300890-main.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.tox.2016.05.026.html",
       "evidence_extracted_text_lines": "684-691; 718-724",
       "workflow_references": [
         {
@@ -832,7 +832,7 @@
       "doi": "10.1093/bioinformatics/btr554",
       "knime_version": null,
       "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/bioinformatics_27_22_3200.txt",
+      "processed_text_file": "data/processed/articles/10.1093_bioinformatics_btr554.html",
       "evidence_extracted_text_lines": "35; 149-150",
       "workflow_references": [
         {
@@ -856,7 +856,7 @@
       "doi": "10.1016/j.tiv.2017.06.015",
       "knime_version": null,
       "workflow_artifact_status": "linked_workflow_portal_reported",
-      "processed_text_file": "data/processed/articles/1-s2.0-S0887233317301649-main.txt",
+      "processed_text_file": "data/processed/articles/10.1016_j.tiv.2017.06.015.html",
       "evidence_extracted_text_lines": "538-552; 684",
       "workflow_references": [
         {

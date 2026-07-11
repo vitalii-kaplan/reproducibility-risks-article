@@ -228,6 +228,8 @@ def article_section_for_block(blocks: list[dict[str, str]], index: int) -> str:
 
 def processed_text_path(article: dict[str, Any], text_dir: Path) -> Path | None:
     meta = article.get("meta", {})
+    if meta.get("article_text_match_status") and meta.get("article_text_match_status") != "matched":
+        return None
     candidates = [
         meta.get("processed_text_file"),
         article.get("processed_text_file"),
@@ -238,12 +240,6 @@ def processed_text_path(article: dict[str, Any], text_dir: Path) -> Path | None:
             path = Path(str(candidate))
             if path.exists():
                 return path
-    rank = str(article.get("rank", ""))
-    if rank:
-        for pattern in ("*.html", "*.txt"):
-            for path in sorted(text_dir.glob(pattern)):
-                if path.stem.startswith(f"{rank}_"):
-                    return path
     return None
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill undefined deterministic article-audit fields with bounded LLM calls."""
+"""Review and correct article-audit fields with bounded LLM calls."""
 
 from __future__ import annotations
 
@@ -19,9 +19,9 @@ DEFAULT_INPUT = Path("data/processed/audit/article_deterministic_assessments.jso
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")
-DEFAULT_PROMPT = Path("data/processed/audit/llm_article_assessment_prompt.json")
+DEFAULT_PROMPT = Path("data/processed/audit/article_llm_flag_assessment_prompt.json")
 DEFAULT_OUTPUT = Path(
-    "data/processed/audit/article_llm_assessments.json"
+    "data/processed/audit/article_llm_flag_assessments.json"
 )
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
@@ -72,6 +72,27 @@ FLAG_NAMES = [
     "linked_workflow_artifacts_retrievable",
 ]
 
+KNIME_USE_EVIDENCE_PATTERNS = [
+    r"\bimplemented in KNIME\b",
+    r"\bmodel(?:ing)?\s+using KNIME\b",
+    r"\bstandardi[sz]ed\b.{0,80}\busing KNIME\b",
+    r"\bdata mining\b.{0,80}\busing KNIME and Orange platforms\b",
+    r"\bKNIME\b.{0,120}\bworkflow was used\b",
+    r"\bKNIME workflow was used\b",
+    r"\bKNIME platform is adopted\b",
+    r"\badopted to set-up the model workflow\b",
+    r"\bKNIME based model\b",
+    r"\bdeployed on KNIME\b",
+    r"\bdata mining model was deployed on KNIME\b",
+    r"\bKNIME and Orange platforms\b",
+]
+
+KNIME_FIGURE_EVIDENCE_PATTERNS = [
+    r"\bFigure\s+\d+[^.]{0,160}\bKNIME workflow\b",
+    r"\bKNIME workflow[^.]{0,160}\bFigure\s+\d+",
+    r"\bKNIME workflows?\s*\(Supplementary Figs?\.",
+]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -79,7 +100,7 @@ def parse_args() -> argparse.Namespace:
         "--input-assessment",
         type=Path,
         default=DEFAULT_INPUT,
-        help="Deterministic assessment JSON whose undefined fields should be filled.",
+        help="Assessment JSON whose article_audit_fields should be reviewed.",
     )
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--text-dir", type=Path, default=DEFAULT_TEXT_DIR)
@@ -161,35 +182,10 @@ def normalize_doi(value: str) -> str:
     return value.lower()
 
 
-def token_set(value: str) -> set[str]:
-    return {token for token in re.findall(r"[a-z0-9]+", value.lower()) if len(token) >= 4}
-
-
-def doi_match_tokens(doi: str) -> set[str]:
-    tokens = token_set(doi)
-    compact_doi = re.sub(r"[^a-z0-9]+", "", doi.lower())
-    if compact_doi:
-        tokens.add(compact_doi)
-        if len(compact_doi) >= 4:
-            tokens.add(compact_doi[-4:])
-        if len(compact_doi) >= 5:
-            tokens.add(compact_doi[-5:])
-    return tokens
-
-
-def title_match_score(title_tokens: set[str], path: Path) -> int:
-    stem_tokens = token_set(path.stem)
-    score = len(title_tokens & stem_tokens) * 3
-    try:
-        head = " ".join(path.read_text(encoding="utf-8", errors="replace").splitlines()[:80])
-    except OSError:
-        return score
-    head_tokens = token_set(head)
-    return score + len(title_tokens & head_tokens) * 2
-
-
 def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | None:
     meta = article.get("meta", {})
+    if meta.get("article_text_match_status") and meta.get("article_text_match_status") != "matched":
+        return None
     existing = (
         meta.get("processed_text_file")
         or article.get("processed_text_file")
@@ -200,40 +196,7 @@ def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | Non
         if path.exists():
             return path
 
-    files = [path for pattern in ("*.html", "*.txt") for path in text_dir.glob(pattern) if path.is_file()]
-    if not files:
-        return None
-
-    seed = meta.get("openalex_seed_fields", {})
-    doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or seed.get("doi") or ""))
-    title = str(article.get("title") or seed.get("title") or "")
-    title_tokens = token_set(title)
-    doi_tokens = doi_match_tokens(doi)
-    rank = str(article.get("rank", ""))
-
-    best_path: Path | None = None
-    best_score = 0
-    for path in files:
-        stem = path.stem.lower()
-        stem_tokens = token_set(stem)
-        score = 0
-        if rank and stem.startswith(f"{rank}_"):
-            score += 8
-        if doi:
-            doi_slug = slugify(doi).lower()
-            if doi_slug and doi_slug in stem:
-                score += 80
-            for token in doi_tokens:
-                if token in stem:
-                    score += 15
-        score += title_match_score(title_tokens, path)
-        if title and slugify(title).lower()[:35] in stem:
-            score += 25
-        if score > best_score:
-            best_score = score
-            best_path = path
-
-    return best_path if best_score >= 12 else None
+    return None
 
 
 def compact(value: str) -> str:
@@ -278,51 +241,101 @@ def build_excerpts(
 ) -> list[dict[str, str]]:
     ranges: list[tuple[int, int]] = []
     if lines:
-        ranges.append((0, min(len(lines), 80)))
+        ranges.append((0, min(len(lines), 30)))
 
     patterns = [re.compile(pattern, re.IGNORECASE) for pattern in EXCERPT_PATTERNS]
     for index, line in enumerate(lines):
         haystack = compact(" ".join(lines[index : index + 2]))
         if any(pattern.search(haystack) for pattern in patterns):
-            ranges.append((max(0, index - 4), min(len(lines), index + 7)))
+            ranges.append((max(0, index - 3), min(len(lines), index + 4)))
 
     excerpts: list[dict[str, str]] = []
     total_chars = 0
-    for start, end in merge_ranges(ranges):
+    used_ranges: list[tuple[int, int]] = []
+    for start, end in ranges:
+        if any(start >= used_start and end <= used_end for used_start, used_end in used_ranges):
+            continue
         text = "\n".join(line.rstrip() for line in lines[start:end] if line.strip())
         if not text.strip():
             continue
+        if len(text) > 2200:
+            match = next((pattern.search(text) for pattern in patterns if pattern.search(text)), None)
+            if match:
+                slice_start = max(0, match.start() - 900)
+                slice_end = min(len(text), slice_start + 2200)
+                text = text[slice_start:slice_end]
+            else:
+                text = text[:2200]
         item = {
             "extracted_text_lines": line_label(start, end),
             "article_section": article_section_for_line(lines, start),
-            "text": text[:2200],
+            "text": text,
         }
         item_chars = len(item["text"])
         if excerpts and total_chars + item_chars > max_chars:
             break
         excerpts.append(item)
+        used_ranges.append((start, end))
         total_chars += item_chars
         if len(excerpts) >= max_excerpts:
             break
     return excerpts
 
 
-def undefined_targets(article: dict[str, Any]) -> dict[str, list[str]]:
+def assessment_targets(article: dict[str, Any]) -> dict[str, list[str]]:
     audit = article.get("article_audit_fields", {})
     desc = audit.get("description_audit_fields", {})
     flags = audit.get("flag_audit_fields", {})
     return {
-        "description_audit_fields": [
-            key for key, value in desc.items() if value == "undefined"
-        ],
-        "flag_audit_fields": [
-            key for key, value in flags.items() if value == "undefined"
-        ],
+        "description_audit_fields": list(desc.keys()),
+        "flag_audit_fields": list(flags.keys()) or FLAG_NAMES,
     }
 
 
-def has_undefined_targets(targets: dict[str, list[str]]) -> bool:
+def has_assessment_targets(targets: dict[str, list[str]]) -> bool:
     return any(targets.values())
+
+
+def excerpts_text(excerpts: list[dict[str, str]]) -> str:
+    return "\n".join(str(excerpt.get("text", "")) for excerpt in excerpts)
+
+
+def has_pattern_evidence(text: str, patterns: list[str]) -> bool:
+    return any(re.search(pattern, text, flags=re.IGNORECASE | re.DOTALL) for pattern in patterns)
+
+
+def apply_direct_evidence_guards(
+    article: dict[str, Any],
+    excerpts: list[dict[str, str]],
+) -> tuple[dict[str, Any], int]:
+    updated = copy.deepcopy(article)
+    changed = 0
+    evidence_text = excerpts_text(excerpts)
+    audit = updated.setdefault("article_audit_fields", {})
+    desc = audit.setdefault("description_audit_fields", {})
+    flags = audit.setdefault("flag_audit_fields", {})
+
+    if (
+        desc.get("knime_article_relation") != "about_knime"
+        and has_pattern_evidence(evidence_text, KNIME_USE_EVIDENCE_PATTERNS)
+    ):
+        if desc.get("knime_article_relation") != "uses_knime":
+            desc["knime_article_relation"] = "uses_knime"
+            changed += 1
+        for flag in FLAG_NAMES:
+            if flag not in flags:
+                flags[flag] = False
+                changed += 1
+        if flags.get("uses_knime") is not True:
+            flags["uses_knime"] = True
+            changed += 1
+
+    if flags and has_pattern_evidence(evidence_text, KNIME_FIGURE_EVIDENCE_PATTERNS):
+        if flags.get("provides_workflow_screenshots_or_figures") is not True:
+            flags["provides_workflow_screenshots_or_figures"] = True
+            changed += 1
+
+    return updated, changed
 
 
 def normalize_implied_absences(article: dict[str, Any]) -> dict[str, Any]:
@@ -341,53 +354,45 @@ def normalize_implied_absences(article: dict[str, Any]) -> dict[str, Any]:
     return updated
 
 
-def merge_unique(existing: list[Any], incoming: list[Any]) -> list[Any]:
-    merged = list(existing)
-    seen = {json.dumps(item, sort_keys=True, ensure_ascii=False) for item in merged}
-    for item in incoming:
-        marker = json.dumps(item, sort_keys=True, ensure_ascii=False)
-        if marker not in seen:
-            seen.add(marker)
-            merged.append(item)
-    return merged
-
-
-def merge_llm_fill(
+def merge_llm_review(
     article: dict[str, Any],
     candidate: dict[str, Any],
     targets: dict[str, list[str]],
 ) -> tuple[dict[str, Any], int]:
     updated = copy.deepcopy(article)
-    filled = 0
+    changed = 0
     audit = updated.setdefault("article_audit_fields", {})
     desc = audit.setdefault("description_audit_fields", {})
     flags = audit.setdefault("flag_audit_fields", {})
-    support = audit.setdefault("flag_audit_support", {})
 
     candidate_desc = candidate.get("description_audit_fields", {})
     for field in targets["description_audit_fields"]:
         value = candidate_desc.get(field)
-        if value not in (None, "", "undefined"):
+        if value is not None and value != desc.get(field):
             desc[field] = value
-            filled += 1
+            changed += 1
 
     candidate_flags = candidate.get("flag_audit_fields", {})
-    candidate_support = candidate.get("flag_audit_support", {})
     for field in targets["flag_audit_fields"]:
         value = candidate_flags.get(field)
-        if isinstance(value, bool):
+        if isinstance(value, bool) and value != flags.get(field):
             flags[field] = value
-            filled += 1
-            if value is True and candidate_support.get(field):
-                support[field] = merge_unique(support.get(field, []), candidate_support[field])
-
-    updated["llm_fill"] = {
-        "confidence": candidate.get("confidence", "low"),
-        "needs_human_review": bool(candidate.get("needs_human_review", True)),
-        "filled_undefined_fields": filled,
-        "requested_targets": targets,
-    }
-    return updated, filled
+            changed += 1
+    has_workflow_resource = any(
+        resource.get("type") == "workflow"
+        for resource in updated.get("linked_resources", [])
+        if isinstance(resource, dict)
+    )
+    if flags.get("provides_downloadable_knime_workflow_files") is True and not has_workflow_resource:
+        flags["provides_downloadable_knime_workflow_files"] = False
+        changed += 1
+        if desc.get("workflow_artifact_status") == "published_or_linked_in_text":
+            desc["workflow_artifact_status"] = "shown_or_described_but_no_public_workflow_found"
+            changed += 1
+    if desc.get("knime_article_relation") == "about_knime" and flags:
+        flags.clear()
+        changed += 1
+    return updated, changed
 
 
 class OpenAIArticleAssessor:
@@ -428,9 +433,9 @@ class OpenAIArticleAssessor:
                         {
                             "task": (
                                 self.prompt["user_task"]
-                                + " Fill only the fields listed in undefined_fields_to_fill. "
-                                + "Preserve already-defined deterministic values unless they are needed as context. "
-                                + "Return the usual schema, but values for fields not listed may be omitted."
+                                + " Review and correct only the fields listed in fields_to_review. "
+                                + "Return corrected description_audit_fields and flag_audit_fields for those fields. "
+                                + "Do not return or modify flag_audit_support."
                             ),
                             "evidence_rules": self.prompt["evidence_rules"],
                             "allowed_description_values": self.prompt[
@@ -455,11 +460,9 @@ class OpenAIArticleAssessor:
                                     "description_audit_fields", {}
                                 ),
                                 "flag_audit_fields": audit.get("flag_audit_fields", {}),
-                                "flag_audit_support": audit.get("flag_audit_support", {}),
-                                "linked_resources": article.get("linked_resources", {}),
                             },
-                            "undefined_fields_to_fill": targets,
-                            "resource_hints": article.get("linked_resources", {}),
+                            "fields_to_review": targets,
+                            "typed_linked_resources": article.get("linked_resources", []),
                             "article_excerpts": excerpts,
                         },
                         ensure_ascii=False,
@@ -527,11 +530,7 @@ def main() -> int:
     prompt = load_json(args.prompt)
     articles = selected_articles(input_articles, args.rank, args.limit)
 
-    calls_needed = any(
-        has_undefined_targets(undefined_targets(article))
-        and text_path_for_article(article, args.text_dir) is not None
-        for article in articles
-    )
+    calls_needed = any(text_path_for_article(article, args.text_dir) is not None for article in articles)
     if calls_needed:
         load_env_file(args.env_file)
         api_key = os.environ.get("OPENAI_API_KEY", "")
@@ -550,30 +549,22 @@ def main() -> int:
         questions=questions,
     )
     written = 0
-    skipped_no_undefined = 0
+    skipped_no_targets = 0
     skipped_no_text = 0
-    total_fields_filled = 0
+    total_fields_changed = 0
     result_articles: list[dict[str, Any]] = []
     for article in articles:
         article = normalize_implied_absences(article)
-        targets = undefined_targets(article)
-        if not has_undefined_targets(targets):
+        targets = assessment_targets(article)
+        if not has_assessment_targets(targets):
             result_articles.append(article)
-            skipped_no_undefined += 1
+            skipped_no_targets += 1
             written += 1
             continue
 
         text_path = text_path_for_article(article, args.text_dir)
         if text_path is None:
-            skipped = copy.deepcopy(article)
-            skipped["llm_fill"] = {
-                "confidence": "low",
-                "needs_human_review": True,
-                "filled_undefined_fields": 0,
-                "requested_targets": targets,
-                "skip_reason": "no local processed text available for LLM fill",
-            }
-            result_articles.append(skipped)
+            result_articles.append(article)
             skipped_no_text += 1
             written += 1
             continue
@@ -586,11 +577,12 @@ def main() -> int:
             )
             candidate = assessor.assess(article, excerpts, targets)
 
-        filled_article, filled_count = merge_llm_fill(article, candidate, targets)
-        filled_article["llm_fill"]["model"] = args.model
-        filled_article["llm_fill"]["temperature"] = args.temperature
-        result_articles.append(filled_article)
-        total_fields_filled += filled_count
+        reviewed_article, changed_count = merge_llm_review(article, candidate, targets)
+        reviewed_article, guard_changed_count = apply_direct_evidence_guards(
+            reviewed_article, excerpts
+        )
+        result_articles.append(reviewed_article)
+        total_fields_changed += changed_count + guard_changed_count
         written += 1
 
     result = {
@@ -605,9 +597,9 @@ def main() -> int:
             "ranks": args.rank or [],
             "records_written": written,
             "llm_api_calls": assessor.calls,
-            "records_skipped_no_undefined_fields": skipped_no_undefined,
+            "records_skipped_no_reviewable_fields": skipped_no_targets,
             "records_skipped_no_local_text": skipped_no_text,
-            "undefined_fields_filled": total_fields_filled,
+            "article_audit_fields_changed": total_fields_changed,
         },
         "article_audit_summary_counts": summary_counts(result_articles),
         "articles": result_articles,
@@ -616,9 +608,9 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     write_json(args.output, result)
 
-    print(f"Wrote {written} LLM-filled article-assessment records to {args.output}.")
+    print(f"Wrote {written} LLM-reviewed article-assessment records to {args.output}.")
     print(f"LLM article-assessment API calls: {assessor.calls}.")
-    print(f"Undefined fields filled: {total_fields_filled}.")
+    print(f"Article audit fields changed: {total_fields_changed}.")
     print("Curated assessment JSON was not read or modified.")
     return 0
 

@@ -102,6 +102,7 @@
       "network_required": false,
       "input": [
         "data/processed/openalex/openalex_knime_most_cited.csv",
+        "data/original/articles/registry.bbl",
         "data/processed/articles/*.html",
         "data/processed/audit/knime_article_audit_questions.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
@@ -112,9 +113,9 @@
       "handoff_to_next": "automatic",
       "manual_action_required": [
         "Review data/processed/audit/article_deterministic_assessments.json for over-detected regex matches, undefined fields, and mismatches with the curated audit.",
-        "Do not overwrite data/processed/audit/article_assessments.json from this step; use the generated file as a deterministic comparison and review artifact."
+        "Do not overwrite data/processed/audit/old_article_assessments.json from this step; use the generated file as a deterministic comparison and review artifact."
       ],
-      "notes": "This step creates a deterministic candidate assessment without network access and without reading the curated assessment JSON. The script reads the OpenAlex seed table, processed article HTML with source-PDF metadata, audit questions, and the workflow-reference inventory. It writes a standalone JSON file with article_audit_fields, linked_resources, source pdf_file values, and undefined values where deterministic rules cannot decide. Use DETERMINISTIC_LIMIT and RANK to test subsets."
+      "notes": "This step creates a deterministic candidate assessment without network access and without reading the curated assessment JSON. The script reads the OpenAlex seed table, the canonical local article registry, processed article HTML with source-PDF metadata, audit questions, and the workflow-reference inventory. The registry is the source of truth for local article bibliographic metadata and PDF/HTML identity; OpenAlex is kept as the citation-ranked seed and provenance source. DOI is treated as an indivisible primary key, so matching uses only the full normalized DOI-derived registry key or an explicit no-DOI registry key, never DOI suffixes, tails, or fragments. The script writes a standalone JSON file with article_audit_fields, linked_resources, source pdf_file values, and undefined values where deterministic rules cannot decide. Use DETERMINISTIC_LIMIT and RANK to test subsets."
     },
     {
       "step": 6,
@@ -140,26 +141,26 @@
     },
     {
       "step": 7,
-      "name": "Fill undefined deterministic article assessment fields with LLM",
-      "script": "scripts/audit_assessments_llm.py",
-      "make_target": "llm-article-assessments",
+      "name": "Review and correct article audit fields with LLM",
+      "script": "scripts/audit_assessments_llm_flag.py",
+      "make_target": "llm-flag-assessments",
       "network_required": true,
       "input": [
         "data/processed/audit/article_llm_url_assessments.json",
         "data/processed/articles/*.html",
         "data/processed/audit/knime_article_audit_questions.json",
-        "data/processed/audit/llm_article_assessment_prompt.json"
+        "data/processed/audit/article_llm_flag_assessment_prompt.json"
       ],
       "output": [
-        "data/processed/audit/article_llm_assessments.json"
+        "data/processed/audit/article_llm_flag_assessments.json"
       ],
       "handoff_to_next": "llm_automatic",
       "manual_action_required": [
         "Run a small pilot first, for example LIMIT=1 or RANK=<rank>, before a full paid run.",
-        "Review data/processed/audit/article_llm_assessments.json for filled fields that are unsupported, weakly supported, or inconsistent with deterministic evidence.",
-        "Do not overwrite data/processed/audit/article_assessments.json from this step; use the generated file as an LLM-filled comparison and review artifact."
+        "Review data/processed/audit/article_llm_flag_assessments.json for corrected fields that are unsupported, weakly supported, or inconsistent with deterministic and URL-type evidence.",
+        "Do not overwrite data/processed/audit/old_article_assessments.json from this step; use the generated file as an LLM-filled comparison and review artifact."
       ],
-      "notes": "This step reads the URL-typed candidate assessment and asks the LLM only to fill article_audit_fields that are still marked undefined. The script sends article metadata, the current deterministic article_audit_fields, the list of undefined target fields, URL/resource hints, audit questions, prompt rules, and selected line-referenced excerpts. Already-defined deterministic and URL-type values are preserved. The output remains a standalone candidate file for review."
+      "notes": "This step reads the URL-typed candidate assessment and asks the LLM to review and correct only article_audit_fields.description_audit_fields and article_audit_fields.flag_audit_fields. The script sends article metadata, current article_audit_fields, typed linked_resources, audit questions, prompt rules, and selected line-referenced excerpts. It ignores flag_audit_support and preserves all fields outside article_audit_fields. The output remains a standalone candidate file for review."
     },
     {
       "step": 8,
@@ -169,13 +170,13 @@
       "network_required": false,
       "network_required_when": "LLM_MODE=validate-support",
       "input": [
-        "data/processed/audit/article_assessments.json",
+        "data/processed/audit/old_article_assessments.json",
         "data/processed/audit/knime_article_audit_questions.json",
-        "data/processed/audit/llm_support_validation_prompt.json",
+        "data/processed/audit/old_llm_support_validation_prompt.json",
         "data/processed/articles/*.html"
       ],
       "output": [
-        "data/processed/audit/article_assessments.json",
+        "data/processed/audit/old_article_assessments.json",
         "data/processed/audit/logs/llm_support_validation_decisions.jsonl when LLM_MODE=validate-support"
       ],
       "handoff_to_next": "llm_automatic",
@@ -194,7 +195,7 @@
       "make_target": null,
       "network_required": true,
       "input": [
-        "data/processed/audit/article_assessments.json",
+        "data/processed/audit/old_article_assessments.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
       "output": [
@@ -210,7 +211,7 @@
         "Open retrieved workflows in the local current KNIME environment.",
         "Record import/opening outcome, execution outcome, screenshots, missing extensions, missing data, and other failure notes."
       ],
-      "notes": "Human semi-automatic work: first inspect data/processed/audit/knime_downloadable_workflow_references.json. For each record, use workflow_references, supplement_references_checked, evidence_extracted_text_lines, and processed_text_file to understand where the article reported a workflow or supplement. If more context is needed, open the matching record in data/processed/audit/article_assessments.json and inspect linked_resources.workflow_urls, linked_resources.supplement_urls_or_dois, linked_resources.notes, workflow_artifact_status, and evidence_notes. Then follow the recorded URLs manually in a browser or with a download tool: publisher supplements, repositories such as GitHub or Zenodo, KNIME Hub pages, older workflow portals such as myExperiment, and project websites. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update download_result with the retrieval status, downloaded_files, workflow_files_found, failed_references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual_knime_opening_tests with opened_in_knime, execution_result, artifact, screenshot_directory, and notes. If nothing is obtained, record the reason explicitly rather than deleting the reference."
+      "notes": "Human semi-automatic work: first inspect data/processed/audit/knime_downloadable_workflow_references.json. For each record, use workflow_references, supplement_references_checked, evidence_extracted_text_lines, and processed_text_file to understand where the article reported a workflow or supplement. If more context is needed, open the matching record in data/processed/audit/old_article_assessments.json and inspect linked_resources.workflow_urls, linked_resources.supplement_urls_or_dois, linked_resources.notes, workflow_artifact_status, and evidence_notes. Then follow the recorded URLs manually in a browser or with a download tool: publisher supplements, repositories such as GitHub or Zenodo, KNIME Hub pages, older workflow portals such as myExperiment, and project websites. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update download_result with the retrieval status, downloaded_files, workflow_files_found, failed_references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual_knime_opening_tests with opened_in_knime, execution_result, artifact, screenshot_directory, and notes. If nothing is obtained, record the reason explicitly rather than deleting the reference."
     },
     {
       "step": 10,
@@ -219,7 +220,7 @@
       "make_target": "article-audit-tables",
       "network_required": false,
       "input": [
-        "data/processed/audit/article_assessments.json",
+        "data/processed/audit/old_article_assessments.json",
         "article/article.tex"
       ],
       "output": [
@@ -237,7 +238,7 @@
       "make_target": "knime-use-table",
       "network_required": false,
       "input": [
-        "data/processed/audit/article_assessments.json",
+        "data/processed/audit/old_article_assessments.json",
         "data/processed/audit/knime_downloadable_workflow_references.json",
         "article/tables/top_cited_article_audit_summary.csv",
         "article/article.tex"

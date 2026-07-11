@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_ASSESSMENT = Path("data/processed/audit/article_assessments.json")
+DEFAULT_ASSESSMENT = Path("data/processed/audit/old_article_assessments.json")
 DEFAULT_WORKFLOW_REFERENCES = Path("data/processed/audit/knime_downloadable_workflow_references.json")
 DEFAULT_TABLE3 = Path("article/tables/top_cited_article_audit_summary.csv")
 DEFAULT_ARTICLE = Path("article/article.tex")

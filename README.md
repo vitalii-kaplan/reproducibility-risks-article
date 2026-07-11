@@ -58,6 +58,7 @@ only workflow images or textual descriptions.
 article/                 Paper source, bibliography, LNCS files, and PDF
 article/tables/          CSV tables used by the paper
 data/original/           Source evidence included in the repository
+data/original/articles/  Canonical article registry; source PDFs are ignored
 data/original/workflows/ Retrieved workflow artifacts and opening screenshots
 data/processed/audit/    Structured article-audit data
 data/processed/articles/ GROBID-derived semantic article HTML and TEI XML
@@ -74,8 +75,11 @@ AGENTS.md                Detailed maintenance notes for future project updates
 
 - `article/article.pdf`: current generated paper PDF.
 - `article/article.tex`: main paper source.
-- `data/processed/audit/article_assessments.json`: structured
+- `data/processed/audit/old_article_assessments.json`: structured
   article audit.
+- `data/original/articles/registry.bbl`: canonical registry for local source
+  articles. Its `\bibitem{...}` keys correspond to source PDF stems; DOI-bearing
+  records use full DOI-derived filesystem keys.
 - `data/processed/articles/*.html`: semantic article HTML rendered from GROBID
   TEI XML.
 - `data/processed/articles/grobid_tei/*.tei.xml`: GROBID TEI XML extracted
@@ -112,6 +116,11 @@ latexmk -pdf -interaction=nonstopmode article.tex
 The main analysis scripts are in `scripts/`. Most use only the Python standard
 library. Some collection steps require network access. Article extraction uses
 GROBID for semantic TEI/HTML output.
+
+For local articles, `data/original/articles/registry.bbl` is the source of
+truth for article metadata and PDF identity. OpenAlex records are used as a
+citation-ranked seed and provenance source, not as authority over local PDF
+metadata when the registry is more specific.
 
 Run GROBID locally before regenerating semantic article HTML:
 

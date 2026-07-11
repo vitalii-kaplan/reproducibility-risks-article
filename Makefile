@@ -32,6 +32,7 @@ OPENALEX_PROCESSED_DIR ?= data/processed/openalex
 
 # Article PDF processing parameters.
 ARTICLE_PDF_DIR ?= data/original/articles
+ARTICLE_REGISTRY ?= data/original/articles/registry.bbl
 ARTICLE_TEXT_DIR ?= data/processed/articles
 ARTICLE_GROBID_TEI_DIR ?= data/processed/articles/grobid_tei
 GROBID_URL ?= http://localhost:8070
@@ -41,7 +42,7 @@ END ?= 80
 DOWNLOAD_TIMEOUT ?= 45
 
 # Article-audit and table parameters.
-ASSESSMENT ?= data/processed/audit/article_assessments.json
+ASSESSMENT ?= data/processed/audit/old_article_assessments.json
 AUDIT_QUESTIONS ?= data/processed/audit/knime_article_audit_questions.json
 WORKFLOW_REFERENCES ?= data/processed/audit/knime_downloadable_workflow_references.json
 ARTICLE_TEX ?= article/article.tex
@@ -51,10 +52,10 @@ LLM_MODE ?= off
 LLM_MODEL ?= gpt-4.1-mini
 LLM_TEMPERATURE ?= 0
 LLM_ENV_FILE ?= .env
-LLM_PROMPT ?= data/processed/audit/llm_support_validation_prompt.json
-LLM_ARTICLE_ASSESSMENT_PROMPT ?= data/processed/audit/llm_article_assessment_prompt.json
-LLM_ARTICLE_ASSESSMENT_INPUT ?= $(LLM_URL_ASSESSMENT_OUTPUT)
-LLM_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_assessments.json
+LLM_PROMPT ?= data/processed/audit/old_llm_support_validation_prompt.json
+LLM_FLAG_ASSESSMENT_PROMPT ?= data/processed/audit/article_llm_flag_assessment_prompt.json
+LLM_FLAG_ASSESSMENT_INPUT ?= $(LLM_URL_ASSESSMENT_OUTPUT)
+LLM_FLAG_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_flag_assessments.json
 LLM_URL_ASSESSMENT_PROMPT ?= data/processed/audit/article_llm_url_prompts.json
 LLM_URL_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_url_assessments.json
 DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_deterministic_assessments.json
@@ -85,6 +86,7 @@ help: ## Show target descriptions and important parameters.
 	@printf '  KNIME_OSS_ROOT=%s                 local knime-oss clone root\n' "$(KNIME_OSS_ROOT)"
 	@printf '  OPENALEX_MAILTO=%s                optional email for OpenAlex polite pool\n' "$(OPENALEX_MAILTO)"
 	@printf '  OPENALEX_MOST_CITED_LIMIT=%s      citation-ranked OpenAlex subset size\n' "$(OPENALEX_MOST_CITED_LIMIT)"
+	@printf '  ARTICLE_REGISTRY=%s               canonical local article registry\n' "$(ARTICLE_REGISTRY)"
 	@printf '  FAIL_ON_MISMATCH=%s               pass empty to allow table mismatches\n' "$(FAIL_ON_MISMATCH)"
 	@printf '  LLM_MODE=%s LLM_MODEL=%s          audit-support LLM mode/model\n' "$(LLM_MODE)" "$(LLM_MODEL)"
 	@printf '  LLM_APPLY_REJECTIONS=%s           empty logs LLM decisions without applying rejections\n' "$(LLM_APPLY_REJECTIONS)"
@@ -184,6 +186,7 @@ deterministic-article-assessments: ## Generate deterministic article_audit_field
 	  --seed-csv "$(OPENALEX_PROCESSED_DIR)/openalex_knime_most_cited.csv" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
+	  --registry "$(ARTICLE_REGISTRY)" \
 	  --workflow-references "$(WORKFLOW_REFERENCES)" \
 	  --output "$(DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT)" \
 	  --limit "$(DETERMINISTIC_LIMIT)" \
@@ -202,19 +205,22 @@ llm-url-assessments: ## Classify linked_resources URL types with LLM calls. Netw
 	  --limit "$(LIMIT)" \
 	  $(if $(RANK),--rank "$(RANK)",)
 
-.PHONY: llm-article-assessments
-llm-article-assessments: ## Fill undefined deterministic article_audit_fields with LLM calls. Network access required.
-	$(PYTHON) scripts/audit_assessments_llm.py \
+.PHONY: llm-flag-assessments
+llm-flag-assessments: ## Review/correct article_audit_fields flags with LLM calls. Network access required.
+	$(PYTHON) scripts/audit_assessments_llm_flag.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
-	  --prompt "$(LLM_ARTICLE_ASSESSMENT_PROMPT)" \
-	  --input-assessment "$(LLM_ARTICLE_ASSESSMENT_INPUT)" \
+	  --prompt "$(LLM_FLAG_ASSESSMENT_PROMPT)" \
+	  --input-assessment "$(LLM_FLAG_ASSESSMENT_INPUT)" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
-	  --output "$(LLM_ARTICLE_ASSESSMENT_OUTPUT)" \
+	  --output "$(LLM_FLAG_ASSESSMENT_OUTPUT)" \
 	  --limit "$(LIMIT)" \
 	  $(if $(RANK),--rank "$(RANK)",)
+
+.PHONY: llm-article-assessments
+llm-article-assessments: llm-flag-assessments ## Backward-compatible alias for llm-flag-assessments.
 
 .PHONY: article-audit-tables
 article-audit-tables: ## Build Table 3 CSV and comparison/check logs from the audit JSON.

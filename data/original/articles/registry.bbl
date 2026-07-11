@@ -1,0 +1,418 @@
+\begin{thebibliography}{99}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{10.1016_j.jbusres.2021.08.036}
+Francisco Villarroel Ordenes, Rosaria Silipo: Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications.
+Journal of Business Research \textbf{137}, 393--410 (2021).
+\doi{10.1016/j.jbusres.2021.08.036}
+
+\bibitem{10.1016_j.cmpb.2020.105712}
+C. Ricciardi, G. Improta, F. Amato, G. Cesarelli, M. Romano: Classifying the type of delivery from cardiotocographic signals: A machine learning approach.
+Computer Methods and Programs in Biomedicine \textbf{196}, 105712 (2020).
+\doi{10.1016/j.cmpb.2020.105712}
+
+\bibitem{10.1016_j.chemolab.2013.02.003}
+Georgia Melagraki, Antreas Afantitis: Enalos KNIME nodes: Exploring corrosion inhibition of steel in acidic medium.
+Chemometrics and Intelligent Laboratory Systems \textbf{123}, 9--14 (2013).
+\doi{10.1016/j.chemolab.2013.02.003}
+
+\bibitem{10.1016_j.tox.2016.05.026}
+Frédéric Y. Bois, Juan G. Díaz Ochoa, Monika Gajewska, Simona Kovarich, Klaus Mauch, Alicia Paini, A. Pery, J.V. Sala Benito, Sophie Teng, Andrew Worth: Multiscale modelling approaches for assessing cosmetic ingredients safety.
+Toxicology \textbf{392}, 130--139 (2017).
+\doi{10.1016/j.tox.2016.05.026}
+
+\bibitem{10.1016_j.tox.2016.09.008}
+Domenico Gadaleta, Serena Manganelli, Alberto Manganaro, Nicola Porta, Emilio Benfenati: A knowledge-based expert rule system for predicting mutagenicity (Ames test) of aromatic amines and azo compounds.
+Toxicology \textbf{370}, 20--30 (2016).
+\doi{10.1016/j.tox.2016.09.008}
+
+\bibitem{10.1016_j.tiv.2017.06.015}
+Alicia Paini, J.V. Sala Benito, Jos Bessems, Andrew Worth: From in vitro to in vivo: Integration of the virtual cell based assay with physiologically based kinetic modelling.
+Toxicology in Vitro \textbf{45}(Pt 2), 241--248 (2017).
+\doi{10.1016/j.tiv.2017.06.015}
+
+\bibitem{10.1016_j.tiv.2019.01.004}
+Peiwen Di, Yongmin Yin, Changsheng Jiang, Yingchun Cai, Weihua Li, Yun Tang, Guixia Liu: Prediction of the skin sensitising potential and potency of compounds via mechanism-based binary and ternary classification models.
+Toxicology in Vitro \textbf{59}, 204--214 (2019).
+\doi{10.1016/j.tiv.2019.01.004}
+
+\bibitem{10.1016_j.jksuci.2021.06.002}
+Judith Santos-Pereira, Le Gruenwald, Jorge Bernardino: Top data mining tools for the healthcare industry.
+Journal of King Saud University - Computer and Information Sciences \textbf{34}(8), 4968--4982 (2022).
+\doi{10.1016/j.jksuci.2021.06.002}
+
+\bibitem{10.1016_j.jprot.2016.08.002}
+Enrique Audain, Julian Uszkoreit, Timo Sachsenberg, Julianus Pfeuffer, Xiao Liang, Henning Hermjakob, Aniel Sánchez, Martin Eisenacher, Knut Reinert, David L. Tabb, Oliver Kohlbacher, Yasset Pérez‐Riverol: In-depth analysis of protein inference algorithms using multiple search engines and well-defined metrics.
+Journal of Proteomics \textbf{150}, 170--182 (2017).
+\doi{10.1016/j.jprot.2016.08.002}
+
+\bibitem{10.1016_j.procs.2016.04.276}
+Shenghao Yu, Dongming Zhao, Wei Chen, Hui Hou: Oil-immersed Power Transformer Internal Fault Diagnosis Research Based on Probabilistic Neural Network.
+Procedia Computer Science \textbf{83}, 1327--1331 (2016).
+\doi{10.1016/j.procs.2016.04.276}
+
+\bibitem{10.1016_j.procs.2016.05.251}
+Amrita Naik, Lilavati Samant: Correlation Review of Classification Algorithm Using Data Mining Tool: WEKA, Rapidminer, Tanagra, Orange and Knime.
+Procedia Computer Science \textbf{85}, 662--668 (2016).
+\doi{10.1016/j.procs.2016.05.251}
+
+\bibitem{10.1186_1471-2105-14-257}
+Stephan Beisken, Thorsten Meinl, Bernd Wiswedel, Luís F. de Figueiredo, Michael R. Berthold, Christoph Steinbeck: KNIME-CDK: Workflow-driven cheminformatics.
+BMC Bioinformatics \textbf{14}(1), 257 (2013).
+\doi{10.1186/1471-2105-14-257}
+
+\bibitem{10.1021_acs.chemrestox.5b00480}
+Claire L. Mellor, Fabian P. Steinmetz, M Cronin: Using Molecular Initiating Events to Develop a Structural Alert Based Screening Workflow for Nuclear Receptor Ligands Associated with Hepatic Steatosis.
+Chemical Research in Toxicology \textbf{29}(2), 203--212 (2016).
+\doi{10.1021/acs.chemrestox.5b00480}
+
+\bibitem{10.1186_s13321-024-00814-3}
+Kamel Mansouri, José Teófilo Moreira‐Filho, Charles N. Lowe, Nathaniel Charest, Todd M. Martin, Valery Tkachenko, Richard Judson, Mike Conway, Nicole Kleinstreuer, Antony Williams: Free and open-source QSAR-ready workflow for automated standardization of chemical structures in support of QSAR modeling.
+Journal of Cheminformatics \textbf{16}(1), 19 (2024).
+\doi{10.1186/s13321-024-00814-3}
+
+\bibitem{10.1007_s10710-015-9247-3}
+Steve O’Hagan, Douglas B. Kell: Software review: the KNIME workflow environment and its applications in genetic programming and machine learning.
+Genetic Programming and Evolvable Machines \textbf{16}(3), 387--391 (2015).
+\doi{10.1007/s10710-015-9247-3}
+
+\bibitem{10.3390_info9070176}
+Alessandro Massaro, Vincenzo Maritati, Nicola Savino, Angelo Galiano, Daniele Convertini, Emanuele De Fonte, Maurizio Di Muro: A Study of a Health Resources Management Platform Integrating Neural Networks and DSS Telemedicine for Homecare Assistance.
+Information \textbf{9}(7), 176 (2018).
+\doi{10.3390/info9070176}
+
+\bibitem{10.1016_j.chemosphere.2015.06.009}
+Claire M. Ellison, Judith C. Madden, M Cronin, Steven J. Enoch: Investigation of the Verhaar scheme for predicting acute aquatic toxicity: Improving predictions obtained from Toxtree ver. 2.6.
+Chemosphere \textbf{139}, 146--154 (2015).
+\doi{10.1016/j.chemosphere.2015.06.009}
+
+\bibitem{10.1074_mcp.ra117.000165}
+Wei Zeng, Kristina Ford, Antony Bacic, Joshua L. Heazlewood: N-linked Glycan Micro-heterogeneity in Glycoproteins of Arabidopsis.
+Molecular \& Cellular Proteomics \textbf{17}(3), 413--421 (2018).
+\doi{10.1074/mcp.ra117.000165}
+
+\bibitem{10.1016_j.ntt.2020.106918}
+Afolarin O. Ogungbemi, Elisabet Teixidó, Riccardo Massei, Stefan Scholz, Eberhard Küster: Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®.
+Neurotoxicology and Teratology \textbf{81}, 106918 (2020).
+\doi{10.1016/j.ntt.2020.106918}
+
+\bibitem{10.3390_pharmaceutics14101998}
+Gabriela Falcón-Cano, Christophe Molina, Miguel Ángel Cabrera‐Pérez: Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches.
+Pharmaceutics \textbf{14}(10), 1998 (2022).
+\doi{10.3390/pharmaceutics14101998}
+
+\bibitem{10.1007_s11306-018-1349-5}
+Sonia Liggi, Christine Hinz, Zoe Hall, Maria Laura Santoru, Simone Poddighe, John C. Fjeldsted, Luigi Atzori, Julian L. Griffin: KniMet: a pipeline for the processing of chromatography–mass spectrometry metabolomics data.
+Metabolomics \textbf{14}(4), 52 (2018).
+\doi{10.1007/s11306-018-1349-5}
+
+\bibitem{628-2272-1-PB}
+Irina Ioniță: Prediction of Thyroid Disease Using Data Mining Techniques.
+BRAIN. Broad Research in Artificial Intelligence and Neuroscience \textbf{7}, 115--124 (2016).
+
+\bibitem{10.3389_fcomp.2020.00008}
+Christian Dietz, Curtis Rueden, Stefan Helfrich, Ellen T. A. Dobson, Martin Horn, Jan Eglinger, Edward L. Evans, Dalton McLean, Tatiana Novitskaya, William A. Ricke, Nathan M. Sherer, Andries Zijlstra, et\textasciitilde{}al.: Integration of the ImageJ Ecosystem in KNIME Analytics Platform.
+Frontiers in Computer Science \textbf{2} (2020).
+\doi{10.3389/fcomp.2020.00008}
+
+\bibitem{10.5121_ijaia.2018.9301}
+Alessandro Massaro, Vincenzo Maritati, Angelo Galiano, Vitangelo Birardi, Leonardo Pellicani: ESB Platform Integrating Knime Data Mining Tool Oriented on Industry 4.0 Based on Artificial Neural Network Predictive Maintenance.
+International Journal of Artificial Intelligence \& Applications \textbf{9}(3), 01--17 (2018).
+\doi{10.5121/ijaia.2018.9301}
+
+\bibitem{10.1186_s12859-020-3363-7}
+Laurent S. V. Thomas, Jochen Gehrig: Multi-template matching: a versatile tool for object-localization in microscopy images.
+BMC Bioinformatics \textbf{21}(1), 44 (2020).
+\doi{10.1186/s12859-020-3363-7}
+
+\bibitem{10.1038_s41598-022-24421-0}
+Emma Qumsiyeh, Louise C. Showe, Malik Yousef: GediNET for discovering gene associations across diseases using knowledge based machine learning approach.
+Scientific Reports \textbf{12}(1), 19955 (2022).
+\doi{10.1038/s41598-022-24421-0}
+
+\bibitem{10.1002_minf.201400188}
+Fabian P. Steinmetz, Claire L. Mellor, Thorsten Meinl, M Cronin: Screening Chemicals for Receptor‐Mediated Toxicological and Pharmacological Endpoints: Using Public Data to Build Screening Tools within a KNIME Workflow.
+Molecular Informatics \textbf{34}(2-3), 171--178 (2015).
+\doi{10.1002/minf.201400188}
+
+\bibitem{10.3390_s16091498}
+Andrzej W. Przybyszewski, Mark Kon, Stanisław Szlufik, Artur Szymański, Piotr Habela, Dariusz Koziorowski: Multimodal Learning and Intelligent Prediction of Symptom Development in Individual Parkinson’s Patients.
+Sensors \textbf{16}(9), 1498 (2016).
+\doi{10.3390/s16091498}
+
+\bibitem{10.11591_ijeecs.v25.i2.pp1151-1158}
+Ameera Jaradat, Malek Barhoush, Rawan S. Bani Easa: Network intrusion detection system: machine learning approach.
+Indonesian Journal of Electrical Engineering and Computer Science \textbf{25}(2), 1151 (2022).
+\doi{10.11591/ijeecs.v25.i2.pp1151-1158}
+
+\bibitem{10.3389_fenvs.2015.00054}
+Malgorzata N. Drwal, Vishal B. Siramshetty, Priyanka Banerjee, Andrean Goede, Robert Preißner, Mathias Dunkel: Molecular similarity-based predictions of the Tox21 screening outcome.
+Frontiers in Environmental Science \textbf{3} (2015).
+\doi{10.3389/fenvs.2015.00054}
+
+\bibitem{10.13189_csit.2019.070101}
+Alessandro Massaro, Valeria Vitti, Angelo Galiano, Alessandro Morelli: Business Intelligence Improved by Data Mining Algorithms and Big Data Systems: An Overview of Different Tools Applied in Industrial Research.
+Computer Science and Information Technology \textbf{7}(1), 1--21 (2019).
+\doi{10.13189/csit.2019.070101}
+
+\bibitem{10.1186_s40537-019-0176-5}
+Aderibigbe Israel Adekitan, Jeremiah O. Abolade, Olamilekan Shobayo: Data mining approach for predicting the daily Internet data traffic of a smart university.
+Journal Of Big Data \textbf{6}(1) (2019).
+\doi{10.1186/s40537-019-0176-5}
+
+\bibitem{10.1038_sdata.2018.241}
+Arun Pal, Hannes Glaß, Marcel Naumann, Nicole Kreiter, Julia Japtok, Ronny Sczech, Andreas Hermann: High content organelle trafficking enables disease state profiling as powerful tool for disease modelling.
+Scientific Data \textbf{5}(1), 180241 (2018).
+\doi{10.1038/sdata.2018.241}
+
+\bibitem{10.1186_s13321-016-0121-y}
+Floriane Montanari, Barbara Zdrazil, Daniela Digles, Gerhard F. Ecker: Selectivity profiling of BCRP versus P-gp inhibition: from automated collection of polypharmacology data to multi-label learning.
+Journal of Cheminformatics \textbf{8}(1), 7 (2016).
+\doi{10.1186/s13321-016-0121-y}
+
+\bibitem{10.20853_30-2-583}
+Amanda Lourens, David Bleazard: Applying predictive analytics in identifying students at risk: A case study.
+South African Journal of Higher Education \textbf{30}(2) (2016).
+\doi{10.20853/30-2-583}
+
+\bibitem{10.5599_admet.852}
+Gabriela Falcón-Cano, Christophe Molina, Miguel Angel Cabrera-Pérez: ADME Prediction with KNIME: In silico aqueous solubility models based on supervised recursive machine learning approaches.
+ADMET and DMPK (2020).
+\doi{10.5599/admet.852}
+
+\bibitem{10.7124_bc.00090f}
+Sergii Babichev, A. I. Kornelyuk, Volodymyr Lytvynenko, Valentyna Osypenko: Computational analysis of microarray gene expression profiles of lung cancer.
+Biopolymers and Cell \textbf{32}(1), 70--79 (2016).
+\doi{10.7124/bc.00090f}
+
+\bibitem{10.1051_medsci_201834f110}
+Jingsheng Shi, Guanglei Zhao, Yibing Wei: Computational QSAR model combined molecular descriptors and fingerprints to predict HDAC1 inhibitors.
+médecine/sciences \textbf{34}, 52--58 (2018).
+\doi{10.1051/medsci/201834f110}
+
+\bibitem{10.1186_1758-2946-6-s1-p8}
+Paolo Tosco, Nikolaus Stiefl, Gregory A. Landrum: The integration of Open3DTOOLS into the RDKit and KNIME.
+Journal of Cheminformatics \textbf{6}(S1) (2014).
+\doi{10.1186/1758-2946-6-s1-p8}
+
+\bibitem{10.18178_ijiet.2022.12.2.1591}
+Benjamín Maraza-Quispe, Enrique Damián Valderrama-Chauca, Lenin Henry Cari-Mogrovejo, Jorge Milton Apaza-Huanca, Jaime Sanchez-Ilabaca: A Predictive Model Implemented in KNIME Based on Learning Analytics for Timely Decision Making in Virtual Learning Environments.
+International Journal of Information and Education Technology \textbf{12}(2), 91--99 (2022).
+\doi{10.18178/ijiet.2022.12.2.1591}
+
+\bibitem{10.1007_s11042-020-09916-0}
+Soodeh Hosseini, Saman Rafiee Sardo: Data mining tools -a case study for network intrusion detection.
+Multimedia Tools and Applications \textbf{80}(4), 4999--5019 (2021).
+\doi{10.1007/s11042-020-09916-0}
+
+\bibitem{10.3390_iech2022-12311}
+Samin Poudel: A Study of Disease Diagnosis Using Machine Learning.
+The 2nd International Electronic Conference on Healthcare, 8 (2022).
+\doi{10.3390/IECH2022-12311}
+
+\bibitem{10.1109_mipro.2014.6859735}
+A. Jovic, K. Brkic, N. Bogunovic: An overview of free software tools for general data mining.
+2014 37th International Convention on Information and Communication Technology, Electronics and Microelectronics (MIPRO), 1112--1117 (2014).
+\doi{10.1109/mipro.2014.6859735}
+
+\bibitem{10.1145_1656274.1656280}
+Michael R. Berthold, Nicolas Cebron, Fabian Dill, Thomas R. Gabriel, Tobias Kötter, Thorsten Meinl, Peter Ohl, Kilian Thiel, Bernd Wiswedel: KNIME - The Konstanz Information Miner: Version 2.0 and Beyond.
+ACM SIGKDD Explorations Newsletter \textbf{11}(1), 26--31 (2009).
+\doi{10.1145/1656274.1656280}
+
+\bibitem{10.20895_dinda.v3i1.822}
+Claudia Larasvaty, Siti Khomsah, Rona Nisa SA: Cluster Analysis of Covid-19 in Indonesia Using K-means Method.
+Journal of Dinda: Data Science, Information Technology, and Data Analytics \textbf{3}(1), 36--39 (2023).
+\doi{10.20895/dinda.v3i1.822}
+
+\bibitem{10.1109_cdan.2016.7570894}
+Shraddha Dwivedi, Paridhi Kasliwal, Suryakant Soni: Comprehensive study of data analytics tools (RapidMiner, Weka, R tool, Knime).
+2016 Symposium on Colossal Data Analysis and Networking (CDAN) (2016).
+\doi{10.1109/cdan.2016.7570894}
+
+\bibitem{10.1007_s10639-018-9839-7}
+Aderibigbe Israel Adekitan, Odunayo Salau, Felix N. Ugwoke: Data mining approach to predicting the performance of first year student in a university using the admission requirements.
+Education and Information Technologies \textbf{24}(2), 1527--1543 (2019).
+\doi{10.1007/s10639-018-9839-7}
+
+\bibitem{10.1109_mgrs.2015.2496160}
+Leonardo Feltrin: KNIME an Open Source Solution for Predictive Analytics in the Geosciences [Software and Data Sets].
+IEEE Geoscience and Remote Sensing Magazine \textbf{3}(4), 28--38 (2015).
+\doi{10.1109/MGRS.2015.2496160}
+
+\bibitem{10.35940_ijitee.i1003.0789s19}
+Kanupriya Verma, Sahil Bhardwaj, Resham Arya, Mir Salim Ul Islam, Megha Bhushan, Ashok Kumar, Piyush Samant: Latest Tools for Data Mining and Machine Learning.
+International Journal of Innovative Technology and Exploring Engineering \textbf{8}(9S), 18--23 (2019).
+\doi{10.35940/ijitee.I1003.0789S19}
+
+\bibitem{10.1080_07391102.2018.1456975}
+Pravin Ambure, Jyotsna Bhat, Tomasz Puzyn, Kunal Roy: Identifying natural compounds as multi-target-directed ligands against Alzheimer’s disease: an \textit{in silico} approach.
+Journal of Biomolecular Structure and Dynamics \textbf{37}(5), 1282--1306 (2019).
+\doi{10.1080/07391102.2018.1456975}
+
+\bibitem{10.1177_1460458219899210}
+Carlo Ricciardi, Antonio Saverio Valente, Kyle Edmund, Valeria Cantoni, Roberta Green, Antonella Fiorillo, Ilaria Picone, Stefania Santini, Mario Cesarelli: Linear discriminant analysis and principal component analysis to predict coronary artery disease.
+Health Informatics Journal \textbf{26}(3), 2181--2192 (2020).
+\doi{10.1177/1460458219899210}
+
+\bibitem{10.1002_minf.201100076}
+Simon Saubern, Rajarshi Guha, Jonathan B. Baell: KNIME Workflow to Assess PAINS Filters in SMARTS Format. Comparison of RDKit and Indigo Cheminformatics Libraries.
+Molecular Informatics \textbf{30}(10), 847--850 (2011).
+\doi{10.1002/minf.201100076}
+
+\bibitem{10.1016_j.heliyon.2019.e01250}
+Aderibigbe Israel Adekitan, Odunayo Paul Salau: The impact of engineering students' performance in the first three years on their graduation result using educational data mining.
+Heliyon \textbf{5}(2), e01250 (2019).
+\doi{10.1016/j.heliyon.2019.e01250}
+
+\bibitem{10.1145_2494444.2494451}
+Luís C. Borges, Viriato M. Marques, Jorge Bernardino: Comparison of data mining techniques and tools for data classification.
+Proceedings of the International C* Conference on Computer Science and Software Engineering, 113--116 (2013).
+\doi{10.1145/2494444.2494451}
+
+\bibitem{10.1177_1087057111432885}
+Frans W. Cornelissen, Miroslav Cik, Emmanuel Gustin: Phaedra, a Protocol-Driven System for Analysis and Validation of High-Content Imaging and Flow Cytometry.
+SLAS DISCOVERY \textbf{17}(4), 496--508 (2012).
+\doi{10.1177/1087057111432885}
+
+\bibitem{10.1002_spe.2274}
+Antonio J. Jara, Dominique Genoud, Yann Bocchi: Big data for smart cities with KNIME a real experience in the SmartSantander testbed.
+Software: Practice and Experience \textbf{45}(8), 1145--1160 (2015).
+\doi{10.1002/spe.2274}
+
+\bibitem{10.1080_1528008x.2020.1848747}
+Nichapat Sangkaew, Hongrui Zhu: Understanding Tourists’ Experiences at Local Markets in Phuket: An Analysis of TripAdvisor Reviews.
+Journal of Quality Assurance in Hospitality \& Tourism \textbf{23}(1), 89--114 (2022).
+\doi{10.1080/1528008x.2020.1848747}
+
+\bibitem{10.3390_bioengineering9040172}
+Carlo Ricciardi, Alfonso Maria Ponsiglione, Arianna Scala, Anna Borrelli, M Misasi, Gaetano Romano, Giuseppe Russo, Maria Triassi, Giovanni Improta: Machine Learning and Regression Analysis to Model the Length of Hospital Stay in Patients with Femur Fracture.
+Bioengineering \textbf{9}(4), 172 (2022).
+\doi{10.3390/bioengineering9040172}
+
+\bibitem{10.1093_bioinformatics_btr478}
+Bernd Jagla, Bernd Wiswedel, Jean‐Yves Coppée: Extending KNIME for next-generation sequencing data analysis.
+Bioinformatics \textbf{27}(20), 2907--2909 (2011).
+\doi{10.1093/bioinformatics/btr478}
+
+\bibitem{10.1093_bioinformatics_btr554}
+Pierre Lindenbaum, Solena Le Scouarnec, Vincent Portero, Richard Redon: Knime4Bio: a set of custom nodes for the interpretation of next-generation sequencing data with KNIME.
+Bioinformatics \textbf{27}(22), 3200--3201 (2011).
+\doi{10.1093/bioinformatics/btr554}
+
+\bibitem{10.1093_bioinformatics_btz204}
+Malik Yousef, Loai AbdAllah, Jens Allmer: maTE: discovering expressed interactions between microRNAs and their targets.
+Bioinformatics \textbf{35}(20), 4020--4028 (2019).
+\doi{10.1093/bioinformatics/btz204}
+
+\bibitem{10.1093_bioinformatics_bts543}
+Tobias Pietzsch, Stephan Preibisch, Pavel Tomančák, Stephan Saalfeld: ImgLib2—generic image processing in Java.
+Bioinformatics \textbf{28}(22), 3009--3011 (2012).
+\doi{10.1093/bioinformatics/bts543}
+
+\bibitem{10.3390_diagnostics10100815}
+Carlo Ricciardi, Halldór Jónsson, Deborah Jacob, Giovanni Improta, Marco Recenti, Magnús Kjartan Gíslason, Giuseppe Cesarelli, Luca Esposito, Vincenzo Minutolo, Paolo Bifulco, Paolo Gargiulo: Improving Prosthetic Selection and Predicting BMD from Biometric Measurements in Patients Receiving Total Hip Arthroplasty.
+Diagnostics \textbf{10}(10), 815 (2020).
+\doi{10.3390/diagnostics10100815}
+
+\bibitem{10.3390_encyclopedia3020035}
+Sebastjan Kralj, Marko Jukič, Urban Bren: Molecular Filters in Medicinal Chemistry.
+Encyclopedia \textbf{3}(2), 501--511 (2023).
+\doi{10.3390/encyclopedia3020035}
+
+\bibitem{10.3389_fchem.2018.00093}
+Priyanka Banerjee, Robert Preissner: BitterSweetForest: A Random Forest Based Binary Classifier to Predict Bitterness and Sweetness of Chemical Compounds.
+Frontiers in Chemistry \textbf{6} (2018).
+\doi{10.3389/fchem.2018.00093}
+
+\bibitem{10.3389_fenvs.2016.00002}
+Ahmed Abdelaziz, H. Spahn‐Langguth, Karl‐Werner Schramm, Igor V. Tetko: Consensus Modeling for HTS Assays Using In silico Descriptors Calculates the Best Balanced Accuracy in Tox21 Challenge.
+Frontiers in Environmental Science \textbf{4} (2016).
+\doi{10.3389/fenvs.2016.00002}
+
+\bibitem{10.1371_journal.pone.0208626}
+Muhammad Asif, Hugo Martiniano, Astrid M. Vicente, Francisco M. Couto: Identifying disease genes using machine learning and gene functional similarities, assessed through Gene Ontology.
+PLoS ONE \textbf{13}(12), e0208626 (2018).
+\doi{10.1371/journal.pone.0208626}
+
+\bibitem{knime_the_konstanz_information_miner_2006}
+Michael R. Berthold, Nicolas Cebron, Fabian Dill, Giuseppe Di Fatta, Thomas R. Gabriel, Florian Georg, Thorsten Meinl, Peter Ohl, Christoph Sieb, Bernd Wiswedel: KNIME: The Konstanz Information Miner.
+Proc. of the 4th Annual Industrial Simulation Conference (ISC), Workshop on Multi-Agent Systems and Simulation (MAS\&S), Palermo, Italy (2006).
+
+\bibitem{10.1007_s10822-012-9577-7}
+Wendy A. Warr: Scientific workflow systems: Pipeline Pilot and KNIME.
+Journal of Computer-Aided Molecular Design \textbf{26}(7), 801--804 (2012).
+\doi{10.1007/s10822-012-9577-7}
+
+\bibitem{10.1007_s11356-022-21471-9}
+Chetan Sharma, Sumit Sakhuja, Shivinder Nijjer: Recent trends of green human resource management: Text mining and network analysis.
+Environmental Science and Pollution Research \textbf{29}(56), 84916--84935 (2022).
+\doi{10.1007/s11356-022-21471-9}
+
+\bibitem{10.1007_s12553-020-00438-1}
+Ilias Tougui, Abdelilah Jilbab, Jamal El Mhamdi: Heart disease classification using data mining tools and machine learning techniques.
+Health and Technology \textbf{10}(5), 1137--1144 (2020).
+\doi{10.1007/s12553-020-00438-1}
+
+\bibitem{10.1186_s13321-018-0299-2}
+Andrew D. McEachran, Kamel Mansouri, Chris Grulke, Emma Schymanski, Christoph Ruttkies, Antony Williams: “MS-Ready” structures for non-targeted high-resolution mass spectrometry screening studies.
+Journal of Cheminformatics \textbf{10}(1), 45 (2018).
+\doi{10.1186/s13321-018-0299-2}
+
+\bibitem{10.1186_s13321-018-0315-6}
+Domenico Gadaleta, Anna Lombardo, Cosimo Toma, Emilio Benfenati: A new semi-automated workflow for chemical data retrieval and quality checking for modeling applications.
+Journal of Cheminformatics \textbf{10}(1), 60 (2018).
+\doi{10.1186/s13321-018-0315-6}
+
+\bibitem{10.1186_s13321-019-0384-1}
+Kamel Mansouri, Neal F. Cariello, Alexandru Korotcov, Valery Tkachenko, Chris Grulke, Catherine S. Sprankle, David Allen, Warren Casey, Nicole Kleinstreuer, Antony Williams: Open-source QSAR models for pKa prediction using multiple machine learning approaches.
+Journal of Cheminformatics \textbf{11}(1), 60 (2019).
+\doi{10.1186/s13321-019-0384-1}
+
+\bibitem{10.1186_s13321-020-00435-6}
+Ryosuke Kojima, Shoichi Ishida, Masateru Ohta, Hiroaki Iwata, Teruki Honma, Yasushi Okuno: kGCN: a graph-based deep learning framework for chemical structures.
+Journal of Cheminformatics \textbf{12}(1), 32 (2020).
+\doi{10.1186/s13321-020-00435-6}
+
+\bibitem{10.1038_s41592-018-0216-7}
+Martin Weigert, Uwe Schmidt, Tobias Boothe, Andreas Müller, Alexandr Dibrov, Akanksha Jain, Benjamin Wilhelm, Deborah Schmidt, Coleman Broaddus, S J Culley, Maurício Rocha-Martins, Fabián Segovia‐Miranda, et\textasciitilde{}al.: Content-aware image restoration: pushing the limits of fluorescence microscopy.
+Nature Methods \textbf{15}(12), 1090--1097 (2018).
+\doi{10.1038/s41592-018-0216-7}
+
+\bibitem{10.3390_su12114776}
+Pier Francesco Orrù, Andrea Zoccheddu, Lorenzo Sassu, Carmine Mattia, Riccardo Cozza, Simone Arena: Machine Learning Approach Using MLP and SVM Algorithms for the Fault Prediction of a Centrifugal Pump in the Oil and Gas Industry.
+Sustainability \textbf{12}(11), 4776 (2020).
+\doi{10.3390/su12114776}
+
+\bibitem{10.3390_su13073836}
+David Flores Ruíz, Adolfo Elizondo-Salto, María de la O Barroso González: Using Social Media in Tourist Sentiment Analysis: A Case Study of Andalusia during the Covid-19 Pandemic.
+Sustainability \textbf{13}(7), 3836 (2021).
+\doi{10.3390/su13073836}
+
+\bibitem{10.3390_su15065443}
+Ganesh Dash, Chetan Sharma, Shamneesh Sharma: Sustainable Marketing and the Role of Social Media: An Experimental Study Using Natural Language Processing (NLP).
+Sustainability \textbf{15}(6), 5443 (2023).
+\doi{10.3390/su15065443}
+
+\bibitem{10.61925_swb.2023.1302}
+Yogesh Kisan Mali, Tejal Upadhyay: Fraud Detection in Online Content Mining Relies on the Random Forest Algorithm.
+SciWaveBulletin \textbf{01}(03), 13--20 (2023).
+\doi{10.61925/swb.2023.1302}
+
+\bibitem{10.1021_acs.jcim.9b00662}
+Dominique Sydow, Michele Wichmann, Jaime Rodrı́guez-Guerra, Daria Goldmann, Gregory A. Landrum, Andrea Volkamer: TeachOpenCADD-KNIME: A Teaching Platform for Computer-Aided Drug Design Using KNIME Workflows.
+Journal of Chemical Information and Modeling \textbf{59}(10), 4083--4086 (2019).
+\doi{10.1021/acs.jcim.9b00662}
+
+\bibitem{10.14569_specialissue.2011.010304}
+Abdullah H, Qasem A., Mohammed N., Emad M.: A Comparison Study between Data Mining Tools over some Classification Methods.
+International Journal of Advanced Computer Science and Applications \textbf{1}(3) (2011).
+\doi{10.14569/specialissue.2011.010304}
+
+\bibitem{10.3390_w15112004}
+Jakub Langhammer: Flood Simulations Using a Sensor Network and Support Vector Machine Model.
+Water \textbf{15}(11), 2004 (2023).
+\doi{10.3390/w15112004}
+
+\end{thebibliography}

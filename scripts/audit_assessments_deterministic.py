@@ -24,6 +24,7 @@ from urllib.parse import urlparse
 DEFAULT_SEED_CSV = Path("data/processed/openalex/openalex_knime_most_cited.csv")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
+DEFAULT_REGISTRY = Path("data/original/articles/registry.bbl")
 DEFAULT_WORKFLOW_REFERENCES = Path(
     "data/processed/audit/knime_downloadable_workflow_references.json"
 )
@@ -45,6 +46,18 @@ HTML_META_RE = re.compile(
     r'<meta\s+name=["\']article:([^"\']+)["\']\s+content=["\']([^"\']*)["\']\s*/?>',
     re.IGNORECASE,
 )
+HTML_TITLE_RE = re.compile(
+    r"<h1[^>]*>(.*?)</h1>|<title[^>]*>(.*?)</title>",
+    re.IGNORECASE | re.DOTALL,
+)
+ARTICLE_HTML_METADATA_FIELDS = {
+    "grobid_url",
+    "html_file",
+    "source_pdf",
+    "tei_file",
+    "text_extractor",
+    "text_stage",
+}
 EXCLUDED_OPENALEX_SEED_FIELDS = {
     "has_fulltext",
     "has_pdf",
@@ -162,6 +175,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed-csv", type=Path, default=DEFAULT_SEED_CSV)
     parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
     parser.add_argument("--text-dir", type=Path, default=DEFAULT_TEXT_DIR)
+    parser.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
     parser.add_argument("--workflow-references", type=Path, default=DEFAULT_WORKFLOW_REFERENCES)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--limit", type=int, default=0, help="Maximum records to write. 0 means all.")
@@ -197,10 +211,17 @@ def text_metadata(path: Path | None) -> dict[str, Any]:
                 metadata = json.loads(html.unescape(match.group(1).strip()))
             except json.JSONDecodeError:
                 continue
-            return metadata if isinstance(metadata, dict) else {}
+            if not isinstance(metadata, dict):
+                return {}
+            return {
+                key: value
+                for key, value in metadata.items()
+                if key in ARTICLE_HTML_METADATA_FIELDS
+            }
         meta_fields = {
             key: html.unescape(value)
             for key, value in HTML_META_RE.findall(text[:6000])
+            if key in ARTICLE_HTML_METADATA_FIELDS
         }
         return meta_fields
     try:
@@ -226,55 +247,107 @@ def normalize_doi(value: str) -> str:
     return value.lower()
 
 
-def token_set(value: str) -> set[str]:
-    return {token for token in re.findall(r"[a-z0-9]+", value.lower()) if len(token) >= 4}
+def doi_registry_key(doi: str) -> str:
+    normalized = normalize_doi(doi)
+    if not normalized:
+        return ""
+    return slugify(normalized.replace("/", "_")).lower()
 
 
-def doi_match_tokens(doi: str) -> set[str]:
-    tokens = token_set(doi)
-    compact_doi = re.sub(r"[^a-z0-9]+", "", doi.lower())
-    if compact_doi:
-        tokens.add(compact_doi)
-        tokens.add(compact_doi[-4:])
-        tokens.add(compact_doi[-5:])
-    return tokens
+def parse_registry_bbl(path: Path) -> dict[str, Any]:
+    """Parse the local article registry.
+
+    The registry is the source of truth for local article bibliographic
+    metadata. DOI is treated as an indivisible primary key: matching uses the
+    complete normalized DOI only, never DOI suffixes or fragments.
+    """
+    if not path.exists():
+        return {"by_key": {}, "by_doi": {}}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    by_key: dict[str, dict[str, str]] = {}
+    by_doi: dict[str, dict[str, str]] = {}
+    for match in re.finditer(
+        r"\\bibitem\{([^}]+)\}\n(.*?)(?=\n\\bibitem\{|\n\\end\{thebibliography\})",
+        text,
+        re.DOTALL,
+    ):
+        key = match.group(1)
+        lines = [compact(line) for line in match.group(2).splitlines() if compact(line)]
+        if not lines:
+            continue
+        first_line = lines[0]
+        authors = ""
+        title = first_line.rstrip(".")
+        if ": " in first_line:
+            authors, title = first_line.split(": ", 1)
+            title = title.rstrip(".")
+        doi_match = re.search(r"\\doi\{([^}]+)\}", match.group(2))
+        doi = normalize_doi(doi_match.group(1)) if doi_match else ""
+        publication_line = next((line for line in lines[1:] if not line.startswith(r"\doi{")), "")
+        year_match = re.search(r"\((\d{4})\)", publication_line)
+        record = {
+            "registry_key": key,
+            "authors": authors,
+            "title": html.unescape(title),
+            "publication": publication_line,
+            "publication_year": year_match.group(1) if year_match else "",
+            "doi": doi,
+        }
+        by_key[key] = record
+        if doi:
+            by_doi[doi] = record
+    return {"by_key": by_key, "by_doi": by_doi}
 
 
-def title_match_score(title_tokens: set[str], path: Path) -> int:
-    stem_tokens = token_set(path.stem)
-    score = len(title_tokens & stem_tokens) * 3
+def html_title(path: Path) -> str:
     try:
-        head = " ".join(path.read_text(encoding="utf-8", errors="replace").splitlines()[:80])
+        head = path.read_text(encoding="utf-8", errors="replace")[:8000]
     except OSError:
-        return score
-    return score + len(title_tokens & token_set(head)) * 2
+        return ""
+    match = HTML_TITLE_RE.search(head)
+    if not match:
+        return ""
+    return compact(html.unescape(re.sub(r"<[^>]+>", " ", match.group(1) or match.group(2) or "")))
 
 
-def text_path_for_article(article: dict[str, Any], text_dir: Path) -> Path | None:
+def text_match_for_article(article: dict[str, Any], text_dir: Path) -> tuple[Path | None, dict[str, Any]]:
     files = [path for path in text_dir.glob("*.html") if path.is_file()]
+    diagnostics: dict[str, Any] = {
+        "article_text_match_status": "no_processed_text_match",
+        "matched_html_title": "",
+        "doi_match": False,
+        "match_reason": "no processed GROBID HTML matched this article",
+    }
     if not files:
-        return None
+        diagnostics["match_reason"] = "processed article HTML directory is empty"
+        return None, diagnostics
+    registry_key = str(article.get("registry_key") or "")
     doi = normalize_doi(str(article.get("doi_or_url") or article.get("doi") or ""))
-    title_tokens = token_set(str(article.get("title", "")))
-    rank = str(article.get("rank", ""))
-    doi_tokens = doi_match_tokens(doi)
-    best_path: Path | None = None
-    best_score = 0
+    if registry_key:
+        path = text_dir / f"{registry_key}.html"
+        if path.exists():
+            diagnostics.update(
+                {
+                    "article_text_match_status": "matched",
+                    "matched_html_title": html_title(path),
+                    "doi_match": bool(doi),
+                    "match_reason": "processed HTML filename matches full registry key",
+                }
+            )
+            return path, diagnostics
     for path in files:
         stem = path.stem.lower()
-        score = 0
-        if rank and stem.startswith(f"{rank}_"):
-            score += 8
-        if doi:
-            doi_slug = slugify(doi).lower()
-            if doi_slug and doi_slug in stem:
-                score += 80
-            score += sum(15 for token in doi_tokens if token and token in stem)
-        score += title_match_score(title_tokens, path)
-        if score > best_score:
-            best_score = score
-            best_path = path
-    return best_path if best_score >= 12 else None
+        if doi and stem == doi_registry_key(doi):
+            diagnostics.update(
+                {
+                    "article_text_match_status": "matched",
+                    "matched_html_title": html_title(path),
+                    "doi_match": True,
+                    "match_reason": "processed HTML filename matches full DOI registry key",
+                }
+            )
+            return path, diagnostics
+    return None, diagnostics
 
 
 def line_label(start: int, end: int) -> str:
@@ -486,11 +559,16 @@ def workflow_index(path: Path) -> dict[int, dict[str, Any]]:
     }
 
 
-def load_seed_articles(path: Path) -> list[dict[str, Any]]:
+def load_seed_articles(path: Path, registry: dict[str, Any]) -> list[dict[str, Any]]:
     with path.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
     articles: list[dict[str, Any]] = []
+    registry_by_doi: dict[str, dict[str, str]] = registry.get("by_doi", {})
     for index, row in enumerate(rows, start=1):
+        doi = normalize_doi(row.get("doi", ""))
+        registry_record = registry_by_doi.get(doi, {}) if doi else {}
+        registry_title = registry_record.get("title", "")
+        registry_year = registry_record.get("publication_year", "")
         openalex_seed_fields = {
             key: value for key, value in row.items() if key not in EXCLUDED_OPENALEX_SEED_FIELDS
         }
@@ -498,12 +576,14 @@ def load_seed_articles(path: Path) -> list[dict[str, Any]]:
             {
                 "rank": index,
                 "article_identifier": row.get("openalex_id", ""),
-                "title": row.get("title", ""),
-                "publication_year": row.get("publication_year", ""),
+                "title": registry_title or row.get("title", ""),
+                "publication_year": registry_year or row.get("publication_year", ""),
                 "venue": row.get("source", ""),
-                "doi_or_url": normalize_doi(row.get("doi", "")),
-                "doi": normalize_doi(row.get("doi", "")),
+                "doi_or_url": doi,
+                "doi": doi,
                 "openalex_seed_fields": openalex_seed_fields,
+                "registry_bibliographic_fields": registry_record,
+                "registry_key": registry_record.get("registry_key", ""),
             }
         )
     return articles
@@ -560,6 +640,7 @@ def audit_article(
     article: dict[str, Any],
     text_path: Path | None,
     workflow_record: dict[str, Any] | None,
+    text_match: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     lines = text_path.read_text(encoding="utf-8", errors="replace").splitlines() if text_path else None
     metadata = text_metadata(text_path)
@@ -719,6 +800,8 @@ def audit_article(
         "processed_text_file": processed_text_file,
         "openalex_seed_fields": article.get("openalex_seed_fields", {}),
     }
+    if text_match:
+        meta.update(text_match)
 
     return {
         "rank": article["rank"],
@@ -753,6 +836,26 @@ def summary_counts(articles: list[dict[str, Any]]) -> dict[str, Any]:
     return counts
 
 
+def text_match_summary(articles: list[dict[str, Any]]) -> dict[str, Any]:
+    status_counts: dict[str, int] = {}
+    reason_counts: dict[str, int] = {}
+    doi_matches = 0
+    for article in articles:
+        meta = article.get("meta", {})
+        status = str(meta.get("article_text_match_status", "unknown"))
+        reason = str(meta.get("match_reason", "unknown"))
+        status_counts[status] = status_counts.get(status, 0) + 1
+        reason_counts[reason] = reason_counts.get(reason, 0) + 1
+        if status == "matched" and meta.get("doi_match") is True:
+            doi_matches += 1
+    return {
+        "status_counts": status_counts,
+        "reason_counts": reason_counts,
+        "doi_matches": doi_matches,
+        "title_similarity_matches": 0,
+    }
+
+
 def schema_from_questions(questions: dict[str, Any]) -> dict[str, Any]:
     return {
         "description_audit_fields": {
@@ -772,36 +875,40 @@ def schema_from_questions(questions: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     args = parse_args()
     questions = load_json(args.questions) if args.questions.exists() else {}
+    registry = parse_registry_bbl(args.registry)
     workflows = workflow_index(args.workflow_references)
-    seed_articles = selected_articles(load_seed_articles(args.seed_csv), args.rank, args.limit)
+    seed_articles = selected_articles(load_seed_articles(args.seed_csv, registry), args.rank, args.limit)
 
     articles: list[dict[str, Any]] = []
     for article in seed_articles:
-        text_path = text_path_for_article(article, args.text_dir)
-        articles.append(audit_article(article, text_path, workflows.get(article["rank"])))
+        text_path, text_match = text_match_for_article(article, args.text_dir)
+        articles.append(audit_article(article, text_path, workflows.get(article["rank"]), text_match))
 
     result = {
         "created_at": date.today().isoformat(),
         "created_by": Path(__file__).as_posix(),
         "source_csv": {
             "top_cited_seed": args.seed_csv.as_posix(),
+            "article_registry": args.registry.as_posix(),
             "workflow_references": args.workflow_references.as_posix(),
             "audit_questions": args.questions.as_posix(),
         },
         "article_directory": args.text_dir.as_posix(),
         "scope": (
             "Deterministic candidate assessment generated without LLM calls and without reading "
-            "data/processed/audit/article_assessments.json."
+            "data/processed/audit/old_article_assessments.json."
         ),
         "method": {
-            "input_files": "OpenAlex seed CSV, processed GROBID article HTML, audit questions, and workflow-reference inventory.",
+            "input_files": "OpenAlex seed CSV, canonical article registry.bbl, processed GROBID article HTML, audit questions, and workflow-reference inventory.",
             "text_extraction": "Uses existing processed GROBID article HTML under data/processed/articles.",
             "assessment_focus": [
-                "bibliographic metadata from OpenAlex",
+                "bibliographic metadata from data/original/articles/registry.bbl for local articles",
+                "OpenAlex metadata retained as seed/provenance metadata",
                 "direct regex-supported text evidence",
                 "URLs normalized and validated from article text",
                 "article-level downloadable or linked workflow evidence from text and the workflow-reference inventory",
             ],
+            "doi_policy": "DOI is treated as an indivisible primary key. Matching uses the full normalized DOI-derived registry key only; DOI suffixes or fragments are never accepted as article identity.",
         },
         "limitations": [
             "No LLM is called.",
@@ -818,6 +925,7 @@ def main() -> int:
             "articles_with_extracted_text": sum(
                 1 for article in articles if article.get("meta", {}).get("processed_text_file")
             ),
+            "match_summary": text_match_summary(articles),
             "line_reference_semantics": "extracted_text_lines refer to processed GROBID HTML files under data/processed/articles.",
         },
     }
