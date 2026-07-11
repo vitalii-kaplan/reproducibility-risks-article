@@ -123,8 +123,18 @@ FLAG_NAMES = [
 ]
 
 URL_RE = re.compile(r"https?://[^\s<>\[\])\]}>\"']+", re.IGNORECASE)
+SPACED_URL_START_RE = re.compile(r"https?\s*:\s*/\s*/", re.IGNORECASE)
+DOI_RE = re.compile(r"10\.\d{4,9}/[-._;()/:A-Za-z0-9]+", re.IGNORECASE)
 VERSION_RE = re.compile(r"\bKNIME(?: Analytics Platform)?\s*(?:version|v\.?|ver\.?)?\s*(\d+(?:\.\d+){1,3})\b", re.IGNORECASE)
 URL_INVISIBLE_CHARS_RE = re.compile(r"[\u00ad\u200b\u200c\u200d\ufeff]")
+TRUNCATED_URL_PATH_SEGMENTS = {
+    "advan",
+    "chemi",
+    "dashb",
+    "multi",
+    "pesti",
+    "resul",
+}
 
 DIRECT_USE_RE = re.compile(
     r"\b(?:used|using|implemented|performed|built|designed|developed|adopted|created|constructed|processed|analysed|analyzed|executed|modelled|modeled)\b.{0,120}\bKNIME\b|"
@@ -411,7 +421,7 @@ def url_contexts(lines: list[str]) -> list[tuple[str, str]]:
     contexts: list[tuple[str, str]] = []
     for index, line in enumerate(lines):
         context = clean_url_text(compact(" ".join(lines[max(0, index - 2) : min(len(lines), index + 3)])))
-        candidates = [line]
+        candidates = [line, *spaced_url_candidates(line)]
         seen_in_line: set[str] = set()
         for candidate in candidates:
             for url in URL_RE.findall(clean_url_text(candidate)):
@@ -426,8 +436,95 @@ def clean_url_text(value: str) -> str:
     return URL_INVISIBLE_CHARS_RE.sub("", value)
 
 
+def compact_spaced_url_text(value: str) -> str:
+    value = clean_url_text(value)
+    value = re.sub(r"\b(https?)\s*:\s*/\s*/\s*", lambda match: f"{match.group(1).lower()}://", value)
+    value = re.sub(r"(?<=[A-Za-z0-9])\s*\.\s*(?=[a-z0-9])", ".", value)
+    value = re.sub(r"(?<=://)\s+", "", value)
+    return value
+
+
+def spaced_url_candidates(context: str) -> list[str]:
+    candidates: list[str] = []
+    seen: set[str] = set()
+    for match in SPACED_URL_START_RE.finditer(context):
+        compacted = compact_spaced_url_text(context[match.start() : match.start() + 240])
+        url_match = URL_RE.match(compacted)
+        if not url_match:
+            continue
+        candidate = url_match.group(0).rstrip(".,;:])")
+        if candidate and candidate.lower() not in seen:
+            seen.add(candidate.lower())
+            candidates.append(candidate)
+    return candidates
+
+
+def repair_url_from_context(raw_url: str, context: str) -> str:
+    if not context:
+        return raw_url
+    raw_key = compact_spaced_url_text(raw_url).rstrip(".,;:/").lower()
+    for candidate in spaced_url_candidates(context):
+        candidate_key = candidate.rstrip(".,;:/").lower()
+        if candidate_key.startswith(raw_key):
+            return candidate
+    return raw_url
+
+
+def repair_doi_url_from_context(raw_url: str, context: str) -> str:
+    if not context:
+        return raw_url
+    try:
+        parsed = urlparse(raw_url)
+    except ValueError:
+        return raw_url
+    if parsed.netloc.lower() not in {"doi.org", "dx.doi.org"}:
+        return raw_url
+    doi_prefix = parsed.path.lstrip("/").rstrip("/").lower()
+    if not doi_prefix:
+        return raw_url
+    compacted = compact_spaced_url_text(context)
+    for match in DOI_RE.finditer(compacted):
+        candidate = match.group(0).rstrip(".,;:])")
+        if candidate.lower().startswith(doi_prefix) and len(candidate) > len(doi_prefix):
+            return f"{parsed.scheme}://{parsed.netloc}/{candidate}"
+    return raw_url
+
+
+def url_seen_key(url: str) -> str:
+    return url.rstrip("/").lower()
+
+
+def valid_doi_url(parsed: Any) -> bool:
+    doi = parsed.path.lstrip("/").rstrip("/")
+    if not doi:
+        return False
+    if not DOI_RE.fullmatch(doi):
+        return False
+    suffix = doi.split("/", 1)[1]
+    if len(suffix) < 4:
+        return False
+    if not re.search(r"\d", suffix):
+        return False
+    if re.fullmatch(r"j\.[a-z]+", suffix, re.IGNORECASE):
+        return False
+    if re.fullmatch(r"[a-z.]+", suffix, re.IGNORECASE):
+        return False
+    if doi.lower().startswith("10.1021/acs.") and re.search(r"\.\d[a-z]\d{1,3}$", doi, re.IGNORECASE):
+        return False
+    return True
+
+
+def looks_truncated_path(parsed: Any) -> bool:
+    path = parsed.path.rstrip("/")
+    if not path:
+        return False
+    last_segment = path.rsplit("/", 1)[-1].lower()
+    return last_segment in TRUNCATED_URL_PATH_SEGMENTS
+
+
 def normalized_url(raw_url: str, context: str = "") -> str | None:
-    url = clean_url_text(raw_url).strip().rstrip(",;:")
+    url = repair_url_from_context(clean_url_text(raw_url).strip().rstrip(",;:"), context)
+    url = repair_doi_url_from_context(url, context)
     if url.endswith("-"):
         return None
     if url.endswith("."):
@@ -467,24 +564,15 @@ def normalized_url(raw_url: str, context: str = "") -> str | None:
         return None
     if parsed.path.count("(") != parsed.path.count(")"):
         return None
-    if host in {"doi.org", "dx.doi.org"} and re.fullmatch(r"/10\.\d+/?", parsed.path):
+    if host in {"doi.org", "dx.doi.org"} and not valid_doi_url(parsed):
+        return None
+    if looks_truncated_path(parsed):
         return None
     return url
 
 
-def tei_url(raw_url: str) -> str | None:
-    url = clean_url_text(html.unescape(raw_url)).strip().rstrip(".,;:")
-    if url.endswith("-"):
-        return None
-    try:
-        parsed = urlparse(url)
-    except ValueError:
-        return None
-    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-        return None
-    if "." not in parsed.netloc:
-        return None
-    return url
+def tei_url(raw_url: str, context: str = "") -> str | None:
+    return normalized_url(html.unescape(raw_url), html.unescape(context))
 
 
 def unique_normalized_urls_from_tei(path: Path) -> list[str]:
@@ -508,6 +596,9 @@ def unique_normalized_urls_from_tei(path: Path) -> list[str]:
         for element in content_root.iter():
             tag = element.tag.rsplit("}", 1)[-1]
             target = element.attrib.get("target", "")
+            context = clean_url_text(
+                html.unescape(" ".join(part for part in (target, element.text or "", element.tail or "") if part))
+            )
             if tag in {"ref", "ptr"} and target.startswith(("http://", "https://")):
                 values = [target]
             else:
@@ -518,8 +609,8 @@ def unique_normalized_urls_from_tei(path: Path) -> list[str]:
                 values.append(element.tail)
             for value in values:
                 for raw_url in URL_RE.findall(html.unescape(value)):
-                    cleaned = tei_url(raw_url)
-                    seen_key = cleaned.lower() if cleaned else ""
+                    cleaned = tei_url(raw_url, context)
+                    seen_key = url_seen_key(cleaned) if cleaned else ""
                     if cleaned and seen_key not in seen:
                         seen.add(seen_key)
                         urls.append(cleaned)
@@ -535,13 +626,12 @@ def linked_resources_from_sources(
     source_urls: list[str] = []
     if tei_path and tei_path.exists():
         source_urls = unique_normalized_urls_from_tei(tei_path)
-    if not source_urls:
-        for url, context in url_contexts(lines):
-            cleaned = normalized_url(url, context)
-            if cleaned:
-                source_urls.append(cleaned)
+    for url, context in url_contexts(lines):
+        cleaned = normalized_url(url, context)
+        if cleaned:
+            source_urls.append(cleaned)
     for cleaned in source_urls:
-        seen_key = cleaned.lower()
+        seen_key = url_seen_key(cleaned)
         if seen_key not in seen:
             seen.add(seen_key)
             resources.append({"url": cleaned, "type": UNDEFINED})
