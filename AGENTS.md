@@ -274,6 +274,37 @@ Create directories only when they are needed. Keep generated files out of versio
 - The parser comparison and rationale are recorded in
   `PDF_parser_comparison.md`. The 83-file GROBID run produced 83 HTML files,
   83 TEI XML files, and no failed records.
+- Current article-to-workflow discovery should use reference-page content
+  analysis as the preferred evidence path. Article text is useful for context,
+  but the strongest signal for whether a reader can obtain a workflow is often
+  the target of the article's links: KNIME Hub pages, myExperiment pages,
+  GitHub repositories, publisher supplements, datasets, code repositories, or
+  dead/blocked URLs.
+- The current reference-page chain is:
+  `scripts/collect_article_urls.py` ->
+  `scripts/fetch_article_url_pages.py` ->
+  `scripts/attach_url_fetch_metadata.py` ->
+  `scripts/browser_fetch_403_urls.py` when needed ->
+  `scripts/classify_article_references_with_llm.py`.
+  The main intermediate/output files are
+  `data/processed/audit/article_url_collection.json`,
+  `data/processed/audit/pages/`,
+  `data/processed/audit/browser_pages/`, and
+  `data/processed/audit/article_reference_llm_classifications.json`.
+- Treat `data/processed/audit/article_reference_llm_classifications.json` as
+  the current best machine-generated evidence for article-to-workflow
+  relations. Interpret `workflow_landing_page_available`,
+  `direct_workflow_available`, and `possible_workflow_requires_inspection` as
+  stronger URL-level evidence than `manual_check_required`; manually review
+  `manual_check_required` before counting it as confirmed workflow
+  availability.
+- The older article-text and candidate-assessment scripts are retained only as
+  reference material and are prefixed with `old_`:
+  `scripts/old_audit_assessments_deterministic.py`,
+  `scripts/old_audit_assessments_llm_url.py`, and
+  `scripts/old_audit_assessments_llm_flag.py`. Do not use them as the active
+  article-to-workflow discovery path unless explicitly restoring the old
+  workflow for comparison.
 - The empirical expansion priority is now lower than formalizing the framework,
   evidence model, and score dimensions. Continue assessing KNIME-related article
   records beyond the current 100-record audit registry only if time allows, and

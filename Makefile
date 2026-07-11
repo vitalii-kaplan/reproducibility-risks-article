@@ -181,8 +181,8 @@ refresh-audit-support: ## Refresh quote/provenance support in the structured art
 	  --text-dir "$(ARTICLE_TEXT_DIR)"
 
 .PHONY: deterministic-article-assessments
-deterministic-article-assessments: ## Generate deterministic article_audit_fields candidates without network or LLM.
-	$(PYTHON) scripts/audit_assessments_deterministic.py \
+deterministic-article-assessments: ## Legacy: generate old deterministic article_audit_fields candidates.
+	$(PYTHON) scripts/old_audit_assessments_deterministic.py \
 	  --seed-csv "$(OPENALEX_PROCESSED_DIR)/openalex_knime_most_cited.csv" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
@@ -193,8 +193,8 @@ deterministic-article-assessments: ## Generate deterministic article_audit_field
 	  $(if $(RANK),--rank "$(RANK)",)
 
 .PHONY: llm-url-assessments
-llm-url-assessments: ## Classify linked_resources URL types with LLM calls. Network access required.
-	$(PYTHON) scripts/audit_assessments_llm_url.py \
+llm-url-assessments: ## Legacy: classify old linked_resources URL types with LLM calls. Network access required.
+	$(PYTHON) scripts/old_audit_assessments_llm_url.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
@@ -206,8 +206,8 @@ llm-url-assessments: ## Classify linked_resources URL types with LLM calls. Netw
 	  $(if $(RANK),--rank "$(RANK)",)
 
 .PHONY: llm-flag-assessments
-llm-flag-assessments: ## Review/correct article_audit_fields flags with LLM calls. Network access required.
-	$(PYTHON) scripts/audit_assessments_llm_flag.py \
+llm-flag-assessments: ## Legacy: review/correct old article_audit_fields flags with LLM calls. Network access required.
+	$(PYTHON) scripts/old_audit_assessments_llm_flag.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \

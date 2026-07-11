@@ -23,6 +23,7 @@ workflow platform with a long public development history.
 - Scripts used to reproduce the main tables and data summaries.
 - GROBID-derived semantic HTML/TEI article extractions used for structured
   article-text inspection.
+- Cached reference-page evidence used to classify article-to-workflow links.
 
 The paper is the main narrative. The data and scripts are included so the
 claims can be inspected and updated.
@@ -39,6 +40,10 @@ claims can be inspected and updated.
 - Twenty-eight records report downloadable or linked KNIME workflow files.
   Workflow artifacts or workflow directories were obtained for 12 article
   records.
+- The current workflow-link discovery process uses reference-page content
+  analysis: article URLs are collected from GROBID HTML/TEI, fetched and cached,
+  then classified from the locally stored target pages. This gave clearer
+  article-to-workflow evidence than article-text-only LLM analysis.
 - Workflows from all 12 obtained article records opened in the local KNIME
   environment used for the manual check. Four article records had at least one
   workflow execute successfully: PAINS, Webinar Pricing Analytics, ImageJ
@@ -84,6 +89,10 @@ AGENTS.md                Detailed maintenance notes for future project updates
   TEI XML.
 - `data/processed/articles/grobid_tei/*.tei.xml`: GROBID TEI XML extracted
   from local article PDFs.
+- `data/processed/audit/article_url_collection.json`: article metadata,
+  normalized referenced URLs, and URL fetch metadata.
+- `data/processed/audit/article_reference_llm_classifications.json`: LLM
+  classification of cached reference pages for KNIME workflow obtainability.
 - `data/original/workflows/knime_downloadable_workflow_references.json`:
   workflow-link records, retrieval outcomes, and manual KNIME opening results.
 - `article/tables/top_cited_article_audit_summary.csv`: article-audit summary
@@ -121,6 +130,12 @@ For local articles, `data/original/articles/registry.bbl` is the source of
 truth for article metadata and PDF identity. OpenAlex records are used as a
 citation-ranked seed and provenance source, not as authority over local PDF
 metadata when the registry is more specific.
+
+For workflow-link discovery, the current preferred evidence path is reference
+page analysis rather than article-text-only classification: collect URLs from
+processed article HTML/TEI, fetch and cache those pages, attach fetch metadata,
+then classify the locally stored reference-page content for whether it provides
+or points to an obtainable KNIME workflow.
 
 Run GROBID locally before regenerating semantic article HTML:
 

@@ -225,3 +225,5 @@ data/original/articles/*.pdf
 data/processed/articles/
 data/processed/audit/logs/llm_support_validation_decisions.jsonl
 data/processed/audit/logs/llm_article_assessment_candidates.jsonl
+data/processed/audit/browser_pages/*
+data/processed/audit/pages/*

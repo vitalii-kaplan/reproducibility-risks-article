@@ -1,0 +1,91 @@
+{
+  "name": "article_reference_workflow_obtainability_classification",
+  "version": "2026-07-11.2",
+  "mode": "classify_article_references_from_local_fetched_pages",
+  "system_instruction": "You classify URLs referenced by scientific articles for a reproducibility audit. Return only JSON. Use only the supplied URL metadata and local downloaded page excerpt. Do not browse, fetch, use external knowledge, or infer from the full article text. The goal is to decide whether the referenced URL lets a reader obtain a KNIME workflow artifact, and in which form.",
+  "user_task": "For each supplied reference URL, classify the URL's role for KNIME workflow reproducibility. Be conservative. A URL counts as workflow-providing only when the supplied local page evidence or URL metadata strongly indicates a KNIME workflow, workflow file/archive, KNIME Hub workflow, myExperiment workflow, supplementary workflow archive, or repository containing workflow artifacts.",
+  "limitations": [
+    "Do not decide whether the article has textual workflow descriptions or graphical workflow figures.",
+    "Do not read or rely on the full article text.",
+    "Do not open or fetch URLs.",
+    "Use only the supplied URL, fetch metadata, final URL, local page title, and local downloaded page excerpt.",
+    "If a URL is blocked by captcha, Cloudflare, login, or script access, use workflow_access=manual_check_required only when the URL itself is workflow-looking, supplement-looking, repository-looking, or otherwise potentially workflow-relevant. If the blocked URL is plainly an article page, DOI page, generic software page, documentation page, or dataset page, use workflow_access=no_workflow_evidence.",
+    "Do not classify generic software pages, documentation pages, datasets, DOI pages, or publisher article pages as workflow artifacts unless they directly expose a workflow artifact or a workflow-hosting page.",
+    "KNIME Hub links, kni.me workflow links, myExperiment workflow URLs, workflow ZIP/archive downloads, and repository pages explicitly about KNIME workflows are workflow-relevant.",
+    "GitHub/GitLab repositories count as workflow_repository only if the supplied page evidence or URL/title indicates KNIME workflows, workflow directories, workflow files, or executable workflow artifacts. Otherwise classify as code_repository.",
+    "Do not classify model repositories, QSAR model databases, data repositories, benchmark repositories, or general scientific repositories as workflow_repository unless the supplied evidence explicitly mentions KNIME workflow artifacts or executable workflows.",
+    "Publisher supplements count as possible_workflow_supplement only if the page/file name/title/excerpt indicates supplementary files and there is evidence they may contain workflows, scripts, workflow archives, or KNIME-related executable artifacts. Otherwise classify as supplementary_material.",
+    "A publication_or_article_page normally has workflow_access=no_workflow_evidence. Use manual_check_required for a publication page only if the local evidence says that workflow files are available behind that page.",
+    "If evidence is insufficient, use reference_type=unclear and workflow_access=unknown."
+  ],
+  "allowed_reference_types": [
+    "knime_workflow_direct_file",
+    "knime_hub_workflow",
+    "myexperiment_workflow",
+    "workflow_repository",
+    "possible_workflow_supplement",
+    "supplementary_material",
+    "code_repository",
+    "dataset_or_input_data",
+    "third_party_software_or_documentation",
+    "publication_or_article_page",
+    "blocked_or_captcha_page",
+    "other_non_workflow_resource",
+    "malformed_or_dead_url",
+    "unclear"
+  ],
+  "reference_type_definitions": {
+    "knime_workflow_direct_file": "A direct downloadable KNIME workflow file, workflow archive, ZIP containing KNIME workflows, or equivalent executable workflow artifact.",
+    "knime_hub_workflow": "A KNIME Hub or kni.me URL for a workflow, component, node, extension, or space where a workflow artifact can plausibly be obtained.",
+    "myexperiment_workflow": "A myExperiment workflow URL or workflow landing page.",
+    "workflow_repository": "A repository or project page that appears to contain KNIME workflows, workflow files, workflow directories, or executable workflow artifacts.",
+    "possible_workflow_supplement": "A supplementary/supporting-material URL or file that may contain KNIME workflow artifacts but needs inspection to confirm.",
+    "supplementary_material": "Supplementary/supporting material without evidence that it contains a workflow.",
+    "code_repository": "Source code, scripts, notebooks, model code, or a repository not shown to provide KNIME workflow files.",
+    "dataset_or_input_data": "Input data, benchmark data, raw/processed data, database records, data downloads, or data repositories.",
+    "third_party_software_or_documentation": "External software, libraries, tools, platforms, downloads, update sites, documentation, examples, tutorials, or manuals.",
+    "publication_or_article_page": "DOI landing page, article page, PubMed record, book/report/preprint page, or other cited publication page.",
+    "blocked_or_captcha_page": "The local page evidence shows a captcha, Cloudflare challenge, bot verification, login wall, or access block.",
+    "other_non_workflow_resource": "A clearly identified non-workflow resource that does not fit the other categories.",
+    "malformed_or_dead_url": "Malformed, truncated, dead, unresolved, or clearly invalid URL evidence.",
+    "unclear": "Insufficient evidence to classify the reference."
+  },
+  "allowed_workflow_access": [
+    "direct_workflow_available",
+    "workflow_landing_page_available",
+    "possible_workflow_requires_inspection",
+    "manual_check_required",
+    "no_workflow_evidence",
+    "unknown"
+  ],
+  "workflow_access_definitions": {
+    "direct_workflow_available": "The URL appears to directly provide a workflow file/archive or downloadable workflow artifact.",
+    "workflow_landing_page_available": "The URL opens a workflow-hosting or repository page where a workflow can likely be obtained.",
+    "possible_workflow_requires_inspection": "The URL may provide workflow artifacts, but the local evidence is not enough to confirm.",
+    "manual_check_required": "The URL is blocked, captcha-protected, login-gated, or otherwise needs human/browser inspection.",
+    "no_workflow_evidence": "The URL does not provide evidence of a KNIME workflow artifact.",
+    "unknown": "Evidence is insufficient."
+  },
+  "allowed_workflow_forms": [
+    "knime_workflow_file_or_archive",
+    "knime_hub_page",
+    "myexperiment_page",
+    "repository",
+    "publisher_supplement",
+    "none",
+    "unknown"
+  ],
+  "required_json_schema": {
+    "references": [
+      {
+        "url": "exact URL copied from input",
+        "reference_type": "one allowed_reference_type",
+        "workflow_access": "one allowed_workflow_access",
+        "workflow_form": "one allowed_workflow_forms",
+        "evidence_quote": "short quote from supplied local page excerpt or URL/title metadata, or empty string",
+        "reason": "brief explanation based only on supplied local evidence",
+        "confidence": "low, medium, or high"
+      }
+    ]
+  }
+}

@@ -1,11 +1,11 @@
 {
   "name": "KNIME publication and workflow reproducibility audit script chain",
   "purpose": "Formal workflow index for the article and workflow audit process, from OpenAlex article collection through article-audit table generation.",
-  "updated_at": "2026-07-09",
+  "updated_at": "2026-07-11",
   "handoff_terms": {
     "automatic": "The next step consumes files written by this step without required manual editing.",
     "semi_automatic": "The script produces or consumes an intermediate state that may require manual action, such as institutional article download, human article assessment, workflow retrieval, or manual KNIME opening/execution checks.",
-    "llm_automatic": "The script runs automatically after deterministic preprocessing, but uses an LLM for bounded judgment tasks that previously required human review.",
+    "llm_automatic": "The script runs automatically after local preprocessing, but uses an LLM for bounded judgment tasks that previously required human review.",
     "manual": "The step is not currently represented by a deterministic script and must be performed or edited by a human before the next scripted step is meaningful."
   },
   "article_audit_chain": [
@@ -96,106 +96,108 @@
     },
     {
       "step": 5,
-      "name": "Generate structured article assessment candidates",
-      "script": "scripts/audit_assessments_deterministic.py",
-      "make_target": "deterministic-article-assessments",
+      "name": "Collect article URLs and metadata",
+      "script": "scripts/collect_article_urls.py",
+      "make_target": null,
       "network_required": false,
       "input": [
         "data/processed/openalex/openalex_knime_most_cited.csv",
         "data/original/articles/registry.bbl",
         "data/processed/articles/*.html",
-        "data/processed/audit/knime_article_audit_questions.json",
-        "data/processed/audit/knime_downloadable_workflow_references.json"
+        "data/processed/articles/grobid_tei/*.tei.xml"
       ],
       "output": [
-        "data/processed/audit/article_deterministic_assessments.json"
+        "data/processed/audit/article_url_collection.json"
       ],
       "handoff_to_next": "automatic",
-      "manual_action_required": [
-        "Review data/processed/audit/article_deterministic_assessments.json for over-detected regex matches, undefined fields, and mismatches with the curated audit.",
-        "Do not overwrite data/processed/audit/old_article_assessments.json from this step; use the generated file as a deterministic comparison and review artifact."
-      ],
-      "notes": "This step creates a deterministic candidate assessment without network access and without reading the curated assessment JSON. The script reads the OpenAlex seed table, the canonical local article registry, processed article HTML with source-PDF metadata, audit questions, and the workflow-reference inventory. The registry is the source of truth for local article bibliographic metadata and PDF/HTML identity; OpenAlex is kept as the citation-ranked seed and provenance source. DOI is treated as an indivisible primary key, so matching uses only the full normalized DOI-derived registry key or an explicit no-DOI registry key, never DOI suffixes, tails, or fragments. The script writes a standalone JSON file with article_audit_fields, linked_resources, source pdf_file values, and undefined values where deterministic rules cannot decide. Use DETERMINISTIC_LIMIT and RANK to test subsets."
+      "notes": "Current article-to-workflow analysis starts here. This step joins the OpenAlex seed table, canonical article registry, and processed GROBID HTML/TEI. It collects article metadata and normalized article-related URLs only. It does not infer audit flags, classify URLs, call URLs, read the curated audit, or use an LLM. The registry and full DOI-derived keys remain the source of truth for local article identity."
     },
     {
       "step": 6,
-      "name": "Classify linked resource URL types with LLM",
-      "script": "scripts/audit_assessments_llm_url.py",
-      "make_target": "llm-url-assessments",
+      "name": "Fetch referenced URL pages",
+      "script": "scripts/fetch_article_url_pages.py",
+      "make_target": null,
       "network_required": true,
       "input": [
-        "data/processed/audit/article_deterministic_assessments.json",
-        "data/processed/articles/*.html",
-        "data/processed/audit/article_llm_url_prompts.json"
+        "data/processed/audit/article_url_collection.json"
       ],
       "output": [
-        "data/processed/audit/article_llm_url_assessments.json"
+        "data/processed/audit/pages/index.json",
+        "data/processed/audit/pages/*.json",
+        "data/processed/audit/pages/files/*"
       ],
-      "handoff_to_next": "llm_automatic",
-      "manual_action_required": [
-        "Run a small pilot first, for example LIMIT=1 or RANK=<rank>, before a full paid run.",
-        "Review data/processed/audit/article_llm_url_assessments.json for URL type assignments that are unsupported by article text.",
-        "Do not open or fetch URLs for this step; the LLM must classify URL types only from article text evidence."
-      ],
-      "notes": "This step reads linked_resources from the deterministic assessment and asks the LLM only to replace linked_resources[*].type values that are undefined. It sends article metadata, URL lists, and paragraph-local article context from the processed article representation. It does not call the URLs under audit and does not change article_audit_fields."
+      "handoff_to_next": "automatic",
+      "notes": "Fetches each unique collected URL, records HTTP status, redirect chain, final URL, headers, and stored response body. It does not classify pages or infer workflow availability."
     },
     {
       "step": 7,
-      "name": "Review and correct article audit fields with LLM",
-      "script": "scripts/audit_assessments_llm_flag.py",
-      "make_target": "llm-flag-assessments",
-      "network_required": true,
+      "name": "Attach URL fetch metadata to article records",
+      "script": "scripts/attach_url_fetch_metadata.py",
+      "make_target": null,
+      "network_required": false,
       "input": [
-        "data/processed/audit/article_llm_url_assessments.json",
-        "data/processed/articles/*.html",
-        "data/processed/audit/knime_article_audit_questions.json",
-        "data/processed/audit/article_llm_flag_assessment_prompt.json"
+        "data/processed/audit/article_url_collection.json",
+        "data/processed/audit/pages/index.json"
       ],
       "output": [
-        "data/processed/audit/article_llm_flag_assessments.json"
+        "data/processed/audit/article_url_collection.json"
       ],
-      "handoff_to_next": "llm_automatic",
-      "manual_action_required": [
-        "Run a small pilot first, for example LIMIT=1 or RANK=<rank>, before a full paid run.",
-        "Review data/processed/audit/article_llm_flag_assessments.json for corrected fields that are unsupported, weakly supported, or inconsistent with deterministic and URL-type evidence.",
-        "Do not overwrite data/processed/audit/old_article_assessments.json from this step; use the generated file as an LLM-filled comparison and review artifact."
-      ],
-      "notes": "This step reads the URL-typed candidate assessment and asks the LLM to review and correct only article_audit_fields.description_audit_fields and article_audit_fields.flag_audit_fields. The script sends article metadata, current article_audit_fields, typed linked_resources, audit questions, prompt rules, and selected line-referenced excerpts. It ignores flag_audit_support and preserves all fields outside article_audit_fields. The output remains a standalone candidate file for review."
+      "handoff_to_next": "automatic",
+      "notes": "Adds fetch status, HTTP code, final URL, redirect count, and stored page paths to each URL entry. This is metadata attachment only, not URL interpretation."
     },
     {
       "step": 8,
-      "name": "Refresh quote-backed article-audit support",
-      "script": "scripts/refresh_article_audit_support.py",
-      "make_target": "refresh-audit-support",
-      "network_required": false,
-      "network_required_when": "LLM_MODE=validate-support",
+      "name": "Browser-fetch HTTP 403 reference pages",
+      "script": "scripts/browser_fetch_403_urls.py",
+      "make_target": null,
+      "network_required": true,
       "input": [
-        "data/processed/audit/old_article_assessments.json",
-        "data/processed/audit/knime_article_audit_questions.json",
-        "data/processed/audit/old_llm_support_validation_prompt.json",
-        "data/processed/articles/*.html"
+        "data/processed/audit/article_url_collection.json"
       ],
       "output": [
-        "data/processed/audit/old_article_assessments.json",
-        "data/processed/audit/logs/llm_support_validation_decisions.jsonl when LLM_MODE=validate-support"
+        "data/processed/audit/article_url_collection.json",
+        "data/processed/audit/browser_pages/*.json",
+        "data/processed/audit/browser_pages/files/*"
       ],
-      "handoff_to_next": "llm_automatic",
+      "handoff_to_next": "semi_automatic",
       "manual_action_required": [
-        "Run with LLM_MODE=validate-support to ask the LLM whether candidate quotes directly support each audit flag.",
-        "Review data/processed/audit/logs/llm_support_validation_decisions.jsonl, especially records where llm_supported differs from deterministic_validator_result.",
-        "Use LLM_APPLY_REJECTIONS=--llm-apply-rejections only after reviewing disagreements and accepting that LLM false decisions should remove candidate quote support.",
-        "Use RESET_FLAGS_FROM_DESCRIPTIONS=--reset-flags-from-descriptions and APPLY_FLAG_REMOVALS=--apply-flag-removals only for an intentional classification rebuild, not for routine support refresh."
+        "Do not solve captchas or bypass access controls.",
+        "Treat myexperiment.org as captcha-protected and record blocked_by_challenge rather than repeatedly visiting it.",
+        "Review browser_fetch_status values for failed downloads or challenge pages before interpreting workflow access."
       ],
-      "notes": "This is a provenance/support updater, not a replacement for the article assessment itself. With LLM_MODE=off it uses only deterministic regex and validation rules. With LLM_MODE=validate-support it still finds candidate quote windows deterministically, then asks the LLM a bounded yes/no evidence question for each candidate quote. By default, LLM decisions are logged for audit rather than applied as destructive edits; the existing audited flags are preserved. The LLM must decide whether the quote directly answers the audit question for that flag; vague keyword matches should be rejected. Current processed article input is GROBID HTML."
+      "notes": "Second-stage retrievability check for URLs that simple HTTP fetching could not access. Uses Playwright/Chrome where useful, saves rendered HTML, and records challenge pages explicitly."
     },
     {
       "step": 9,
+      "name": "Classify reference pages for workflow obtainability",
+      "script": "scripts/classify_article_references_with_llm.py",
+      "make_target": null,
+      "network_required": true,
+      "input": [
+        "data/processed/audit/article_url_collection.json",
+        "data/processed/audit/pages/",
+        "data/processed/audit/browser_pages/",
+        "data/processed/audit/article_reference_classification_prompt.json"
+      ],
+      "output": [
+        "data/processed/audit/article_reference_llm_classifications.json"
+      ],
+      "handoff_to_next": "llm_automatic",
+      "manual_action_required": [
+        "Run by explicit rank ranges when testing or extending the audit, for example --rank-from 41 --rank-to 100.",
+        "Review manual_check_required records before treating them as confirmed workflow availability.",
+        "Review KNIME Hub extension/documentation pages separately from actual KNIME Hub workflow pages."
+      ],
+      "notes": "This is the preferred current evidence path for article-to-workflow relations. The LLM receives only URL metadata and locally cached reference-page excerpts, not the full article text. Empirically this gives a clearer signal about whether the article reference lets a reader obtain a KNIME workflow than article-text-only LLM analysis. The output supports article-level workflow-reference counts and prioritizes manual workflow retrieval."
+    },
+    {
+      "step": 10,
       "name": "Create or update workflow-reference inventory",
       "script": null,
       "make_target": null,
       "network_required": true,
       "input": [
-        "data/processed/audit/old_article_assessments.json",
+        "data/processed/audit/article_reference_llm_classifications.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
       "output": [
@@ -211,10 +213,10 @@
         "Open retrieved workflows in the local current KNIME environment.",
         "Record import/opening outcome, execution outcome, screenshots, missing extensions, missing data, and other failure notes."
       ],
-      "notes": "Human semi-automatic work: first inspect data/processed/audit/knime_downloadable_workflow_references.json. For each record, use workflow_references, supplement_references_checked, evidence_extracted_text_lines, and processed_text_file to understand where the article reported a workflow or supplement. If more context is needed, open the matching record in data/processed/audit/old_article_assessments.json and inspect linked_resources.workflow_urls, linked_resources.supplement_urls_or_dois, linked_resources.notes, workflow_artifact_status, and evidence_notes. Then follow the recorded URLs manually in a browser or with a download tool: publisher supplements, repositories such as GitHub or Zenodo, KNIME Hub pages, older workflow portals such as myExperiment, and project websites. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update download_result with the retrieval status, downloaded_files, workflow_files_found, failed_references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual_knime_opening_tests with opened_in_knime, execution_result, artifact, screenshot_directory, and notes. If nothing is obtained, record the reason explicitly rather than deleting the reference."
+      "notes": "Human semi-automatic work now starts from data/processed/audit/article_reference_llm_classifications.json. Inspect records with reference_type values such as knime_hub_workflow, myexperiment_workflow, workflow_repository, possible_workflow_supplement, and records where workflow_access is direct_workflow_available, workflow_landing_page_available, possible_workflow_requires_inspection, or manual_check_required. Follow the recorded URLs manually in a browser or with a download tool when allowed. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update the workflow-reference inventory with retrieval status, downloaded files, workflow files found, failed references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual KNIME opening tests. If nothing is obtained, record the reason explicitly rather than deleting the reference."
     },
     {
-      "step": 10,
+      "step": 11,
       "name": "Build article-audit summary table source",
       "script": "scripts/build_article_audit_tables.py",
       "make_target": "article-audit-tables",
@@ -232,7 +234,7 @@
       "notes": "Use --fail-on-mismatch when table values should match the manuscript exactly."
     },
     {
-      "step": 11,
+      "step": 12,
       "name": "Build KNIME-use workflow-reporting table source",
       "script": "scripts/build_knime_use_workflow_reporting_table.py",
       "make_target": "knime-use-table",
