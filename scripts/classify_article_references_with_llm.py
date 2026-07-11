@@ -60,6 +60,14 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
         handle.write("\n")
 
 
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
+
+
 def load_env_file(path: Path) -> None:
     if not path.exists():
         return
@@ -339,7 +347,7 @@ def main() -> int:
 
 def build_output(args: argparse.Namespace, classified: list[dict[str, Any]]) -> dict[str, Any]:
     return {
-        "created_by": Path(__file__).as_posix(),
+        "created_by": repo_relative_script_path(),
         "input": args.input.as_posix(),
         "prompt": args.prompt.as_posix(),
         "model": args.model,

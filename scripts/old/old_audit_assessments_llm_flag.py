@@ -15,16 +15,24 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_INPUT = Path("data/processed/audit/article_deterministic_assessments.json")
+DEFAULT_INPUT = Path("data/processed/audit/old/article_deterministic_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")
-DEFAULT_PROMPT = Path("data/processed/audit/article_llm_flag_assessment_prompt.json")
+DEFAULT_PROMPT = Path("data/processed/audit/old/article_llm_flag_assessment_prompt.json")
 DEFAULT_OUTPUT = Path(
-    "data/processed/audit/article_llm_flag_assessments.json"
+    "data/processed/audit/old/article_llm_flag_assessments.json"
 )
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
+
+
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
 
 EXCERPT_PATTERNS = [
     r"\bKNIME\b",
@@ -586,7 +594,7 @@ def main() -> int:
         written += 1
 
     result = {
-        "created_by": Path(__file__).as_posix(),
+        "created_by": repo_relative_script_path(),
         "source_assessment": args.input_assessment.as_posix(),
         "text_dir": args.text_dir.as_posix(),
         "prompt": args.prompt.as_posix(),

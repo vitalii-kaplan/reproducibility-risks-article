@@ -1,0 +1,60 @@
+{
+  "name": "article_supplementary_workflow_signal_flags",
+  "version": "2026-07-11.1",
+  "mode": "classify_article_level_supplementary_flags_from_article_text_and_reference_evidence",
+  "system_instruction": "You classify article-level reproducibility signals for a KNIME workflow audit. Return only JSON. Use only the supplied article metadata, article text excerpts, collected URL evidence, and reference-page classifications. Do not browse, fetch, use external knowledge, or infer from paper reputation. Be conservative: a true flag requires explicit supplied evidence.",
+  "user_task": "For the supplied article, fill each requested boolean flag independently. Do not copy the example field order as answers. Use article text evidence for text/figure/data/code/version/dependency claims and use reference-page classifications as additional evidence for downloadable workflow availability. Return a short supporting quote or URL evidence for each true flag and a short reason for each false flag.",
+  "limitations": [
+    "Do not open URLs or use external knowledge.",
+    "Do not treat a generic KNIME mention as evidence that the article uses KNIME in the study.",
+    "Set uses_knime=true only when the article applies KNIME in an empirical analysis, method, case study, workflow implementation, tool integration, or presents KNIME itself as the main studied platform. Set uses_knime=false for survey, comparison, overview, bibliography, or third-party-library papers that only mention or describe KNIME without using it as part of a study workflow.",
+    "Do not treat a workflow diagram or figure as a downloadable workflow file.",
+    "Do not treat a GitHub repository as a KNIME workflow unless the supplied reference classification or article text indicates KNIME workflows, workflow files, workflow directories, or executable workflow artifacts.",
+    "Do not classify generic KNIME documentation, KNIME extension pages, software manuals, DOI pages, or article pages as downloadable workflows.",
+    "For provides_downloadable_knime_workflow_files, count article-supplied workflow-looking references such as KNIME Hub workflow pages, kni.me workflow links, myExperiment workflow pages, workflow repositories, or possible workflow supplements as true even if current retrieval is blocked or requires manual checking. Current accessibility is represented by the reference-page workflow_access field, not by this flag.",
+    "If evidence is absent, implied only, generic, or ambiguous, set the flag to false and explain the missing evidence.",
+    "A KNIME version flag requires an explicit version-like value or named KNIME release in the article text. For example, KNIME 2.0, KNIME version 3.5, or KNIME Analytics Platform 4.x counts.",
+    "A workflow screenshot/figure flag requires explicit evidence that a figure, screenshot, supplementary figure, or caption shows a KNIME workflow, KNIME workbench, KNIME nodes, or a visual KNIME pipeline. Generic scientific figures, model diagrams, microscopy figures, plots, or non-KNIME workflows do not count.",
+    "A textual workflow/node description requires explicit text about KNIME workflow steps, KNIME nodes, node chains, components, metanodes, or pipeline structure. Generic descriptions of the scientific method or software outputs do not count.",
+    "For reports_extension_or_plugin_dependencies, ordinary built-in KNIME node names alone do not count. Count only explicitly named extensions, plugins, integrations, external libraries, update sites, or non-core packages such as RDKit, Indigo, CDK, Weka, R integration, ImageJ integration, community extensions, or similar installable dependencies.",
+    "Input data availability means the article reports where input data can be obtained, not merely that data were used.",
+    "Input data direct URL requires an explicit supplied URL or persistent identifier for data.",
+    "Code/scripts means code, scripts, notebooks, or source repositories for the study, not a workflow screenshot.",
+    "Extension/plugin dependency information means the article names KNIME extensions, plugins, nodes, external tool integrations, or installable packages needed for the KNIME workflow.",
+    "Extension installation source means the article gives an update site, install source, URL, repository, or instructions for obtaining extensions/plugins."
+  ],
+  "flags": {
+    "uses_knime": "True when the article explicitly applies KNIME in the reported study or presents KNIME itself as the main studied platform. False for generic mentions, surveys, tool overviews, comparison papers, or third-party library papers that only describe KNIME without using it in a concrete study workflow.",
+    "reports_knime_version": "True when the article reports a KNIME version, release, or versioned KNIME platform environment.",
+    "provides_downloadable_knime_workflow_files": "True when the article or classified reference pages provide or strongly point to KNIME workflow files, workflow archives, KNIME Hub workflows, myExperiment workflows, workflow supplements, or repositories containing KNIME workflows. This is about the article providing or pointing to a workflow, not about whether the link is still currently accessible.",
+    "provides_workflow_screenshots_or_figures": "True when the article includes a figure, screenshot, supplementary figure, or visual workflow representation of a KNIME workflow or nodes.",
+    "describes_workflow_or_nodes_in_text": "True when the article text describes KNIME workflow steps, nodes, components, modules, or pipeline structure beyond merely naming KNIME.",
+    "provides_input_data_direct_url": "True when the article gives a direct URL, DOI, accession, repository link, or persistent identifier for input data used by the study.",
+    "reports_input_data_availability": "True when the article reports data availability, source, repository, accession, supplementary data, or availability terms, even if no direct URL is present.",
+    "provides_code_or_scripts": "True when the article provides source code, scripts, notebooks, software repository, or executable non-workflow code used by the study.",
+    "reports_extension_or_plugin_dependencies": "True when the article reports KNIME extensions/plugins/integrations or other required non-core software dependencies used with the KNIME workflow. Ordinary built-in node names alone do not count.",
+    "reports_extension_installation_source": "True when the article reports where or how to install required KNIME extensions/plugins/integrations, such as update sites, repositories, plugin URLs, or install instructions."
+  },
+  "required_json_schema": {
+    "flag_audit_fields": {
+      "uses_knime": "boolean",
+      "reports_knime_version": "boolean",
+      "provides_downloadable_knime_workflow_files": "boolean",
+      "provides_workflow_screenshots_or_figures": "boolean",
+      "describes_workflow_or_nodes_in_text": "boolean",
+      "provides_input_data_direct_url": "boolean",
+      "reports_input_data_availability": "boolean",
+      "provides_code_or_scripts": "boolean",
+      "reports_extension_or_plugin_dependencies": "boolean",
+      "reports_extension_installation_source": "boolean"
+    },
+    "flag_evidence": {
+      "each_flag_name": {
+        "evidence_type": "article_text | reference_page | none",
+        "quote_or_url": "short quote or URL evidence, empty if false",
+        "reason": "brief reason. For false flags, explain what evidence is missing. For true flags, explain why the quote_or_url directly supports the flag."
+      }
+    },
+    "confidence": "low, medium, or high"
+  }
+}

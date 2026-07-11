@@ -18,7 +18,7 @@ DEFAULT_ASSESSMENT = Path("data/processed/audit/old_article_assessments.json")
 DEFAULT_QUESTIONS = Path("data/processed/audit/knime_article_audit_questions.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
 DEFAULT_ENV_FILE = Path(".env")
-DEFAULT_LLM_PROMPT = Path("data/processed/audit/old_llm_support_validation_prompt.json")
+DEFAULT_LLM_PROMPT = Path("data/processed/audit/old/old_llm_support_validation_prompt.json")
 DEFAULT_LLM_DECISION_LOG = Path(
     "data/processed/audit/logs/llm_support_validation_decisions.jsonl"
 )

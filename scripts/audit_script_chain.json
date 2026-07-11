@@ -192,15 +192,70 @@
     },
     {
       "step": 10,
-      "name": "Create or update workflow-reference inventory",
+      "name": "Classify supplementary article-level audit flags",
+      "script": "scripts/classify_article_supplementary_flags_with_llm.py",
+      "make_target": "supplementary-article-flags",
+      "network_required": true,
+      "input": [
+        "data/processed/audit/article_reference_llm_classifications.json",
+        "data/processed/articles/*.html",
+        "data/processed/audit/article_supplementary_flag_prompt.json"
+      ],
+      "output": [
+        "data/processed/audit/article_supplementary_llm_flags.json"
+      ],
+      "handoff_to_next": "llm_automatic",
+      "manual_action_required": [
+        "Run by explicit rank ranges when testing or extending the audit, for example --rank-from 1 --rank-to 10.",
+        "Review evidence quotes for true flags before using counts as paper claims.",
+        "Treat these fields as supplementary article-level signals; the main workflow-obtainability evidence remains the reference-page classification from step 9."
+      ],
+      "notes": "This step uses the combined reference-page classifications, article metadata, and selected GROBID HTML text excerpts to fill supplementary boolean flags comparable to the old audit fields: uses KNIME, reports KNIME version, downloadable workflow files, workflow screenshots/figures, textual workflow/node descriptions, input-data availability, direct input-data URLs, code/scripts, extension/plugin dependencies, and extension installation source. It does not replace step 9; it adds article-level context fields for analysis."
+    },
+    {
+      "step": 11,
+      "name": "Build compact article audit report",
+      "script": "scripts/build_article_audit_report.py",
+      "make_target": "article-audit-report",
+      "network_required": false,
+      "input": [
+        "data/processed/audit/article_supplementary_llm_flags.json",
+        "data/processed/audit/article_reference_llm_classifications.json"
+      ],
+      "output": [
+        "data/processed/audit/article_audit_report.json"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Deterministic report collection step. Joins article metadata and supplementary flag_audit_fields with workflow-relevant reference-page classifications. linked_resources contains confirmed, possible, or manual-check workflow resources only; generic article pages, software documentation, datasets, malformed URLs, and non-workflow references are excluded."
+    },
+    {
+      "step": 12,
+      "name": "Initialize workflow-reference inventory from article audit report",
+      "script": "scripts/build_workflow_reference_inventory.py",
+      "make_target": "workflow-reference-inventory",
+      "network_required": false,
+      "input": [
+        "data/processed/audit/article_audit_report.json",
+        "data/processed/audit/knime_downloadable_workflow_references.json"
+      ],
+      "output": [
+        "data/processed/audit/knime_downloadable_workflow_references.json"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Creates or refreshes workflow-reference inventory records from article_audit_report.json linked_resources. Existing manual download_result and manual_knime_opening_tests are preserved for matching article ranks. This step only initializes structured records; it does not retrieve workflow files or run KNIME."
+    },
+    {
+      "step": 13,
+      "name": "Manually refine article audit report records and workflow evidence",
       "script": null,
       "make_target": null,
       "network_required": true,
       "input": [
-        "data/processed/audit/article_reference_llm_classifications.json",
+        "data/processed/audit/article_audit_report.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
       "output": [
+        "data/processed/audit/article_audit_report.json",
         "data/processed/audit/knime_downloadable_workflow_references.json",
         "data/original/workflows/<article-or-doi-safe-directory>/",
         "data/original/workflows/<article-or-doi-safe-directory>/logs/",
@@ -208,21 +263,24 @@
       ],
       "handoff_to_next": "semi_automatic",
       "manual_action_required": [
-        "Retrieve workflow archives, workflow directories, repository snapshots, or supplements where possible.",
-        "Record failed or not-attempted retrievals.",
-        "Open retrieved workflows in the local current KNIME environment.",
-        "Record import/opening outcome, execution outcome, screenshots, missing extensions, missing data, and other failure notes."
+        "Open data/processed/audit/article_audit_report.json and review one article object at a time, using rank, title, DOI, pdf_file, flag_audit_fields, and linked_resources as the working record.",
+        "For flag_audit_fields, edit only boolean values. Set a flag to true only when the article text, linked reference page, or downloaded evidence directly supports it; otherwise leave or set it false.",
+        "For linked_resources, keep only workflow-relevant URLs: confirmed workflow pages/files, possible workflow supplements/repositories, and manual-check workflow candidates. Remove generic documentation, article landing pages, unrelated software pages, datasets with no workflow relation, malformed URLs, and duplicate URLs.",
+        "For each linked_resources item, preserve the URL and classification fields from the LLM result when useful, but correct wrong workflow_access/reference_type/workflow_form values after manual inspection.",
+        "When a linked resource can be retrieved, download workflow archives, workflow directories, repository snapshots, or supplements and save them under data/original/workflows/<article-or-doi-safe-directory>/.",
+        "Update data/processed/audit/knime_downloadable_workflow_references.json with retrieval status, downloaded files, workflow files found, failed references, directory names, manual notes, and KNIME opening/execution results when tested.",
+        "If no workflow can be obtained from a candidate link, keep the article record but document the failed or not-attempted retrieval reason rather than deleting the article."
       ],
-      "notes": "Human semi-automatic work now starts from data/processed/audit/article_reference_llm_classifications.json. Inspect records with reference_type values such as knime_hub_workflow, myexperiment_workflow, workflow_repository, possible_workflow_supplement, and records where workflow_access is direct_workflow_available, workflow_landing_page_available, possible_workflow_requires_inspection, or manual_check_required. Follow the recorded URLs manually in a browser or with a download tool when allowed. Save obtained workflow archives, workflow directories, HTTP traces, and screenshots under data/original/workflows/<article-or-doi-safe-directory>/. Update the workflow-reference inventory with retrieval status, downloaded files, workflow files found, failed references, directory, and notes. Open retrieved workflows in the current local KNIME environment when feasible, then update manual KNIME opening tests. If nothing is obtained, record the reason explicitly rather than deleting the reference."
+      "notes": "This is a deliberate semi-automatic checkpoint. The automatic pipeline creates data/processed/audit/article_audit_report.json, but final workflow availability claims require human correction of article records. Edit article_audit_report.json conservatively: do not add true flags or workflow links without direct evidence, do not change bibliographic metadata unless it conflicts with data/original/articles/registry.bbl, and keep linked_resources limited to workflow-obtainability evidence. After manual edits, steps 14 and 15 rebuild tables from article_audit_report.json and the workflow inventory."
     },
     {
-      "step": 11,
+      "step": 14,
       "name": "Build article-audit summary table source",
       "script": "scripts/build_article_audit_tables.py",
       "make_target": "article-audit-tables",
       "network_required": false,
       "input": [
-        "data/processed/audit/old_article_assessments.json",
+        "data/processed/audit/article_audit_report.json",
         "article/article.tex"
       ],
       "output": [
@@ -231,16 +289,16 @@
         "article/tables/logs/article_audit_summary_count_check.csv"
       ],
       "handoff_to_next": "automatic",
-      "notes": "Use --fail-on-mismatch when table values should match the manuscript exactly."
+      "notes": "Builds count rows from the compact final article audit report. Relation-only rows from the old audit are not generated unless the input file contains those relation fields. Use --fail-on-mismatch only after the manuscript table has been synchronized with this report."
     },
     {
-      "step": 12,
+      "step": 15,
       "name": "Build KNIME-use workflow-reporting table source",
       "script": "scripts/build_knime_use_workflow_reporting_table.py",
       "make_target": "knime-use-table",
       "network_required": false,
       "input": [
-        "data/processed/audit/old_article_assessments.json",
+        "data/processed/audit/article_audit_report.json",
         "data/processed/audit/knime_downloadable_workflow_references.json",
         "article/tables/top_cited_article_audit_summary.csv",
         "article/article.tex"
@@ -250,7 +308,7 @@
         "article/tables/logs/knime_use_workflow_reporting_table_comparison.csv"
       ],
       "handoff_to_next": "automatic",
-      "notes": "Uses the workflow inventory summary count for articles with successfully downloaded workflows."
+      "notes": "Uses flag counts from data/processed/audit/article_audit_report.json and the workflow inventory summary count for articles with successfully downloaded workflows."
     }
   ],
   "final_table_outputs": [

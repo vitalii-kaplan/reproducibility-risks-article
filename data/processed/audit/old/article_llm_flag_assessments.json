@@ -1,41 +1,40 @@
 {
-  "created_at": "2026-07-11",
-  "created_by": "/Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/scripts/audit_assessments_llm_url.py",
-  "source_csv": {
-    "top_cited_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
-    "article_registry": "data/original/articles/registry.bbl",
-    "workflow_references": "data/processed/audit/knime_downloadable_workflow_references.json",
-    "audit_questions": "data/processed/audit/knime_article_audit_questions.json"
-  },
-  "article_directory": "data/processed/articles",
+  "created_by": "scripts/audit_assessments_llm_flag.py",
+  "source_assessment": "data/processed/audit/old/article_llm_url_assessments.json",
+  "text_dir": "data/processed/articles",
+  "prompt": "data/processed/audit/old/article_llm_flag_assessment_prompt.json",
+  "model": "gpt-4.1-mini",
+  "temperature": 0.0,
   "scope": {
     "limit": 0,
     "ranks": [],
     "records_written": 100,
-    "llm_api_calls": 99,
-    "records_skipped_no_undefined_urls": 32,
-    "records_skipped_no_local_text": 0,
-    "url_types_filled": 1073,
-    "urls_marked_malformed_without_llm": 6,
-    "url_call_policy": "URLs were not opened or fetched; classification used only article text.",
-    "urls_per_call": 20,
-    "max_chars_per_url_context": 1800
+    "llm_api_calls": 79,
+    "records_skipped_no_reviewable_fields": 0,
+    "records_skipped_no_local_text": 21,
+    "article_audit_fields_changed": 890
   },
-  "method": {
-    "input_files": "URL-normalized deterministic assessment and processed article text.",
-    "assessment_focus": [
-      "linked_resources URL type classification",
-      "paragraph-local URL context"
-    ],
-    "url_policy": "URLs under audit are not opened, fetched, or externally checked."
+  "article_audit_summary_counts": {
+    "full_text_accessible": 73,
+    "uses_knime": 68,
+    "reports_knime_version": 15,
+    "provides_downloadable_knime_workflow_files": 13,
+    "provides_workflow_screenshots_or_figures": 30,
+    "describes_workflow_or_nodes_in_text": 64,
+    "provides_input_data_direct_url": 12,
+    "reports_input_data_availability": 56,
+    "provides_code_or_scripts": 57,
+    "reports_extension_or_plugin_dependencies": 38,
+    "reports_extension_installation_source": 25,
+    "linked_workflow_artifacts_retrievable": 0,
+    "total_records": 100,
+    "knime_article_relation_counts": {
+      "uses_knime": 69,
+      "about_knime": 6,
+      "not_a_knime_use_case": 4,
+      "not_assessed": 21
+    }
   },
-  "limitations": [
-    "This step uses an LLM.",
-    "The LLM may use only the supplied paragraph for each URL.",
-    "URL type assignments are not evidence that the URL is currently reachable.",
-    "Unclear paragraph evidence should leave URL type as unclear.",
-    "No article_audit_fields are changed by this step."
-  ],
   "articles": [
     {
       "rank": 1,
@@ -114,26 +113,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "published_or_linked_in_text",
+          "knime_version_values": "",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article reports KNIME workflows developed and available (Supplementary Figs. 29 and 30), code and data publicly available, and mentions KNIME use in the study. No KNIME version or installation source reported. Workflow artifact retrievability not checked."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -264,13 +263,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "This article describes the KNIME platform architecture and design; it is a background article about KNIME itself, not a use case study."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -388,13 +387,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "Article is a background and overview of KNIME platform and Pipeline Pilot; no study workflows or KNIME use case reported."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -431,26 +430,27 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states KNIME platform was adopted to set up the model workflow and describes the workflow design in text and figures. No KNIME version or downloadable workflow files reported. Input data from real oil and gas industry pump is described but no direct data URL given. Code availability is reported. No mention of KNIME extensions or installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -847,26 +847,27 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "published_or_linked_in_text",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states use of a KNIME workflow for data curation and standardization; code is provided via GitHub for OPERA application implementing models; no KNIME version or downloadable KNIME workflow files reported; input data availability and code availability confirmed; no mention of KNIME extensions or installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -993,23 +994,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article uses KNIME for predictive modeling with detailed description of KNIME workflows and algorithms; no downloadable KNIME workflow files found; input data described but no direct URL; code and KNIME extension dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -1118,13 +1119,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
+          "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "Article describes ImgLib2 as a Java library underlying the KNIME Image Processing toolbox but is primarily about ImgLib2 itself; no evidence of KNIME use in study workflows; code is available via GitHub; no workflow or plugin dependency reporting."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -1212,26 +1213,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "4.0.2; 82.49; 83.84",
-          "workflow_artifact_status": "published_or_linked_in_text",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article compares KNIME with other data mining tools using machine learning techniques on heart disease data; KNIME is used in the study but no KNIME version, workflow files, code, or extension details are reported. Input data is from UCI repository with direct URL."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -1431,13 +1432,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "2.6, 2.7",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "reports_extension_or_plugin_dependencies": "yes",
+          "reports_extension_installation_source": "yes",
+          "evidence_notes": "Article describes the KNIME-CDK plugin as a KNIME extension with details on versions tested, update mechanism, and dependencies; no study workflow or KNIME use case reported."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -1473,27 +1474,27 @@
       "linked_resources": [],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_article_relation": "not_a_knime_use_case",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_applicable",
+          "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article reviews and compares KNIME as a tool but does not use or implement KNIME in a study or workflow."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
-          "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -1570,26 +1571,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article compares classification algorithms using KNIME and other tools, reports performance results using KNIME, but no KNIME version or workflow files or extension dependencies are reported. Input data is described but no direct URL provided."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -1781,27 +1782,27 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "knime_article_relation": "not_a_knime_use_case",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "not_applicable",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article is a comparative overview of data mining tools including KNIME but does not use or implement KNIME workflows or code; no downloadable KNIME workflows or input data reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
-          "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -1893,16 +1894,29 @@
       "linked_resources": [],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
-          "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "The article reports use of the KNIME analytics platform combined with R software for implementing the algorithm. No KNIME version or downloadable workflows are reported. Input data availability is described but no direct URLs are given. No code or plugin dependencies are reported."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -1985,11 +1999,11 @@
           "knime_article_relation": "uses_knime",
           "knime_version_values": "2.3.4",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes a KNIME workflow used to assess PAINS filters with RDKit and Indigo libraries; workflow is available for download at myExperiment.org; code and extension dependencies are reported; input data availability is mentioned but no direct URL found in evidence."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
@@ -1998,8 +2012,8 @@
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -2118,25 +2132,26 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME platform for data mining models and predictive analysis; describes KNIME workflows and algorithms in text; no downloadable KNIME workflow files or extension/plugin dependencies reported; input data availability reported without direct URL; code availability reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2291,16 +2306,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_article_relation": "not_a_knime_use_case",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "Article compares KNIME as one of several data mining tools but does not use or implement KNIME workflows or models in the study."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -2386,26 +2414,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "yes",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes use of KNIME GUI interface for kGCN tool with detailed KNIME nodes and workflows; code is available on GitHub; input data availability reported but no direct URL; no downloadable KNIME workflow files linked; KNIME extension dependencies mentioned but no installation source given."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2560,27 +2588,27 @@
       "linked_resources": [],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "knime_article_relation": "not_a_knime_use_case",
+          "knime_version_values": "",
+          "workflow_artifact_status": "not_applicable",
+          "provides_input_data": "not_applicable",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article mentions KNIME as a popular data mining tool but does not use or implement KNIME in the study."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
-          "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -2780,26 +2808,27 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "3.4",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes a KNIME 3.4 workflow for chemical data curation with downloadable workflow on GitHub, input data from public datasets, code availability, and extension dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "reports_extension_installation_source": true,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -3134,26 +3163,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article develops and uses a KNIME workflow for disease gene prediction; code and workflow available on GitHub; no explicit KNIME version or extension details; input data reported via SFARI database but no direct URL; workflow described but no downloadable KNIME workflow files explicitly linked."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -3270,23 +3299,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "supplementary_workflow_reported",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article text and linked resources show KNIME used for model implementation, code and workflow linked, extensions reported, input data described but no direct URL."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -3398,26 +3427,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "4.7",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME workflows for molecular filtering in medicinal chemistry with direct links to KNIME Hub workflows and code repositories. KNIME version 4.7 is explicitly mentioned. Input data sampling and filtering described. No explicit mention of KNIME extension/plugin dependencies or installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": true,
           "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": true
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -3822,22 +3851,22 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes a KNIME workflow for MS-Ready structure generation, implemented in KNIME with open-source nodes, available on GitHub, integrated with EPA Chemistry Dashboard and MetFrag. Input data and code are available via Dashboard and GitHub links. Extension/plugin dependencies and installation sources are described in the workflow implementation."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -3953,26 +3982,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes use of Enalos KNIME nodes and KNIME platform for corrosion inhibition modeling; code and nodes available via company website; input data reported in text and supplement; no explicit KNIME version or extension installation source reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -4158,26 +4187,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes KNIME workflows used for chemical and biological data curation with a public URL; input data and code availability reported; no KNIME version or extension installation source specified."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -4329,26 +4358,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes a KNIME-based workflow for protein inference benchmarking with code on GitHub; multiple public datasets with URLs are used; no explicit KNIME version or downloadable workflow files reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -4659,16 +4688,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME tool for text mining and workflow development; workflows described in text and figures but no downloadable workflow files or code provided."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -4969,23 +5011,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article uses KNIME Analytics Platform for sentiment analysis of TripAdvisor reviews; no downloadable KNIME workflow files or direct input data URLs reported; code availability and extension dependencies reported in text."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -5128,26 +5170,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "3.7.1",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article explicitly states use of KNIME analytics platform v3.7.1 for machine learning classification; code and plugin dependencies reported; no downloadable workflows or direct input data URLs found."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -5287,26 +5329,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "knime_version_values": "",
+          "workflow_artifact_status": "provides_workflow_screenshots_or_figures",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article surveys and compares KNIME as a data mining tool for healthcare, describes KNIME features and GUI with a workflow screenshot, but does not report use of KNIME in a study, code availability, workflow files, or extension/plugin dependencies."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
-          "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "uses_knime": false,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -5602,23 +5644,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article uses KNIME workflows for QSAR modeling in Tox21 challenge; code and models available online; input data reported via Tox21 challenge and PubChem assays; KNIME version not specified."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -5706,26 +5748,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "yes",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text describes use of KNIME platform for data processing and modelling in sentiment analysis; no KNIME version or downloadable workflows reported; input data from Twitter described but no direct URL; code availability stated; no extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -5863,26 +5905,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME as an open-source tool for text processing and mining in the study; no KNIME version or workflow files reported; input data and code availability reported; no extension/plugin dependencies mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -5950,16 +5992,29 @@
       "linked_resources": [],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes KNIME use with detailed workflow steps and nodes in text but no downloadable workflows or code; no input data URLs or extension info."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -6005,25 +6060,25 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": "no",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes a KNIME workflow developed and used for the study, downloadable from Bioinformatics online and a project website. Input data from GEO and miRTarBase is reported with direct URLs. Code and workflow are provided. No explicit mention of KNIME extension/plugin dependencies."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": false,
           "reports_extension_installation_source": true
         },
         "flag_audit_support": {
@@ -6166,26 +6221,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_reported",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "knime_version_values": "3.2",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "no",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states KNIME version 3.2 was used to build workflows; no downloadable KNIME workflow files or input data URLs found; no code repository or extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": true,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6619,22 +6674,22 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "The article describes a KNIME workflow developed and used for chemical structure standardization, with multiple linked KNIME workflows and code repositories publicly available, including on KNIME Hub, GitHub, Docker, and KNIME Server. The article text explicitly states the workflow was designed in KNIME and used in various projects. Input data and code availability are supported by linked dataset and code resources. Extension/plugin dependencies and installation sources are documented in the article and linked resources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -6747,26 +6802,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "yes",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME platform to implement and run probabilistic neural network workflows for transformer fault diagnosis; no KNIME version or extension details reported; input data from UCI repository described; no code or plugin dependency details found."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -6966,23 +7021,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
+          "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article presents detailed KNIME workflows for marketing ML cases, links to KNIME Hub workflows, datasets on Kaggle, and documents KNIME extension dependencies and installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -7333,21 +7388,21 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "3.5.3",
-          "workflow_artifact_status": "undefined",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes a KNIME MLP-ANN workflow in detail with node descriptions and version 3.5.3; input data and code availability reported; no downloadable workflow files linked; extension dependencies and installation sources mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": "undefined",
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -7486,23 +7541,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article text and figure caption describe KNIME workflows used in cheminformatics analysis; references and text mention KNIME environment, nodes, and extensions; code and plugin dependencies reported; input data availability reported but no direct URL; no KNIME version specified."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -7618,27 +7673,27 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "undefined",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME for peptide spectrum match filtering and analysis but does not report KNIME version or downloadable workflows. Input data and code availability supported by dataset and supplement links."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
-          "uses_knime": "undefined",
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -7770,23 +7825,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "supplementary_workflow_reported",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article uses KNIME as a post-processing filter workflow described in text; no downloadable KNIME workflow files or direct workflow links found; input data reported as supplementary info without direct URL; code and KNIME extension dependencies reported; full text accessible."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -8280,16 +8335,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME platform for automated workflow analysis of zebrafish embryo tail coiling test; workflow is publicly available on KNIME Hub and linked in text."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": true,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -8344,16 +8412,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
-          "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes use of KNIME platform for big data analytics in SmartSantander testbed with detailed workflow description in text; no downloadable KNIME workflow files or code linked; input data availability reported via dataset URL but no direct input data URL; no KNIME version or extension dependencies reported."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -8715,21 +8796,21 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "4.4.2",
-          "workflow_artifact_status": "downloadable_workflow_linked",
+          "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article text and typed linked resources confirm use of KNIME 4.4.2 platform with community extensions, downloadable KNIME workflow at pikairos.eu, input data availability, code/scripts via KNIME workflows and RDKit nodes, and explicit mention of KNIME extension dependencies and installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
           "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -9028,23 +9109,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "software_release_reference",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes KniMet as a KNIME-based pipeline for metabolomics data processing, with modular workflow steps implemented in KNIME. Code is available on GitHub. No direct downloadable KNIME workflow files or explicit workflow archive links found. Input data availability is reported via example data in the repository but no direct URL to input data is given."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -9406,13 +9487,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "Article describes KNIME Analytics Platform and its ImageJ integration as a platform and extension; no study workflow or use case reported."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -9470,26 +9551,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflows_on_knime_hub",
-          "provides_input_data": "undefined",
+          "knime_version_values": "2.3.4",
+          "workflow_artifact_status": "published_or_linked_in_text",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes KNIME workflows and nodes for NGS data analysis, provides example workflows linked on myExperiment.org, and reports code availability via KNIME update mechanism. KNIME version 2.3.4 is explicitly mentioned. No direct URLs for input data but availability is reported. No explicit mention of extension/plugin dependencies or installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": true,
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -9600,26 +9681,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "2.6.0; 81.40; 83.06",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "2.6.0",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article compares KNIME 2.6.0 with other data mining tools using classification tasks; describes KNIME workflows and nodes in text; datasets from UCI repository reported without direct URLs; code/scripts availability implied by detailed method descriptions; no downloadable KNIME workflows or extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -10018,26 +10099,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "yes",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article describes a KNIME workflow for GediNET with downloadable workflow link and code repository; input data available via GEO but no direct URL given; no mention of KNIME version or extension dependencies."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -10206,16 +10287,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "not_applicable",
-          "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
+          "provides_code_or_scripts": "yes",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "The article reports a KNIME workflow implementation of multi-template matching for microscopy image object localization, with code available on GitHub but no direct downloadable KNIME workflow files identified. Input data availability is reported without direct URLs. No KNIME version or extension/plugin dependencies are specified."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": true,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -10271,22 +10365,22 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes KNIME workflow use with Python scripting and data integration; no downloadable workflow files found; code and input data described; extension dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -10391,26 +10485,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "not_assessed",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article integrates KNIME as a data-mining tool within Phaedra and describes its use in workflows, but no downloadable KNIME workflow files or code/scripts are provided or linked. No input data URLs or extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": true
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -10495,26 +10589,27 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "supplementary_workflow_reported",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME Analytics Platform for classification methods and native KNIME nodes for data preparation; no downloadable workflow files or explicit installation sources reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -10614,21 +10709,21 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "2.9.4",
-          "workflow_artifact_status": "published_or_linked_in_text",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes building and testing a KNIME 2.9.4 workflow for screening RAR ligands using public data sources including ChEMBL and PDB. KNIME nodes and Indigo substructure matcher are used. Workflow and code availability are reported. Input data from ChEMBL and PDB is used and reported. KNIME extensions and installation sources are mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": true,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -10815,26 +10910,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "The article uses KNIME analytics platform to build and test classifiers for intrusion detection on CICIDS2017 dataset. It describes workflow nodes and classifiers in text but does not provide downloadable KNIME workflow files or explicit installation sources for KNIME extensions."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -10951,25 +11046,26 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "2.10.0",
-          "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
+          "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states KNIME v2.10.0 was used for the study workflow; molecular data sourced from Tox21 Data Challenge website with direct URL; code and KNIME workflows referenced in supplements; RDKit nodes in KNIME used; no installation source for KNIME extensions reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -11123,26 +11219,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "no",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME workflows in study with figures showing KNIME workflows; code and extension dependencies reported; no direct input data URL or extension installation source reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -11301,26 +11397,27 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article reports use of KNIME platform for data mining with detailed workflow description and figures; dataset available via direct URL; code/scripts and extension dependencies reported; KNIME version not specified."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": true
+          "reports_extension_installation_source": true,
+          "linked_workflow_artifacts_retrievable": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -11625,26 +11722,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME for data processing workflow as described in text; no KNIME version or downloadable workflow files reported; input data availability reported without direct URL; code/scripts provided; no explicit KNIME extension/plugin dependencies or installation sources mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -11800,23 +11897,23 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "not_assessed",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article text explicitly states the model was implemented as a KNIME workflow; describes use of KNIME nodes and extensions; code and extension dependencies reported; no direct downloadable workflow files or input data URLs found in evidence."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -11936,26 +12033,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "yes",
-          "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "provides_input_data": "no",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME platform for machine learning analyses but does not provide KNIME version, downloadable workflows, code, or input data due to privacy restrictions. Supplementary materials provide methodological details but no direct code or workflow files."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": true,
-          "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -12056,26 +12153,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "no",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME platform for ML analyses; code and extension dependencies reported; no KNIME version or installation source specified; no input data URL found; workflow artifacts linked in text but no downloadable KNIME workflow files confirmed."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -12194,7 +12291,7 @@
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article describes use of a KNIME workflow for data retrieval and merging, reports KNIME version 2.11, provides a downloadable workflow from myExperiment, includes code/scripts, and details KNIME extension dependencies and installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
@@ -12203,7 +12300,7 @@
           "provides_downloadable_knime_workflow_files": true,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": true,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
@@ -12411,22 +12508,22 @@
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
           "knime_version_values": "4.0.0",
-          "workflow_artifact_status": "downloadable_workflow_linked",
-          "provides_input_data": "undefined",
+          "workflow_artifact_status": "published_or_linked_in_text",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article reports development and use of KNIME workflows for CADD with version 4.0.0, links to KNIME Hub workflows and Zenodo release, describes workflows and nodes in text, provides code repository, and reports extension dependencies and installation sources."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
           "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
@@ -12791,26 +12888,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states use of a KNIME workflow for model development; no KNIME version or downloadable workflow files reported; input data described from databases without direct URLs; code availability stated; no extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -12933,25 +13030,25 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "4.7.1",
-          "workflow_artifact_status": "undefined",
+          "knime_version_values": "4",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": "no",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article reports use of KNIME 4 for model setup, training, and simulation; uses LibSVM and Python packages; no downloadable KNIME workflow files or extensions reported; input data and code availability indicated."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": false,
           "reports_extension_installation_source": true
         },
         "flag_audit_support": {
@@ -13083,26 +13180,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text explicitly states KNIME was used for predictive modelling; no KNIME version or downloadable workflows reported; input data described but no direct URLs; code/scripts availability indicated; no extension/plugin dependencies reported."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13199,24 +13296,24 @@
           "knime_article_relation": "uses_knime",
           "knime_version_values": "4.0.2",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
+          "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "yes",
+          "evidence_notes": "Article reports use of KNIME 4.0.2 with specific node extensions, describes workflow steps in text, links to input data dataset URL, and lists KNIME extension update sites."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
           "reports_knime_version": true,
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": true,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": true
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13370,26 +13467,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article text states KNIME was used for modeling cluster analysis with WEKA functions; no downloadable KNIME workflows or version info found; input data from Array Express database reported without direct URL; code/scripts and extension dependencies mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13482,26 +13579,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "linked_workflow_portal_reported",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "published_or_linked_in_text",
+          "provides_input_data": "no",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article reports use of KNIME workflows implemented for COSMOS project with public KNIME WebPortal link; code and extension dependencies mentioned; no direct input data URL found; no KNIME version or installation source specified."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
+          "reports_knime_version": false,
           "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13612,26 +13709,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "described_in_text_only",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article uses KNIME MoSS node for substructure analysis; no KNIME version or downloadable workflows reported; input data from BindingDB and ChEMBL reported without direct URLs; code/scripts and extension dependencies mentioned."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
-          "describes_workflow_or_nodes_in_text": "undefined",
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13756,13 +13853,13 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
           "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "not_applicable",
           "reports_extension_or_plugin_dependencies": "not_applicable",
           "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "evidence_notes": "Article is a background and overview piece describing KNIME platform features, community, and functionality for geosciences; no study workflow or KNIME use case reported."
         },
         "flag_audit_fields": {},
         "flag_audit_support": {}
@@ -13805,26 +13902,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "reported_without_direct_url",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "The article reports implementing a predictive model in the KNIME platform using a Simple Regression Tree Learner, describes data preparation and modeling steps, and reports code and extension dependencies. No KNIME version or downloadable workflow files are provided. Input data availability is reported but no direct URL is given."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -13906,16 +14003,29 @@
       ],
       "article_audit_fields": {
         "description_audit_fields": {
-          "knime_article_relation": "about_knime",
-          "knime_version_values": "undefined",
+          "knime_article_relation": "uses_knime",
+          "knime_version_values": "",
           "workflow_artifact_status": "not_applicable",
-          "provides_input_data": "not_applicable",
-          "provides_code_or_scripts": "not_applicable",
-          "reports_extension_or_plugin_dependencies": "not_applicable",
-          "reports_extension_installation_source": "not_applicable",
-          "evidence_notes": "Deterministic classification marked this as a KNIME platform, extension, or background article; workflow-reporting flags are intentionally empty."
+          "provides_input_data": "reported_without_direct_url",
+          "provides_code_or_scripts": "no",
+          "reports_extension_or_plugin_dependencies": "no",
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article compares multiple data mining tools including KNIME and applies KNIME in a network intrusion detection case study; no KNIME version or workflow files reported; input data availability mentioned without direct URL."
         },
-        "flag_audit_fields": {},
+        "flag_audit_fields": {
+          "full_text_accessible": true,
+          "uses_knime": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
+          "describes_workflow_or_nodes_in_text": false,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": true,
+          "provides_code_or_scripts": false,
+          "reports_extension_or_plugin_dependencies": false,
+          "reports_extension_installation_source": false,
+          "linked_workflow_artifacts_retrievable": false
+        },
         "flag_audit_support": {}
       }
     },
@@ -14021,24 +14131,24 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
+          "knime_version_values": "",
           "workflow_artifact_status": "published_or_linked_in_text",
-          "provides_input_data": "undefined",
-          "provides_code_or_scripts": "yes",
+          "provides_input_data": "no",
+          "provides_code_or_scripts": "no",
           "reports_extension_or_plugin_dependencies": "yes",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article text and linked resources show KNIME used for study workflow and modeling; workflow is available online but no direct downloadable KNIME workflow files or code repository found; input data not reported with direct URL."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
           "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
-          "provides_code_or_scripts": true,
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
+          "provides_code_or_scripts": false,
           "reports_extension_or_plugin_dependencies": true,
           "reports_extension_installation_source": true
         },
@@ -14147,26 +14257,26 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "undefined",
-          "provides_input_data": "undefined",
+          "knime_version_values": "not reported",
+          "workflow_artifact_status": "no_downloadable_workflow_reported",
+          "provides_input_data": "not_applicable",
           "provides_code_or_scripts": "yes",
           "reports_extension_or_plugin_dependencies": "yes",
-          "reports_extension_installation_source": "undefined",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "reports_extension_installation_source": "no",
+          "evidence_notes": "Article reports integration of Open3DTOOLS into KNIME and RDKit; mentions KNIME use but no downloadable workflows or version info; code and extension dependencies reported; no input data or installation source details."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": "undefined",
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": false,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
-          "reports_input_data_availability": "undefined",
+          "provides_input_data_direct_url": false,
+          "reports_input_data_availability": false,
           "provides_code_or_scripts": true,
           "reports_extension_or_plugin_dependencies": true,
-          "reports_extension_installation_source": "undefined"
+          "reports_extension_installation_source": false
         },
         "flag_audit_support": {
           "full_text_accessible": [
@@ -14264,25 +14374,25 @@
       "article_audit_fields": {
         "description_audit_fields": {
           "knime_article_relation": "uses_knime",
-          "knime_version_values": "undefined",
-          "workflow_artifact_status": "linked_workflow_portal_reported",
+          "knime_version_values": "",
+          "workflow_artifact_status": "shown_or_described_but_no_public_workflow_found",
           "provides_input_data": "yes",
           "provides_code_or_scripts": "yes",
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": "no",
           "reports_extension_installation_source": "yes",
-          "evidence_notes": "Deterministic candidate generated from OpenAlex metadata, processed article text, URL extraction, and workflow-reference inventory. Undefined fields require LLM review."
+          "evidence_notes": "Article reports development and use of KNIME nodes for NGS data analysis, includes a KNIME workflow screenshot, and links a workflow on myExperiment.org. Code and input data availability are reported. No explicit KNIME version or extension dependencies stated."
         },
         "flag_audit_fields": {
           "full_text_accessible": true,
           "uses_knime": true,
-          "reports_knime_version": "undefined",
-          "provides_downloadable_knime_workflow_files": true,
-          "provides_workflow_screenshots_or_figures": "undefined",
+          "reports_knime_version": false,
+          "provides_downloadable_knime_workflow_files": false,
+          "provides_workflow_screenshots_or_figures": true,
           "describes_workflow_or_nodes_in_text": true,
-          "provides_input_data_direct_url": "undefined",
+          "provides_input_data_direct_url": false,
           "reports_input_data_availability": true,
           "provides_code_or_scripts": true,
-          "reports_extension_or_plugin_dependencies": "undefined",
+          "reports_extension_or_plugin_dependencies": false,
           "reports_extension_installation_source": true
         },
         "flag_audit_support": {
@@ -14345,94 +14455,5 @@
         }
       }
     }
-  ],
-  "article_audit_schema": {
-    "description_audit_fields": {
-      "description": "Deterministic non-bibliographic assessment fields. Bibliographic metadata and OpenAlex role fields are stored once under each article's meta object.",
-      "fields": [
-        "knime_article_relation",
-        "knime_version_values",
-        "workflow_artifact_status",
-        "provides_input_data",
-        "provides_code_or_scripts",
-        "reports_extension_or_plugin_dependencies",
-        "reports_extension_installation_source",
-        "evidence_notes"
-      ]
-    },
-    "flag_audit_fields": {
-      "description": "Deterministic article-level flags. Later workflow retrieval, opening, and execution fields are excluded from this candidate file.",
-      "fields": [
-        "full_text_accessible",
-        "uses_knime",
-        "reports_knime_version",
-        "provides_downloadable_knime_workflow_files",
-        "provides_workflow_screenshots_or_figures",
-        "describes_workflow_or_nodes_in_text",
-        "provides_input_data_direct_url",
-        "reports_input_data_availability",
-        "provides_code_or_scripts",
-        "reports_extension_or_plugin_dependencies",
-        "reports_extension_installation_source"
-      ]
-    },
-    "flag_audit_support": {
-      "description": "Map from true deterministic flags to direct quote or article-level workflow-reference support objects."
-    }
-  },
-  "article_audit_summary_counts": {
-    "full_text_accessible": 65,
-    "uses_knime": 64,
-    "reports_knime_version": 11,
-    "provides_downloadable_knime_workflow_files": 41,
-    "provides_workflow_screenshots_or_figures": 23,
-    "describes_workflow_or_nodes_in_text": 54,
-    "provides_input_data_direct_url": 0,
-    "reports_input_data_availability": 27,
-    "provides_code_or_scripts": 65,
-    "reports_extension_or_plugin_dependencies": 51,
-    "reports_extension_installation_source": 33,
-    "total_records": 100,
-    "knime_article_relation_counts": {
-      "uses_knime": 64,
-      "about_knime": 14,
-      "not_assessed": 21,
-      "undefined": 1
-    },
-    "undefined_flag_counts": {
-      "full_text_accessible": 0,
-      "uses_knime": 22,
-      "reports_knime_version": 75,
-      "provides_downloadable_knime_workflow_files": 45,
-      "provides_workflow_screenshots_or_figures": 63,
-      "describes_workflow_or_nodes_in_text": 32,
-      "provides_input_data_direct_url": 86,
-      "reports_input_data_availability": 59,
-      "provides_code_or_scripts": 21,
-      "reports_extension_or_plugin_dependencies": 35,
-      "reports_extension_installation_source": 53
-    }
-  },
-  "article_text_source": {
-    "directory": "data/processed/articles",
-    "articles_with_extracted_text": 79,
-    "match_summary": {
-      "status_counts": {
-        "matched": 79,
-        "no_processed_text_match": 21
-      },
-      "reason_counts": {
-        "processed HTML filename matches full registry key": 79,
-        "no processed GROBID HTML matched this article": 21
-      },
-      "doi_matches": 79,
-      "title_similarity_matches": 0
-    },
-    "line_reference_semantics": "extracted_text_lines refer to processed GROBID HTML files under data/processed/articles."
-  },
-  "source_assessment": "data/processed/audit/article_deterministic_assessments.json",
-  "text_dir": "data/processed/articles",
-  "prompt": "data/processed/audit/article_llm_url_prompts.json",
-  "model": "gpt-4.1-mini",
-  "temperature": 0.0
+  ]
 }

@@ -1,0 +1,2775 @@
+{
+  "created_at": "2026-07-11",
+  "created_by": "scripts/build_article_audit_report.py",
+  "source_files": {
+    "article_flags": "data/processed/audit/article_supplementary_llm_flags.json",
+    "reference_classifications": "data/processed/audit/article_reference_llm_classifications.json"
+  },
+  "scope": "Compact article audit report. Flags come from supplementary article-level LLM classification; linked_resources come from workflow-relevant reference-page classifications.",
+  "linked_resource_filter": {
+    "confirmed_or_possible_workflow_access": [
+      "direct_workflow_available",
+      "possible_workflow_requires_inspection",
+      "workflow_landing_page_available"
+    ],
+    "manual_check_required_included_only_for_reference_types": [
+      "knime_hub_workflow",
+      "knime_workflow_direct_file",
+      "myexperiment_workflow",
+      "possible_workflow_supplement",
+      "workflow_repository"
+    ]
+  },
+  "summary": {
+    "articles": 100,
+    "flag_true_counts": {
+      "uses_knime": 75,
+      "provides_workflow_screenshots_or_figures": 49,
+      "provides_input_data_direct_url": 20,
+      "reports_input_data_availability": 66,
+      "provides_code_or_scripts": 20,
+      "reports_knime_version": 18,
+      "describes_workflow_or_nodes_in_text": 68,
+      "reports_extension_or_plugin_dependencies": 23,
+      "provides_downloadable_knime_workflow_files": 17,
+      "reports_extension_installation_source": 4
+    },
+    "workflow_link_counts": {
+      "articles_with_linked_resources": 17,
+      "linked_resources": 61,
+      "manual_check_required": 49,
+      "confirmed_workflow_landing_page": 10,
+      "confirmed_direct_workflow": 1,
+      "possible_workflow_requires_inspection": 1
+    }
+  },
+  "articles": [
+    {
+      "rank": 1,
+      "article_identifier": "https://openalex.org/W2950501364",
+      "pdf_file": "data/original/articles/10.1038_s41592-018-0216-7.pdf",
+      "doi": "https://doi.org/10.1038/s41592-018-0216-7",
+      "title": "Content-aware image restoration: pushing the limits of fluorescence microscopy",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 2,
+      "article_identifier": "https://openalex.org/W1979900513",
+      "pdf_file": "data/original/articles/10.1145_1656274.1656280.pdf",
+      "doi": "https://doi.org/10.1145/1656274.1656280",
+      "title": "KNIME - the Konstanz information miner",
+      "publication_year": "2009",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 3,
+      "article_identifier": "https://openalex.org/W1969389753",
+      "pdf_file": "data/original/articles/10.1007_s10822-012-9577-7.pdf",
+      "doi": "https://doi.org/10.1007/s10822-012-9577-7",
+      "title": "Scientific workflow systems: Pipeline Pilot and KNIME",
+      "publication_year": "2012",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is the myExperiment domain known for hosting workflows but is blocked by a captcha, preventing direct inspection of workflow availability.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "article_identifier": "https://openalex.org/W3035667192",
+      "pdf_file": "data/original/articles/10.3390_su12114776.pdf",
+      "doi": "https://doi.org/10.3390/su12114776",
+      "title": "Machine Learning Approach Using MLP and SVM Algorithms for the Fault Prediction of a Centrifugal Pump in the Oil and Gas Industry",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 5,
+      "article_identifier": "https://openalex.org/W2973634761",
+      "pdf_file": "data/original/articles/10.1186_s13321-019-0384-1.pdf",
+      "doi": "https://doi.org/10.1186/s13321-019-0384-1",
+      "title": "Open-source QSAR models for pKa prediction using multiple machine learning approaches",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 6,
+      "article_identifier": "https://openalex.org/W2917344953",
+      "pdf_file": "data/original/articles/10.1016_j.heliyon.2019.e01250.pdf",
+      "doi": "https://doi.org/10.1016/j.heliyon.2019.e01250",
+      "title": "The impact of engineering students' performance in the first three years on their graduation result using educational data mining",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 7,
+      "article_identifier": "https://openalex.org/W2170358380",
+      "pdf_file": "data/original/articles/10.1093_bioinformatics_bts543.pdf",
+      "doi": "https://doi.org/10.1093/bioinformatics/bts543",
+      "title": "ImgLib2—generic image processing in Java",
+      "publication_year": "2012",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 8,
+      "article_identifier": "https://openalex.org/W3026428279",
+      "pdf_file": "data/original/articles/10.1007_s12553-020-00438-1.pdf",
+      "doi": "https://doi.org/10.1007/s12553-020-00438-1",
+      "title": "Heart disease classification using data mining tools and machine learning techniques",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 9,
+      "article_identifier": "https://openalex.org/W2124955716",
+      "pdf_file": "data/original/articles/10.1186_1471-2105-14-257.pdf",
+      "doi": "https://doi.org/10.1186/1471-2105-14-257",
+      "title": "KNIME-CDK: Workflow-driven cheminformatics",
+      "publication_year": "2013",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": true
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/workflows/3045.html",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is a myExperiment workflow page but is blocked by captcha; the domain and URL path strongly indicate a workflow landing page.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "article_identifier": "https://openalex.org/W3189818995",
+      "pdf_file": "data/original/articles/10.35940_ijitee.i1003.0789s19.pdf",
+      "doi": "https://doi.org/10.35940/ijitee.i1003.0789s19",
+      "title": "Latest Tools for Data Mining and Machine Learning",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 11,
+      "article_identifier": "https://openalex.org/W2472149534",
+      "pdf_file": "data/original/articles/10.1016_j.procs.2016.05.251.pdf",
+      "doi": "https://doi.org/10.1016/j.procs.2016.05.251",
+      "title": "Correlation Review of Classification Algorithm Using Data Mining Tool: WEKA, Rapidminer, Tanagra, Orange and Knime",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 12,
+      "article_identifier": "https://openalex.org/W2395911948",
+      "pdf_file": "undefined",
+      "doi": "",
+      "title": "KNIME: The Konstanz Information Miner",
+      "publication_year": "2006",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 13,
+      "article_identifier": "https://openalex.org/W2549115005",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1080/1062936x.2016.1253611",
+      "title": "An automated curation procedure for addressing chemical errors and inconsistencies in public datasets used in QSAR modelling",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 14,
+      "article_identifier": "https://openalex.org/W2000190989",
+      "pdf_file": "data/original/articles/10.1109_mipro.2014.6859735.pdf",
+      "doi": "https://doi.org/10.1109/mipro.2014.6859735",
+      "title": "An overview of free software tools for general data mining",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 15,
+      "article_identifier": "https://openalex.org/W3001976279",
+      "pdf_file": "data/original/articles/10.1177_1460458219899210.pdf",
+      "doi": "https://doi.org/10.1177/1460458219899210",
+      "title": "Linear discriminant analysis and principal component analysis to predict coronary artery disease",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 16,
+      "article_identifier": "https://openalex.org/W1969293071",
+      "pdf_file": "data/original/articles/10.1002_minf.201100076.pdf",
+      "doi": "https://doi.org/10.1002/minf.201100076",
+      "title": "KNIME Workflow to Assess PAINS Filters in SMARTS Format. Comparison of RDKit and Indigo Cheminformatics Libraries",
+      "publication_year": "2011",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is a myExperiment domain known for workflows but the page is blocked by HTTP 403 and captcha, requiring manual check to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "http://myexperiment.org/workflows/1841",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "This is a specific myExperiment workflow URL but access is blocked by HTTP 403 and captcha, so manual inspection is needed to verify workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "http://myexperiment.org/workflows/2164",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is a myExperiment workflow page but is blocked by a captcha (HTTP 403), preventing direct inspection; it likely hosts a workflow but requires manual check.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "article_identifier": "https://openalex.org/W2902553462",
+      "pdf_file": "data/original/articles/10.1007_s10639-018-9839-7.pdf",
+      "doi": "https://doi.org/10.1007/s10639-018-9839-7",
+      "title": "Data mining approach to predicting the performance of first year student in a university using the admission requirements",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 18,
+      "article_identifier": "https://openalex.org/W161431362",
+      "pdf_file": "data/original/articles/10.14569_specialissue.2011.010304.pdf",
+      "doi": "https://doi.org/10.14569/specialissue.2011.010304",
+      "title": "A Comparison Study between Data Mining Tools over some Classification Methods",
+      "publication_year": "2011",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 19,
+      "article_identifier": "https://openalex.org/W3030071125",
+      "pdf_file": "data/original/articles/10.1186_s13321-020-00435-6.pdf",
+      "doi": "https://doi.org/10.1186/s13321-020-00435-6",
+      "title": "kGCN: a graph-based deep learning framework for chemical structures",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 20,
+      "article_identifier": "https://openalex.org/W2468870810",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1007/978-3-319-28549-8_7",
+      "title": "KNIME for Open-Source Bioimage Analysis: A Tutorial",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 21,
+      "article_identifier": "https://openalex.org/W4389682894",
+      "pdf_file": "data/original/articles/10.61925_swb.2023.1302.pdf",
+      "doi": "https://doi.org/10.61925/swb.2023.1302",
+      "title": "Fraud Detection in Online Content Mining Relies on the Random Forest Algorithm",
+      "publication_year": "2023",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 22,
+      "article_identifier": "https://openalex.org/W2903800243",
+      "pdf_file": "data/original/articles/10.1186_s13321-018-0315-6.pdf",
+      "doi": "https://doi.org/10.1186/s13321-018-0315-6",
+      "title": "A new semi-automated workflow for chemical data retrieval and quality checking for modeling applications",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://github.com/DGadaleta88/data_curation_workflow",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf ... data_curation_SMILES_input_29112024.knwf",
+          "reason": "The GitHub repository contains multiple .knwf files (KNIME workflow files) and related documentation, indicating it hosts KNIME workflow artifacts.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "article_identifier": "https://openalex.org/W2901568326",
+      "pdf_file": "data/original/articles/10.1371_journal.pone.0208626.pdf",
+      "doi": "https://doi.org/10.1371/journal.pone.0208626",
+      "title": "Identifying disease genes using machine learning and gene functional similarities, assessed through Gene Ontology",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://github.com/Muh-Asif/ASD-genes-prediction",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "ASD_genes_prediction_workflow.zip ASD_genes_prediction_workflow.zip",
+          "reason": "The GitHub repository contains a ZIP file named 'ASD_genes_prediction_workflow.zip' indicating presence of a KNIME workflow archive artifact.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "article_identifier": "https://openalex.org/W2796932608",
+      "pdf_file": "data/original/articles/10.3389_fchem.2018.00093.pdf",
+      "doi": "https://doi.org/10.3389/fchem.2018.00093",
+      "title": "BitterSweetForest: A Random Forest Based Binary Classifier to Predict Bitterness and Sweetness of Chemical Compounds",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 25,
+      "article_identifier": "https://openalex.org/W4366274270",
+      "pdf_file": "data/original/articles/10.3390_encyclopedia3020035.pdf",
+      "doi": "https://doi.org/10.3390/encyclopedia3020035",
+      "title": "Molecular Filters in Medicinal Chemistry",
+      "publication_year": "2023",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://hub.knime.com/-/spaces/-/latest/~xoK5FQgB_5Jmg54V/",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow space URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and needs manual inspection to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://hub.knime.com/marko_/spaces/Medicinal%20Chemistry%20Filtering/latest/~XQX98NGeZEgCxQ_j/",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "This is a KNIME Hub workflow URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and requires manual inspection to verify workflow availability.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "article_identifier": "https://openalex.org/W2888792171",
+      "pdf_file": "data/original/articles/10.1186_s13321-018-0299-2.pdf",
+      "doi": "https://doi.org/10.1186/s13321-018-0299-2",
+      "title": "“MS-Ready” structures for non-targeted high-resolution mass spectrometry screening studies",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://github.com/kmansouri/MS-ready",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "Standardization workflow for MS-ready chemical structures pretreatment. See \"release\" tab for the latest version and sample files!",
+          "reason": "GitHub repository page explicitly describes a standardization workflow and mentions releases and sample files, indicating presence of workflow artifacts.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "article_identifier": "https://openalex.org/W2094833064",
+      "pdf_file": "data/original/articles/10.1016_j.chemolab.2013.02.003.pdf",
+      "doi": "https://doi.org/10.1016/j.chemolab.2013.02.003",
+      "title": "Enalos KNIME nodes: Exploring corrosion inhibition of steel in acidic medium",
+      "publication_year": "2013",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 28,
+      "article_identifier": "https://openalex.org/W1999241626",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1021/ci800413m",
+      "title": "Knowledge-Based Approach to <i>de Novo</i> Design Using Reaction Vectors",
+      "publication_year": "2009",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 29,
+      "article_identifier": "https://openalex.org/W2792618216",
+      "pdf_file": "data/original/articles/10.1080_07391102.2018.1456975.pdf",
+      "doi": "https://doi.org/10.1080/07391102.2018.1456975",
+      "title": "Identifying natural compounds as multi-target-directed ligands against Alzheimer’s disease: an <i>in silico</i> approach",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 30,
+      "article_identifier": "https://openalex.org/W2495112941",
+      "pdf_file": "data/original/articles/10.1016_j.jprot.2016.08.002.pdf",
+      "doi": "https://doi.org/10.1016/j.jprot.2016.08.002",
+      "title": "In-depth analysis of protein inference algorithms using multiple search engines and well-defined metrics",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 31,
+      "article_identifier": "https://openalex.org/W4284705894",
+      "pdf_file": "data/original/articles/10.1007_s11356-022-21471-9.pdf",
+      "doi": "https://doi.org/10.1007/s11356-022-21471-9",
+      "title": "Recent trends of green human resource management: Text mining and network analysis",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 32,
+      "article_identifier": "https://openalex.org/W3108211699",
+      "pdf_file": "data/original/articles/10.1080_1528008x.2020.1848747.pdf",
+      "doi": "https://doi.org/10.1080/1528008x.2020.1848747",
+      "title": "Understanding Tourists’ Experiences at Local Markets in Phuket: An Analysis of TripAdvisor Reviews",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 33,
+      "article_identifier": "https://openalex.org/W3023983310",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1021/acs.jcim.0c00019",
+      "title": "ADME Prediction with KNIME: Development and Validation of a Publicly Available Workflow for the Prediction of Human Oral Bioavailability",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 34,
+      "article_identifier": "https://openalex.org/W3064554225",
+      "pdf_file": "data/original/articles/10.1016_j.cmpb.2020.105712.pdf",
+      "doi": "https://doi.org/10.1016/j.cmpb.2020.105712",
+      "title": "Classifying the type of delivery from cardiotocographic signals: A machine learning approach",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 35,
+      "article_identifier": "https://openalex.org/W3171573804",
+      "pdf_file": "data/original/articles/10.1016_j.jksuci.2021.06.002.pdf",
+      "doi": "https://doi.org/10.1016/j.jksuci.2021.06.002",
+      "title": "Top data mining tools for the healthcare industry",
+      "publication_year": "2021",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 36,
+      "article_identifier": "https://openalex.org/W2279004469",
+      "pdf_file": "data/original/articles/10.3389_fenvs.2016.00002.pdf",
+      "doi": "https://doi.org/10.3389/fenvs.2016.00002",
+      "title": "Consensus Modeling for HTS Assays Using In silico Descriptors Calculates the Best Balanced Accuracy in Tox21 Challenge",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 37,
+      "article_identifier": "https://openalex.org/W3143984520",
+      "pdf_file": "data/original/articles/10.3390_su13073836.pdf",
+      "doi": "https://doi.org/10.3390/su13073836",
+      "title": "Using Social Media in Tourist Sentiment Analysis: A Case Study of Andalusia during the Covid-19 Pandemic",
+      "publication_year": "2021",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 38,
+      "article_identifier": "https://openalex.org/W2977773286",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1021/acs.jproteome.9b00313",
+      "title": "MHCquant: Automated and Reproducible Data Analysis for Immunopeptidomics",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 39,
+      "article_identifier": "https://openalex.org/W4327960899",
+      "pdf_file": "data/original/articles/10.3390_su15065443.pdf",
+      "doi": "https://doi.org/10.3390/su15065443",
+      "title": "Sustainable Marketing and the Role of Social Media: An Experimental Study Using Natural Language Processing (NLP)",
+      "publication_year": "2023",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 40,
+      "article_identifier": "https://openalex.org/W2520861907",
+      "pdf_file": "data/original/articles/10.1109_cdan.2016.7570894.pdf",
+      "doi": "https://doi.org/10.1109/cdan.2016.7570894",
+      "title": "Comprehensive study of data analytics tools (RapidMiner, Weka, R tool, Knime)",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 41,
+      "article_identifier": "https://openalex.org/W2924234733",
+      "pdf_file": "data/original/articles/10.1093_bioinformatics_btz204.pdf",
+      "doi": "https://doi.org/10.1093/bioinformatics/btz204",
+      "title": "maTE: discovering expressed interactions between microRNAs and their targets",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 42,
+      "article_identifier": "https://openalex.org/W2338423545",
+      "pdf_file": "data/original/articles/10.1021_acs.chemrestox.5b00480.pdf",
+      "doi": "https://doi.org/10.1021/acs.chemrestox.5b00480",
+      "title": "Using Molecular Initiating Events to Develop a Structural Alert Based Screening Workflow for Nuclear Receptor Ligands Associated with Hepatic Steatosis",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 43,
+      "article_identifier": "https://openalex.org/W3112864390",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.25105/jti.v10i3.8428",
+      "title": "K-Means Clustering Data COVID-19",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 44,
+      "article_identifier": "https://openalex.org/W4391962651",
+      "pdf_file": "data/original/articles/10.1186_s13321-024-00814-3.pdf",
+      "doi": "https://doi.org/10.1186/s13321-024-00814-3",
+      "title": "Free and open-source QSAR-ready workflow for automated standardization of chemical structures in support of QSAR modeling",
+      "publication_year": "2024",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://hub.knime.com/knime/extensions/org.knime.features.js.views/latest",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub page for an extension but currently returns an error; it is potentially workflow relevant but requires manual check.",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://kni.me/w/5TRvnGfMJsgTkcZu",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "This is a short kni.me URL redirecting to a KNIME Hub workflow page but currently returns an error; manual inspection needed.",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://github.com/kmansouri/QSAR-ready",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "Standardization workflow for QSAR-ready chemical structures pre-treatment. See \"release\" tab for the latest version and sample files!",
+          "reason": "GitHub repository explicitly about a KNIME standardization workflow with releases and sample files, indicating it contains workflow files or artifacts.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://github.com/ibisba/knime-workflow-base",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "Base image for IBISBA Nodes ... make KNIME workflows usable via CWL ... Docker image ... scripts and Dock",
+          "reason": "GitHub repository describing a base image and scripts related to KNIME workflows, indicating it contains KNIME workflow-related artifacts.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 45,
+      "article_identifier": "https://openalex.org/W2370500362",
+      "pdf_file": "data/original/articles/10.1016_j.procs.2016.04.276.pdf",
+      "doi": "https://doi.org/10.1016/j.procs.2016.04.276",
+      "title": "Oil-immersed Power Transformer Internal Fault Diagnosis Research Based on Probabilistic Neural Network",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 46,
+      "article_identifier": "https://openalex.org/W3198526585",
+      "pdf_file": "data/original/articles/10.1016_j.jbusres.2021.08.036.pdf",
+      "doi": "https://doi.org/10.1016/j.jbusres.2021.08.036",
+      "title": "Machine learning for marketing on the KNIME Hub: The development of a live repository for marketing applications",
+      "publication_year": "2021",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://kni.me/w/GCI4B-AzIczhIwjG",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/m9lFUDUeLyLFjpMr",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://hub.knime.com/knime/spaces/Examples/latest/50_Applications/39_Fraud_Detection/03_Keras_Autoencoder_for_Fraud_Detection_Training%7e9qFNMrsuN4PH1hRg",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors%7eHYlUnc7CnzG2fe8d",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://kni.me/w/O04qJIa1oD94M1rd",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a short kni.me link redirecting to a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://kni.me/w/szC3HhTNkE12-r6h",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a kni.me workflow link (KNIME Hub workflow) but page returns error 500 with a JavaScript error, blocking access; likely a workflow page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/8XFC5Hm",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/tST9mpG",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://www.knime.com/book/geo-nodes",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL redirects to a KNIME Hub extension page but returns error 500 with JavaScript error; likely a workflow or component page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/PRrwnq5",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/FEczzB1",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors%7eHYlUnc7CnzG2fe8d.16",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow page but returns an error (HTTP 500) and cannot be accessed; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/szC3HhTNkE12-r6h.researchers",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me short link to a KNIME workflow but access is forbidden (HTTP 403); manual check required to verify workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/zXa_WBQ",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me link which typically hosts KNIME workflows, but the page is blocked with a 403 Forbidden error, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 47,
+      "article_identifier": "https://openalex.org/W2397016474",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1007/978-1-62703-311-4_8",
+      "title": "CellProfiler and KNIME: Open Source Tools for High Content Screening",
+      "publication_year": "2013",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 48,
+      "article_identifier": "https://openalex.org/W2787568625",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1021/acssuschemeng.7b04220",
+      "title": "A Perspective and a New Integrated Computational Strategy for Skin Sensitization Assessment",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 49,
+      "article_identifier": "https://openalex.org/W2064883676",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1109/ictai.2014.115",
+      "title": "Strategies for Big Data Clustering",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 50,
+      "article_identifier": "https://openalex.org/W2999645440",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1016/j.cmpb.2020.105343",
+      "title": "Application of data mining in a cohort of Italian subjects undergoing myocardial perfusion imaging at an academic medical center",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 51,
+      "article_identifier": "https://openalex.org/W2884970730",
+      "pdf_file": "data/original/articles/10.3390_info9070176.pdf",
+      "doi": "https://doi.org/10.3390/info9070176",
+      "title": "A Study of a Health Resources Management Platform Integrating Neural Networks and DSS Telemedicine for Homecare Assistance",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 52,
+      "article_identifier": "https://openalex.org/W1013989637",
+      "pdf_file": "data/original/articles/10.1007_s10710-015-9247-3.pdf",
+      "doi": "https://doi.org/10.1007/s10710-015-9247-3",
+      "title": "Software review: the KNIME workflow environment and its applications in genetic programming and machine learning",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "captcha-protected domain; browser visit skipped",
+          "reason": "URL is the myExperiment workflow platform but local page is blocked by captcha; likely hosts workflows but requires manual check.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 53,
+      "article_identifier": "https://openalex.org/W2775038352",
+      "pdf_file": "data/original/articles/10.1074_mcp.ra117.000165.pdf",
+      "doi": "https://doi.org/10.1074/mcp.ra117.000165",
+      "title": "N-linked Glycan Micro-heterogeneity in Glycoproteins of Arabidopsis",
+      "publication_year": "2017",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 54,
+      "article_identifier": "https://openalex.org/W2509976270",
+      "pdf_file": "undefined",
+      "doi": "",
+      "title": "Prediction of Thyroid Disease Using Data Mining Techniques",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 55,
+      "article_identifier": "https://openalex.org/W1961307031",
+      "pdf_file": "data/original/articles/10.1016_j.chemosphere.2015.06.009.pdf",
+      "doi": "https://doi.org/10.1016/j.chemosphere.2015.06.009",
+      "title": "Investigation of the Verhaar scheme for predicting acute aquatic toxicity: Improving predictions obtained from Toxtree ver. 2.6",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 56,
+      "article_identifier": "https://openalex.org/W2334920380",
+      "pdf_file": "undefined",
+      "doi": "",
+      "title": "Comparative Study of Data Mining Tools",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 57,
+      "article_identifier": "https://openalex.org/W3045845943",
+      "pdf_file": "data/original/articles/10.1016_j.ntt.2020.106918.pdf",
+      "doi": "https://doi.org/10.1016/j.ntt.2020.106918",
+      "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 58,
+      "article_identifier": "https://openalex.org/W1895379397",
+      "pdf_file": "data/original/articles/10.1002_spe.2274.pdf",
+      "doi": "https://doi.org/10.1002/spe.2274",
+      "title": "Big data for smart cities with KNIME a real experience in the SmartSantander testbed",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 59,
+      "article_identifier": "https://openalex.org/W4296614628",
+      "pdf_file": "data/original/articles/10.3390_pharmaceutics14101998.pdf",
+      "doi": "https://doi.org/10.3390/pharmaceutics14101998",
+      "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": true
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 60,
+      "article_identifier": "https://openalex.org/W2950896755",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1021/acs.jproteome.8b00723",
+      "title": "Protein Inference Using PIA Workflows and PSI Standard File Formats",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 61,
+      "article_identifier": "https://openalex.org/W2790263756",
+      "pdf_file": "data/original/articles/10.1007_s11306-018-1349-5.pdf",
+      "doi": "https://doi.org/10.1007/s11306-018-1349-5",
+      "title": "KniMet: a pipeline for the processing of chromatography–mass spectrometry metabolomics data",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://github.com/sonial/KniMet",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "KniMet is a workflow for the post-processing of LC-MS, GC-MS and LC-IM-MS metabolomic",
+          "reason": "The GitHub repository page title and excerpt indicate it hosts the KniMet workflow including a .knwf file (KniMet1.2.8.knwf) which is a KNIME workflow file, thus it is a repository containing KNIME workflow artifacts.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 62,
+      "article_identifier": "https://openalex.org/W3012542478",
+      "pdf_file": "data/original/articles/10.3389_fcomp.2020.00008.pdf",
+      "doi": "https://doi.org/10.3389/fcomp.2020.00008",
+      "title": "Integration of the ImageJ Ecosystem in KNIME Analytics Platform",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": true
+      },
+      "linked_resources": [
+        {
+          "url": "https://kni.me/n/OZ-74WyecFLOEiuK",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub Hub Search Pricing About Sign in Sorry! Cannot read properties of undefined (reading 'split') Back to homepage KNIME Open for Innovation KNIME AG Talacker 50 8001 Zurich, Switzerland Software Getting started Documentation Courses + Certification Solutions KNIME Hub KNIME Forum Blog Events Partner Developers KNIME Home Careers Contact us Download KNIME Analytics Platform Read more about KNIME Business Hub",
+          "reason": "The URL is a KNIME Hub link likely for a workflow, but the local page shows a server error (HTTP 500) and error message, so access to the workflow is blocked and requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://hub.knime.com",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub Hub Search Pricing About Sign in Sorry! Cannot read properties of undefined (reading 'split') Back to homepage KNIME Open for Innovation KNIME AG Talacker 50 8001 Zurich, Switzerland Software Getting started Documentation Courses + Certification Solutions KNIME Hub KNIME Forum Blog Events Partner Developers KNIME Home Careers Contact us Download KNIME Analytics Platform Read more about KNIME Business Hub",
+          "reason": "The URL is the KNIME Hub main site, which hosts workflows, but the local page shows a server error (HTTP 500) and error message, so access to workflows is blocked and requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/10cc5QJ5thLDG_cc",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/QNB4FsAPnEAgOMVh",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/ThmsDDG4kj-_Ecml",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/oZteZanXoWURLouy",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/PQRHqpYEOx-QXrbp",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/OPevaIVf-GfJ1NXJ",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/L0bv0drXtgAsdbFe",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/NriZ1-GeHMqitd1c",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/AePOcxewSCvaUiZh",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/n/aFTAPO7mEW_Okby7",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/e/6cbZ6X3DrLrH96WD",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/e/9Z2SYIHDiATP4xQK",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/e/Uq6QE1IQIqG4q_mp",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/7yXlo4oq91qSBWeU",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/QVjrs0Vj7xG48Pcr",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/F3K1YgZKt_923UgH",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/QMky8ZEz3dzja42q",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
+          "reason": "The URL is a KNIME Hub short link for a workflow but the page shows an error (500) and cannot be loaded; likely a workflow page but requires manual check due to error.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me workflow URL but access is forbidden (403), so manual check is required to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://doi.org/10.6084/m9.figshare.c.4687004.v1",
+          "reference_type": "possible_workflow_supplement",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "publisher_supplement",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden 403 Forbidden",
+          "reason": "The URL is a figshare collection likely intended as supplementary material for the article, possibly containing workflows, but access is blocked with 403 Forbidden, requiring manual inspection.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 63,
+      "article_identifier": "https://openalex.org/W2154592269",
+      "pdf_file": "data/original/articles/10.1093_bioinformatics_btr478.pdf",
+      "doi": "https://doi.org/10.1093/bioinformatics/btr478",
+      "title": "Extending KNIME for next-generation sequencing data analysis",
+      "publication_year": "2011",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/search?query=KNIME",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is a myExperiment search page for KNIME workflows but is blocked by a captcha challenge, preventing direct inspection; myExperiment is known for hosting workflows.",
+          "confidence": "high"
+        },
+        {
+          "url": "http://www.myexperiment.org/workflows/2183.html",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "Just a moment...",
+          "reason": "The URL is a myExperiment workflow page but is blocked by a captcha challenge, preventing direct inspection; myExperiment pages typically host workflows.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 64,
+      "article_identifier": "https://openalex.org/W2075653873",
+      "pdf_file": "data/original/articles/10.1145_2494444.2494451.pdf",
+      "doi": "https://doi.org/10.1145/2494444.2494451",
+      "title": "Comparison of data mining techniques and tools for data classification",
+      "publication_year": "2013",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 65,
+      "article_identifier": "https://openalex.org/W4311917005",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1177/14673584221145819",
+      "title": "Hotel service quality dimensions and attributes: An analysis of online hotel customer reviews",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 66,
+      "article_identifier": "https://openalex.org/W4309400074",
+      "pdf_file": "data/original/articles/10.1038_s41598-022-24421-0.pdf",
+      "doi": "https://doi.org/10.1038/s41598-022-24421-0",
+      "title": "GediNET for discovering gene associations across diseases using knowledge based machine learning approach",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://github.com/malikyousef/GediNET.git",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "GediNET_v1.knwf GediNET_v1.knwf ProcessGEO_data.knwf ProcessGEO_data.knwf",
+          "reason": "The GitHub repository contains files with .knwf extension which are KNIME workflow files, indicating it hosts KNIME workflows.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
+          "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is forbidden, so manual check is required to confirm workflow availability.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://github.com/malikyousef/GediNET",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "GediNET_v1.knwf GediNET_v1.knwf ProcessGEO_data.knwf ProcessGEO_data.knwf",
+          "reason": "The GitHub repository contains .knwf files which are KNIME workflow files, indicating it hosts KNIME workflows.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 67,
+      "article_identifier": "https://openalex.org/W3012866794",
+      "pdf_file": "data/original/articles/10.1186_s12859-020-3363-7.pdf",
+      "doi": "https://doi.org/10.1186/s12859-020-3363-7",
+      "title": "Multi-template matching: a versatile tool for object-localization in microscopy images",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://multi-template-matching.github.io/Multi-Template-Matching/",
+          "reference_type": "knime_hub_workflow",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "knime_hub_page",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "KNIME (relying on the python implementation) This repository also contains the workflow for classification using multiple templates. Download the workflow from the KNIME Hub.",
+          "reason": "The page explicitly states that the KNIME workflow is available for download from the KNIME Hub, indicating a workflow-hosting landing page with KNIME workflow artifacts.",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "rank": 68,
+      "article_identifier": "https://openalex.org/W2808421084",
+      "pdf_file": "data/original/articles/10.5121_ijaia.2018.9301.pdf",
+      "doi": "https://doi.org/10.5121/ijaia.2018.9301",
+      "title": "ESB Platform Integrating Knime Data Mining Tool Oriented on Industry 4.0 Based on Artificial Neural Network Predictive Maintenance",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 69,
+      "article_identifier": "https://openalex.org/W2031598641",
+      "pdf_file": "data/original/articles/10.1177_1087057111432885.pdf",
+      "doi": "https://doi.org/10.1177/1087057111432885",
+      "title": "Phaedra, a Protocol-Driven System for Analysis and Validation of High-Content Imaging and Flow Cytometry",
+      "publication_year": "2012",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 70,
+      "article_identifier": "https://openalex.org/W2519933759",
+      "pdf_file": "data/original/articles/10.3390_s16091498.pdf",
+      "doi": "https://doi.org/10.3390/s16091498",
+      "title": "Multimodal Learning and Intelligent Prediction of Symptom Development in Individual Parkinson’s Patients",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 71,
+      "article_identifier": "https://openalex.org/W2075849109",
+      "pdf_file": "data/original/articles/10.1002_minf.201400188.pdf",
+      "doi": "https://doi.org/10.1002/minf.201400188",
+      "title": "Screening Chemicals for Receptor‐Mediated Toxicological and Pharmacological Endpoints: Using Public Data to Build Screening Tools within a KNIME Workflow",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 72,
+      "article_identifier": "https://openalex.org/W2521252293",
+      "pdf_file": "undefined",
+      "doi": "",
+      "title": "OpenML: A Collaborative Science Platform",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 73,
+      "article_identifier": "https://openalex.org/W4210814081",
+      "pdf_file": "data/original/articles/10.11591_ijeecs.v25.i2.pp1151-1158.pdf",
+      "doi": "https://doi.org/10.11591/ijeecs.v25.i2.pp1151-1158",
+      "title": "Network intrusion detection system: machine learning approach",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 74,
+      "article_identifier": "https://openalex.org/W1533664488",
+      "pdf_file": "data/original/articles/10.3389_fenvs.2015.00054.pdf",
+      "doi": "https://doi.org/10.3389/fenvs.2015.00054",
+      "title": "Molecular similarity-based predictions of the Tox21 screening outcome",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 75,
+      "article_identifier": "https://openalex.org/W2141684093",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.4155/fmc.12.152",
+      "title": "Computational Tools And Resources For Metabolism-Related Property Predictions. 2. Application To Prediction Of Half-Life Time In Human Liver Microsomes",
+      "publication_year": "2012",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 76,
+      "article_identifier": "https://openalex.org/W2915052419",
+      "pdf_file": "data/original/articles/10.13189_csit.2019.070101.pdf",
+      "doi": "https://doi.org/10.13189/csit.2019.070101",
+      "title": "Business Intelligence Improved by Data Mining Algorithms and Big Data Systems: An Overview of Different Tools Applied in Industrial Research",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 77,
+      "article_identifier": "https://openalex.org/W2621548818",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1002/minf.201700023",
+      "title": "VSPrep: A General KNIME Workflow for the Preparation of Molecules for Virtual Screening",
+      "publication_year": "2017",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 78,
+      "article_identifier": "https://openalex.org/W2921743340",
+      "pdf_file": "data/original/articles/10.1186_s40537-019-0176-5.pdf",
+      "doi": "https://doi.org/10.1186/s40537-019-0176-5",
+      "title": "Data mining approach for predicting the daily Internet data traffic of a smart university",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 79,
+      "article_identifier": "https://openalex.org/W1977863230",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1002/pmic.201400391",
+      "title": "Workflows for automated downstream data analysis and visualization in large‐scale computational mass spectrometry",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 80,
+      "article_identifier": "https://openalex.org/W2901055252",
+      "pdf_file": "data/original/articles/10.1038_sdata.2018.241.pdf",
+      "doi": "https://doi.org/10.1038/sdata.2018.241",
+      "title": "High content organelle trafficking enables disease state profiling as powerful tool for disease modelling",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 81,
+      "article_identifier": "https://openalex.org/W2520511389",
+      "pdf_file": "data/original/articles/10.1016_j.tox.2016.09.008.pdf",
+      "doi": "https://doi.org/10.1016/j.tox.2016.09.008",
+      "title": "A knowledge-based expert rule system for predicting mutagenicity (Ames test) of aromatic amines and azo compounds",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "https://chm.kode-solutions.net/research/Supporting-Materials-Gadaleta-2016.zip",
+          "reference_type": "possible_workflow_supplement",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "publisher_supplement",
+          "audit_status": "confirmed_direct_workflow",
+          "evidence_quote": "Downloaded non-text file with suffix .zip.",
+          "reason": "The URL points to a downloadable ZIP file named 'Supporting-Materials-Gadaleta-2016.zip' which is likely supplementary material that may contain workflow artifacts.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 82,
+      "article_identifier": "https://openalex.org/W4223900207",
+      "pdf_file": "data/original/articles/10.3390_bioengineering9040172.pdf",
+      "doi": "https://doi.org/10.3390/bioengineering9040172",
+      "title": "Machine Learning and Regression Analysis to Model the Length of Hospital Stay in Patients with Femur Fracture",
+      "publication_year": "2022",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 83,
+      "article_identifier": "https://openalex.org/W3093194453",
+      "pdf_file": "data/original/articles/10.3390_diagnostics10100815.pdf",
+      "doi": "https://doi.org/10.3390/diagnostics10100815",
+      "title": "Improving Prosthetic Selection and Predicting BMD from Biometric Measurements in Patients Receiving Total Hip Arthroplasty",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 84,
+      "article_identifier": "https://openalex.org/W2288366709",
+      "pdf_file": "data/original/articles/10.1186_s13321-016-0121-y.pdf",
+      "doi": "https://doi.org/10.1186/s13321-016-0121-y",
+      "title": "Selectivity profiling of BCRP versus P-gp inhibition: from automated collection of polypharmacology data to multi-label learning",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": true,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": [
+        {
+          "url": "http://www.myexperiment.org/workflows/4754.html",
+          "reference_type": "myexperiment_workflow",
+          "workflow_access": "manual_check_required",
+          "workflow_form": "myexperiment_page",
+          "audit_status": "manual_check_required",
+          "evidence_quote": "captcha-protected domain; browser visit skipped",
+          "reason": "The URL is a myExperiment workflow page but is blocked by a captcha, preventing direct inspection; the URL pattern indicates a workflow page.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://github.com/openphacts/OPS-Knime",
+          "reference_type": "workflow_repository",
+          "workflow_access": "workflow_landing_page_available",
+          "workflow_form": "repository",
+          "audit_status": "confirmed_workflow_landing_page",
+          "evidence_quote": "OPS-KNIME 1.4-example-workflow.zip README.md ... The OPS-Knime project has three goals: To easily inclu",
+          "reason": "GitHub repository contains example workflow ZIP files and README indicating KNIME workflows are present.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://zenodo.org/record/15423#.VrHCKkIoA_s",
+          "reference_type": "possible_workflow_supplement",
+          "workflow_access": "possible_workflow_requires_inspection",
+          "workflow_form": "unknown",
+          "audit_status": "possible_workflow_requires_inspection",
+          "evidence_quote": "Downloaded non-text file with suffix .bin.",
+          "reason": "The URL is a Zenodo record which often hosts supplementary materials including workflows, but the local page content is a non-text .bin file without clear evidence of KNIME workflow files. Thus it may contain workflow artifacts but requires manual inspection.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "rank": 85,
+      "article_identifier": "https://openalex.org/W2078810130",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.1109/mipro.2014.6859797",
+      "title": "Big data and sentiment analysis using KNIME: Online reviews vs. social media",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 86,
+      "article_identifier": "https://openalex.org/W2980497069",
+      "pdf_file": "data/original/articles/10.1021_acs.jcim.9b00662.pdf",
+      "doi": "https://doi.org/10.1021/acs.jcim.9b00662",
+      "title": "TeachOpenCADD-KNIME: A Teaching Platform for Computer-Aided Drug Design Using KNIME Workflows",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 87,
+      "article_identifier": "https://openalex.org/W2941458018",
+      "pdf_file": "data/original/articles/10.1016_j.tiv.2019.01.004.pdf",
+      "doi": "https://doi.org/10.1016/j.tiv.2019.01.004",
+      "title": "Prediction of the skin sensitising potential and potency of compounds via mechanism-based binary and ternary classification models",
+      "publication_year": "2019",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 88,
+      "article_identifier": "https://openalex.org/W4378223202",
+      "pdf_file": "data/original/articles/10.3390_w15112004.pdf",
+      "doi": "https://doi.org/10.3390/w15112004",
+      "title": "Flood Simulations Using a Sensor Network and Support Vector Machine Model",
+      "publication_year": "2023",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 89,
+      "article_identifier": "https://openalex.org/W2505685449",
+      "pdf_file": "data/original/articles/10.20853_30-2-583.pdf",
+      "doi": "https://doi.org/10.20853/30-2-583",
+      "title": "Applying predictive analytics in identifying students at risk: A case study",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 90,
+      "article_identifier": "https://openalex.org/W3047697246",
+      "pdf_file": "data/original/articles/10.5599_admet.852.pdf",
+      "doi": "https://doi.org/10.5599/admet.852",
+      "title": "ADME Prediction with KNIME: In silico aqueous solubility models based on supervised recursive machine learning approaches",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": true,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": true
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 91,
+      "article_identifier": "https://openalex.org/W2903768033",
+      "pdf_file": "undefined",
+      "doi": "https://doi.org/10.23919/aeit.2018.8577362",
+      "title": "Neural Networks for Automated Smart Health Platforms oriented on Heart Predictive Diagnostic Big Data Systems",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": false,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": false,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 92,
+      "article_identifier": "https://openalex.org/W2979114862",
+      "pdf_file": "data/original/articles/10.7124_bc.00090f.pdf",
+      "doi": "https://doi.org/10.7124/bc.00090f",
+      "title": "Computational analysis of microarray gene expression profiles of lung cancer",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 93,
+      "article_identifier": "https://openalex.org/W2409982462",
+      "pdf_file": "data/original/articles/10.1016_j.tox.2016.05.026.pdf",
+      "doi": "https://doi.org/10.1016/j.tox.2016.05.026",
+      "title": "Multiscale modelling approaches for assessing cosmetic ingredients safety",
+      "publication_year": "2016",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 94,
+      "article_identifier": "https://openalex.org/W2900107325",
+      "pdf_file": "data/original/articles/10.1051_medsci_201834f110.pdf",
+      "doi": "https://doi.org/10.1051/medsci/201834f110",
+      "title": "Computational QSAR model combined molecular descriptors and fingerprints to predict HDAC1 inhibitors",
+      "publication_year": "2018",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 95,
+      "article_identifier": "https://openalex.org/W2286489929",
+      "pdf_file": "data/original/articles/10.1109_mgrs.2015.2496160.pdf",
+      "doi": "https://doi.org/10.1109/mgrs.2015.2496160",
+      "title": "KNIME an Open Source Solution for Predictive Analytics in the Geosciences [Software and Data Sets]",
+      "publication_year": "2015",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 96,
+      "article_identifier": "https://openalex.org/W4200444944",
+      "pdf_file": "data/original/articles/10.18178_ijiet.2022.12.2.1591.pdf",
+      "doi": "https://doi.org/10.18178/ijiet.2022.12.2.1591",
+      "title": "A Predictive Model Implemented in KNIME Based on Learning Analytics for Timely Decision Making in Virtual Learning Environments",
+      "publication_year": "2021",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 97,
+      "article_identifier": "https://openalex.org/W3090290354",
+      "pdf_file": "data/original/articles/10.1007_s11042-020-09916-0.pdf",
+      "doi": "https://doi.org/10.1007/s11042-020-09916-0",
+      "title": "Data mining tools -a case study for network intrusion detection",
+      "publication_year": "2020",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 98,
+      "article_identifier": "https://openalex.org/W2728122703",
+      "pdf_file": "data/original/articles/10.1016_j.tiv.2017.06.015.pdf",
+      "doi": "https://doi.org/10.1016/j.tiv.2017.06.015",
+      "title": "From in vitro to in vivo: Integration of the virtual cell based assay with physiologically based kinetic modelling",
+      "publication_year": "2017",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": true,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 99,
+      "article_identifier": "https://openalex.org/W2121137483",
+      "pdf_file": "data/original/articles/10.1186_1758-2946-6-s1-p8.pdf",
+      "doi": "https://doi.org/10.1186/1758-2946-6-s1-p8",
+      "title": "The integration of Open3DTOOLS into the RDKit and KNIME",
+      "publication_year": "2014",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": false,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": false,
+        "reports_input_data_availability": false,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": true,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    },
+    {
+      "rank": 100,
+      "article_identifier": "https://openalex.org/W2129047745",
+      "pdf_file": "data/original/articles/10.1093_bioinformatics_btr554.pdf",
+      "doi": "https://doi.org/10.1093/bioinformatics/btr554",
+      "title": "Knime4Bio: a set of custom nodes for the interpretation of next-generation sequencing data with KNIME",
+      "publication_year": "2011",
+      "flag_audit_fields": {
+        "uses_knime": true,
+        "reports_knime_version": false,
+        "provides_downloadable_knime_workflow_files": false,
+        "provides_workflow_screenshots_or_figures": true,
+        "describes_workflow_or_nodes_in_text": true,
+        "provides_input_data_direct_url": true,
+        "reports_input_data_availability": true,
+        "provides_code_or_scripts": false,
+        "reports_extension_or_plugin_dependencies": false,
+        "reports_extension_installation_source": false
+      },
+      "linked_resources": []
+    }
+  ]
+}

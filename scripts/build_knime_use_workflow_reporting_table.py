@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_ASSESSMENT = Path("data/processed/audit/old_article_assessments.json")
+DEFAULT_ASSESSMENT = Path("data/processed/audit/article_audit_report.json")
 DEFAULT_WORKFLOW_REFERENCES = Path("data/processed/audit/knime_downloadable_workflow_references.json")
 DEFAULT_TABLE3 = Path("article/tables/top_cited_article_audit_summary.csv")
 DEFAULT_ARTICLE = Path("article/article.tex")
@@ -67,6 +67,8 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def flag_fields(article: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(article.get("flag_audit_fields"), dict):
+        return article["flag_audit_fields"]
     return article.get("article_audit_fields", {}).get("flag_audit_fields", {})
 
 

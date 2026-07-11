@@ -29,7 +29,7 @@ DEFAULT_WORKFLOW_REFERENCES = Path(
     "data/processed/audit/knime_downloadable_workflow_references.json"
 )
 DEFAULT_OUTPUT = Path(
-    "data/processed/audit/article_deterministic_assessments.json"
+    "data/processed/audit/old/article_deterministic_assessments.json"
 )
 
 UNDEFINED = "undefined"
@@ -58,6 +58,14 @@ ARTICLE_HTML_METADATA_FIELDS = {
     "text_extractor",
     "text_stage",
 }
+
+
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
 EXCLUDED_OPENALEX_SEED_FIELDS = {
     "has_fulltext",
     "has_pdf",
@@ -976,7 +984,7 @@ def main() -> int:
 
     result = {
         "created_at": date.today().isoformat(),
-        "created_by": Path(__file__).as_posix(),
+        "created_by": repo_relative_script_path(),
         "source_csv": {
             "top_cited_seed": args.seed_csv.as_posix(),
             "article_registry": args.registry.as_posix(),

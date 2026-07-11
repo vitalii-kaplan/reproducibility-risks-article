@@ -1,9 +1,9 @@
 label,count,share_percent
-Uses KNIME,67,100.0
-Workflow or nodes described in text,59,88.1
-Workflow screenshots or figures,37,55.2
-Reports KNIME version,18,26.9
-Reports extension/plugin dependencies,30,44.8
-Reports extension installation source,19,28.4
-Reports downloadable workflows,28,41.8
-Articles with successfully downloaded workflows,12,17.9
+Uses KNIME,75,100.0
+Workflow or nodes described in text,68,90.7
+Workflow screenshots or figures,49,65.3
+Reports KNIME version,18,24.0
+Reports extension/plugin dependencies,23,30.7
+Reports extension installation source,4,5.3
+Reports downloadable workflows,17,22.7
+Articles with successfully downloaded workflows,12,16.0

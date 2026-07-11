@@ -1,5 +1,5 @@
 {
-  "created_by": "/Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/scripts/classify_article_references_with_llm.py",
+  "created_by": "scripts/classify_article_references_with_llm.py",
   "input": "data/processed/audit/article_url_collection.json",
   "prompt": "data/processed/audit/article_reference_classification_prompt.json",
   "model": "gpt-4.1-mini",

@@ -12,9 +12,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "old"))
 
 from old_audit_assessments_deterministic import (
     UNDEFINED,
@@ -57,6 +60,14 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
         handle.write("\n")
 
 
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
+
+
 def collect_article(article: dict[str, Any], text_dir: Path) -> dict[str, Any]:
     text_path, _text_match = text_match_for_article(article, text_dir)
     metadata = text_metadata(text_path)
@@ -92,7 +103,7 @@ def main() -> int:
 
     result = {
         "created_at": date.today().isoformat(),
-        "created_by": Path(__file__).as_posix(),
+        "created_by": repo_relative_script_path(),
         "scope": "Metadata and URL collection only. No URL classification, article-audit inference, curated-audit reads, network calls, or LLM calls.",
         "source_files": {
             "top_cited_seed": args.seed_csv.as_posix(),

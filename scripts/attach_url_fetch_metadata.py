@@ -48,6 +48,14 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
         handle.write("\n")
 
 
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
+
+
 def url_value(entry: str | dict[str, Any]) -> str:
     if isinstance(entry, str):
         return entry
@@ -103,7 +111,7 @@ def attach_metadata(collection: dict[str, Any], pages_index: dict[str, Any]) -> 
 
     collection["page_fetch_metadata"] = {
         "attached_at": now_iso(),
-        "attached_by": Path(__file__).as_posix(),
+        "attached_by": repo_relative_script_path(),
         "pages_index": DEFAULT_PAGES_INDEX.as_posix(),
         "scope": "URL fetch metadata only. No URL classification, page-content interpretation, or audit-field inference.",
         "fields_added_to_urls": [

@@ -22,13 +22,22 @@ from typing import Any
 from urllib.parse import urlparse
 
 
-DEFAULT_INPUT = Path("data/processed/audit/article_deterministic_assessments.json")
-DEFAULT_OUTPUT = Path("data/processed/audit/article_llm_url_assessments.json")
+DEFAULT_INPUT = Path("data/processed/audit/old/article_deterministic_assessments.json")
+DEFAULT_OUTPUT = Path("data/processed/audit/old/article_llm_url_assessments.json")
 DEFAULT_TEXT_DIR = Path("data/processed/articles")
-DEFAULT_PROMPT = Path("data/processed/audit/article_llm_url_prompts.json")
+DEFAULT_PROMPT = Path("data/processed/audit/old/article_llm_url_prompts.json")
 DEFAULT_ENV_FILE = Path(".env")
 DEFAULT_OPENAI_MODEL = "gpt-4.1-mini"
 OPENAI_CHAT_COMPLETIONS_URL = "https://api.openai.com/v1/chat/completions"
+
+
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
+
 URL_TYPE_ALIASES = {
     "workflow_artifact": "workflow",
     "cited_workflow_artifact": "workflow",
@@ -770,7 +779,7 @@ def main() -> int:
         typed_urls += changed
 
     result = copy.deepcopy(input_assessment)
-    result["created_by"] = Path(__file__).as_posix()
+    result["created_by"] = repo_relative_script_path()
     result["source_assessment"] = args.input_assessment.as_posix()
     result["text_dir"] = args.text_dir.as_posix()
     result["prompt"] = args.prompt.as_posix()

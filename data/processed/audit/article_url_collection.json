@@ -1,6 +1,6 @@
 {
   "created_at": "2026-07-11",
-  "created_by": "/Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/scripts/collect_article_urls.py",
+  "created_by": "scripts/collect_article_urls.py",
   "scope": "Metadata and URL collection only. No URL classification, article-audit inference, curated-audit reads, network calls, or LLM calls.",
   "source_files": {
     "top_cited_seed": "data/processed/openalex/openalex_knime_most_cited.csv",
@@ -13941,7 +13941,7 @@
   ],
   "page_fetch_metadata": {
     "attached_at": "2026-07-11T10:25:09+00:00",
-    "attached_by": "/Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/scripts/attach_url_fetch_metadata.py",
+    "attached_by": "scripts/attach_url_fetch_metadata.py",
     "pages_index": "data/processed/audit/pages/index.json",
     "scope": "URL fetch metadata only. No URL classification, page-content interpretation, or audit-field inference.",
     "fields_added_to_urls": [
@@ -13967,7 +13967,7 @@
   },
   "browser_403_fetch_metadata": {
     "attached_at": "2026-07-11T11:45:03+00:00",
-    "attached_by": "/Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/scripts/browser_fetch_403_urls.py",
+    "attached_by": "scripts/browser_fetch_403_urls.py",
     "browser_index": "data/processed/audit/browser_pages/index.json",
     "summary": {
       "unique_403_urls_selected": 256,

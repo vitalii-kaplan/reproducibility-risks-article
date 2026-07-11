@@ -250,8 +250,8 @@ Create directories only when they are needed. Keep generated files out of versio
   find another quote. If more than five candidates fail and no supporting quote
   is found, set the flag to `false`. Do not keep keyword-only support that does
   not make the claim true.
-- Use `scripts/refresh_article_audit_support.py` as the provenance/support
-  refresher for the top-cited article audit. It rebuilds candidate flags from
+- Use `scripts/old/refresh_article_audit_support.py` only when restoring the
+  old provenance/support workflow for comparison. It rebuilds candidate flags from
   `description_audit_fields`, searches the processed one-column article text,
   records direct quotes and section names, rejects invalid quote support, and
   removes positive article-text flags that have no valid quote. Treat it as a
@@ -298,11 +298,17 @@ Create directories only when they are needed. Keep generated files out of versio
   stronger URL-level evidence than `manual_check_required`; manually review
   `manual_check_required` before counting it as confirmed workflow
   availability.
-- The older article-text and candidate-assessment scripts are retained only as
-  reference material and are prefixed with `old_`:
-  `scripts/old_audit_assessments_deterministic.py`,
-  `scripts/old_audit_assessments_llm_url.py`, and
-  `scripts/old_audit_assessments_llm_flag.py`. Do not use them as the active
+- Use `scripts/classify_article_supplementary_flags_with_llm.py` only for
+  additional article-level signals: KNIME use, version reporting, downloadable
+  workflow reporting, workflow screenshots/figures, textual workflow/node
+  descriptions, input-data availability, direct data URLs, code/scripts,
+  extension/plugin dependencies, and extension installation source. The output
+  is `data/processed/audit/article_supplementary_llm_flags.json`. These fields
+  are useful for analysis, but they do not supersede the reference-page
+  workflow-obtainability classification.
+- The older article-text and candidate-assessment scripts and outputs are
+  retained only as reference material under `scripts/old/` and
+  `data/processed/audit/old/`. Do not use them as the active
   article-to-workflow discovery path unless explicitly restoring the old
   workflow for comparison.
 - The empirical expansion priority is now lower than formalizing the framework,

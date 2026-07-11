@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Build the top-cited article audit summary table from structured audit flags.
+"""Build the article audit summary table from structured audit flags.
 
 The manuscript keeps the rendered table in LaTeX, but the counts should come
-from the audit JSON. This script computes the Table 3 rows from per-article
-``flag_audit_fields`` and description-level classification fields, writes the
-CSV source under ``article/tables/``, and compares the generated values with
-the current LaTeX table.
+from the audit JSON. This script computes rows from per-article
+``flag_audit_fields``, writes the CSV source under ``article/tables/``, and
+compares the generated values with the current LaTeX table.
 """
 
 from __future__ import annotations
@@ -19,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 
-DEFAULT_ASSESSMENT = Path("data/processed/audit/old_article_assessments.json")
+DEFAULT_ASSESSMENT = Path("data/processed/audit/article_audit_report.json")
 DEFAULT_ARTICLE = Path("article/article.tex")
 DEFAULT_OUTPUT_DIR = Path("article/tables")
 
@@ -105,6 +104,8 @@ def description_fields(article: dict[str, Any]) -> dict[str, Any]:
 
 
 def flag_fields(article: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(article.get("flag_audit_fields"), dict):
+        return article["flag_audit_fields"]
     return article.get("article_audit_fields", {}).get("flag_audit_fields", {})
 
 
@@ -116,6 +117,23 @@ def flag_count(articles: list[dict[str, Any]], flag_name: str) -> int:
     return sum(1 for article in articles if flag_fields(article).get(flag_name) is True)
 
 
+def has_relation_fields(articles: list[dict[str, Any]]) -> bool:
+    return any(description_fields(article).get("knime_article_relation") for article in articles)
+
+
+def has_compact_report_metadata(articles: list[dict[str, Any]]) -> bool:
+    return any("pdf_file" in article for article in articles)
+
+
+def assessed_from_report_metadata(articles: list[dict[str, Any]]) -> int:
+    return sum(
+        1
+        for article in articles
+        if str(article.get("pdf_file", "")).strip()
+        and str(article.get("pdf_file", "")).strip().lower() != "undefined"
+    )
+
+
 def pct(count: int, denominator: int) -> float:
     if denominator == 0:
         return 0.0
@@ -124,10 +142,6 @@ def pct(count: int, denominator: int) -> float:
 
 def build_top_table(articles: list[dict[str, Any]]) -> list[TableRow]:
     total = len(articles)
-    assessed = sum(1 for article in articles if relation(article) != "not_assessed")
-    not_assessed = sum(1 for article in articles if relation(article) == "not_assessed")
-    about_knime = sum(1 for article in articles if relation(article) == "about_knime")
-    not_use_case = sum(1 for article in articles if relation(article) == "not_a_knime_use_case")
 
     rows = [
         TableRow(
@@ -136,31 +150,51 @@ def build_top_table(articles: list[dict[str, Any]]) -> list[TableRow]:
             pct(total, total),
             "Most-cited KNIME-matching article records selected from OpenAlex",
         ),
-        TableRow(
-            "Assessed from full text",
-            assessed,
-            pct(assessed, total),
-            "Article text available for manual assessment",
-        ),
-        TableRow(
-            "Not assessed from full text",
-            not_assessed,
-            pct(not_assessed, total),
-            "Full text unavailable at assessment time",
-        ),
-        TableRow(
-            "About KNIME",
-            about_knime,
-            pct(about_knime, total),
-            "Background/platform or extension papers, not deeper workflow-reporting cases",
-        ),
-        TableRow(
-            "Not a KNIME use case",
-            not_use_case,
-            pct(not_use_case, total),
-            "KNIME appears in the record but is not a KNIME-based study",
-        ),
     ]
+
+    if has_relation_fields(articles):
+        assessed = sum(1 for article in articles if relation(article) != "not_assessed")
+        not_assessed = sum(1 for article in articles if relation(article) == "not_assessed")
+        about_knime = sum(1 for article in articles if relation(article) == "about_knime")
+        not_use_case = sum(1 for article in articles if relation(article) == "not_a_knime_use_case")
+        rows.extend(
+            [
+                TableRow(
+                    "Assessed from full text",
+                    assessed,
+                    pct(assessed, total),
+                    "Article text available for manual assessment",
+                ),
+                TableRow(
+                    "Not assessed from full text",
+                    not_assessed,
+                    pct(not_assessed, total),
+                    "Full text unavailable at assessment time",
+                ),
+                TableRow(
+                    "About KNIME",
+                    about_knime,
+                    pct(about_knime, total),
+                    "Background/platform or extension papers, not deeper workflow-reporting cases",
+                ),
+                TableRow(
+                    "Not a KNIME use case",
+                    not_use_case,
+                    pct(not_use_case, total),
+                    "KNIME appears in the record but is not a KNIME-based study",
+                ),
+            ]
+        )
+    elif has_compact_report_metadata(articles):
+        assessed = assessed_from_report_metadata(articles)
+        rows.append(
+            TableRow(
+                "Records with local PDF",
+                assessed,
+                pct(assessed, total),
+                "Source PDF recorded in the compact audit report",
+            )
+        )
 
     for label, flag_name, interpretation in TOP_FLAG_ROWS:
         count = flag_count(articles, flag_name)
@@ -269,6 +303,8 @@ def write_comparison(path: Path, rows: list[dict[str, str]]) -> None:
 
 def write_summary_count_check(path: Path, data: dict[str, Any], articles: list[dict[str, Any]]) -> None:
     summary_counts = data.get("article_audit_summary_counts", {})
+    if not summary_counts:
+        summary_counts = data.get("summary", {}).get("flag_true_counts", {})
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(
             handle,
@@ -286,15 +322,16 @@ def write_summary_count_check(path: Path, data: dict[str, Any], articles: list[d
                     "match": generated == expected,
                 }
             )
-        full_text_generated = flag_count(articles, "full_text_accessible")
-        writer.writerow(
-            {
-                "flag": "full_text_accessible",
-                "generated_true_count": full_text_generated,
-                "json_summary_count": summary_counts.get("full_text_accessible", ""),
-                "match": full_text_generated == summary_counts.get("full_text_accessible", ""),
-            }
-        )
+        if "full_text_accessible" in summary_counts:
+            full_text_generated = flag_count(articles, "full_text_accessible")
+            writer.writerow(
+                {
+                    "flag": "full_text_accessible",
+                    "generated_true_count": full_text_generated,
+                    "json_summary_count": summary_counts.get("full_text_accessible", ""),
+                    "match": full_text_generated == summary_counts.get("full_text_accessible", ""),
+                }
+            )
 
 
 def main() -> int:

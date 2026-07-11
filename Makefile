@@ -42,23 +42,28 @@ END ?= 80
 DOWNLOAD_TIMEOUT ?= 45
 
 # Article-audit and table parameters.
-ASSESSMENT ?= data/processed/audit/old_article_assessments.json
+ASSESSMENT ?= data/processed/audit/article_audit_report.json
 AUDIT_QUESTIONS ?= data/processed/audit/knime_article_audit_questions.json
 WORKFLOW_REFERENCES ?= data/processed/audit/knime_downloadable_workflow_references.json
 ARTICLE_TEX ?= article/article.tex
 ARTICLE_TABLE_DIR ?= article/tables
-FAIL_ON_MISMATCH ?= --fail-on-mismatch
+FAIL_ON_MISMATCH ?=
 LLM_MODE ?= off
 LLM_MODEL ?= gpt-4.1-mini
 LLM_TEMPERATURE ?= 0
 LLM_ENV_FILE ?= .env
-LLM_PROMPT ?= data/processed/audit/old_llm_support_validation_prompt.json
-LLM_FLAG_ASSESSMENT_PROMPT ?= data/processed/audit/article_llm_flag_assessment_prompt.json
+LLM_PROMPT ?= data/processed/audit/old/old_llm_support_validation_prompt.json
+LLM_FLAG_ASSESSMENT_PROMPT ?= data/processed/audit/old/article_llm_flag_assessment_prompt.json
 LLM_FLAG_ASSESSMENT_INPUT ?= $(LLM_URL_ASSESSMENT_OUTPUT)
-LLM_FLAG_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_flag_assessments.json
-LLM_URL_ASSESSMENT_PROMPT ?= data/processed/audit/article_llm_url_prompts.json
-LLM_URL_ASSESSMENT_OUTPUT ?= data/processed/audit/article_llm_url_assessments.json
-DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/article_deterministic_assessments.json
+LLM_FLAG_ASSESSMENT_OUTPUT ?= data/processed/audit/old/article_llm_flag_assessments.json
+LLM_URL_ASSESSMENT_PROMPT ?= data/processed/audit/old/article_llm_url_prompts.json
+LLM_URL_ASSESSMENT_OUTPUT ?= data/processed/audit/old/article_llm_url_assessments.json
+ARTICLE_REFERENCE_CLASSIFICATIONS ?= data/processed/audit/article_reference_llm_classifications.json
+ARTICLE_SUPPLEMENTARY_FLAG_PROMPT ?= data/processed/audit/article_supplementary_flag_prompt.json
+ARTICLE_SUPPLEMENTARY_FLAG_OUTPUT ?= data/processed/audit/article_supplementary_llm_flags.json
+ARTICLE_AUDIT_REPORT ?= data/processed/audit/article_audit_report.json
+WORKFLOW_REFERENCE_INVENTORY ?= data/processed/audit/knime_downloadable_workflow_references.json
+DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/old/article_deterministic_assessments.json
 DETERMINISTIC_LIMIT ?= 0
 LLM_DECISION_LOG ?= data/processed/audit/logs/llm_support_validation_decisions.jsonl
 LLM_APPLY_REJECTIONS ?=
@@ -66,6 +71,8 @@ RESET_FLAGS_FROM_DESCRIPTIONS ?=
 APPLY_FLAG_REMOVALS ?=
 LIMIT ?= 10
 RANK ?=
+RANK_FROM ?=
+RANK_TO ?=
 
 # KNIME source-mining parameters. Override KNIME_OSS_ROOT for your local clone.
 KNIME_OSS_ROOT ?= ../2026-06-knime-oss
@@ -87,11 +94,11 @@ help: ## Show target descriptions and important parameters.
 	@printf '  OPENALEX_MAILTO=%s                optional email for OpenAlex polite pool\n' "$(OPENALEX_MAILTO)"
 	@printf '  OPENALEX_MOST_CITED_LIMIT=%s      citation-ranked OpenAlex subset size\n' "$(OPENALEX_MOST_CITED_LIMIT)"
 	@printf '  ARTICLE_REGISTRY=%s               canonical local article registry\n' "$(ARTICLE_REGISTRY)"
-	@printf '  FAIL_ON_MISMATCH=%s               pass empty to allow table mismatches\n' "$(FAIL_ON_MISMATCH)"
+	@printf '  FAIL_ON_MISMATCH=%s               set to --fail-on-mismatch after manuscript tables are synchronized\n' "$(FAIL_ON_MISMATCH)"
 	@printf '  LLM_MODE=%s LLM_MODEL=%s          audit-support LLM mode/model\n' "$(LLM_MODE)" "$(LLM_MODEL)"
 	@printf '  LLM_APPLY_REJECTIONS=%s           empty logs LLM decisions without applying rejections\n' "$(LLM_APPLY_REJECTIONS)"
 	@printf '  APPLY_FLAG_REMOVALS=%s            empty preserves audited positive flags\n' "$(APPLY_FLAG_REMOVALS)"
-	@printf '  LIMIT=%s RANK=%s                  optional LLM article-assessment subset\n' "$(LIMIT)" "$(RANK)"
+	@printf '  LIMIT=%s RANK=%s RANK_FROM=%s RANK_TO=%s optional LLM article subset\n' "$(LIMIT)" "$(RANK)" "$(RANK_FROM)" "$(RANK_TO)"
 	@printf '  GROBID_URL=%s                     local GROBID service URL\n' "$(GROBID_URL)"
 
 .PHONY: all
@@ -166,7 +173,7 @@ article-grobid-html-from-tei: ## Regenerate semantic article HTML from existing 
 
 .PHONY: refresh-audit-support
 refresh-audit-support: ## Refresh quote/provenance support in the structured article audit.
-	$(PYTHON) scripts/refresh_article_audit_support.py \
+	$(PYTHON) scripts/old/refresh_article_audit_support.py \
 	  --llm-mode "$(LLM_MODE)" \
 	  --llm-model "$(LLM_MODEL)" \
 	  --llm-temperature "$(LLM_TEMPERATURE)" \
@@ -182,7 +189,7 @@ refresh-audit-support: ## Refresh quote/provenance support in the structured art
 
 .PHONY: deterministic-article-assessments
 deterministic-article-assessments: ## Legacy: generate old deterministic article_audit_fields candidates.
-	$(PYTHON) scripts/old_audit_assessments_deterministic.py \
+	$(PYTHON) scripts/old/old_audit_assessments_deterministic.py \
 	  --seed-csv "$(OPENALEX_PROCESSED_DIR)/openalex_knime_most_cited.csv" \
 	  --questions "$(AUDIT_QUESTIONS)" \
 	  --text-dir "$(ARTICLE_TEXT_DIR)" \
@@ -194,7 +201,7 @@ deterministic-article-assessments: ## Legacy: generate old deterministic article
 
 .PHONY: llm-url-assessments
 llm-url-assessments: ## Legacy: classify old linked_resources URL types with LLM calls. Network access required.
-	$(PYTHON) scripts/old_audit_assessments_llm_url.py \
+	$(PYTHON) scripts/old/old_audit_assessments_llm_url.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
@@ -207,7 +214,7 @@ llm-url-assessments: ## Legacy: classify old linked_resources URL types with LLM
 
 .PHONY: llm-flag-assessments
 llm-flag-assessments: ## Legacy: review/correct old article_audit_fields flags with LLM calls. Network access required.
-	$(PYTHON) scripts/old_audit_assessments_llm_flag.py \
+	$(PYTHON) scripts/old/old_audit_assessments_llm_flag.py \
 	  --model "$(LLM_MODEL)" \
 	  --temperature "$(LLM_TEMPERATURE)" \
 	  --env-file "$(LLM_ENV_FILE)" \
@@ -221,6 +228,34 @@ llm-flag-assessments: ## Legacy: review/correct old article_audit_fields flags w
 
 .PHONY: llm-article-assessments
 llm-article-assessments: llm-flag-assessments ## Backward-compatible alias for llm-flag-assessments.
+
+.PHONY: supplementary-article-flags
+supplementary-article-flags: ## Classify supplementary article-level flags from article text and reference-page evidence. Network access required.
+	$(PYTHON) scripts/classify_article_supplementary_flags_with_llm.py \
+	  --model "$(LLM_MODEL)" \
+	  --temperature "$(LLM_TEMPERATURE)" \
+	  --env-file "$(LLM_ENV_FILE)" \
+	  --prompt "$(ARTICLE_SUPPLEMENTARY_FLAG_PROMPT)" \
+	  --input "$(ARTICLE_REFERENCE_CLASSIFICATIONS)" \
+	  --output "$(ARTICLE_SUPPLEMENTARY_FLAG_OUTPUT)" \
+	  --limit "$(LIMIT)" \
+	  $(if $(RANK),--rank "$(RANK)",) \
+	  $(if $(RANK_FROM),--rank-from "$(RANK_FROM)",) \
+	  $(if $(RANK_TO),--rank-to "$(RANK_TO)",)
+
+.PHONY: article-audit-report
+article-audit-report: ## Build compact article audit report from supplementary flags and reference-page classifications.
+	$(PYTHON) scripts/build_article_audit_report.py \
+	  --flags "$(ARTICLE_SUPPLEMENTARY_FLAG_OUTPUT)" \
+	  --references "$(ARTICLE_REFERENCE_CLASSIFICATIONS)" \
+	  --output "$(ARTICLE_AUDIT_REPORT)"
+
+.PHONY: workflow-reference-inventory
+workflow-reference-inventory: ## Initialize/update workflow-reference inventory from article_audit_report.json.
+	$(PYTHON) scripts/build_workflow_reference_inventory.py \
+	  --report "$(ARTICLE_AUDIT_REPORT)" \
+	  --existing "$(WORKFLOW_REFERENCE_INVENTORY)" \
+	  --output "$(WORKFLOW_REFERENCE_INVENTORY)"
 
 .PHONY: article-audit-tables
 article-audit-tables: ## Build Table 3 CSV and comparison/check logs from the audit JSON.

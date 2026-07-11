@@ -63,6 +63,14 @@ def write_json(path: Path, data: dict[str, Any]) -> None:
         handle.write("\n")
 
 
+def repo_relative_script_path() -> str:
+    path = Path(__file__).resolve()
+    try:
+        return path.relative_to(Path.cwd()).as_posix()
+    except ValueError:
+        return Path(__file__).name
+
+
 def safe_slug(url: str, max_len: int = 80) -> str:
     chars = []
     for char in url.lower():
@@ -316,7 +324,7 @@ def main() -> int:
     updated_entries = apply_browser_results(collection, by_url)
     index = {
         "created_at": now_iso(),
-        "created_by": Path(__file__).as_posix(),
+        "created_by": repo_relative_script_path(),
         "source_collection": args.collection.as_posix(),
         "output_dir": args.output_dir.as_posix(),
         "scope": "Browser fallback for URLs whose first-stage HTTP status code is 403. Captchas are detected and recorded, not bypassed.",
@@ -348,7 +356,7 @@ def main() -> int:
     write_json(args.output_dir / "index.json", index)
     collection["browser_403_fetch_metadata"] = {
         "attached_at": now_iso(),
-        "attached_by": Path(__file__).as_posix(),
+        "attached_by": repo_relative_script_path(),
         "browser_index": (args.output_dir / "index.json").as_posix(),
         "summary": index["summary"],
     }
