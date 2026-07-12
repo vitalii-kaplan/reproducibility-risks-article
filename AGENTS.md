@@ -367,30 +367,28 @@ Create directories only when they are needed. Keep generated files out of versio
   `data/original/knime_snapshots/<snapshot-date>/logs/`, and per-workflow
   `data/original/workflows/<doi-safe-directory>/logs/` for HTTP header traces.
 - Current 100-record structured audit counts in
-  `data/processed/audit/old_article_assessments.json` are:
+  `data/processed/audit/article_audit_report.json` are:
   - expanded audit records: 100
-  - local full text available: 82
-  - not assessed from full text: 18
-  - about KNIME: 8
+  - records with local PDF: 79
   - not a KNIME use case: 7
-  - uses KNIME: 67
-  - workflow or nodes described in text: 59
-  - workflow screenshots or figures: 37
+  - uses KNIME: 75
+  - workflow or nodes described in text: 68
+  - workflow screenshots or figures: 49
   - reports KNIME version: 18
-  - downloadable KNIME workflow files: 28
-  - articles with successfully downloaded workflows or workflow directories: 12
-  - extension/plugin dependencies reported: 30
-  - extension installation source reported: 19
-  - code or scripts reported: 17
-  - reports input-data availability: 55
-  - direct input-data resource: 23
+  - downloadable KNIME workflow files: 22
+  - articles with successfully downloaded workflows or workflow directories: 18
+  - extension/plugin dependencies reported: 23
+  - extension installation source reported: 4
+  - code or scripts reported: 20
+  - reports input-data availability: 66
+  - direct input-data resource: 20
   Keep these counts synchronized with `article/article.tex`,
   `article/tables/*.csv`, and
-  `data/processed/audit/old_article_assessments.json` when the
+  `data/processed/audit/article_audit_report.json` when the
   audit changes.
 - Linked workflow artifact retrievability is tracked in the project workflow
   inventory rather than in Table 3 or Table 4. The current workflow inventory
-  records 12 article records with obtained workflow artifacts or workflow
+  records 18 article records with obtained workflow artifacts or workflow
   directories.
 - Workflow-level statistics should include the number of retrieved workflows,
   importable workflows, executable workflows where feasible, workflows with
@@ -411,14 +409,14 @@ Create directories only when they are needed. Keep generated files out of versio
   the stronger near-term contribution is a deeper KNIME workflow corpus with
   quantitative node-level compatibility analysis.
 - The current workflow-reference inventory under
-  `data/processed/audit/knime_downloadable_workflow_references.json` covers 28
+  `data/processed/audit/knime_downloadable_workflow_references.json` covers 33
   article records with
   downloadable or linked KNIME workflow evidence. Workflow artifacts or workflow
-  directories have been obtained for 12 article records. Workflows from all 12
-  article records opened in the local KNIME environment. Four article records
+  directories have been obtained for 18 article records. Workflows from all 18
+  article records opened in the local KNIME environment. Five article records
   had at least one workflow execute successfully: PAINS, Webinar Pricing
-  Analytics, ImageJ ecosystem integration, and high-content organelle
-  trafficking. PAINS is counted once at article-record level even though
+  Analytics, ImageJ ecosystem integration, high-content organelle
+  trafficking, and GediNET. PAINS is counted once at article-record level even though
   separate RDKit and Indigo workflow archives exist. The other opened article
   records failed during execution, required missing R packages or extensions,
   or could not be confidently executed from the available workflow state.
@@ -428,16 +426,16 @@ Create directories only when they are needed. Keep generated files out of versio
   article again needs standalone figure files.
 - The workflow reference inventory is
   `data/processed/audit/knime_downloadable_workflow_references.json`. It
-  records the 28 article records with downloadable or linked KNIME workflow
+  records the 31 article records with downloadable or linked KNIME workflow
   evidence, download outcomes, reasons for unavailable workflows, manual KNIME
-  opening tests, and the summary that 12 article records yielded workflow
-  artifacts or workflow directories, workflows from all 12 were opened in the
-  manual subset, and four article records had at least one workflow execute
+  opening tests, and the summary that 18 article records yielded workflow
+  artifacts or workflow directories, workflows from all 18 were opened in the
+  manual subset, and five article records had at least one workflow execute
   successfully.
 - The reader-facing `README.md` should summarize the current 100-record audit as
-  82 records with local full text, 18 not assessed, 67 KNIME-use records, 28
-  records reporting downloadable or linked workflows, 12 article records with
-  obtained workflow artifacts or workflow directories, and four article records
+  79 records with local PDFs, 75 KNIME-use records, 22
+  records reporting downloadable or linked workflows, 18 article records with
+  obtained workflow artifacts or workflow directories, and five article records
   with at least one successfully executed workflow. Keep it concise and avoid
   exposing the full internal audit schema there.
 - The final bibliography pass checked DOI-bearing entries in `article.bbl`

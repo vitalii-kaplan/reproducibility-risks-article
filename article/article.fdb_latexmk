@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex article"] 1783842289.70441 "article.aux" "article.bbl" "article" 1783842290.70564 0
-  "./references.bib" 1783179480.25998 10883 370e0078323827835a851ab3bd610f92 ""
+["bibtex article"] 1783877829.83008 "article.aux" "article.bbl" "article" 1783880257.36053 0
+  "./references.bib" 1783877799.58515 12076 ea9c0795151eac9c769e4722f5d0c0af ""
   "./splncs04.bst" 1782898237.30583 32146 aadf770ded437d161532035219ea6f45 ""
-  "article.aux" 1783842290.42175 6348 f72732ca18ff75a32f119e10ec2c2f70 "pdflatex"
+  "article.aux" 1783880257.02904 6614 ae92227bdab0e8f40bb8e30d2749cc4a "pdflatex"
   (generated)
   "article.bbl"
   "article.blg"
   (rewritten before read)
-["pdflatex"] 1783842289.80155 "article.tex" "article.pdf" "article" 1783842290.70577 0
+["pdflatex"] 1783880256.27901 "article.tex" "article.pdf" "article" 1783880257.36067 0
   "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1783539076.14517 294 c709f8171e909c2832b2b4469444f964 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -181,9 +181,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739209689 5466570 e8651e7fa7bb054fee9a07d3f37faf28 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739209844 3352639 2aa689c226d5667ed0ad838dc122ce61 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "article.aux" 1783842290.42175 6348 f72732ca18ff75a32f119e10ec2c2f70 "pdflatex"
-  "article.bbl" 1783842289.79914 5576 83a60c9ae246f2fabe9332280f386749 "bibtex article"
-  "article.tex" 1783842282.49287 64634 e9f33eada9db92a88000595e7cdf8131 ""
+  "article.aux" 1783880257.02904 6614 ae92227bdab0e8f40bb8e30d2749cc4a "pdflatex"
+  "article.bbl" 1783877829.92399 6380 fbd29bdce15ea5c27c250a8b7c881096 "bibtex article"
+  "article.tex" 1783880231.25169 64931 dfd43e64bb6fd71726d5b52e4422366e ""
   "llncs.cls" 1782898237.30583 43405 543b73320c367b0229b3cdfcddaedc46 ""
   (generated)
   "article.aux"

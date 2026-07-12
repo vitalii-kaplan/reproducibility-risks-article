@@ -45,21 +45,20 @@ main source of knowledge about the audit process.
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
   records and collected on June 29, 2026, returned 963 article-type records.
 - The expanded top-cited audit covers 100 KNIME-matching article records. Of
-  these, 82 have local full text or PDFs and 18 remain not assessed because no
-  local full text was available.
-- In the 100-record audit, 67 records use KNIME as a workflow, tool, interface,
+  these, 79 have local PDFs recorded in the compact audit report.
+- In the 100-record audit, 75 records use KNIME as a workflow, tool, interface,
   or implementation context.
-- Twenty-eight records report downloadable or linked KNIME workflow files.
-  Workflow artifacts or workflow directories were obtained for 12 article
+- Twenty-two records report downloadable or linked KNIME workflow files.
+  Workflow artifacts or workflow directories were obtained for 18 article
   records.
 - The current workflow-link discovery process uses reference-page content
   analysis: article URLs are collected from GROBID HTML/TEI, fetched and cached,
   then classified from the locally stored target pages. This gave clearer
   article-to-workflow evidence than article-text-only LLM analysis.
-- Workflows from all 12 obtained article records opened in the local KNIME
-  environment used for the manual check. Four article records had at least one
+- Workflows from all 18 obtained article records opened in the local KNIME
+  environment used for the manual check. Five article records had at least one
   workflow execute successfully: PAINS, Webinar Pricing Analytics, ImageJ
-  ecosystem integration, and high-content organelle trafficking.
+  ecosystem integration, high-content organelle trafficking, and GediNET.
 - Repository mining found that deprecated ordinary nodes increased from 14.83%
   of registered ordinary nodes in the 2018 source baseline to 33.33% in the
   June 28, 2026 local source snapshot.

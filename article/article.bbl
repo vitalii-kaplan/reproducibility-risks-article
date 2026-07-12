@@ -22,6 +22,11 @@ Fu, X., Liu, L., Guan, W.W., Kalra, Y., Bao, S., K{\"o}tter, T., Sturm, K.:
   Cartography and Geographic Information Science  \textbf{53}(3),  270--290
   (2025). \doi{10.1080/15230406.2024.2446556}
 
+\bibitem{GROBIDSoftware2026}
+{GROBID contributors}: {GROBID}: Generation of bibliographic data.
+  \url{https://github.com/kermitt2/grobid} (2026), version 0.9.0-crf Docker
+  image; accessed July 12, 2026
+
 \bibitem{Hall2009WEKA}
 Hall, M., Frank, E., Holmes, G., Pfahringer, B., Reutemann, P., Witten, I.H.:
   The {WEKA} data mining software: An update. ACM SIGKDD Explorations
@@ -73,6 +78,15 @@ Kurtzer, G.M., Sochat, V., Bauer, M.W.: Singularity: Scientific containers for
   mobility of compute. PLOS ONE  \textbf{12}(5),  e0177459 (2017).
   \doi{10.1371/journal.pone.0177459}
 
+\bibitem{PlaywrightPython2026}
+{Microsoft}: {Playwright for Python}. \url{https://playwright.dev/python/}
+  (2026), version 1.61.0; accessed July 12, 2026
+
+\bibitem{OpenAIAPI2026}
+{OpenAI}: {OpenAI API Documentation}: Chat completions.
+  \url{https://platform.openai.com/docs/api-reference/chat} (2026), accessed
+  July 12, 2026
+
 \bibitem{Pal2018OrganelleKNIME}
 Pal, A., Gla{\ss}, H., Naumann, M., Kreiter, N., Japtok, J., Sczech, R.,
   Hermann, A.: High content organelle trafficking enables disease state
@@ -84,6 +98,12 @@ Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly
   works, authors, venues, institutions, and concepts. arXiv preprint
   arXiv:2205.01833  (2022). \doi{10.48550/arXiv.2205.01833},
   \url{https://arxiv.org/abs/2205.01833}
+
+\bibitem{Qumsiyeh2022GediNET}
+Qumsiyeh, E., Showe, L.C., Yousef, M.: {GediNET} for discovering gene
+  associations across diseases using knowledge based machine learning approach.
+  Scientific Reports  \textbf{12}(1),  19955 (2022).
+  \doi{10.1038/s41598-022-24421-0}
 
 \bibitem{SamuelMietchen2024JupyterReproducibility}
 Samuel, S., Mietchen, D.: Computational reproducibility of {Jupyter} notebooks

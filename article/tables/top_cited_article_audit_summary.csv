@@ -5,7 +5,7 @@ Uses KNIME,75,75.0,"KNIME used as a workflow, tool, interface, or implementation
 Workflow or nodes described in text,68,68.0,"Named workflow steps, nodes, modules, or components recorded"
 Workflow screenshots or figures,49,49.0,Workflow shown visually in article or supplement
 Reports KNIME version,18,18.0,Specific KNIME version value found
-Reports downloadable workflows,23,23.0,Executable workflow files provided or linked
+Reports downloadable workflows,22,22.0,Executable workflow files provided or linked
 Reports extension/plugin dependencies,23,23.0,KNIME extension or node-library dependency reported
 Reports extension installation source,4,4.0,"Update site, project URL, or installation source reported"
 Provides code or scripts,20,20.0,"Code repository, scripts, or software code reported"
