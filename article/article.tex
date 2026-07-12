@@ -221,12 +221,13 @@ process is specified in \path{scripts/audit_script_chain.json}, which acts as
 the workflow index for this part of the study. Each step consumes the recorded
 outputs of earlier steps and writes an explicit intermediate or final artifact.
 The current chain contains fifteen scripted steps and one manual checkpoint.
-Thirteen scripted steps are deterministic. Two scripted steps use an LLM.
+Thirteen scripted steps are rule-based. Two scripted steps use an LLM.
 We use the LLM only where rule-based extraction is insufficient. The first LLM
-step classifies cached reference pages. The second LLM step fills
-supplementary article-level audit flags. The LLM calls use temperature 0 to
-reduce variation. Repeated execution may still depend on the model and service
-version used.
+step classifies workflow relevance from downloaded reference-page content. The
+second LLM step fills supplementary article-level audit flags from the
+processed text of the articles. The LLM calls use temperature 0 to reduce
+variation. Repeated execution may still depend on the model and service version
+used.
 
 The pipeline is mostly automatic, but it is deliberately semi-automatic at two boundary
 points: obtaining article PDFs at the beginning of the process and obtaining
@@ -310,7 +311,7 @@ later classification and avoids asking the language model to rely on live web
 state.
 
 Step 7 attaches the URL-fetch metadata back to the article records with
-\path{scripts/attach_url_fetch_metadata.py}. This deterministic step augments
+\path{scripts/attach_url_fetch_metadata.py}. This rule-based step augments
 each URL entry with fetch status, HTTP code, final URL, redirect count, and the
 path to any stored page. It is metadata attachment only; it does not interpret
 whether a reference is a workflow, software page, dataset, article landing
@@ -341,7 +342,7 @@ plugin information. These flags provide article-level context around the
 reference-page workflow evidence.
 
 Step 11 builds a compact article audit report with
-\path{scripts/build_article_audit_report.py}. This deterministic join combines
+\path{scripts/build_article_audit_report.py}. This rule-based join combines
 article metadata, the supplementary flag fields, and the workflow-relevant
 reference classifications into
 \path{data/processed/audit/article_audit_report.json}. The report is the
@@ -350,7 +351,7 @@ generation steps.
 
 Step 12 attempts automatic workflow artifact downloads from the workflow
 references in the audit report with
-\path{scripts/download_workflow_artifacts.py}. The script uses deterministic
+\path{scripts/download_workflow_artifacts.py}. The script uses rule-based
 HTTP retrieval and, where appropriate, browser-assisted discovery to look for
 KNIME workflow archives, \texttt{workflow.knime} files, or archives containing
 workflow files. It writes attempt status, local directories, downloaded files,

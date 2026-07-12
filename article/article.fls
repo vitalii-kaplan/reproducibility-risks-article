@@ -2,7 +2,7 @@ PWD /Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/article
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT article.tex
+INPUT /Users/vitaly/Home/git_proj/2026-07-reproducibility-risks/article/article.tex
 OUTPUT article.log
 INPUT ./llncs.cls
 INPUT llncs.cls

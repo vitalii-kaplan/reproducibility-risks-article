@@ -6,7 +6,7 @@
     "automatic": "The next step consumes files written by this step without required manual editing.",
     "semi_automatic": "The script produces or consumes an intermediate state that may require manual action, such as institutional article download, human article assessment, workflow retrieval, or manual KNIME opening/execution checks.",
     "llm_automatic": "The script runs automatically after local preprocessing, but uses an LLM for bounded judgment tasks that previously required human review.",
-    "manual": "The step is not currently represented by a deterministic script and must be performed or edited by a human before the next scripted step is meaningful."
+    "manual": "The step is not currently represented by a rule-based or LLM-assisted script and must be performed or edited by a human before the next scripted step is meaningful."
   },
   "article_audit_chain": [
     {
@@ -226,7 +226,7 @@
         "data/processed/audit/article_audit_report.json"
       ],
       "handoff_to_next": "automatic",
-      "notes": "Deterministic report collection step. Joins article metadata and supplementary flag_audit_fields with workflow-relevant reference-page classifications. linked_resources contains confirmed, possible, or manual-check workflow resources only; generic article pages, software documentation, datasets, malformed URLs, and non-workflow references are excluded."
+      "notes": "Rule-based report collection step. Joins article metadata and supplementary flag_audit_fields with workflow-relevant reference-page classifications. linked_resources contains confirmed, possible, or manual-check workflow resources only; generic article pages, software documentation, datasets, malformed URLs, and non-workflow references are excluded."
     },
     {
       "step": 12,
@@ -248,7 +248,7 @@
         "Do not solve captchas or bypass access controls during automatic browser attempts.",
         "If a data/original/workflows/<rank>_<doi-safe>/ directory already exists, this step skips download attempts for that article and only scans local files."
       ],
-      "notes": "The references are selected by the LLM-supported reference classification and collected in article_audit_report.json. This script uses deterministic HTTP and optional Playwright/Chrome browser discovery to try to obtain .knwf, workflow.knime, or ZIP archives containing KNIME workflow files. It writes attempt status, local directories, downloaded files, and workflow_files_found to the workflow-reference inventory."
+      "notes": "The references are selected by the LLM-supported reference classification and collected in article_audit_report.json. This script uses rule-based HTTP and optional Playwright/Chrome browser discovery to try to obtain .knwf, workflow.knime, or ZIP archives containing KNIME workflow files. It writes attempt status, local directories, downloaded files, and workflow_files_found to the workflow-reference inventory."
     },
     {
       "step": 13,
@@ -271,7 +271,7 @@
         "Do not edit data/processed/audit/article_audit_report.json manually at this stage.",
         "Do not bypass captchas, paywalls, authentication, robots, or other access controls."
       ],
-      "notes": "This is a download-only manual checkpoint. The JSON inventory is the checklist, but the user should only add files/directories under data/original/workflows. The next deterministic step scans the actual local workflow files and updates article_audit_report.json."
+      "notes": "This is a download-only manual checkpoint. The JSON inventory is the checklist, but the user should only add files/directories under data/original/workflows. The next rule-based step scans the actual local workflow files and updates article_audit_report.json."
     },
     {
       "step": 14,
