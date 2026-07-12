@@ -230,51 +230,68 @@
     },
     {
       "step": 12,
-      "name": "Initialize workflow-reference inventory from article audit report",
-      "script": "scripts/build_workflow_reference_inventory.py",
+      "name": "Try automatic workflow artifact downloads from report references",
+      "script": "scripts/download_workflow_artifacts.py",
       "make_target": "workflow-reference-inventory",
-      "network_required": false,
-      "input": [
-        "data/processed/audit/article_audit_report.json",
-        "data/processed/audit/knime_downloadable_workflow_references.json"
-      ],
-      "output": [
-        "data/processed/audit/knime_downloadable_workflow_references.json"
-      ],
-      "handoff_to_next": "automatic",
-      "notes": "Creates or refreshes workflow-reference inventory records from article_audit_report.json linked_resources. Existing manual download_result and manual_knime_opening_tests are preserved for matching article ranks. This step only initializes structured records; it does not retrieve workflow files or run KNIME."
-    },
-    {
-      "step": 13,
-      "name": "Manually refine article audit report records and workflow evidence",
-      "script": null,
-      "make_target": null,
       "network_required": true,
       "input": [
         "data/processed/audit/article_audit_report.json",
         "data/processed/audit/knime_downloadable_workflow_references.json"
       ],
       "output": [
-        "data/processed/audit/article_audit_report.json",
         "data/processed/audit/knime_downloadable_workflow_references.json",
-        "data/original/workflows/<article-or-doi-safe-directory>/",
-        "data/original/workflows/<article-or-doi-safe-directory>/logs/",
-        "data/original/workflows/<article-or-doi-safe-directory>/opened/"
+        "data/original/workflows/<article-doi-safe-directory>/"
       ],
       "handoff_to_next": "semi_automatic",
       "manual_action_required": [
-        "Open data/processed/audit/article_audit_report.json and review one article object at a time, using rank, title, DOI, pdf_file, flag_audit_fields, and linked_resources as the working record.",
-        "For flag_audit_fields, edit only boolean values. Set a flag to true only when the article text, linked reference page, or downloaded evidence directly supports it; otherwise leave or set it false.",
-        "For linked_resources, keep only workflow-relevant URLs: confirmed workflow pages/files, possible workflow supplements/repositories, and manual-check workflow candidates. Remove generic documentation, article landing pages, unrelated software pages, datasets with no workflow relation, malformed URLs, and duplicate URLs.",
-        "For each linked_resources item, preserve the URL and classification fields from the LLM result when useful, but correct wrong workflow_access/reference_type/workflow_form values after manual inspection.",
-        "When a linked resource can be retrieved, download workflow archives, workflow directories, repository snapshots, or supplements and save them under data/original/workflows/<article-or-doi-safe-directory>/.",
-        "Update data/processed/audit/knime_downloadable_workflow_references.json with retrieval status, downloaded files, workflow files found, failed references, directory names, manual notes, and KNIME opening/execution results when tested.",
-        "If no workflow can be obtained from a candidate link, keep the article record but document the failed or not-attempted retrieval reason rather than deleting the article."
+        "Review download_result.status for each record in data/processed/audit/knime_downloadable_workflow_references.json.",
+        "Do not solve captchas or bypass access controls during automatic browser attempts.",
+        "If a data/original/workflows/<rank>_<doi-safe>/ directory already exists, this step skips download attempts for that article and only scans local files."
       ],
-      "notes": "This is a deliberate semi-automatic checkpoint. The automatic pipeline creates data/processed/audit/article_audit_report.json, but final workflow availability claims require human correction of article records. Edit article_audit_report.json conservatively: do not add true flags or workflow links without direct evidence, do not change bibliographic metadata unless it conflicts with data/original/articles/registry.bbl, and keep linked_resources limited to workflow-obtainability evidence. After manual edits, steps 14 and 15 rebuild tables from article_audit_report.json and the workflow inventory."
+      "notes": "The references are selected by the LLM-supported reference classification and collected in article_audit_report.json. This script uses deterministic HTTP and optional Playwright/Chrome browser discovery to try to obtain .knwf, workflow.knime, or ZIP archives containing KNIME workflow files. It writes attempt status, local directories, downloaded files, and workflow_files_found to the workflow-reference inventory."
+    },
+    {
+      "step": 13,
+      "name": "Manually download missing workflow artifacts",
+      "script": null,
+      "make_target": null,
+      "network_required": true,
+      "input": [
+        "data/processed/audit/knime_downloadable_workflow_references.json"
+      ],
+      "output": [
+        "data/original/workflows/<article-doi-safe-directory>/"
+      ],
+      "handoff_to_next": "semi_automatic",
+      "manual_action_required": [
+        "Open data/processed/audit/knime_downloadable_workflow_references.json and inspect records whose download_result.workflow_files_found is empty.",
+        "Try to download missing workflow artifacts manually using a browser where access is allowed.",
+        "Save downloaded files only under the record download_result.directory, normally data/original/workflows/<rank>_<doi-safe>/.",
+        "Do not edit data/processed/audit/knime_downloadable_workflow_references.json manually at this stage.",
+        "Do not edit data/processed/audit/article_audit_report.json manually at this stage.",
+        "Do not bypass captchas, paywalls, authentication, robots, or other access controls."
+      ],
+      "notes": "This is a download-only manual checkpoint. The JSON inventory is the checklist, but the user should only add files/directories under data/original/workflows. The next deterministic step scans the actual local workflow files and backpropagates the result into article_audit_report.json."
     },
     {
       "step": 14,
+      "name": "Backpropagate downloaded workflow evidence to article report",
+      "script": "scripts/backpropagate_workflow_inventory_to_report.py",
+      "make_target": "backpropagate-workflow-inventory",
+      "network_required": false,
+      "input": [
+        "data/processed/audit/knime_downloadable_workflow_references.json",
+        "data/original/workflows/<article-doi-safe-directory>/",
+        "data/processed/audit/article_audit_report.json"
+      ],
+      "output": [
+        "data/processed/audit/article_audit_report.json"
+      ],
+      "handoff_to_next": "automatic",
+      "notes": "Scans actual local workflow evidence and inventory workflow_files_found. For ranks with downloaded KNIME workflow files, sets flag_audit_fields.provides_downloadable_knime_workflow_files to true, adds workflow_artifact_evidence, merges inventory workflow references into linked_resources when needed, and recomputes report summary counts."
+    },
+    {
+      "step": 15,
       "name": "Build article-audit summary table source",
       "script": "scripts/build_article_audit_tables.py",
       "make_target": "article-audit-tables",
@@ -292,7 +309,7 @@
       "notes": "Builds count rows from the compact final article audit report. Relation-only rows from the old audit are not generated unless the input file contains those relation fields. Use --fail-on-mismatch only after the manuscript table has been synchronized with this report."
     },
     {
-      "step": 15,
+      "step": 16,
       "name": "Build KNIME-use workflow-reporting table source",
       "script": "scripts/build_knime_use_workflow_reporting_table.py",
       "make_target": "knime-use-table",

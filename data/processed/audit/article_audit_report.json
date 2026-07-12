@@ -31,14 +31,15 @@
       "reports_knime_version": 18,
       "describes_workflow_or_nodes_in_text": 68,
       "reports_extension_or_plugin_dependencies": 23,
-      "provides_downloadable_knime_workflow_files": 17,
+      "provides_downloadable_knime_workflow_files": 21,
       "reports_extension_installation_source": 4
     },
     "workflow_link_counts": {
-      "articles_with_linked_resources": 17,
-      "linked_resources": 61,
-      "manual_check_required": 49,
-      "confirmed_workflow_landing_page": 10,
+      "articles_with_linked_resources": 21,
+      "linked_resources": 67,
+      "manual_check_required": 7,
+      "downloaded_workflow_artifact": 51,
+      "confirmed_workflow_landing_page": 7,
       "confirmed_direct_workflow": 1,
       "possible_workflow_requires_inspection": 1
     }
@@ -406,7 +407,7 @@
           "reference_type": "myexperiment_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Just a moment...",
           "reason": "The URL is a myExperiment domain known for workflows but the page is blocked by HTTP 403 and captcha, requiring manual check to confirm workflow availability.",
           "confidence": "high"
@@ -416,7 +417,7 @@
           "reference_type": "myexperiment_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Just a moment...",
           "reason": "This is a specific myExperiment workflow URL but access is blocked by HTTP 403 and captcha, so manual inspection is needed to verify workflow availability.",
           "confidence": "high"
@@ -426,12 +427,19 @@
           "reference_type": "myexperiment_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Just a moment...",
           "reason": "The URL is a myExperiment workflow page but is blocked by a captcha (HTTP 403), preventing direct inspection; it likely hosts a workflow but requires manual check.",
-          "confidence": "medium"
+          "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "Indigo-pains-v2.zip::Indigo-pains/workflow.knime",
+          "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime"
+        ]
+      }
     },
     {
       "rank": 17,
@@ -563,12 +571,21 @@
           "reference_type": "workflow_repository",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf ... data_curation_SMILES_input_29112024.knwf",
           "reason": "The GitHub repository contains multiple .knwf files (KNIME workflow files) and related documentation, indicating it hosts KNIME workflow artifacts.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf",
+          "github_data_curation_workflow_master_long.zip::data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "github_data_curation_workflow_master_long.zip::data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf"
+        ]
+      }
     },
     {
       "rank": 23,
@@ -595,12 +612,21 @@
           "reference_type": "workflow_repository",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "ASD_genes_prediction_workflow.zip ASD_genes_prediction_workflow.zip",
           "reason": "The GitHub repository contains a ZIP file named 'ASD_genes_prediction_workflow.zip' indicating presence of a KNIME workflow archive artifact.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "ASD_genes_prediction_workflow.zip::ASD_genes_prediction_workflow/Input Parame (#160)/workflow.knime",
+          "ASD_genes_prediction_workflow.zip::ASD_genes_prediction_workflow/workflow.knime",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/workflow.knime",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.knime"
+        ]
+      }
     },
     {
       "rank": 24,
@@ -648,7 +674,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow space URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and needs manual inspection to confirm workflow availability.",
           "confidence": "high"
@@ -658,12 +684,21 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "This is a KNIME Hub workflow URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and requires manual inspection to verify workflow availability.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf",
+          "gitlab_knime_medchem_filters_main.zip::knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
+          "gitlab_knime_medchem_filters_main.zip::knime_medchem_filters-main/previous/knime_filter_final.knwf"
+        ]
+      }
     },
     {
       "rank": 26,
@@ -1162,7 +1197,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1172,7 +1207,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1182,37 +1217,37 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
-          "confidence": "medium"
+          "confidence": "high"
         },
         {
           "url": "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors%7eHYlUnc7CnzG2fe8d",
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
-          "confidence": "medium"
+          "confidence": "high"
         },
         {
           "url": "https://kni.me/w/O04qJIa1oD94M1rd",
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a short kni.me link redirecting to a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability.",
-          "confidence": "medium"
+          "confidence": "high"
         },
         {
           "url": "https://kni.me/w/szC3HhTNkE12-r6h",
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a kni.me workflow link (KNIME Hub workflow) but page returns error 500 with a JavaScript error, blocking access; likely a workflow page but requires manual check.",
           "confidence": "high"
@@ -1222,7 +1257,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check.",
           "confidence": "high"
@@ -1232,7 +1267,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check.",
           "confidence": "high"
@@ -1242,7 +1277,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL redirects to a KNIME Hub extension page but returns error 500 with JavaScript error; likely a workflow or component page but requires manual check.",
           "confidence": "high"
@@ -1252,7 +1287,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability.",
           "confidence": "high"
@@ -1262,7 +1297,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability.",
           "confidence": "high"
@@ -1272,7 +1307,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow page but returns an error (HTTP 500) and cannot be accessed; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1282,7 +1317,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "The URL is a kni.me short link to a KNIME workflow but access is forbidden (HTTP 403); manual check required to verify workflow availability.",
           "confidence": "high"
@@ -1292,12 +1327,18 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "The URL is a kni.me link which typically hosts KNIME workflows, but the page is blocked with a 403 Forbidden error, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "Webinar Pricing Analytics_English.knwf"
+        ]
+      }
     },
     {
       "rank": 47,
@@ -1530,7 +1571,7 @@
       "flag_audit_fields": {
         "uses_knime": true,
         "reports_knime_version": false,
-        "provides_downloadable_knime_workflow_files": false,
+        "provides_downloadable_knime_workflow_files": true,
         "provides_workflow_screenshots_or_figures": true,
         "describes_workflow_or_nodes_in_text": true,
         "provides_input_data_direct_url": false,
@@ -1539,7 +1580,24 @@
         "reports_extension_or_plugin_dependencies": false,
         "reports_extension_installation_source": false
       },
-      "linked_resources": []
+      "linked_resources": [
+        {
+          "url": "https://hub.knime.com/ search: spontaneous tail coilings detection in zebrafish",
+          "reference_type": "article-reported workflow reference",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        }
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "Spontaneous tail coilings-measurement.knwf"
+        ]
+      }
     },
     {
       "rank": 58,
@@ -1572,7 +1630,7 @@
       "flag_audit_fields": {
         "uses_knime": true,
         "reports_knime_version": true,
-        "provides_downloadable_knime_workflow_files": false,
+        "provides_downloadable_knime_workflow_files": true,
         "provides_workflow_screenshots_or_figures": true,
         "describes_workflow_or_nodes_in_text": true,
         "provides_input_data_direct_url": false,
@@ -1581,7 +1639,24 @@
         "reports_extension_or_plugin_dependencies": true,
         "reports_extension_installation_source": true
       },
-      "linked_resources": []
+      "linked_resources": [
+        {
+          "url": "https://pikairos.eu/download/Caco-2-permeability-prediction",
+          "reference_type": "article-reported workflow reference",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        }
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf"
+        ]
+      }
     },
     {
       "rank": 60,
@@ -1629,12 +1704,18 @@
           "reference_type": "workflow_repository",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "KniMet is a workflow for the post-processing of LC-MS, GC-MS and LC-IM-MS metabolomic",
           "reason": "The GitHub repository page title and excerpt indicate it hosts the KniMet workflow including a .knwf file (KniMet1.2.8.knwf) which is a KNIME workflow file, thus it is a repository containing KNIME workflow artifacts.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "KniMet-master.zip::KniMet-master/KniMet.knwf"
+        ]
+      }
     },
     {
       "rank": 62,
@@ -1661,7 +1742,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub Hub Search Pricing About Sign in Sorry! Cannot read properties of undefined (reading 'split') Back to homepage KNIME Open for Innovation KNIME AG Talacker 50 8001 Zurich, Switzerland Software Getting started Documentation Courses + Certification Solutions KNIME Hub KNIME Forum Blog Events Partner Developers KNIME Home Careers Contact us Download KNIME Analytics Platform Read more about KNIME Business Hub",
           "reason": "The URL is a KNIME Hub link likely for a workflow, but the local page shows a server error (HTTP 500) and error message, so access to the workflow is blocked and requires manual check.",
           "confidence": "high"
@@ -1671,7 +1752,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub Hub Search Pricing About Sign in Sorry! Cannot read properties of undefined (reading 'split') Back to homepage KNIME Open for Innovation KNIME AG Talacker 50 8001 Zurich, Switzerland Software Getting started Documentation Courses + Certification Solutions KNIME Hub KNIME Forum Blog Events Partner Developers KNIME Home Careers Contact us Download KNIME Analytics Platform Read more about KNIME Business Hub",
           "reason": "The URL is the KNIME Hub main site, which hosts workflows, but the local page shows a server error (HTTP 500) and error message, so access to workflows is blocked and requires manual check.",
           "confidence": "high"
@@ -1681,7 +1762,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1691,7 +1772,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1701,7 +1782,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability.",
           "confidence": "high"
@@ -1711,7 +1792,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
@@ -1721,7 +1802,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
@@ -1731,7 +1812,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
@@ -1741,7 +1822,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
@@ -1751,7 +1832,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability.",
           "confidence": "high"
@@ -1761,7 +1842,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check.",
           "confidence": "high"
@@ -1771,7 +1852,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check.",
           "confidence": "high"
@@ -1781,7 +1862,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
           "confidence": "high"
@@ -1791,7 +1872,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
           "confidence": "high"
@@ -1801,7 +1882,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check.",
           "confidence": "high"
@@ -1811,7 +1892,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
           "confidence": "high"
@@ -1821,7 +1902,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
           "confidence": "high"
@@ -1831,7 +1912,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability.",
           "confidence": "high"
@@ -1841,7 +1922,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Cannot read properties of undefined (reading 'split') – KNIME Community Hub",
           "reason": "The URL is a KNIME Hub short link for a workflow but the page shows an error (500) and cannot be loaded; likely a workflow page but requires manual check due to error.",
           "confidence": "high"
@@ -1851,7 +1932,7 @@
           "reference_type": "knime_hub_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden Forbidden You don't have permission to access this resource.",
           "reason": "The URL is a kni.me workflow URL but access is forbidden (403), so manual check is required to confirm workflow availability.",
           "confidence": "high"
@@ -1861,12 +1942,24 @@
           "reference_type": "possible_workflow_supplement",
           "workflow_access": "manual_check_required",
           "workflow_form": "publisher_supplement",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "403 Forbidden 403 Forbidden",
           "reason": "The URL is a figshare collection likely intended as supplementary material for the article, possibly containing workflows, but access is blocked with 403 Forbidden, requiring manual inspection.",
-          "confidence": "medium"
+          "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#158)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#159)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#166)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#173)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#174)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/Variables Loop _Data_ (#149)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/workflow.knime"
+        ]
+      }
     },
     {
       "rank": 63,
@@ -1893,7 +1986,7 @@
           "reference_type": "myexperiment_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Just a moment...",
           "reason": "The URL is a myExperiment search page for KNIME workflows but is blocked by a captcha challenge, preventing direct inspection; myExperiment is known for hosting workflows.",
           "confidence": "high"
@@ -1903,12 +1996,23 @@
           "reference_type": "myexperiment_workflow",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "evidence_quote": "Just a moment...",
           "reason": "The URL is a myExperiment workflow page but is blocked by a captcha challenge, preventing direct inspection; myExperiment pages typically host workflows.",
           "confidence": "high"
         }
-      ]
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "7yXlo4oq91qSBWeU.knwf",
+          "DU4eH3TjYhcxfWXD.knwf",
+          "F3K1YgZKt_923UgH.knwf",
+          "QVjrs0Vj7xG48Pcr.knwf",
+          "ThmsDDG4kj-_Ecml.knwf",
+          "oZteZanXoWURLouy.knwf"
+        ]
+      }
     },
     {
       "rank": 64,
@@ -2067,7 +2171,7 @@
       "flag_audit_fields": {
         "uses_knime": true,
         "reports_knime_version": false,
-        "provides_downloadable_knime_workflow_files": false,
+        "provides_downloadable_knime_workflow_files": true,
         "provides_workflow_screenshots_or_figures": true,
         "describes_workflow_or_nodes_in_text": true,
         "provides_input_data_direct_url": false,
@@ -2076,7 +2180,45 @@
         "reports_extension_or_plugin_dependencies": true,
         "reports_extension_installation_source": false
       },
-      "linked_resources": []
+      "linked_resources": [
+        {
+          "url": "https://github.com/malikyousef/GediNET",
+          "reference_type": "GitHub repository",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://github.com/malikyousef/GediNET.git",
+          "reference_type": "GitHub repository",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        },
+        {
+          "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
+          "reference_type": "KNIME Hub workflow",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        }
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "github_GediNET_master.zip::GediNET-main/GediNET_v1.knwf",
+          "github_GediNET_master.zip::GediNET-main/ProcessGEO_data.knwf"
+        ]
+      }
     },
     {
       "rank": 70,
@@ -2298,7 +2440,7 @@
       "flag_audit_fields": {
         "uses_knime": true,
         "reports_knime_version": false,
-        "provides_downloadable_knime_workflow_files": false,
+        "provides_downloadable_knime_workflow_files": true,
         "provides_workflow_screenshots_or_figures": true,
         "describes_workflow_or_nodes_in_text": true,
         "provides_input_data_direct_url": true,
@@ -2307,7 +2449,26 @@
         "reports_extension_or_plugin_dependencies": false,
         "reports_extension_installation_source": false
       },
-      "linked_resources": []
+      "linked_resources": [
+        {
+          "url": "Data Citation 1: KNIME workflow.zip",
+          "reference_type": "figshare workflow archive",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "evidence_quote": "",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows.",
+          "confidence": "high"
+        }
+      ],
+      "workflow_artifact_evidence": {
+        "source": "data/processed/audit/knime_downloadable_workflow_references.json",
+        "local_workflow_files_found": [
+          "KNIME workflow.zip::Knime for Paper/File loading (#175)/workflow.knime",
+          "KNIME workflow.zip::Knime for Paper/Filter and c (#190)/workflow.knime",
+          "KNIME workflow.zip::Knime for Paper/workflow.knime"
+        ]
+      }
     },
     {
       "rank": 81,
@@ -2771,5 +2932,25 @@
       },
       "linked_resources": []
     }
-  ]
+  ],
+  "workflow_inventory_backpropagation": {
+    "updated_at": "2026-07-12T01:54:15+00:00",
+    "source_inventory": "data/processed/audit/knime_downloadable_workflow_references.json",
+    "workflow_root": "data/original/workflows",
+    "downloaded_ranks": [
+      16,
+      22,
+      23,
+      25,
+      46,
+      57,
+      59,
+      61,
+      62,
+      63,
+      69,
+      80
+    ],
+    "articles_updated": 4
+  }
 }

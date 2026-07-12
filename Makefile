@@ -63,6 +63,7 @@ ARTICLE_SUPPLEMENTARY_FLAG_PROMPT ?= data/processed/audit/article_supplementary_
 ARTICLE_SUPPLEMENTARY_FLAG_OUTPUT ?= data/processed/audit/article_supplementary_llm_flags.json
 ARTICLE_AUDIT_REPORT ?= data/processed/audit/article_audit_report.json
 WORKFLOW_REFERENCE_INVENTORY ?= data/processed/audit/knime_downloadable_workflow_references.json
+WORKFLOW_ROOT ?= data/original/workflows
 DETERMINISTIC_ARTICLE_ASSESSMENT_OUTPUT ?= data/processed/audit/old/article_deterministic_assessments.json
 DETERMINISTIC_LIMIT ?= 0
 LLM_DECISION_LOG ?= data/processed/audit/logs/llm_support_validation_decisions.jsonl
@@ -251,11 +252,20 @@ article-audit-report: ## Build compact article audit report from supplementary f
 	  --output "$(ARTICLE_AUDIT_REPORT)"
 
 .PHONY: workflow-reference-inventory
-workflow-reference-inventory: ## Initialize/update workflow-reference inventory from article_audit_report.json.
-	$(PYTHON) scripts/build_workflow_reference_inventory.py \
+workflow-reference-inventory: ## Try browser/HTTP workflow downloads and update workflow-reference inventory.
+	$(PYTHON) scripts/download_workflow_artifacts.py \
 	  --report "$(ARTICLE_AUDIT_REPORT)" \
 	  --existing "$(WORKFLOW_REFERENCE_INVENTORY)" \
-	  --output "$(WORKFLOW_REFERENCE_INVENTORY)"
+	  --output "$(WORKFLOW_REFERENCE_INVENTORY)" \
+	  --workflow-root "$(WORKFLOW_ROOT)"
+
+.PHONY: backpropagate-workflow-inventory
+backpropagate-workflow-inventory: ## Update article_audit_report.json from downloaded workflow inventory and local workflow files.
+	$(PYTHON) scripts/backpropagate_workflow_inventory_to_report.py \
+	  --report "$(ARTICLE_AUDIT_REPORT)" \
+	  --inventory "$(WORKFLOW_REFERENCE_INVENTORY)" \
+	  --workflow-root "$(WORKFLOW_ROOT)" \
+	  --output "$(ARTICLE_AUDIT_REPORT)"
 
 .PHONY: article-audit-tables
 article-audit-tables: ## Build Table 3 CSV and comparison/check logs from the audit JSON.
