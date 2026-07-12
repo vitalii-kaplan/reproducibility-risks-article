@@ -105,6 +105,24 @@ def inventory_workflow_files(record: dict[str, Any] | None) -> list[str]:
     return files if isinstance(files, list) else []
 
 
+def inventory_download_type(record: dict[str, Any] | None, local_files: list[str]) -> str:
+    download_type = (record or {}).get("download_result", {}).get("download_type")
+    if download_type and not (download_type == "not_downloaded" and local_files):
+        return str(download_type)
+    status = str((record or {}).get("download_result", {}).get("status", "")).lower()
+    if not local_files and not inventory_workflow_files(record):
+        return "not_downloaded"
+    if "manual" in status:
+        return "manual"
+    if "automatic" in status:
+        return "automatic"
+    if status == "existing_directory_with_workflow_files":
+        return "manual"
+    if "downloaded_workflow" in status:
+        return "manual"
+    return "manual"
+
+
 def linked_resource_from_inventory(record: dict[str, Any]) -> list[dict[str, Any]]:
     resources = []
     for reference in record.get("workflow_references", []):
@@ -188,6 +206,10 @@ def main() -> int:
         article["workflow_artifact_evidence"] = {
             "source": args.inventory.as_posix(),
             "local_workflow_files_found": local_by_rank.get(rank, inventory_workflow_files(record)),
+            "download_type": inventory_download_type(
+                record,
+                local_by_rank.get(rank, inventory_workflow_files(record)),
+            ),
         }
 
     report["workflow_inventory_backpropagation"] = {

@@ -1,9 +1,8 @@
 {
-  "created_at": "2026-07-11",
+  "created_at": "2026-07-12T03:39:31+00:00",
   "source_assessment": "data/processed/audit/article_audit_report.json",
-  "selection_rule": "One record per article in article_audit_report.json with non-empty linked_resources; existing manual records outside the current report are retained unless --drop-extra-existing-records is used.",
-  "url_status_note": "This inventory is initialized from workflow-relevant report links. Download and KNIME-opening fields require manual update.",
-  "retained_extra_existing_records": 16,
+  "selection_rule": "Workflow-relevant linked_resources in article_audit_report.json are attempted automatically unless an article workflow directory already exists.",
+  "url_status_note": "Automatic attempts do not solve captchas or bypass access controls. Manual follow-up should use this inventory as the checklist.",
   "records": [
     {
       "rank": 3,
@@ -23,10 +22,22 @@
       ],
       "download_result": {
         "directory": "data/original/workflows/3_10.1007_s10822-012-9577-7",
-        "status": "not_attempted_in_current_workflow_download_pass",
+        "status": "automatic_attempt_no_workflow_file_found",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "Initialized from data/processed/audit/article_audit_report.json; manual retrieval has not been recorded yet."
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "http://www.myexperiment.org/",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "not_attempted",
+              "links": [],
+              "error": null
+            }
+          }
+        ],
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -41,17 +52,33 @@
           "url": "http://www.myexperiment.org/workflows/3045.html",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "The URL is a myExperiment workflow page but is blocked by captcha; the domain and URL path strongly indicate a workflow landing page."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/9_10.1186_1471-2105-14-257",
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "downloaded_files": [],
-        "workflow_files_found": [],
-        "notes": "Initialized from data/processed/audit/article_audit_report.json; manual retrieval has not been recorded yet."
+        "status": "existing_directory_with_workflow_files",
+        "downloaded_files": [
+          "13C_NMR_spectra_prediction-v2.zip"
+        ],
+        "workflow_files_found": [
+          "13C_NMR_spectra_prediction-v2.zip::13C_NMR/workflow.knime"
+        ],
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "http://www.myexperiment.org/workflows/3045.html",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "blocked_by_challenge",
+              "links": [],
+              "error": "Domain is known to require interactive challenge/captcha."
+            }
+          }
+        ],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": []
     },
@@ -66,7 +93,7 @@
           "url": "http://www.myexperiment.org/",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a myExperiment domain known for workflows but the page is blocked by HTTP 403 and captcha, requiring manual check to confirm workflow availability."
         },
@@ -75,7 +102,7 @@
           "url": "http://myexperiment.org/workflows/1841",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "This is a specific myExperiment workflow URL but access is blocked by HTTP 403 and captcha, so manual inspection is needed to verify workflow availability."
         },
@@ -84,8 +111,8 @@
           "url": "http://myexperiment.org/workflows/2164",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "The URL is a myExperiment workflow page but is blocked by a captcha (HTTP 403), preventing direct inspection; it likely hosts a workflow but requires manual check."
         }
       ],
@@ -93,14 +120,28 @@
         "directory": "data/original/workflows/16_10.1002_minf.201100076",
         "status": "downloaded_workflow_archives_manual",
         "downloaded_files": [
+          "Indigo-pains-v2.zip",
           "RDKit-pains-v4.zip",
-          "Indigo-pains-v2.zip"
+          "article_workflow_reference.json",
+          "logs/myexperiment_1841_download.headers.txt",
+          "logs/myexperiment_1841_page.headers.txt",
+          "logs/myexperiment_2164_download.headers.txt",
+          "logs/myexperiment_2164_page.headers.txt",
+          "myexperiment_1841_download",
+          "myexperiment_1841_page.html",
+          "myexperiment_2164_download",
+          "myexperiment_2164_page.html",
+          "opened/Indigo-pains-v2 error.png",
+          "opened/No extension 2026-06-30 at 14.30.02 transparent.png",
+          "opened/RDKit-pains-v4 complete.png"
         ],
         "workflow_files_found": [
-          "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime",
-          "Indigo-pains-v2.zip::Indigo-pains/workflow.knime"
+          "Indigo-pains-v2.zip::Indigo-pains/workflow.knime",
+          "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime"
         ],
-        "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but the user manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files."
+        "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but the user manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -111,10 +152,7 @@
           "notes": "Article-level manual check: at least one workflow for this article opened and executed successfully in the current local KNIME environment. The separate Indigo workflow opened but was blocked by a missing Indigo KNIME Integration node; PAINS is counted once at article-record level.",
           "screenshot_directory": "data/original/workflows/16_10.1002_minf.201100076/opened"
         }
-      ],
-      "knime_version": "2.3.4",
-      "processed_text_file": "data/processed/articles/10.1002_minf.201100076.html",
-      "evidence_extracted_text_lines": "58-68; 58-69"
+      ]
     },
     {
       "rank": 22,
@@ -127,7 +165,7 @@
           "url": "https://github.com/DGadaleta88/data_curation_workflow",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The GitHub repository contains multiple .knwf files (KNIME workflow files) and related documentation, indicating it hosts KNIME workflow artifacts."
         }
@@ -136,13 +174,49 @@
         "directory": "data/original/workflows/22_10.1186_s13321-018-0315-6",
         "status": "downloaded_workflow_files",
         "downloaded_files": [
-          "github_data_curation_workflow_master_long.zip"
+          "article_workflow_reference.json",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/CHANGELOG.txt",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/README.md",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/User's Guide.pdf",
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf",
+          "github_data_curation_workflow_main.zip",
+          "github_data_curation_workflow_master.zip",
+          "github_data_curation_workflow_master_long.zip",
+          "github_data_curation_workflow_master_retry.zip",
+          "github_data_curation_workflow_page.html",
+          "logs/github_data_curation_workflow_main.headers.txt",
+          "logs/github_data_curation_workflow_master.headers.txt",
+          "logs/github_data_curation_workflow_master_long.headers.txt",
+          "logs/github_data_curation_workflow_master_retry.headers.txt",
+          "logs/github_data_curation_workflow_page.headers.txt",
+          "opened/Screenshot 2026-07-04 at 00.12.03.png",
+          "opened/Screenshot 2026-07-04 at 00.12.14.png",
+          "opened/Screenshot 2026-07-04 at 00.13.14.png",
+          "opened/Screenshot 2026-07-04 at 00.18.03.png",
+          "opened/Screenshot 2026-07-04 at 00.29.36.png",
+          "opened/Screenshot 2026-07-04 at 00.29.47.png",
+          "opened/water.xlsx"
         ],
         "workflow_files_found": [
           "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
-          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf"
+          "extracted/github_data_curation_workflow_master_long/data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf",
+          "github_data_curation_workflow_master_long.zip::data_curation_workflow-master/DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+          "github_data_curation_workflow_master_long.zip::data_curation_workflow-master/data_curation_SMILES_input_29112024.knwf"
         ],
-        "notes": "GitHub master archive downloaded after long retry and passed unzip integrity test. Earlier main/short attempts are retained as failed evidence files."
+        "notes": "GitHub master archive downloaded after long retry and passed unzip integrity test. Earlier main/short attempts are retained as failed evidence files.",
+        "automatic_attempts": [],
+        "download_type": "automatic",
+        "automatic_verification": {
+          "verified_at": "2026-07-12T03:58:37+00:00",
+          "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+          "temporary_directory": "data/original/workflows/tmp/22_10.1186_s13321-018-0315-6",
+          "workflow_files_found": [
+            "DATA_CURATION_WF_25112022_CompTox_rebuilt.knwf",
+            "data_curation_SMILES_input_29112024.knwf"
+          ],
+          "note": "Workflow files were reproduced by an automatic temporary download pass. Temporary downloaded files were not retained."
+        }
       },
       "manual_knime_opening_tests": [
         {
@@ -153,10 +227,7 @@
           "notes": "Opened, but execution failed inside a metanode during the manual test.",
           "screenshot_directory": "data/original/workflows/22_10.1186_s13321-018-0315-6/opened"
         }
-      ],
-      "knime_version": "3.4",
-      "processed_text_file": "data/processed/articles/10.1186_s13321-018-0315-6.html",
-      "evidence_extracted_text_lines": "202-207"
+      ]
     },
     {
       "rank": 23,
@@ -169,7 +240,7 @@
           "url": "https://github.com/Muh-Asif/ASD-genes-prediction",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The GitHub repository contains a ZIP file named 'ASD_genes_prediction_workflow.zip' indicating presence of a KNIME workflow archive artifact."
         }
@@ -178,13 +249,151 @@
         "directory": "data/original/workflows/23_10.1371_journal.pone.0208626",
         "status": "downloaded_workflow_archive",
         "downloaded_files": [
-          "github_asd_genes_prediction_master.zip"
+          "article_workflow_reference.json",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/.knimeLock",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/.project",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/.savedWithData",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/CSV Reader (#429)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/CSV Reader (#429)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/CSV Reader (#429)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/CSV Reader (#429)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Concatenate _Optional in_ (#415)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Concatenate _Optional in_ (#415)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Concatenate _Optional in_ (#415)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#593)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#593)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#593)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#593)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#594)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#594)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#594)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#594)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#595)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#595)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#595)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#595)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#596)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#596)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#596)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Constant Value Column (#596)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/GroupBy (#627)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/GroupBy (#627)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/GroupBy (#627)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/GroupBy (#627)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/.savedWithData",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Integer Input _legacy_ _deprecated_ (#72)/port_1/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Integer Input _legacy_ _deprecated_ (#72)/port_1/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Integer Input _legacy_ _deprecated_ (#72)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Single Selection Input QuickForm _legacy_ _deprecated_ (#158)/port_1/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Single Selection Input QuickForm _legacy_ _deprecated_ (#158)/port_1/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/Single Selection Input QuickForm _legacy_ _deprecated_ (#158)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/workflow.knime",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Interactive Table (#481)/internalTables/object_0/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Interactive Table (#481)/internalTables/object_0/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Interactive Table (#481)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#432)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#432)/port_1/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#432)/port_1/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#432)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#482)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#482)/port_1/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#482)/port_1/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/LibSVM _3_7_ (#482)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/port_1/r0/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/port_1/r0/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/port_1/r0/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Loop End (#626)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/NaiveBayes _3_7_ (#446)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/NaiveBayes _3_7_ (#446)/port_1/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/NaiveBayes _3_7_ (#446)/port_1/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/NaiveBayes _3_7_ (#446)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/internal/execErrout",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/internal/execOutput",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/R Snippet (#163)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#456)/internal/curves.txt.gz",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#456)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#456)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#456)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#456)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#457)/internal/curves.txt.gz",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#457)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#457)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#457)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#457)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#476)/internal/curves.txt.gz",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#476)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#476)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#476)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#476)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#477)/internal/curves.txt.gz",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#477)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#477)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#477)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/ROC Curve (#477)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_2/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_2/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_2/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_3/object/filestore.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_3/object/portobject.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/port_3/spec/spec.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Learner (#438)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Predictor (#439)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Predictor (#439)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Predictor (#439)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Random Forest Predictor (#439)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#437)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#437)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#437)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#437)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#437)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#447)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#447)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#447)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#447)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#447)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#453)/internal/WekaClassifier",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#453)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#453)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#453)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Weka Predictor _3_7_ (#453)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/filestore/000/000/4_4_TreeEnsemble",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_1/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_1/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_1/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_2/data.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_2/data.zip",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/port_2/spec.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/X_Partitioner (#2)/settings.xml",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.knime",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.svg",
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/.gitattributes",
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/ASD_gene_prediction_input.csv",
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/ASD_genes_prediction_workflow.zip",
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/README.md",
+          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/R_code_and_files.rar",
+          "github_asd_genes_prediction_master.zip",
+          "logs/github_asd_genes_prediction_master.headers.txt",
+          "opened/Screenshot 2026-07-04 at 00.47.56.png",
+          "opened/Screenshot 2026-07-04 at 01.03.41.png",
+          "opened/Screenshot 2026-07-04 at 01.04.28.png"
         ],
         "workflow_files_found": [
-          "extracted/github_asd_genes_prediction_master/ASD-genes-prediction-master/ASD_genes_prediction_workflow.zip",
+          "ASD_genes_prediction_workflow.zip::ASD_genes_prediction_workflow/Input Parame (#160)/workflow.knime",
+          "ASD_genes_prediction_workflow.zip::ASD_genes_prediction_workflow/workflow.knime",
+          "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/Input Parame (#160)/workflow.knime",
           "extracted/ASD_genes_prediction_workflow/ASD_genes_prediction_workflow/workflow.knime"
         ],
-        "notes": "GitHub archive downloaded and passed unzip integrity test. Inner workflow ZIP was extracted to a KNIME workflow directory."
+        "notes": "GitHub archive downloaded and passed unzip integrity test. Inner workflow ZIP was extracted to a KNIME workflow directory.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -195,10 +404,7 @@
           "notes": "Opened, but execution failed in an R node because required R packages and functions were unavailable in the test environment.",
           "screenshot_directory": "data/original/workflows/23_10.1371_journal.pone.0208626/opened"
         }
-      ],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1371_journal.pone.0208626.html",
-      "evidence_extracted_text_lines": "45-53"
+      ]
     },
     {
       "rank": 24,
@@ -217,7 +423,8 @@
           "virtualtaste.html"
         ],
         "workflow_files_found": [],
-        "notes": "Original project page redirected to VirtualTaste; redirected page returned HTTP 404. No workflow archive was retrieved."
+        "notes": "Original project page redirected to VirtualTaste; redirected page returned HTTP 404. No workflow archive was retrieved.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -232,7 +439,7 @@
           "url": "https://hub.knime.com/-/spaces/-/latest/~xoK5FQgB_5Jmg54V/",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow space URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and needs manual inspection to confirm workflow availability."
         },
@@ -241,7 +448,7 @@
           "url": "https://hub.knime.com/marko_/spaces/Medicinal%20Chemistry%20Filtering/latest/~XQX98NGeZEgCxQ_j/",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "This is a KNIME Hub workflow URL but returns HTTP 500 error with a JavaScript error page locally, indicating the page is blocked or broken and requires manual inspection to verify workflow availability."
         }
@@ -250,15 +457,31 @@
         "directory": "data/original/workflows/25_10.3390_encyclopedia3020035",
         "status": "downloaded_workflow_files",
         "downloaded_files": [
+          "article_workflow_reference.json",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/README.md",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/test_data/testset1_zinc.sdf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/test_data/testset2_zinc.sdf",
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/test_data/testset3_zinc.sdf",
           "gitlab_knime_medchem_filters_main.zip",
+          "knime_hub_latest_xoK5.html",
           "knime_hub_marko_filtering.html",
-          "knime_hub_latest_xoK5.html"
+          "logs/gitlab_knime_medchem_filters_main.headers.txt",
+          "logs/knime_hub_latest_xoK5.headers.txt",
+          "logs/knime_hub_marko_filtering.headers.txt",
+          "opened/Screenshot 2026-07-04 at 00.56.41.png",
+          "opened/Screenshot 2026-07-04 at 01.06.30.png"
         ],
         "workflow_files_found": [
           "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
-          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf"
+          "extracted/gitlab_knime_medchem_filters_main/knime_medchem_filters-main/previous/knime_filter_final.knwf",
+          "gitlab_knime_medchem_filters_main.zip::knime_medchem_filters-main/Medicinal_chemistry_filters_0_21.knwf",
+          "gitlab_knime_medchem_filters_main.zip::knime_medchem_filters-main/previous/knime_filter_final.knwf"
         ],
-        "notes": "GitLab archive downloaded and passed unzip integrity test. One KNIME Hub URL returned a page; the older generic KNIME Hub URL returned 404 JSON."
+        "notes": "GitLab archive downloaded and passed unzip integrity test. One KNIME Hub URL returned a page; the older generic KNIME Hub URL returned 404 JSON.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -269,10 +492,7 @@
           "notes": "Opened, but a successful end-to-end execution was not established in the available notes.",
           "screenshot_directory": "data/original/workflows/25_10.3390_encyclopedia3020035/opened"
         }
-      ],
-      "knime_version": "4.7",
-      "processed_text_file": "data/processed/articles/10.3390_encyclopedia3020035.html",
-      "evidence_extracted_text_lines": "432-436"
+      ]
     },
     {
       "rank": 26,
@@ -292,17 +512,20 @@
       ],
       "download_result": {
         "directory": "data/original/workflows/26_10.1186_s13321-018-0299-2",
-        "status": "repository_downloaded_no_workflow_file_found",
+        "status": "existing_directory_no_workflow_file_found",
         "downloaded_files": [
-          "github_ms_ready_master.zip"
+          "article_workflow_reference.json",
+          "extracted/github_ms_ready_master/MS-ready-master/LICENSE",
+          "extracted/github_ms_ready_master/MS-ready-master/README.md",
+          "github_ms_ready_master.zip",
+          "logs/github_ms_ready_master.headers.txt"
         ],
         "workflow_files_found": [],
-        "notes": "GitHub archive downloaded and passed unzip integrity test, but the extracted archive contains only LICENSE and README.md; no .knwf or workflow.knime file was found."
+        "notes": "GitHub archive downloaded and passed unzip integrity test, but the extracted archive contains only LICENSE and README.md; no .knwf or workflow.knime file was found.",
+        "automatic_attempts": [],
+        "download_type": "not_downloaded"
       },
-      "manual_knime_opening_tests": [],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1186_s13321-018-0299-2.html",
-      "evidence_extracted_text_lines": "168-170"
+      "manual_knime_opening_tests": []
     },
     {
       "rank": 29,
@@ -320,7 +543,8 @@
           "github_knime_omics_page.html"
         ],
         "workflow_files_found": [],
-        "notes": "Referenced https://github.com/KNIME-OMICS returned HTTP 404 Not Found; no workflow archive was retrieved."
+        "notes": "Referenced https://github.com/KNIME-OMICS returned HTTP 404 Not Found; no workflow archive was retrieved.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -338,7 +562,8 @@
         "status": "failed_not_obtained",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "Referenced http://teqip.jdvu.ac.in/QSAR_Tools/ failed DNS resolution both in sandbox and escalated retry; no workflow archive was retrieved."
+        "notes": "Referenced http://teqip.jdvu.ac.in/QSAR_Tools/ failed DNS resolution both in sandbox and escalated retry; no workflow archive was retrieved.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -362,7 +587,8 @@
       ],
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -382,7 +608,8 @@
       ],
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -397,8 +624,8 @@
           "url": "https://hub.knime.com/knime/extensions/org.knime.features.js.views/latest",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "The URL is a KNIME Hub page for an extension but currently returns an error; it is potentially workflow relevant but requires manual check."
         },
         {
@@ -406,8 +633,8 @@
           "url": "https://kni.me/w/5TRvnGfMJsgTkcZu",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "This is a short kni.me URL redirecting to a KNIME Hub workflow page but currently returns an error; manual inspection needed."
         },
         {
@@ -415,7 +642,7 @@
           "url": "https://github.com/kmansouri/QSAR-ready",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "GitHub repository explicitly about a KNIME standardization workflow with releases and sample files, indicating it contains workflow files or artifacts."
         },
@@ -424,19 +651,142 @@
           "url": "https://github.com/ibisba/knime-workflow-base",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "GitHub repository describing a base image and scripts related to KNIME workflows, indicating it contains KNIME workflow-related artifacts."
         }
       ],
       "download_result": {
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from article audit; workflow artifact retrieval was not attempted in this update."
+        "directory": "data/original/workflows/44_10.1186_s13321-024-00814-3",
+        "status": "existing_directory_with_workflow_files",
+        "downloaded_files": [
+          "QSAR-ready_2.5.8.knwf",
+          "download_3212bfa19926.bin",
+          "download_9f0d387eb823.bin"
+        ],
+        "workflow_files_found": [
+          "QSAR-ready_2.5.8.knwf"
+        ],
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://hub.knime.com/knime/extensions/org.knime.features.js.views/latest",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://hub.knime.com/knime/extensions/org.knime.features.js.views/latest",
+              "links": [
+                {
+                  "href": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+                  "text": " Download KNIME Analytics Platform"
+                },
+                {
+                  "href": "https://www.knime.com/downloads",
+                  "text": "Download KNIME Analytics Platform"
+                }
+              ],
+              "error": null
+            }
+          },
+          {
+            "url": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+            "started_at": "2026-07-12T03:10:19+00:00",
+            "finished_at": "2026-07-12T03:10:19+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+            "content_type": "text/html; charset=UTF-8",
+            "file": "data/original/workflows/44_10.1186_s13321-024-00814-3/download_3212bfa19926.bin",
+            "bytes": 195252,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://www.knime.com/downloads",
+            "started_at": "2026-07-12T03:10:19+00:00",
+            "finished_at": "2026-07-12T03:10:20+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://www.knime.com/downloads",
+            "content_type": "text/html; charset=UTF-8",
+            "file": "data/original/workflows/44_10.1186_s13321-024-00814-3/download_9f0d387eb823.bin",
+            "bytes": 195252,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://kni.me/w/5TRvnGfMJsgTkcZu",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://hub.knime.com/kmansouri/spaces/Public/QSAR-ready_2.5.8~5TRvnGfMJsgTkcZu/current-state",
+              "links": [
+                {
+                  "href": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+                  "text": " Download KNIME Analytics Platform"
+                },
+                {
+                  "href": "https://www.knime.com/downloads",
+                  "text": "Download KNIME Analytics Platform"
+                }
+              ],
+              "error": null
+            }
+          },
+          {
+            "url": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+            "started_at": "2026-07-12T03:10:22+00:00",
+            "finished_at": "2026-07-12T03:10:22+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://www.knime.com/downloads?utm_source=hub_new_to_knime_banner",
+            "content_type": "text/html; charset=UTF-8",
+            "file": "data/original/workflows/44_10.1186_s13321-024-00814-3/download_3212bfa19926.bin",
+            "bytes": 195252,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://www.knime.com/downloads",
+            "started_at": "2026-07-12T03:10:22+00:00",
+            "finished_at": "2026-07-12T03:10:23+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://www.knime.com/downloads",
+            "content_type": "text/html; charset=UTF-8",
+            "file": "data/original/workflows/44_10.1186_s13321-024-00814-3/download_9f0d387eb823.bin",
+            "bytes": 195252,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/kmansouri/QSAR-ready",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://github.com/kmansouri/QSAR-ready",
+              "links": [],
+              "error": null
+            }
+          },
+          {
+            "url": "https://github.com/ibisba/knime-workflow-base",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://github.com/ibisba/knime-workflow-base",
+              "links": [],
+              "error": null
+            }
+          }
+        ],
+        "download_type": "manual"
       },
-      "manual_knime_opening_tests": [],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1186_s13321-024-00814-3.html",
-      "evidence_extracted_text_lines": "1263-1282"
+      "manual_knime_opening_tests": []
     },
     {
       "rank": 46,
@@ -449,7 +799,7 @@
           "url": "https://kni.me/w/GCI4B-AzIczhIwjG",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability."
         },
@@ -458,7 +808,7 @@
           "url": "https://kni.me/w/m9lFUDUeLyLFjpMr",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (500) preventing access; manual check needed to confirm workflow availability."
         },
@@ -467,8 +817,8 @@
           "url": "https://hub.knime.com/knime/spaces/Examples/latest/50_Applications/39_Fraud_Detection/03_Keras_Autoencoder_for_Fraud_Detection_Training%7e9qFNMrsuN4PH1hRg",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability."
         },
         {
@@ -476,8 +826,8 @@
           "url": "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors%7eHYlUnc7CnzG2fe8d",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "URL is a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability."
         },
         {
@@ -485,8 +835,8 @@
           "url": "https://kni.me/w/O04qJIa1oD94M1rd",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "URL is a short kni.me link redirecting to a KNIME Hub workflow page but local page shows an error (HTTP 500), so manual check is needed to confirm workflow availability."
         },
         {
@@ -494,7 +844,7 @@
           "url": "https://kni.me/w/szC3HhTNkE12-r6h",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a kni.me workflow link (KNIME Hub workflow) but page returns error 500 with a JavaScript error, blocking access; likely a workflow page but requires manual check."
         },
@@ -503,7 +853,7 @@
           "url": "https://kni.me/w/8XFC5Hm",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check."
         },
@@ -512,7 +862,7 @@
           "url": "https://kni.me/w/tST9mpG",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a kni.me workflow link but access is forbidden (403); likely a workflow page but requires manual check."
         },
@@ -521,7 +871,7 @@
           "url": "https://www.knime.com/book/geo-nodes",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL redirects to a KNIME Hub extension page but returns error 500 with JavaScript error; likely a workflow or component page but requires manual check."
         },
@@ -530,7 +880,7 @@
           "url": "https://kni.me/w/PRrwnq5",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability."
         },
@@ -539,7 +889,7 @@
           "url": "https://kni.me/w/FEczzB1",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is blocked with 403 Forbidden, so manual check is required to confirm workflow availability."
         },
@@ -548,7 +898,7 @@
           "url": "https://hub.knime.com/knime/spaces/Examples/latest/04_Analytics/14_Deep_Learning/01_DL4J/08_Sentiment_Classification_Using_Word_Vectors%7eHYlUnc7CnzG2fe8d.16",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow page but returns an error (HTTP 500) and cannot be accessed; manual check needed to confirm workflow availability."
         },
@@ -557,7 +907,7 @@
           "url": "https://kni.me/w/szC3HhTNkE12-r6h.researchers",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me short link to a KNIME workflow but access is forbidden (HTTP 403); manual check required to verify workflow availability."
         },
@@ -566,7 +916,7 @@
           "url": "https://kni.me/w/zXa_WBQ",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me link which typically hosts KNIME workflows, but the page is blocked with a 403 Forbidden error, so manual inspection is needed to confirm workflow availability."
         }
@@ -575,12 +925,16 @@
         "directory": "data/original/workflows/46_10.1016_j.jbusres.2021.08.036",
         "status": "downloaded_workflow_file_manual",
         "downloaded_files": [
-          "Webinar Pricing Analytics_English.knwf"
+          "Webinar Pricing Analytics_English.knwf",
+          "opened/Screenshot 2026-07-04 at 06.46.02.png",
+          "opened/Screenshot 2026-07-04 at 06.48.20.png"
         ],
         "workflow_files_found": [
           "Webinar Pricing Analytics_English.knwf"
         ],
-        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -591,10 +945,7 @@
           "notes": "Opened and executed successfully in the current local KNIME environment.",
           "screenshot_directory": "data/original/workflows/46_10.1016_j.jbusres.2021.08.036/opened"
         }
-      ],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1016_j.jbusres.2021.08.036.html",
-      "evidence_extracted_text_lines": "393-405"
+      ]
     },
     {
       "rank": 52,
@@ -614,10 +965,22 @@
       ],
       "download_result": {
         "directory": "data/original/workflows/52_10.1007_s10710-015-9247-3",
-        "status": "not_attempted_in_current_workflow_download_pass",
+        "status": "automatic_attempt_no_workflow_file_found",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "Initialized from data/processed/audit/article_audit_report.json; manual retrieval has not been recorded yet."
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "http://www.myexperiment.org/",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "not_attempted",
+              "links": [],
+              "error": null
+            }
+          }
+        ],
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
@@ -639,7 +1002,8 @@
         "status": "supplement_urls_identified_no_knime_workflow_file_confirmed",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "The article says the KNIME workflow is available as supplementary information. Crossref identifies Elsevier PII S0045653515006104. The standard Elsevier supplement URLs mmc1.xlsx and mmc2.xlsx resolve as Excel files, but no direct KNIME workflow archive URL was confirmed in this pass."
+        "notes": "The article says the KNIME workflow is available as supplementary information. Crossref identifies Elsevier PII S0045653515006104. The standard Elsevier supplement URLs mmc1.xlsx and mmc2.xlsx resolve as Excel files, but no direct KNIME workflow archive URL was confirmed in this pass.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": [],
       "supplement_references_checked": [
@@ -652,27 +1016,34 @@
     {
       "rank": 57,
       "title": "Optimization of the spontaneous tail coiling test for fast assessment of neurotoxic effects in the zebrafish embryo using an automated workflow in KNIME®",
-      "doi": "10.1016/j.ntt.2020.106918",
-      "knime_version": null,
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.1016_j.ntt.2020.106918.html",
-      "evidence_extracted_text_lines": "645-653",
+      "doi": "https://doi.org/10.1016/j.ntt.2020.106918",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "article-reported workflow reference",
-          "url": "https://hub.knime.com/ search: spontaneous tail coilings detection in zebrafish"
+          "url": "https://hub.knime.com/ search: spontaneous tail coilings detection in zebrafish",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/57_10.1016_j.ntt.2020.106918",
         "status": "downloaded_workflow_file_manual",
         "downloaded_files": [
-          "Spontaneous tail coilings-measurement.knwf"
+          "Spontaneous tail coilings-measurement.knwf",
+          "opened/Screenshot 2026-07-04 at 06.49.45.png",
+          "opened/Screenshot 2026-07-04 at 06.49.54.png",
+          "opened/Screenshot 2026-07-04 at 06.54.38.png"
         ],
         "workflow_files_found": [
           "Spontaneous tail coilings-measurement.knwf"
         ],
-        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -688,27 +1059,34 @@
     {
       "rank": 59,
       "title": "Reliable Prediction of Caco-2 Permeability by Supervised Recursive Machine Learning Approaches",
-      "doi": "10.3390/pharmaceutics14101998",
-      "knime_version": "4.4.2",
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.3390_pharmaceutics14101998.html",
-      "evidence_extracted_text_lines": "831-838",
+      "doi": "https://doi.org/10.3390/pharmaceutics14101998",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "article-reported workflow reference",
-          "url": "https://pikairos.eu/download/Caco-2-permeability-prediction"
+          "url": "https://pikairos.eu/download/Caco-2-permeability-prediction",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/59_10.3390_pharmaceutics14101998",
         "status": "downloaded_workflow_file_manual",
         "downloaded_files": [
-          "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf"
+          "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf",
+          "opened/Screenshot 2026-07-04 at 06.56.23.png",
+          "opened/Screenshot 2026-07-04 at 06.56.34.png",
+          "opened/Screenshot 2026-07-04 at 06.56.55.png"
         ],
         "workflow_files_found": [
           "20260601 FALCON MOLINA CABRERA AUTOMATED PREDICTION PLATFORM CACO2.knwf"
         ],
-        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots."
+        "notes": "User downloaded the workflow file manually and added local KNIME opening screenshots.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -732,7 +1110,7 @@
           "url": "https://github.com/sonial/KniMet",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The GitHub repository page title and excerpt indicate it hosts the KniMet workflow including a .knwf file (KniMet1.2.8.knwf) which is a KNIME workflow file, thus it is a repository containing KNIME workflow artifacts."
         }
@@ -741,12 +1119,25 @@
         "directory": "data/original/workflows/61_10.1007_s11306-018-1349-5",
         "status": "downloaded_workflow_archive",
         "downloaded_files": [
-          "KniMet-master.zip"
+          "KniMet-master.zip",
+          "opened/Screenshot 2026-07-04 at 12.24.38.png",
+          "opened/Screenshot 2026-07-04 at 12.30.29.png"
         ],
         "workflow_files_found": [
           "KniMet-master.zip::KniMet-master/KniMet.knwf"
         ],
-        "notes": "Zenodo DOI resolved to record 1196407. KniMet-master.zip downloaded from Zenodo and contains KniMet.knwf."
+        "notes": "Zenodo DOI resolved to record 1196407. KniMet-master.zip downloaded from Zenodo and contains KniMet.knwf.",
+        "automatic_attempts": [],
+        "download_type": "automatic",
+        "automatic_verification": {
+          "verified_at": "2026-07-12T03:58:37+00:00",
+          "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+          "temporary_directory": "data/original/workflows/tmp/61_10.1007_s11306-018-1349-5",
+          "workflow_files_found": [
+            "KniMet1.2.8.knwf"
+          ],
+          "note": "Workflow files were reproduced by an automatic temporary download pass. Temporary downloaded files were not retained."
+        }
       },
       "manual_knime_opening_tests": [
         {
@@ -757,10 +1148,7 @@
           "notes": "Opened in the current local KNIME environment, but successful execution was not established in the available notes.",
           "screenshot_directory": "data/original/workflows/61_10.1007_s11306-018-1349-5/opened"
         }
-      ],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1007_s11306-018-1349-5.html",
-      "evidence_extracted_text_lines": "21-25; 301-304"
+      ]
     },
     {
       "rank": 62,
@@ -773,7 +1161,7 @@
           "url": "https://kni.me/n/OZ-74WyecFLOEiuK",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub link likely for a workflow, but the local page shows a server error (HTTP 500) and error message, so access to the workflow is blocked and requires manual check."
         },
@@ -782,7 +1170,7 @@
           "url": "https://hub.knime.com",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is the KNIME Hub main site, which hosts workflows, but the local page shows a server error (HTTP 500) and error message, so access to workflows is blocked and requires manual check."
         },
@@ -791,7 +1179,7 @@
           "url": "https://kni.me/n/10cc5QJ5thLDG_cc",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability."
         },
@@ -800,7 +1188,7 @@
           "url": "https://kni.me/n/QNB4FsAPnEAgOMVh",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability."
         },
@@ -809,7 +1197,7 @@
           "url": "https://kni.me/w/ThmsDDG4kj-_Ecml",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub workflow link but the page is an error (HTTP 500) with no content; manual check needed to confirm workflow availability."
         },
@@ -818,7 +1206,7 @@
           "url": "https://kni.me/w/oZteZanXoWURLouy",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability."
         },
@@ -827,7 +1215,7 @@
           "url": "https://kni.me/n/PQRHqpYEOx-QXrbp",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability."
         },
@@ -836,7 +1224,7 @@
           "url": "https://kni.me/n/OPevaIVf-GfJ1NXJ",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability."
         },
@@ -845,7 +1233,7 @@
           "url": "https://kni.me/n/L0bv0drXtgAsdbFe",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability."
         },
@@ -854,7 +1242,7 @@
           "url": "https://kni.me/n/NriZ1-GeHMqitd1c",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub node link but the local page shows a server error (HTTP 500) and an error message, so manual inspection is needed to confirm workflow availability."
         },
@@ -863,7 +1251,7 @@
           "url": "https://kni.me/n/AePOcxewSCvaUiZh",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check."
         },
@@ -872,7 +1260,7 @@
           "url": "https://kni.me/n/aFTAPO7mEW_Okby7",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub workflow URL but the local page shows an error preventing confirmation; likely a workflow page but requires manual check."
         },
@@ -881,7 +1269,7 @@
           "url": "https://kni.me/e/6cbZ6X3DrLrH96WD",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check."
         },
@@ -890,7 +1278,7 @@
           "url": "https://kni.me/e/9Z2SYIHDiATP4xQK",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check."
         },
@@ -899,7 +1287,7 @@
           "url": "https://kni.me/e/Uq6QE1IQIqG4q_mp",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "URL is a KNIME Hub extension URL but local page shows an error; likely related to KNIME workflows or extensions but requires manual check."
         },
@@ -908,7 +1296,7 @@
           "url": "https://kni.me/w/7yXlo4oq91qSBWeU",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability."
         },
@@ -917,7 +1305,7 @@
           "url": "https://kni.me/w/QVjrs0Vj7xG48Pcr",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability."
         },
@@ -926,7 +1314,7 @@
           "url": "https://kni.me/w/F3K1YgZKt_923UgH",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub workflow link but the local page shows an error and no workflow content; human inspection needed to confirm availability."
         },
@@ -935,7 +1323,7 @@
           "url": "https://kni.me/w/QMky8ZEz3dzja42q",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a KNIME Hub short link for a workflow but the page shows an error (500) and cannot be loaded; likely a workflow page but requires manual check due to error."
         },
@@ -944,7 +1332,7 @@
           "url": "https://kni.me/w/",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me workflow URL but access is forbidden (403), so manual check is required to confirm workflow availability."
         },
@@ -953,21 +1341,222 @@
           "url": "https://doi.org/10.6084/m9.figshare.c.4687004.v1",
           "workflow_access": "manual_check_required",
           "workflow_form": "publisher_supplement",
-          "audit_status": "manual_check_required",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "The URL is a figshare collection likely intended as supplementary material for the article, possibly containing workflows, but access is blocked with 403 Forbidden, requiring manual inspection."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/62_10.1093_bioinformatics_btr478",
-        "status": "downloaded_workflow_archive_manual",
+        "status": "existing_directory_with_workflow_files",
         "downloaded_files": [
-          "NGS_sample_workflow_with_data-v1.zip"
+          "NGS_sample_workflow_with_data-v1.zip",
+          "opened/Screenshot 2026-07-04 at 16.45.11.png",
+          "opened/Screenshot 2026-07-04 at 16.45.26.png",
+          "opened/Screenshot 2026-07-04 at 16.53.58.png"
         ],
         "workflow_files_found": [
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#158)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#159)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#166)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#173)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/MetaNode 1 _ 1 (#174)/workflow.knime",
+          "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/Variables Loop _Data_ (#149)/workflow.knime",
           "NGS_sample_workflow_with_data-v1.zip::NGS_sample_workflow/workflow.knime"
         ],
-        "notes": "User manually downloaded the myExperiment workflow archive after automated curl attempts were blocked by Cloudflare HTTP 403. The ZIP archive contains a KNIME workflow directory with saved data; nested workflow.knime files are present inside metanodes."
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://kni.me/n/OZ-74WyecFLOEiuK",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://hub.knime.com",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/10cc5QJ5thLDG_cc",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/QNB4FsAPnEAgOMVh",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/ThmsDDG4kj-_Ecml",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/oZteZanXoWURLouy",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/PQRHqpYEOx-QXrbp",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/OPevaIVf-GfJ1NXJ",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/L0bv0drXtgAsdbFe",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/NriZ1-GeHMqitd1c",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/AePOcxewSCvaUiZh",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/n/aFTAPO7mEW_Okby7",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/e/6cbZ6X3DrLrH96WD",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/e/9Z2SYIHDiATP4xQK",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/e/Uq6QE1IQIqG4q_mp",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/7yXlo4oq91qSBWeU",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/QVjrs0Vj7xG48Pcr",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/F3K1YgZKt_923UgH",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/QMky8ZEz3dzja42q",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://doi.org/10.6084/m9.figshare.c.4687004.v1",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          }
+        ],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -978,10 +1567,7 @@
           "notes": "Opened in the current local KNIME environment, but successful execution was not established in the available notes.",
           "screenshot_directory": "data/original/workflows/62_10.1093_bioinformatics_btr478/opened"
         }
-      ],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1093_bioinformatics_btr478.html",
-      "evidence_extracted_text_lines": "31-36; 94-98"
+      ]
     },
     {
       "rank": 63,
@@ -994,7 +1580,7 @@
           "url": "http://www.myexperiment.org/search?query=KNIME",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a myExperiment search page for KNIME workflows but is blocked by a captcha challenge, preventing direct inspection; myExperiment is known for hosting workflows."
         },
@@ -1003,38 +1589,65 @@
           "url": "http://www.myexperiment.org/workflows/2183.html",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a myExperiment workflow page but is blocked by a captcha challenge, preventing direct inspection; myExperiment pages typically host workflows."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/63_10.3389_fcomp.2020.00008",
-        "status": "downloaded_workflow_files_partial",
+        "status": "existing_directory_with_workflow_files",
         "downloaded_files": [
-          "DU4eH3TjYhcxfWXD.knwf",
-          "ThmsDDG4kj-_Ecml.knwf",
-          "oZteZanXoWURLouy.knwf",
+          "7yXlo4oq91qSBWeU.artifact",
           "7yXlo4oq91qSBWeU.knwf",
+          "DU4eH3TjYhcxfWXD.artifact",
+          "DU4eH3TjYhcxfWXD.knwf",
+          "F3K1YgZKt_923UgH.artifact",
+          "F3K1YgZKt_923UgH.knwf",
+          "QVjrs0Vj7xG48Pcr.artifact",
           "QVjrs0Vj7xG48Pcr.knwf",
-          "F3K1YgZKt_923UgH.knwf"
+          "ThmsDDG4kj-_Ecml.artifact",
+          "ThmsDDG4kj-_Ecml.knwf",
+          "oZteZanXoWURLouy.artifact",
+          "oZteZanXoWURLouy.knwf",
+          "opened/Screenshot 2026-07-04 at 16.59.14.png",
+          "opened/Screenshot 2026-07-04 at 16.59.28.png",
+          "opened/Screenshot 2026-07-04 at 17.00.25.png",
+          "opened/Screenshot 2026-07-04 at 17.01.34.png",
+          "opened/Screenshot 2026-07-04 at 17.01.44.png",
+          "opened/Screenshot 2026-07-04 at 17.02.02.png",
+          "opened/Screenshot 2026-07-04 at 17.06.44.png"
         ],
         "workflow_files_found": [
-          "DU4eH3TjYhcxfWXD.knwf",
-          "ThmsDDG4kj-_Ecml.knwf",
-          "oZteZanXoWURLouy.knwf",
           "7yXlo4oq91qSBWeU.knwf",
+          "DU4eH3TjYhcxfWXD.knwf",
+          "F3K1YgZKt_923UgH.knwf",
           "QVjrs0Vj7xG48Pcr.knwf",
-          "F3K1YgZKt_923UgH.knwf"
+          "ThmsDDG4kj-_Ecml.knwf",
+          "oZteZanXoWURLouy.knwf"
         ],
-        "failed_references": [
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
           {
-            "url": "https://kni.me/w/QMky8ZEz3dzja42q",
-            "status": "failed_not_obtained",
-            "notes": "Short link and Hub artifact API returned HTTP 404."
+            "url": "http://www.myexperiment.org/search?query=KNIME",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "blocked_by_challenge",
+              "links": [],
+              "error": "Domain is known to require interactive challenge/captcha."
+            }
+          },
+          {
+            "url": "http://www.myexperiment.org/workflows/2183.html",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "blocked_by_challenge",
+              "links": [],
+              "error": "Domain is known to require interactive challenge/captcha."
+            }
           }
         ],
-        "notes": "Six KNIME Hub workflow artifact metadata endpoints returned signed S3 URLs and the corresponding .knwf files were downloaded. The QMky8ZEz3dzja42q reference appears stale or unavailable."
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -1045,10 +1658,7 @@
           "notes": "Opened and executed normally in the user environment after installing additional required KNIME/ImageJ-related plugins.",
           "screenshot_directory": "data/original/workflows/63_10.3389_fcomp.2020.00008/opened"
         }
-      ],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.3389_fcomp.2020.00008.html",
-      "evidence_extracted_text_lines": "544-570; 1149-1152; 1179-1184; 1208-1216; 1237-1240; 1428-1434"
+      ]
     },
     {
       "rank": 66,
@@ -1061,7 +1671,7 @@
           "url": "https://github.com/malikyousef/GediNET.git",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The GitHub repository contains files with .knwf extension which are KNIME workflow files, indicating it hosts KNIME workflows."
         },
@@ -1070,7 +1680,7 @@
           "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
           "workflow_access": "manual_check_required",
           "workflow_form": "knime_hub_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a kni.me link which is a KNIME Hub workflow URL but access is forbidden, so manual check is required to confirm workflow availability."
         },
@@ -1079,24 +1689,110 @@
           "url": "https://github.com/malikyousef/GediNET",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The GitHub repository contains .knwf files which are KNIME workflow files, indicating it hosts KNIME workflows."
         }
       ],
       "download_result": {
-        "directory": "data/original/workflows/66_10.1186_s12859-020-3363-7",
-        "status": "repository_downloaded_no_workflow_file_found",
+        "directory": "data/original/workflows/66_10.1038_s41598-022-24421-0",
+        "status": "existing_directory_with_workflow_files",
         "downloaded_files": [
-          "github_multi-template-matching_main.zip"
+          ".git/HEAD",
+          ".git/config",
+          ".git/description",
+          ".git/hooks/applypatch-msg.sample",
+          ".git/hooks/commit-msg.sample",
+          ".git/hooks/fsmonitor-watchman.sample",
+          ".git/hooks/post-update.sample",
+          ".git/hooks/pre-applypatch.sample",
+          ".git/hooks/pre-commit.sample",
+          ".git/hooks/pre-merge-commit.sample",
+          ".git/hooks/pre-push.sample",
+          ".git/hooks/pre-rebase.sample",
+          ".git/hooks/pre-receive.sample",
+          ".git/hooks/prepare-commit-msg.sample",
+          ".git/hooks/push-to-checkout.sample",
+          ".git/hooks/sendemail-validate.sample",
+          ".git/hooks/update.sample",
+          ".git/index",
+          ".git/info/exclude",
+          ".git/logs/HEAD",
+          ".git/logs/refs/heads/main",
+          ".git/logs/refs/remotes/origin/HEAD",
+          ".git/objects/pack/pack-79c0447a462b0aaeb45a8afca5afd4774407e9a8.idx",
+          ".git/objects/pack/pack-79c0447a462b0aaeb45a8afca5afd4774407e9a8.pack",
+          ".git/objects/pack/pack-79c0447a462b0aaeb45a8afca5afd4774407e9a8.rev",
+          ".git/packed-refs",
+          ".git/refs/heads/main",
+          ".git/refs/remotes/origin/HEAD",
+          "GDS4824.table",
+          "GDS4824.xlsx",
+          "GediNET_v1.knwf",
+          "ProcessGEO_data.knwf",
+          "README.md",
+          "cancer-DisGeNET.txt",
+          "images/G-S-M_all_steps.JPG",
+          "images/GDS484.JPG",
+          "images/GDS484_table_format_image.JPG",
+          "images/GediNET_MetaNode.JPG",
+          "images/GediNET_main.JPG",
+          "images/PreProcessGEO.JPG",
+          "images/Ttest_and_GSM.JPG",
+          "images/upload_groups_file.JPG",
+          "pages/GroupingFile.md",
+          "pages/Pseudocode.txt",
+          "pages/SettingsKnime.md",
+          "pages/TableFormat.md",
+          "pages/outputs.md"
         ],
-        "workflow_files_found": [],
-        "notes": "GitHub archive for multi-template-matching/Multi-template-matching downloaded successfully, but it contains documentation/images only and no .knwf, workflow.knime, or KNIME workflow archive. A guessed NodePit workflow URL returned HTTP 404."
+        "workflow_files_found": [
+          "GediNET_v1.knwf",
+          "ProcessGEO_data.knwf"
+        ],
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://github.com/malikyousef/GediNET.git",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://github.com/malikyousef/GediNET",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          }
+        ],
+        "download_type": "automatic",
+        "automatic_verification": {
+          "verified_at": "2026-07-12T03:58:37+00:00",
+          "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+          "temporary_directory": "data/original/workflows/tmp/66_10.1038_s41598-022-24421-0",
+          "workflow_files_found": [
+            "GediNET_v1.knwf",
+            "ProcessGEO_data.knwf"
+          ],
+          "note": "Workflow files were reproduced by an automatic temporary download pass. Temporary downloaded files were not retained."
+        }
       },
-      "manual_knime_opening_tests": [],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1186_s12859-020-3363-7.html",
-      "evidence_extracted_text_lines": "24-30"
+      "manual_knime_opening_tests": []
     },
     {
       "rank": 67,
@@ -1116,53 +1812,112 @@
       ],
       "download_result": {
         "directory": "data/original/workflows/67_10.1186_s12859-020-3363-7",
-        "status": "not_attempted_in_current_workflow_download_pass",
+        "status": "automatic_attempt_no_workflow_file_found",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "Initialized from data/processed/audit/article_audit_report.json; manual retrieval has not been recorded yet."
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://multi-template-matching.github.io/Multi-Template-Matching/",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "not_attempted",
+              "links": [],
+              "error": null
+            }
+          }
+        ],
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
     {
       "rank": 69,
-      "title": "GediNET for discovering gene associations across diseases using knowledge based machine learning approach",
-      "doi": "10.1038/s41598-022-24421-0",
-      "knime_version": null,
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.1038_s41598-022-24421-0.html",
-      "evidence_extracted_text_lines": "25-27; 414-416; 844-846",
+      "title": "Phaedra, a Protocol-Driven System for Analysis and Validation of High-Content Imaging and Flow Cytometry",
+      "doi": "https://doi.org/10.1177/1087057111432885",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "GitHub repository",
-          "url": "https://github.com/malikyousef/GediNET"
+          "url": "https://github.com/malikyousef/GediNET",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         },
         {
           "type": "GitHub repository",
-          "url": "https://github.com/malikyousef/GediNET.git"
+          "url": "https://github.com/malikyousef/GediNET.git",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         },
         {
           "type": "KNIME Hub workflow",
-          "url": "https://kni.me/w/3kH1SQV_mMUsMTS"
+          "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/69_10.1038_s41598-022-24421-0",
-        "status": "downloaded_workflow_archive",
+        "status": "existing_directory_with_workflow_files",
         "downloaded_files": [
-          "github_GediNET_master.zip"
+          "github_GediNET_master.zip",
+          "opened/Screenshot 2026-07-04 at 17.10.27.png",
+          "opened/Screenshot 2026-07-04 at 17.19.26.png"
         ],
         "workflow_files_found": [
           "github_GediNET_master.zip::GediNET-main/GediNET_v1.knwf",
           "github_GediNET_master.zip::GediNET-main/ProcessGEO_data.knwf"
         ],
-        "failed_references": [
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://github.com/malikyousef/GediNET",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
+          {
+            "url": "https://github.com/malikyousef/GediNET.git",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
+          },
           {
             "url": "https://kni.me/w/3kH1SQV_mMUsMTS",
-            "status": "failed_not_obtained",
-            "notes": "KNIME Hub short link returned HTTP 403 and the generic Hub artifact API for the recorded ID returned HTTP 404."
+            "status": "browser_discovery",
+            "browser": {
+              "status": "playwright_not_available",
+              "links": [],
+              "error": "Playwright is not installed."
+            }
           }
         ],
-        "notes": "GitHub master archive downloaded successfully and contains two .knwf files. The recorded KNIME Hub short link could not be retrieved."
+        "download_type": "automatic",
+        "automatic_verification": {
+          "verified_at": "2026-07-12T03:58:37+00:00",
+          "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+          "temporary_directory": "data/original/workflows/tmp/69_10.1177_1087057111432885",
+          "workflow_files_found": [
+            "GediNET_v1.knwf",
+            "ProcessGEO_data.knwf"
+          ],
+          "note": "Workflow files were reproduced by an automatic temporary download pass. Temporary downloaded files were not retained."
+        }
       },
       "manual_knime_opening_tests": [
         {
@@ -1194,36 +1949,42 @@
         "status": "failed_not_obtained",
         "downloaded_files": [],
         "workflow_files_found": [],
-        "notes": "Article reports a downloadable KNIME workflow in supplementary information, but Wiley article and guessed supplementary download endpoints returned Cloudflare HTTP 403 challenge pages. Crossref metadata did not expose an explicit supplementary workflow URL."
+        "notes": "Article reports a downloadable KNIME workflow in supplementary information, but Wiley article and guessed supplementary download endpoints returned Cloudflare HTTP 403 challenge pages. Crossref metadata did not expose an explicit supplementary workflow URL.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
     {
       "rank": 80,
       "title": "High content organelle trafficking enables disease state profiling as powerful tool for disease modelling",
-      "doi": "10.1038/sdata.2018.241",
-      "knime_version": null,
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.1038_sdata.2018.241.html",
-      "evidence_extracted_text_lines": "573-574",
+      "doi": "https://doi.org/10.1038/sdata.2018.241",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "figshare workflow archive",
-          "url": "Data Citation 1: KNIME workflow.zip"
+          "url": "Data Citation 1: KNIME workflow.zip",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/80_10.1038_sdata.2018.241",
         "status": "downloaded_workflow_archive",
         "downloaded_files": [
-          "KNIME workflow.zip"
+          "KNIME workflow.zip",
+          "opened/Screenshot 2026-07-04 at 16.40.24.png"
         ],
         "workflow_files_found": [
-          "KNIME workflow.zip::Knime for Paper/workflow.knime",
           "KNIME workflow.zip::Knime for Paper/File loading (#175)/workflow.knime",
-          "KNIME workflow.zip::Knime for Paper/Filter and c (#190)/workflow.knime"
+          "KNIME workflow.zip::Knime for Paper/Filter and c (#190)/workflow.knime",
+          "KNIME workflow.zip::Knime for Paper/workflow.knime"
         ],
-        "notes": "Figshare collection DOI 10.6084/m9.figshare.c.4045136 resolved via the figshare API. Article 6071717 (Default KNIME workflow) provided file 10938095, downloaded as KNIME workflow.zip."
+        "notes": "Figshare collection DOI 10.6084/m9.figshare.c.4045136 resolved via the figshare API. Article 6071717 (Default KNIME workflow) provided file 10938095, downloaded as KNIME workflow.zip.",
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": [
         {
@@ -1253,13 +2014,43 @@
         }
       ],
       "download_result": {
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "directory": "data/original/workflows/81_10.1016_j.tox.2016.09.008",
+        "status": "existing_directory_no_workflow_file_found",
+        "downloaded_files": [
+          "Supporting-Materials-Gadaleta-2016.zip"
+        ],
+        "workflow_files_found": [],
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "https://chm.kode-solutions.net/research/Supporting-Materials-Gadaleta-2016.zip",
+            "started_at": "2026-07-12T03:10:31+00:00",
+            "finished_at": "2026-07-12T03:10:32+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://chm.kode-solutions.net/research/Supporting-Materials-Gadaleta-2016.zip",
+            "content_type": "application/zip",
+            "file": "data/original/workflows/81_10.1016_j.tox.2016.09.008/Supporting-Materials-Gadaleta-2016.zip",
+            "bytes": 20091593,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://chm.kode-solutions.net/research/Supporting-Materials-Gadaleta-2016.zip",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "browser_error",
+              "links": [],
+              "error": {
+                "type": "Error",
+                "message": "Page.goto: Download is starting\nCall log:\n  - navigating to \"https://chm.kode-solutions.net/research/Supporting-Materials-Gadaleta-2016.zip\", waiting until \"domcontentloaded\"\n"
+              }
+            }
+          }
+        ],
+        "download_type": "not_downloaded"
       },
-      "manual_knime_opening_tests": [],
-      "knime_version": null,
-      "processed_text_file": "data/processed/articles/10.1016_j.tox.2016.09.008.html",
-      "evidence_extracted_text_lines": "429-437; 456-462"
+      "manual_knime_opening_tests": []
     },
     {
       "rank": 84,
@@ -1272,7 +2063,7 @@
           "url": "http://www.myexperiment.org/workflows/4754.html",
           "workflow_access": "manual_check_required",
           "workflow_form": "myexperiment_page",
-          "audit_status": "manual_check_required",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "The URL is a myExperiment workflow page but is blocked by a captcha, preventing direct inspection; the URL pattern indicates a workflow page."
         },
@@ -1281,7 +2072,7 @@
           "url": "https://github.com/openphacts/OPS-Knime",
           "workflow_access": "workflow_landing_page_available",
           "workflow_form": "repository",
-          "audit_status": "confirmed_workflow_landing_page",
+          "audit_status": "downloaded_workflow_artifact",
           "confidence": "high",
           "reason": "GitHub repository contains example workflow ZIP files and README indicating KNIME workflows are present."
         },
@@ -1290,17 +2081,256 @@
           "url": "https://zenodo.org/record/15423#.VrHCKkIoA_s",
           "workflow_access": "possible_workflow_requires_inspection",
           "workflow_form": "unknown",
-          "audit_status": "possible_workflow_requires_inspection",
-          "confidence": "medium",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
           "reason": "The URL is a Zenodo record which often hosts supplementary materials including workflows, but the local page content is a non-text .bin file without clear evidence of KNIME workflow files. Thus it may contain workflow artifacts but requires manual inspection."
         }
       ],
       "download_result": {
         "directory": "data/original/workflows/84_10.1186_s13321-016-0121-y",
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "downloaded_files": [],
-        "workflow_files_found": [],
-        "notes": "Initialized from data/processed/audit/article_audit_report.json; manual retrieval has not been recorded yet."
+        "status": "downloaded_workflow_files_automatic",
+        "downloaded_files": [
+          "OPS_KNIME 1.4-example-workflow.zip",
+          "matplotlib-v1.4.3.zip",
+          "org.openphacts.utils.json_1.0.0.zip",
+          "org.openphacts.utils.json_1.1.0.zip"
+        ],
+        "workflow_files_found": [
+          "OPS_KNIME 1.4-example-workflow.zip::OPS_KNIME 1.4 test/workflow.knime"
+        ],
+        "notes": "Automatic browser/HTTP workflow download attempt completed.",
+        "automatic_attempts": [
+          {
+            "url": "http://www.myexperiment.org/workflows/4754.html",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "blocked_by_challenge",
+              "links": [],
+              "error": "Domain is known to require interactive challenge/captcha."
+            }
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://github.com/openphacts/OPS-Knime",
+              "links": [
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+                  "text": "OPS_KNIME 1.4-example-workflow.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+                  "text": "OPS_KNIME 1.4-example-workflow.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+                  "text": "org.openphacts.utils.json_1.0.0.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+                  "text": "org.openphacts.utils.json_1.0.0.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+                  "text": "org.openphacts.utils.json_1.1.0.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+                  "text": "org.openphacts.utils.json_1.1.0.zip"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/raw/master/org.openphacts.utils.json_1.1.0.zip",
+                  "text": "download"
+                },
+                {
+                  "href": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip?raw=true",
+                  "text": "OPS_KNIME 1.4-example-workflow.zip"
+                }
+              ],
+              "error": null
+            }
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+            "started_at": "2026-07-12T03:11:20+00:00",
+            "finished_at": "2026-07-12T03:11:20+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/OPS_KNIME 1.4-example-workflow.zip",
+            "bytes": 230862,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+            "started_at": "2026-07-12T03:11:20+00:00",
+            "finished_at": "2026-07-12T03:11:20+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/OPS_KNIME 1.4-example-workflow.zip",
+            "bytes": 230862,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+            "started_at": "2026-07-12T03:11:20+00:00",
+            "finished_at": "2026-07-12T03:11:21+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/org.openphacts.utils.json_1.0.0.zip",
+            "bytes": 230744,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+            "started_at": "2026-07-12T03:11:21+00:00",
+            "finished_at": "2026-07-12T03:11:21+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.0.0.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/org.openphacts.utils.json_1.0.0.zip",
+            "bytes": 230744,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+            "started_at": "2026-07-12T03:11:21+00:00",
+            "finished_at": "2026-07-12T03:11:22+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/org.openphacts.utils.json_1.1.0.zip",
+            "bytes": 230746,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+            "started_at": "2026-07-12T03:11:22+00:00",
+            "finished_at": "2026-07-12T03:11:22+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://github.com/openphacts/OPS-Knime/blob/master/org.openphacts.utils.json_1.1.0.zip",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/org.openphacts.utils.json_1.1.0.zip",
+            "bytes": 230746,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/raw/master/org.openphacts.utils.json_1.1.0.zip",
+            "started_at": "2026-07-12T03:11:22+00:00",
+            "finished_at": "2026-07-12T03:11:23+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://raw.githubusercontent.com/openphacts/OPS-Knime/master/org.openphacts.utils.json_1.1.0.zip",
+            "content_type": "application/zip",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/org.openphacts.utils.json_1.1.0.zip",
+            "bytes": 1408984,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://github.com/openphacts/OPS-Knime/blob/master/OPS_KNIME%201.4-example-workflow.zip?raw=true",
+            "started_at": "2026-07-12T03:11:23+00:00",
+            "finished_at": "2026-07-12T03:11:23+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://raw.githubusercontent.com/openphacts/OPS-Knime/refs/heads/master/OPS_KNIME%201.4-example-workflow.zip",
+            "content_type": "application/zip",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/OPS_KNIME 1.4-example-workflow.zip",
+            "bytes": 35387,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://zenodo.org/record/15423#.VrHCKkIoA_s",
+            "status": "browser_discovery",
+            "browser": {
+              "status": "fetched",
+              "http_status_code": 200,
+              "final_url": "https://zenodo.org/records/15423#.VrHCKkIoA_s",
+              "links": [
+                {
+                  "href": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+                  "text": "matplotlib-v1.4.3.zip"
+                },
+                {
+                  "href": "https://zenodo.org/records/15423/preview/matplotlib-v1.4.3.zip?include_deleted=0",
+                  "text": "Preview"
+                },
+                {
+                  "href": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+                  "text": "Download"
+                }
+              ],
+              "error": null
+            }
+          },
+          {
+            "url": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+            "started_at": "2026-07-12T03:11:28+00:00",
+            "finished_at": "2026-07-12T03:11:41+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+            "content_type": "application/octet-stream",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/matplotlib-v1.4.3.zip",
+            "bytes": 51476064,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://zenodo.org/records/15423/preview/matplotlib-v1.4.3.zip?include_deleted=0",
+            "started_at": "2026-07-12T03:11:41+00:00",
+            "finished_at": "2026-07-12T03:11:42+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://zenodo.org/records/15423/preview/matplotlib-v1.4.3.zip?include_deleted=0",
+            "content_type": "text/html; charset=utf-8",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/matplotlib-v1.4.3.zip",
+            "bytes": 315310,
+            "truncated": false,
+            "error": null
+          },
+          {
+            "url": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+            "started_at": "2026-07-12T03:11:42+00:00",
+            "finished_at": "2026-07-12T03:11:54+00:00",
+            "status": "downloaded",
+            "http_status_code": 200,
+            "final_url": "https://zenodo.org/records/15423/files/matplotlib-v1.4.3.zip?download=1",
+            "content_type": "application/octet-stream",
+            "file": "data/original/workflows/84_10.1186_s13321-016-0121-y/matplotlib-v1.4.3.zip",
+            "bytes": 51476064,
+            "truncated": false,
+            "error": null
+          }
+        ],
+        "download_type": "automatic",
+        "automatic_verification": {
+          "verified_at": "2026-07-12T03:58:37+00:00",
+          "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+          "temporary_directory": "data/original/workflows/tmp/84_10.1186_s13321-016-0121-y",
+          "workflow_files_found": [
+            "OPS_KNIME 1.4-example-workflow.zip::OPS_KNIME 1.4 test/workflow.knime"
+          ],
+          "note": "Workflow files were reproduced by an automatic temporary download pass. Temporary downloaded files were not retained."
+        }
       },
       "manual_knime_opening_tests": []
     },
@@ -1320,35 +2350,59 @@
       ],
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
     {
       "rank": 86,
       "title": "TeachOpenCADD-KNIME: A Teaching Platform for Computer-Aided Drug Design Using KNIME Workflows",
-      "doi": "10.1021/acs.jcim.9b00662",
-      "knime_version": null,
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.1021_acs.jcim.9b00662.html",
-      "evidence_extracted_text_lines": "36-51; 60",
+      "doi": "https://doi.org/10.1021/acs.jcim.9b00662",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "KNIME Hub space",
-          "url": "https://hub.knime.com/volkamerlab/space/TeachOpenCADD"
+          "url": "https://hub.knime.com/volkamerlab/space/TeachOpenCADD",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         },
         {
           "type": "release DOI",
-          "url": "https://doi.org/10.5281/zenodo.3475086"
+          "url": "https://doi.org/10.5281/zenodo.3475086",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         },
         {
           "type": "GitHub repository",
-          "url": "https://github.com/volkamerlab/teachopencadd"
+          "url": "https://github.com/volkamerlab/teachopencadd",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "status": "existing_directory_with_workflow_files",
+        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update.",
+        "directory": "data/original/workflows/86_10.1021_acs.jcim.9b00662",
+        "downloaded_files": [
+          "KNIME_workflow_used_to_collate_data_for_the_paper__Selectivity_profiling_of_BCRP_versus_P-gp_inhibition__from_automated_collection_of_polypharmacology_data_to_multi-label_learning__by_F._Montanari__B._Zdrazil_et_al.__J._Cheminform.__2016__P.zip"
+        ],
+        "workflow_files_found": [
+          "KNIME_workflow_used_to_collate_data_for_the_paper__Selectivity_profiling_of_BCRP_versus_P-gp_inhibition__from_automated_collection_of_polypharmacology_data_to_multi-label_learning__by_F._Montanari__B._Zdrazil_et_al.__J._Cheminform.__2016__P.zip::Transporter_Profiling_B1_G2/Data preproc (#459)/workflow.knime",
+          "KNIME_workflow_used_to_collate_data_for_the_paper__Selectivity_profiling_of_BCRP_versus_P-gp_inhibition__from_automated_collection_of_polypharmacology_data_to_multi-label_learning__by_F._Montanari__B._Zdrazil_et_al.__J._Cheminform.__2016__P.zip::Transporter_Profiling_B1_G2/OPS target p (#458)/workflow.knime",
+          "KNIME_workflow_used_to_collate_data_for_the_paper__Selectivity_profiling_of_BCRP_versus_P-gp_inhibition__from_automated_collection_of_polypharmacology_data_to_multi-label_learning__by_F._Montanari__B._Zdrazil_et_al.__J._Cheminform.__2016__P.zip::Transporter_Profiling_B1_G2/workflow.knime"
+        ],
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": []
     },
@@ -1372,31 +2426,48 @@
       ],
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     },
     {
       "rank": 97,
-      "title": "Knime4Bio: a set of custom nodes for the interpretation of next-generation sequencing data with KNIME",
-      "doi": "10.1093/bioinformatics/btr554",
-      "knime_version": null,
-      "workflow_artifact_status": "downloadable_workflow_linked",
-      "processed_text_file": "data/processed/articles/10.1093_bioinformatics_btr554.html",
-      "evidence_extracted_text_lines": "35; 149-150",
+      "title": "Data mining tools -a case study for network intrusion detection",
+      "doi": "https://doi.org/10.1007/s11042-020-09916-0",
+      "workflow_artifact_status": "workflow_reference_in_article_audit_report",
       "workflow_references": [
         {
           "type": "myExperiment workflow",
-          "url": "http://www.myexperiment.org/workflows/2320"
+          "url": "http://www.myexperiment.org/workflows/2320",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         },
         {
           "type": "project repository",
-          "url": "http://code.google.com/p/knime4bio/"
+          "url": "http://code.google.com/p/knime4bio/",
+          "workflow_access": "direct_workflow_available",
+          "workflow_form": "",
+          "audit_status": "downloaded_workflow_artifact",
+          "confidence": "high",
+          "reason": "Workflow artifact evidence is present in data/processed/audit/knime_downloadable_workflow_references.json or data/original/workflows."
         }
       ],
       "download_result": {
-        "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "status": "existing_directory_with_workflow_files",
+        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update.",
+        "directory": "data/original/workflows/97_10.1093_bioinformatics_btr554",
+        "downloaded_files": [
+          "The_NOTCH2_workflow-v1.zip"
+        ],
+        "workflow_files_found": [
+          "The_NOTCH2_workflow-v1.zip::NOTCH2/workflow.knime"
+        ],
+        "automatic_attempts": [],
+        "download_type": "manual"
       },
       "manual_knime_opening_tests": []
     },
@@ -1416,17 +2487,37 @@
       ],
       "download_result": {
         "status": "not_attempted_in_current_workflow_download_pass",
-        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update."
+        "notes": "Reference added from the rank 81-100 article text audit; workflow artifact retrieval was not attempted in this update.",
+        "download_type": "not_downloaded"
       },
       "manual_knime_opening_tests": []
     }
   ],
   "summary_counts": {
     "article_records_with_downloadable_workflow_references": 33,
-    "downloaded_with_workflow_files_or_workflow_directory": 12,
-    "repository_downloaded_but_no_workflow_file_found": 0,
+    "downloaded_with_workflow_files_or_workflow_directory": 18,
+    "existing_directory_no_workflow_file_found": 2,
+    "automatic_attempt_no_workflow_file_found": 3,
+    "not_attempted_in_current_workflow_download_pass": 5,
     "failed_or_not_obtained": 4,
-    "not_attempted_in_current_workflow_download_pass": 14,
-    "reported_supplement_or_repository_but_no_knime_workflow_file_confirmed": 0
+    "download_type_counts": {
+      "automatic": 5,
+      "manual": 13,
+      "mixed": 0,
+      "unknown": 0,
+      "not_downloaded": 15
+    }
+  },
+  "automatic_download_verification": {
+    "verified_at": "2026-07-12T03:58:37+00:00",
+    "temporary_inventory": "/tmp/automatic_workflow_download_inventory.json",
+    "automatic_download_ranks": [
+      22,
+      61,
+      66,
+      69,
+      84
+    ],
+    "note": "Temporary files were written under data/original/workflows/tmp and then removed after using the results to classify download_type."
   }
 }

@@ -84,7 +84,28 @@ def doi_safe(doi: str) -> str:
     return re.sub(r"[^a-z0-9._-]+", "_", doi).strip("_") or "no_doi"
 
 
-def article_dir(article: dict[str, Any], root: Path) -> Path:
+def rank_directory(rank: int | None, root: Path) -> Path | None:
+    if rank is None or not root.exists():
+        return None
+    prefix = f"{rank}_"
+    matches = sorted(path for path in root.iterdir() if path.is_dir() and path.name.startswith(prefix))
+    return matches[0] if matches else None
+
+
+def rank_directories(rank: int | None, root: Path) -> list[Path]:
+    if rank is None or not root.exists():
+        return []
+    prefix = f"{rank}_"
+    return sorted(path for path in root.iterdir() if path.is_dir() and path.name.startswith(prefix))
+
+
+def article_dir(article: dict[str, Any], root: Path, existing_record: dict[str, Any] | None = None) -> Path:
+    existing_directory = (existing_record or {}).get("download_result", {}).get("directory")
+    if existing_directory and Path(existing_directory).exists():
+        return Path(existing_directory)
+    by_rank = rank_directory(article.get("rank"), root)
+    if by_rank:
+        return by_rank
     return root / f"{article.get('rank')}_{doi_safe(str(article.get('doi', '')))}"
 
 
@@ -278,18 +299,30 @@ def record_for_article(
     existing_record: dict[str, Any] | None,
     args: argparse.Namespace,
 ) -> dict[str, Any]:
-    directory = article_dir(article, args.workflow_root)
+    directory = article_dir(article, args.workflow_root, existing_record)
     references = [workflow_reference(resource) for resource in article.get("linked_resources", [])]
     existing_result = (existing_record or {}).get("download_result", {})
     attempts: list[dict[str, Any]] = []
 
+    if directory.exists() and not scan_workflow_files(directory):
+        for candidate in rank_directories(article.get("rank"), args.workflow_root):
+            if scan_workflow_files(candidate):
+                directory = candidate
+                break
+
     if directory.exists():
         workflow_files = scan_workflow_files(directory)
-        status = (
-            existing_result.get("status")
-            if existing_result.get("status") and workflow_files
-            else ("downloaded_workflow_files" if workflow_files else "existing_directory_no_workflow_file_found")
-        )
+        existing_status = str(existing_result.get("status", ""))
+        if workflow_files and (
+            not existing_status
+            or "no_workflow" in existing_status
+            or existing_status == "not_attempted_in_current_workflow_download_pass"
+        ):
+            status = "existing_directory_with_workflow_files"
+        elif workflow_files:
+            status = existing_status
+        else:
+            status = "existing_directory_no_workflow_file_found"
         download_result = {
             **existing_result,
             "directory": directory.as_posix(),
@@ -304,6 +337,7 @@ def record_for_article(
             or "Directory already existed; automatic download attempt skipped and local files were scanned.",
             "automatic_attempts": existing_result.get("automatic_attempts", []),
         }
+        download_result["download_type"] = infer_download_type(download_result)
     else:
         for resource in article.get("linked_resources", []):
             url = resource.get("url", "")
@@ -338,6 +372,7 @@ def record_for_article(
             "notes": "Automatic browser/HTTP workflow download attempt completed.",
             "automatic_attempts": attempts,
         }
+        download_result["download_type"] = infer_download_type(download_result)
 
     return {
         "rank": article.get("rank"),
@@ -359,7 +394,38 @@ def status(record: dict[str, Any]) -> str:
     return str(record.get("download_result", {}).get("status", ""))
 
 
+def infer_download_type(download_result: dict[str, Any]) -> str:
+    status_value = str(download_result.get("status", "")).lower()
+    attempts = download_result.get("automatic_attempts", [])
+    workflow_files = download_result.get("workflow_files_found", [])
+    if not workflow_files:
+        return "not_downloaded"
+    if "manual" in status_value:
+        return "manual"
+    if "automatic" in status_value:
+        return "automatic"
+    if isinstance(attempts, list) and any(
+        attempt.get("status") == "downloaded" for attempt in attempts if isinstance(attempt, dict)
+    ):
+        return "automatic"
+    if status_value == "existing_directory_with_workflow_files":
+        return "manual"
+    if "downloaded_workflow" in status_value:
+        return "manual"
+    return "manual"
+
+
 def summary_counts(records: list[dict[str, Any]]) -> dict[str, int]:
+    download_types = {
+        "automatic": 0,
+        "manual": 0,
+        "mixed": 0,
+        "unknown": 0,
+        "not_downloaded": 0,
+    }
+    for record in records:
+        download_type = str(record.get("download_result", {}).get("download_type", "not_downloaded"))
+        download_types[download_type] = download_types.get(download_type, 0) + 1
     return {
         "article_records_with_downloadable_workflow_references": len(records),
         "downloaded_with_workflow_files_or_workflow_directory": sum(1 for r in records if has_workflow_files(r)),
@@ -375,6 +441,7 @@ def summary_counts(records: list[dict[str, Any]]) -> dict[str, int]:
         "failed_or_not_obtained": sum(
             1 for r in records if any(token in status(r) for token in ("failed", "not_obtained", "unavailable"))
         ),
+        "download_type_counts": download_types,
     }
 
 
