@@ -33,9 +33,9 @@ repository-level mining of KNIME node metadata. OpenAlex shows that KNIME is
 visible across a broad scientific literature, while the article assessment
 shows that influential studies often report KNIME through figures,
 descriptions, or tool mentions rather than downloadable workflow artifacts. In
-the 100-record article audit registry, twenty-three records report
+the 100-record article audit registry, twenty-two records report
 downloadable or linked KNIME workflow files. Recorded retrieval attempts
-obtained workflow artifacts or workflow-directory evidence for nineteen article records. In the recorded
+obtained workflow artifacts or workflow-directory evidence for eighteen article records. In the recorded
 manual execution checks, five article records had at least one workflow execute
 successfully.
 Repository mining gives the source-evolution context: deprecated ordinary
@@ -76,8 +76,8 @@ Our top-cited article collection covers the 100 most-cited KNIME-matching
 records, with not-assessed placeholders retained where local full text is
 unavailable. The structured audit reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. Twenty-three records report downloadable or linked KNIME workflow
-files, and workflow artifacts or workflow-directory evidence were obtained for nineteen article records in
+weak link. Twenty-two records report downloadable or linked KNIME workflow
+files, and workflow artifacts or workflow-directory evidence were obtained for eighteen article records in
 the recorded retrieval attempts. Other links were stale, blocked, incomplete,
 or did not lead to a confirmed KNIME workflow artifact. In the recorded manual
 execution checks, five article records had at least one workflow execute
@@ -220,15 +220,15 @@ of scripts, JSON configuration files, and prompt configuration files. The
 process is specified in \path{scripts/audit_script_chain.json}, which acts as
 the workflow index for this part of the study. Each step consumes the recorded
 outputs of earlier steps and writes an explicit intermediate or final artifact.
-The current chain contains fifteen scripted steps and one manual checkpoint:
-thirteen scripted steps are deterministic, and two use an LLM for bounded
-judgment tasks where rule-based extraction is insufficient, namely
-classification of cached reference pages and supplementary article-level audit
-flags. The LLM calls use temperature 0 to reduce variation, but repeated
-execution may still depend on the model and service version used. 
+The current chain contains fifteen scripted steps and one manual checkpoint.
+Thirteen scripted steps are deterministic. Two scripted steps use an LLM.
+We use the LLM only where rule-based extraction is insufficient. The first LLM
+step classifies cached reference pages. The second LLM step fills
+supplementary article-level audit flags. The LLM calls use temperature 0 to
+reduce variation. Repeated execution may still depend on the model and service
+version used.
 
-The pipeline
-is mostly automatic, but it is deliberately semi-automatic at two boundary
+The pipeline is mostly automatic, but it is deliberately semi-automatic at two boundary
 points: obtaining article PDFs at the beginning of the process and obtaining
 workflow artifacts near the end, before formal result preparation.
 Both tasks may involve institutional access, protected publisher pages,
@@ -247,6 +247,24 @@ Completions API directly, using the configured model
 bibliographic source for article discovery and ranking
 \cite{Priem2022OpenAlex}. The exact commands, script order, prompt files, and
 intermediate outputs are recorded in \path{scripts/audit_script_chain.json}.
+
+For reproducibility of the LLM-supported steps, API configuration is separated
+from prompts and data. The scripts read the API key from \path{.env} or the
+process environment as \texttt{OPENAI\_API\_KEY}; this local credentials file
+is not part of the research data. The model can be overridden with
+\texttt{OPENAI\_MODEL}, but the recorded run used the default
+\texttt{gpt-4.1-mini}. Both LLM scripts use the Chat Completions endpoint
+\path{https://api.openai.com/v1/chat/completions}, temperature \texttt{0.0},
+and at most three retries for transient server-side failures. The prompts are
+stored as JSON configuration files:
+\path{data/processed/audit/article_reference_classification_prompt.json} for
+reference-page classification and
+\path{data/processed/audit/article_supplementary_flag_prompt.json} for
+article-level supplementary flags. The derived JSON outputs record the script
+name, input file, prompt configuration, model, temperature, selection scope,
+summary counts, and per-article classifications. This makes the exact prompt
+and local evidence auditable, while recognizing that future reruns may differ
+if the hosted model implementation changes.
 
 Step 1 collects KNIME-matching article records from the OpenAlex works API with
 \path{scripts/collect_openalex_knime_works.py}. The query searches for KNIME in
@@ -906,7 +924,7 @@ one workflow for the article opened and executed successfully in the tested
 environment, while \textbf{-} means that the workflow opened but did not have a
 confirmed successful end-to-end run, or failed during execution. Five article
 records had at least one workflow execute successfully in the recorded manual
-checks: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration, and
+checks: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration,
 high-content organelle trafficking, and GediNET
 \cite{Saubern2011PAINS,VillarroelOrdenes2021KNIMEHub,Dietz2020ImageJKNIME,Pal2018OrganelleKNIME,Qumsiyeh2022GediNET}.
 Other opened workflows did not have a confirmed successful end-to-end run in
@@ -943,7 +961,7 @@ recorded artifact retrieval outcomes.}
 PAINS workflows, DOI \path{10.1002/minf.201100076} &
 \textbf{X} &
 Automated myExperiment page and download requests returned HTTP 403 HTML, but
-the user manually obtained both RDKit and Indigo workflow ZIP archives. Both
+we manually obtained both RDKit and Indigo workflow ZIP archives. Both
 contain \texttt{workflow.knime} files. \\
 2 &
 Chemical data curation workflow, DOI \path{10.1186/s13321-018-0315-6} &
@@ -981,11 +999,11 @@ was retrieved. \\
 QSAR tools workflow, DOI \path{10.1080/07391102.2018.1456975} &
 \textbf{-} &
 The referenced \path{teqip.jdvu.ac.in/QSAR_Tools/} URL failed DNS resolution.
-no workflow archive was retrieved. \\
+No workflow archive was retrieved. \\
 9 &
 Webinar Pricing Analytics workflow, DOI \path{10.1016/j.jbusres.2021.08.036} &
 \textbf{X} &
-The user manually downloaded the KNIME workflow file and added local KNIME
+We manually downloaded the KNIME workflow file and added local KNIME
 opening screenshots. \\
 10 &
 Verhaar scheme workflow, DOI \path{10.1016/j.chemosphere.2015.06.009} &
@@ -996,12 +1014,12 @@ URL was confirmed. \\
 11 &
 Spontaneous tail coiling workflow, DOI \path{10.1016/j.ntt.2020.106918} &
 \textbf{X} &
-The user manually downloaded the KNIME workflow file and added local KNIME
+We manually downloaded the KNIME workflow file and added local KNIME
 opening screenshots. \\
 12 &
 Caco-2 permeability prediction workflow, DOI \path{10.3390/pharmaceutics14101998} &
 \textbf{X} &
-The user manually downloaded the KNIME workflow file and added local KNIME
+We manually downloaded the KNIME workflow file and added local KNIME
 opening screenshots. \\
 13 &
 KniMet workflow, DOI \path{10.1007/s11306-018-1349-5} &
@@ -1011,7 +1029,7 @@ downloaded and contains \texttt{KniMet.knwf}. \\
 14 &
 NGS sample workflow, DOI \path{10.1093/bioinformatics/btr478} &
 \textbf{X} &
-The user manually downloaded the myExperiment archive after automated requests
+We manually downloaded the myExperiment archive after automated requests
 were blocked by HTTP 403. The ZIP contains a KNIME workflow directory with
 saved data. \\
 15 &
@@ -1030,7 +1048,7 @@ guessed NodePit URL returned HTTP 404. \\
 GediNET workflows, DOI \path{10.1038/s41598-022-24421-0} &
 \textbf{X} &
 GitHub master archive was downloaded and contains two \texttt{.knwf} files.
-the recorded KNIME Hub short link could not be retrieved. \\
+The recorded KNIME Hub short link could not be retrieved. \\
 18 &
 Nuclear receptor ligand workflow, DOI \path{10.1002/minf.201400188} &
 \textbf{-} &
@@ -1127,7 +1145,7 @@ available notes. \\
 ImageJ ecosystem workflows, DOI \path{10.3389/fcomp.2020.00008} &
 \textbf{X} &
 Six downloaded KNIME Hub \texttt{.knwf} files opened and executed normally in
-the user environment after installing additional required KNIME/ImageJ-related
+our test environment after installing additional required KNIME/ImageJ-related
 plugins. \\
 11 &
 GediNET workflows, DOI \path{10.1038/s41598-022-24421-0} &
@@ -1137,7 +1155,7 @@ the workflow was run successfully in the manual check. \\
 12 &
 High-content organelle trafficking workflow, DOI \path{10.1038/sdata.2018.241} &
 \textbf{X} &
-\texttt{KNIME workflow.zip} opened and executed normally in the user
+\texttt{KNIME workflow.zip} opened and executed normally in our test
 environment after installing additional required plugins. \\
 13 &
 Knime4Bio NOTCH2 workflow, DOI \path{10.1093/bioinformatics/btr554} &

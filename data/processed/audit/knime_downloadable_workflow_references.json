@@ -164,7 +164,7 @@
           "Indigo-pains-v2.zip::Indigo-pains/workflow.knime",
           "RDKit-pains-v4.zip::RDKIT-pains/workflow.knime"
         ],
-        "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but the user manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files.",
+        "notes": "The myExperiment pages and download endpoints were not retrievable automatically because they returned HTTP 403 HTML, but we manually downloaded both PAINS workflow archives. Both files are valid ZIP archives and contain KNIME workflow.knime files.",
         "automatic_attempts": [],
         "download_type": "manual",
         "manual_opening_evidence": {
@@ -1757,7 +1757,7 @@
           "opened_in_knime": true,
           "opening_result": "success",
           "execution_result": "success_after_plugin_installation",
-          "notes": "Opened and executed normally in the user environment after installing additional required KNIME/ImageJ-related plugins.",
+          "notes": "Opened and executed normally in our test environment after installing additional required KNIME/ImageJ-related plugins.",
           "screenshot_directory": "data/original/workflows/62_10.3389_fcomp.2020.00008/opened",
           "success_definition": "Workflow load/opening in current KNIME; end-to-end execution is recorded separately when known."
         }
@@ -2121,7 +2121,7 @@
           "artifact": "KNIME workflow.zip",
           "opened_in_knime": true,
           "execution_result": "success_after_plugin_installation",
-          "notes": "Opened and executed normally in the user environment after installing additional required plugins.",
+          "notes": "Opened and executed normally in our test environment after installing additional required plugins.",
           "screenshot_directory": "data/original/workflows/80_10.1038_sdata.2018.241/opened",
           "opening_result": "success",
           "success_definition": "Workflow load/opening in current KNIME; end-to-end execution is recorded separately when known."
@@ -2716,7 +2716,7 @@
   "corrected_at": "2026-07-12T18:40:05+00:00",
   "correction_notes": [
     "Corrected ranks 62, 63, 67, 69, 97, and 100 after local artifact-to-article consistency check: ranks 62/63 were swapped; rank 67 had only a documentation repository snapshot; rank 69 carried duplicate GediNET evidence from rank 66; rank 97 carried NOTCH2 evidence belonging to rank 100.",
-    "Ranks 3, 26, 52, and 67 were manually checked by the user and marked as no downloadable KNIME workflow found.",
+    "Ranks 3, 26, 52, and 67 were manually checked and marked as no downloadable KNIME workflow found.",
     "Removed failed-attempt directories for ranks 24, 29, 30, and 70 because they contained no KNIME workflow artifacts."
   ]
 }

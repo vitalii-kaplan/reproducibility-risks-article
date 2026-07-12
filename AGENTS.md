@@ -119,6 +119,15 @@ of KNIME node metadata.
   findings, repository map, key files, rebuild basics, and scope limits. Do not
   move detailed internal audit rules, raw extraction details, or agent workflow
   notes from `AGENTS.md` into `README.md`.
+- LLM-assisted audit steps read credentials from `.env` or the process
+  environment as `OPENAI_API_KEY`. The optional `OPENAI_MODEL` value controls
+  the model; the recorded article-audit run used the default `gpt-4.1-mini`.
+  Prompt text and allowed labels belong in JSON prompt-configuration files
+  under `data/processed/audit/`, not hard-coded only in scripts. LLM calls use
+  temperature `0.0` for reproducibility, but repeated runs can still vary by
+  model version, service behavior, and prompt/configuration changes. Record the
+  model, temperature, prompt file, input file, output file, and selection scope
+  in generated JSON metadata.
 
 ## Suggested Repository Layout
 
@@ -183,9 +192,8 @@ Create directories only when they are needed. Keep generated files out of versio
   fragments, or partial DOI strings. For local article matching, use the full
   normalized DOI-derived registry key or an explicit no-DOI registry key only.
 - The top-cited article audit registry now contains 100 records, including all
-  records from citation ranks 1-100. Eighty-two records currently have local
-  PDFs or full text and processed GROBID HTML; eighteen records are retained as
-  not-assessed placeholders because no local full text is available.
+  records from citation ranks 1-100. Seventy-nine records currently have local
+  PDFs recorded in the compact audit report.
 - Current local article retrieval for ranks 41-60 is recorded in
   `data/processed/audit/logs/article_download_attempts_41-60.csv`: 14 of 20
   records have local PDFs, including one user-provided record without DOI. The
@@ -196,19 +204,17 @@ Create directories only when they are needed. Keep generated files out of versio
   those 20 records currently have local PDFs or full text; ranks 67, 72, 74,
   76, and 79 are retained as not-assessed placeholders in the expanded
   audit.
-- The top-cited article assessment file
-  `data/processed/audit/old_article_assessments.json` now has
-  an explicit `article_audit_fields` block for each record. The block is split
-  into `description_audit_fields` for traceability and `flag_audit_fields` for
-  statistics, with `article_audit_schema` and `article_audit_summary_counts` at
-  the top level. Use `flag_audit_fields` for article-level workflow-presentation
-  statistics before reinterpreting prose notes.
-- The creation process for
-  `data/processed/audit/old_article_assessments.json` is now
+- The compact top-cited article assessment report is
+  `data/processed/audit/article_audit_report.json`. Use it as the active
+  article-level source for paper tables and article/workflow summary claims.
+  Files under `data/processed/audit/old/` and files with an `old_` prefix are
+  retained only as historical references unless `scripts/audit_script_chain.json`
+  explicitly lists them as active inputs.
+- The creation process for `data/processed/audit/article_audit_report.json` is
   described in the Methods subsection "Top-Cited Article Assessment" in
-  `article/article.tex`. Keep that method description synchronized with the
-  audit JSON, `knime_article_audit_questions.json`, and the support-refresh
-  script.
+  `article/article.tex`. Keep that method description synchronized with
+  `scripts/audit_script_chain.json`, the prompt/configuration files, and the
+  scripts that produce the report.
 - The audit questions and field definitions are recorded in
   `data/processed/audit/knime_article_audit_questions.json`. Keep this file
   synchronized when adding, removing, renaming, or changing the meaning of any
@@ -349,11 +355,11 @@ Create directories only when they are needed. Keep generated files out of versio
 - Use `scripts/build_knime_use_workflow_reporting_table.py` to generate the
   Table 4 CSV source, `knime_use_workflow_reporting_signals.csv`, from
   `top_cited_article_audit_summary.csv` and
-  `data/processed/audit/old_article_assessments.json`. The
+  `data/processed/audit/article_audit_report.json`. The
   "Articles with successfully downloaded workflows" row is a workflow-retrieval
   outcome read
   from
-  `data/original/workflows/knime_downloadable_workflow_references.json`,
+  `data/processed/audit/knime_downloadable_workflow_references.json`,
   specifically
   `summary_counts.downloaded_with_workflow_files_or_workflow_directory`. The
   script also writes
@@ -409,14 +415,14 @@ Create directories only when they are needed. Keep generated files out of versio
   the stronger near-term contribution is a deeper KNIME workflow corpus with
   quantitative node-level compatibility analysis.
 - The current workflow-reference inventory under
-  `data/processed/audit/knime_downloadable_workflow_references.json` covers 33
-  article records with
+  `data/processed/audit/knime_downloadable_workflow_references.json` records 31
+  candidate workflow-reference records and 22 article records that report
   downloadable or linked KNIME workflow evidence. Workflow artifacts or workflow
   directories have been obtained for 18 article records. Workflows from all 18
   article records opened in the local KNIME environment. Five article records
   had at least one workflow execute successfully: PAINS, Webinar Pricing
-  Analytics, ImageJ ecosystem integration, high-content organelle
-  trafficking, and GediNET. PAINS is counted once at article-record level even though
+  Analytics, ImageJ ecosystem integration, high-content organelle trafficking,
+  and GediNET. PAINS is counted once at article-record level even though
   separate RDKit and Indigo workflow archives exist. The other opened article
   records failed during execution, required missing R packages or extensions,
   or could not be confidently executed from the available workflow state.
@@ -426,12 +432,15 @@ Create directories only when they are needed. Keep generated files out of versio
   article again needs standalone figure files.
 - The workflow reference inventory is
   `data/processed/audit/knime_downloadable_workflow_references.json`. It
-  records the 31 article records with downloadable or linked KNIME workflow
-  evidence, download outcomes, reasons for unavailable workflows, manual KNIME
-  opening tests, and the summary that 18 article records yielded workflow
-  artifacts or workflow directories, workflows from all 18 were opened in the
-  manual subset, and five article records had at least one workflow execute
-  successfully.
+  records workflow-reference candidates, download outcomes, reasons for
+  unavailable workflows, manual KNIME opening tests, and the summary that 18
+  article records yielded workflow artifacts or workflow directories, workflows
+  from all 18 were opened in the manual subset, and five article records had at
+  least one workflow execute successfully. Do not use
+  `data/original/workflows/knime_downloadable_workflow_references.json` as an
+  active source if it reappears; workflow artifacts belong under
+  `data/original/workflows/`, but the active inventory JSON belongs under
+  `data/processed/audit/`.
 - The reader-facing `README.md` should summarize the current 100-record audit as
   79 records with local PDFs, 75 KNIME-use records, 22
   records reporting downloadable or linked workflows, 18 article records with
