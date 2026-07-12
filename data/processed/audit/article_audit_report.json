@@ -3041,8 +3041,8 @@
       "linked_resources": []
     }
   ],
-  "workflow_inventory_backpropagation": {
-    "updated_at": "2026-07-12T03:58:37+00:00",
+  "workflow_inventory_report_update": {
+    "updated_at": "2026-07-12T07:02:05+00:00",
     "source_inventory": "data/processed/audit/knime_downloadable_workflow_references.json",
     "workflow_root": "data/original/workflows",
     "downloaded_ranks": [

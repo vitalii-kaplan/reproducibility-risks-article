@@ -104,9 +104,14 @@ of KNIME node metadata.
 - Mark preliminary numbers clearly as provisional until the data collection scripts and raw data are present.
 - Preserve raw data, scripts, and derived tables separately.
 - Prefer reproducible scripts over manual spreadsheet edits.
-- Keep `Makefile` as the project workflow index. It should document every
-  script target, important parameters, and whether a target requires network
-  access or an external local KNIME source clone.
+- Treat `scripts/audit_script_chain.json` as the main source of knowledge about
+  the current article/workflow audit process. It should record the ordered
+  steps, scripts, inputs, outputs, handoff type, network requirements, and
+  manual actions. Check it before relying on older notes or inferring the audit
+  workflow from filenames.
+- Keep `Makefile` as the executable wrapper for common targets. It should expose
+  important parameters and runnable commands, but the canonical process
+  description belongs in `scripts/audit_script_chain.json`.
 - Keep paper claims traceable to a source, dataset, script, or explicit manual assessment note.
 - When assessing a paper, record both the evidence and the absence of evidence, for example whether the paper mentions a KNIME version or provides a downloadable workflow.
 - Keep writing concise and suitable for an 11-page LNCS short paper.
@@ -280,6 +285,11 @@ Create directories only when they are needed. Keep generated files out of versio
   the target of the article's links: KNIME Hub pages, myExperiment pages,
   GitHub repositories, publisher supplements, datasets, code repositories, or
   dead/blocked URLs.
+- The operational source for the current audit pipeline is
+  `scripts/audit_script_chain.json`. When adding, renaming, archiving, or
+  changing any article-audit script or output, update that chain first or in
+  the same change. Do not treat older audit JSON files or `scripts/old/` as the
+  active process unless the chain explicitly references them.
 - The current reference-page chain is:
   `scripts/collect_article_urls.py` ->
   `scripts/fetch_article_url_pages.py` ->

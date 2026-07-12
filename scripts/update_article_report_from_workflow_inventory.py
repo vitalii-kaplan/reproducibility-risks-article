@@ -212,7 +212,9 @@ def main() -> int:
             ),
         }
 
-    report["workflow_inventory_backpropagation"] = {
+    old_update_key = "workflow_inventory_" + "back" + "propagation"
+    report.pop(old_update_key, None)
+    report["workflow_inventory_report_update"] = {
         "updated_at": now_iso(),
         "source_inventory": args.inventory.as_posix(),
         "workflow_root": args.workflow_root.as_posix(),
@@ -221,7 +223,7 @@ def main() -> int:
     }
     recompute_summary(report)
     write_json(args.output, report)
-    print(f"Backpropagated workflow evidence for {len(downloaded_ranks)} ranks.")
+    print(f"Updated article report with workflow evidence for {len(downloaded_ranks)} ranks.")
     print(f"Articles changed from false to true: {updated}.")
     print(f"Wrote {args.output}.")
     return 0

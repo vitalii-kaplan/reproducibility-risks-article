@@ -259,9 +259,9 @@ workflow-reference-inventory: ## Try browser/HTTP workflow downloads and update 
 	  --output "$(WORKFLOW_REFERENCE_INVENTORY)" \
 	  --workflow-root "$(WORKFLOW_ROOT)"
 
-.PHONY: backpropagate-workflow-inventory
-backpropagate-workflow-inventory: ## Update article_audit_report.json from downloaded workflow inventory and local workflow files.
-	$(PYTHON) scripts/backpropagate_workflow_inventory_to_report.py \
+.PHONY: update-report-from-workflow-inventory
+update-report-from-workflow-inventory: ## Update article_audit_report.json from downloaded workflow inventory and local workflow files.
+	$(PYTHON) scripts/update_article_report_from_workflow_inventory.py \
 	  --report "$(ARTICLE_AUDIT_REPORT)" \
 	  --inventory "$(WORKFLOW_REFERENCE_INVENTORY)" \
 	  --workflow-root "$(WORKFLOW_ROOT)" \

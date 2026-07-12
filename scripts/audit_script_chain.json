@@ -271,13 +271,13 @@
         "Do not edit data/processed/audit/article_audit_report.json manually at this stage.",
         "Do not bypass captchas, paywalls, authentication, robots, or other access controls."
       ],
-      "notes": "This is a download-only manual checkpoint. The JSON inventory is the checklist, but the user should only add files/directories under data/original/workflows. The next deterministic step scans the actual local workflow files and backpropagates the result into article_audit_report.json."
+      "notes": "This is a download-only manual checkpoint. The JSON inventory is the checklist, but the user should only add files/directories under data/original/workflows. The next deterministic step scans the actual local workflow files and updates article_audit_report.json."
     },
     {
       "step": 14,
-      "name": "Backpropagate downloaded workflow evidence to article report",
-      "script": "scripts/backpropagate_workflow_inventory_to_report.py",
-      "make_target": "backpropagate-workflow-inventory",
+      "name": "Update article report from retrieved workflow evidence",
+      "script": "scripts/update_article_report_from_workflow_inventory.py",
+      "make_target": "update-report-from-workflow-inventory",
       "network_required": false,
       "input": [
         "data/processed/audit/knime_downloadable_workflow_references.json",

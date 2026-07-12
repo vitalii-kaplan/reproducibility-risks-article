@@ -28,6 +28,18 @@ workflow platform with a long public development history.
 The paper is the main narrative. The data and scripts are included so the
 claims can be inspected and updated.
 
+## Audit Process
+
+The canonical map of the article/workflow audit process is
+`scripts/audit_script_chain.json`. It records the ordered steps, scripts,
+inputs, outputs, handoff type, network requirements, and manual actions for the
+current audit pipeline. Use it as the first file to inspect when checking how
+the audit is produced or deciding where a new script belongs.
+
+The `Makefile` is the executable wrapper around common steps from that chain.
+It is useful for running targets, but `scripts/audit_script_chain.json` is the
+main source of knowledge about the audit process.
+
 ## Current Findings
 
 - An OpenAlex title-and-abstract search for `KNIME`, restricted to article
@@ -107,8 +119,9 @@ AGENTS.md                Detailed maintenance notes for future project updates
 
 ## Rebuilding
 
-The repository includes a `Makefile` as a compact workflow index. It documents
-the main scripts, parameters, and common rebuild targets:
+The repository includes a `Makefile` as a compact execution wrapper. It
+documents the main runnable targets and common parameters, while
+`scripts/audit_script_chain.json` documents the full audit-process sequence:
 
 ```sh
 make help

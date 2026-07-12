@@ -33,11 +33,11 @@ repository-level mining of KNIME node metadata. OpenAlex shows that KNIME is
 visible across a broad scientific literature, while the article assessment
 shows that influential studies often report KNIME through figures,
 descriptions, or tool mentions rather than downloadable workflow artifacts. In
-the 100-record article audit registry, twenty-eight records report
+the 100-record article audit registry, twenty-three records report
 downloadable or linked KNIME workflow files. Recorded retrieval attempts
-obtained workflow artifacts for twelve article records. Workflows from those
-twelve records opened in a current local KNIME environment. Four article
-records had at least one workflow execute successfully.
+obtained workflow artifacts for eighteen article records. In the recorded
+manual execution checks, four article records had at least one workflow execute
+successfully.
 Repository mining gives the source-evolution context: deprecated ordinary
 nodes increased from 14.83\% of registered ordinary nodes in the 2018 source
 baseline to 33.33\% in the June 28, 2026 local source snapshot. Together,
@@ -76,16 +76,15 @@ Our top-cited article collection covers the 100 most-cited KNIME-matching
 records, with not-assessed placeholders retained where local full text is
 unavailable. The structured audit reported in
 Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. Twenty-eight records report downloadable or linked KNIME workflow
-files, but workflow artifacts were obtained for only twelve article records in
+weak link. Twenty-three records report downloadable or linked KNIME workflow
+files, and workflow artifacts were obtained for eighteen article records in
 the recorded retrieval attempts. Other links were stale, blocked, incomplete,
-or did not lead to a confirmed KNIME workflow artifact. Workflows from all
-twelve obtained article records opened in the tested local KNIME environment,
-and four article records had at least one workflow execute successfully. For
-other influential studies, the strongest workflow evidence is usually weaker
-than an executable artifact. Several records present screenshots or figures of
-connected KNIME nodes, or describe workflow steps in text, without preserving
-all executable workflow context.
+or did not lead to a confirmed KNIME workflow artifact. In the recorded manual
+execution checks, four article records had at least one workflow execute
+successfully. For other influential studies, the strongest workflow evidence
+is usually weaker than an executable artifact. Several records present
+screenshots or figures of connected KNIME nodes, or describe workflow steps in
+text, without preserving all executable workflow context.
 
 These reporting practices are risky because KNIME continues to evolve. A
 workflow that was executable when a paper was written may later depend on nodes
@@ -216,40 +215,150 @@ Derived bibliometric tables are generated from the JSONL file by
 
 \subsection{Top-Cited Article Assessment}
 
-For the article-level audit, we sorted the processed OpenAlex article records
-by \texttt{cited\_by\_count} in descending order and selected the 100
-most-cited records. Open-access papers were downloaded directly. Papers that
-required access through a publisher were downloaded where institutional
-subscription access was available or were added manually when a local copy was
-available. Not all 100 papers could be downloaded. Records without local full
-text were retained as not-assessed placeholders so that the denominator stayed
-visible.
+For the article-level audit we developed an open-source application composed
+of scripts, JSON configuration files, and prompt configuration files. The
+process is specified in \path{scripts/audit_script_chain.json}, which acts as
+the workflow index for this part of the study. Each step consumes the recorded
+outputs of earlier steps and writes an explicit intermediate or final artifact.
+The current chain contains fifteen scripted steps and one manual checkpoint:
+thirteen scripted steps are deterministic, and two use an LLM for bounded
+judgment tasks where rule-based extraction is insufficient, namely
+classification of cached reference pages and supplementary article-level audit
+flags. The LLM calls use temperature 0 to reduce variation, but repeated
+execution may still depend on the model and service version used. 
 
-Downloaded PDFs were converted to plain text with
-\path{scripts/extract_article_texts.py}. Where extracted text followed a
-two-column reading order, we normalized it to a one-column reading copy with
-\path{scripts/normalize_article_text_columns.py}. This step used script output
-and LLM-assisted correction checks. We then processed the article text into a
-structured audit stored in
-\path{data/processed/audit/article_assessments.json}. Each
-record contains descriptive metadata, full-text access status, the article's
-relation to KNIME, and reproducibility-relevant flags for version reporting,
-workflow artifacts, workflow figures or text descriptions, input data, code,
-and extension information.
+The pipeline
+is mostly automatic, but it is deliberately semi-automatic at two boundary
+points: obtaining article PDFs at the beginning of the process and obtaining
+workflow artifacts near the end, before formal result preparation.
+Both tasks may involve institutional access, protected publisher pages,
+supplement portals, captchas, and changing web interfaces. The process can
+therefore be improved by human assistance at the beginning and end, while the
+middle steps are executed automatically from the recorded intermediate files.
 
-The audit fields are defined in
-\path{data/processed/audit/knime_article_audit_questions.json}. Positive
-article-text flags require direct quote support from the processed text,
-including line references, article section, and an audit note. The support and
-provenance fields were refreshed with
-\path{scripts/refresh_article_audit_support.py}, and article tables were
-generated from the JSON audit with
-\path{scripts/build_article_audit_tables.py} and
-\path{scripts/build_knime_use_workflow_reporting_table.py}. For records that
-reported downloadable or linked KNIME workflows, we attempted to retrieve the
-workflow artifacts, recorded the download outcomes in the workflow inventory,
-and finally tested whether the downloaded workflows could be opened and
-executed in a current local KNIME installation.
+Step 1 collects KNIME-matching article records from the OpenAlex works API with
+\path{scripts/collect_openalex_knime_works.py}. The query searches for KNIME in
+article titles and abstracts and stores the original API response pages, a
+complete JSONL stream, a compact CSV view, and query metadata. This step
+preserves the bibliographic source records before any article-level audit
+decisions are made.
+
+Step 2 builds the bibliometric summaries and the citation-ranked seed table
+with \path{scripts/build_openalex_knime_bibliometrics.py}. The script reads the
+OpenAlex JSONL export and derives processed CSV and JSON files used to select
+the top-cited audit candidates. The citation-ranked seed table is then used as
+the article list for downstream download, parsing, URL collection, and audit
+report construction.
+
+Step 3 attempts to download article PDFs by citation-rank range with
+\path{scripts/download_openalex_rank_range_articles.py}. This step is
+semi-automatic because OpenAlex links and open-access URLs do not always expose
+the full paper, and some papers require lawful institutional access. The script
+records download attempts and stores retrieved PDFs under
+\path{data/original/articles/}; failed or protected records can be completed by
+manual download without changing the later audit logic.
+
+Step 4 converts the local PDFs into semantic article HTML with
+\path{scripts/extract_article_grobid_html.py}. The current parser uses a local
+GROBID service to produce TEI XML and then renders an HTML reading copy with
+article metadata, abstract, body sections, paragraphs, and bibliography
+structure. This replaced earlier plain-text extraction because the downstream
+steps need stable article identity, paragraphs, and reference context.
+
+Step 5 collects article metadata and article-related URLs with
+\path{scripts/collect_article_urls.py}. The script joins the OpenAlex seed
+table, the canonical PDF registry, the GROBID TEI files, and the generated HTML
+files. At this stage it does not classify URLs or infer workflow availability;
+it only records metadata and normalized URLs that can be traced to the article
+content.
+
+Step 6 fetches the referenced URL pages with
+\path{scripts/fetch_article_url_pages.py}. For each unique URL, the script
+records HTTP status, redirect chain, final URL, response headers, and a stored
+copy of the response body where available. This creates local evidence for
+later classification and avoids asking the language model to rely on live web
+state.
+
+Step 7 attaches the URL-fetch metadata back to the article records with
+\path{scripts/attach_url_fetch_metadata.py}. This deterministic step augments
+each URL entry with fetch status, HTTP code, final URL, redirect count, and the
+path to any stored page. It is metadata attachment only; it does not interpret
+whether a reference is a workflow, software page, dataset, article landing
+page, or documentation.
+
+Step 8 performs a second-stage fetch for reference pages that ordinary HTTP
+requests cannot access, using \path{scripts/browser_fetch_403_urls.py}. This
+step uses a browser when useful, stores rendered pages, and records challenge
+or blocked states explicitly. The process
+does not solve captchas or bypass access controls; protected pages are treated
+as evidence of access friction rather than forced downloads.
+
+Step 9 classifies reference pages for workflow obtainability with
+\path{scripts/classify_article_references_with_llm.py}. The language model is
+given URL metadata and locally cached reference-page excerpts, not the whole
+article as its primary evidence. The purpose is to decide whether a reference
+can help a reader obtain a KNIME workflow artifact, whether it only points to
+software, documentation, data, or a general page, or whether manual checking is
+needed.
+
+Step 10 classifies supplementary article-level flags with
+\path{scripts/classify_article_supplementary_flags_with_llm.py}. This LLM step
+uses the article HTML, metadata, and reference classifications to fill bounded
+boolean fields comparable to a manual audit checklist: KNIME use, KNIME version
+reporting, workflow screenshots or figures, textual workflow or node
+descriptions, input-data availability, code or scripts, and extension or
+plugin information. These flags provide article-level context around the
+reference-page workflow evidence.
+
+Step 11 builds a compact article audit report with
+\path{scripts/build_article_audit_report.py}. This deterministic join combines
+article metadata, the supplementary flag fields, and the workflow-relevant
+reference classifications into
+\path{data/processed/audit/article_audit_report.json}. The report is the
+central article-level audit artifact used by later workflow-download and table
+generation steps.
+
+Step 12 attempts automatic workflow artifact downloads from the workflow
+references in the audit report with
+\path{scripts/download_workflow_artifacts.py}. The script uses deterministic
+HTTP retrieval and, where appropriate, browser-assisted discovery to look for
+KNIME workflow archives, \texttt{workflow.knime} files, or archives containing
+workflow files. It writes attempt status, local directories, downloaded files,
+and discovered workflow files to the workflow-reference inventory.
+
+Step 13 is the manual workflow-download checkpoint. The auditor inspects
+\path{data/processed/audit/knime_downloadable_workflow_references.json} and
+tries to download missing workflow artifacts where access is allowed. The
+inventory JSON is not edited manually at this stage; the manual action is to
+place obtained files in the article-specific directory under
+\path{data/original/workflows/}. This preserves a clear boundary between human
+retrieval and scripted evidence updating.
+
+Step 14 updates the article report from retrieved workflow evidence with
+\path{scripts/update_article_report_from_workflow_inventory.py}. The script scans
+the workflow inventory and the actual files under \path{data/original/workflows/}
+and updates the article audit report when a downloadable KNIME workflow has
+been obtained. This makes the report reflect the local evidence rather than
+only the earlier URL classification.
+
+Step 15 generates the article-audit summary table source with
+\path{scripts/build_article_audit_tables.py}. The script reads the compact
+article audit report and writes the CSV files used for the publication-level
+summary table. The table data are therefore derived from the final structured
+report rather than maintained by hand.
+
+Step 16 generates the KNIME-use workflow-reporting table source with
+\path{scripts/build_knime_use_workflow_reporting_table.py}. This step combines
+the article-level audit report with the workflow-reference inventory, so that
+publication-level workflow-reporting signals and actual obtained workflow
+evidence are kept separate but can be summarized consistently.
+
+The resulting process is reproducible at the level of inputs, scripts,
+configuration files, cached pages, LLM prompts, and derived JSON reports, while
+still acknowledging that publication and workflow retrieval are not fully
+automatable. Manual actions are restricted to acquiring protected article PDFs
+and workflow artifacts where access is lawful; the subsequent interpretation,
+report updating, and table construction are scripted from recorded evidence.
 
 \subsection{Repository-Level Analysis}
 
@@ -635,41 +744,85 @@ final case-study claims require manual full-text and artifact assessment.
 
 \subsection{Top-Cited Article Assessment}
 
-The purpose of this part of the study is to ask whether KNIME-matching papers
-preserve the evidence needed to open and reproduce a KNIME-based workflow:
-full text, KNIME-use role, version information, workflow files, workflow
-figures or textual descriptions, data, code, and extension context. The
-statistics in this subsection use the 100-record structured audit registry.
+The top-cited article assessment uses the data products created by the
+semi-automatic audit application described in Section~3.2. The starting data
+are the citation-ranked OpenAlex seed table and the local article registry.
+The first new article-level evidence is the set of local PDFs under
+\path{data/original/articles/}, together with download-attempt logs under
+\path{data/processed/audit/logs/}. These files record which OpenAlex seed
+records have locally available article text. The next output is the GROBID
+conversion result: semantic HTML files under \path{data/processed/articles/}
+and TEI XML files under \path{data/processed/articles/grobid_tei/}. These
+outputs provide the article text, section structure, bibliography context, and
+machine-readable links used by later steps. The absence of a local PDF is
+retained as a data condition rather than silently removed from the denominator.
 
-The audit separates background and platform papers about KNIME itself from
-workflow-reporting KNIME use cases. Eight of the 100 records are about KNIME
-itself or a KNIME extension. These records are important for understanding the
-KNIME ecosystem, but they do not need the same artifact-preservation audit as
-domain studies that use KNIME. We therefore retain their descriptive metadata
-but leave their workflow-reporting flag maps empty.
-Table~\ref{tab:top-cited-assessment} uses all 100 records in the
-registry as the denominator. It first reports the classification of the
-records, then reports the workflow-reporting flags observed in the structured
-audit.
+The next evidence-building output is
+\path{data/processed/audit/article_url_collection.json}. For each article, it
+stores the rank, canonical article identifiers, PDF path, TEI path, HTML path,
+OpenAlex metadata, and the article-related URLs extracted from the GROBID HTML
+and TEI representations. At this stage the URLs are still unclassified; the
+file is a normalized article-to-reference map, not a workflow-availability
+judgment.
 
-Table~\ref{tab:top-cited-assessment} summarizes the statistics-ready flags in
-the structured audit file. Sixty-seven records use KNIME as a workflow, tool,
-interface, or implementation context. Fifty-nine records contain textual
-workflow or node descriptions, and thirty-seven show workflow screenshots or
-figures. Twenty-eight records report downloadable or linked KNIME workflow
-files, and the recorded retrieval attempts obtained workflow artifacts for
-twelve of these article records. Version and dependency reporting remain limited: eighteen
-records report a KNIME version, thirty report KNIME extension or plugin
-dependencies, and nineteen report an installation source. Data and code signals
-are more common than retrievable workflow-artifact evidence: fifty-five records
-report input-data availability, twenty-three provide a direct input-data
-resource, and seventeen provide code or scripts. In this study, we do not
-verify data availability itself. We only record whether the article text
-reports it. The
-same limitation applies to code or script availability.
-This pattern is important because a reader may find data or code without being
-able to recover the actual KNIME workflow, node settings, KNIME version, or
-extension context.
+The URL collection is expanded into cached reference-page evidence under
+\path{data/processed/audit/pages/}. These records add HTTP status, redirect
+chains, final URLs, response headers, stored body paths, and fetch errors where
+applicable. For pages that ordinary HTTP retrieval cannot access, the browser
+fetch step adds rendered-page records under
+\path{data/processed/audit/browser_pages/}. Those outputs distinguish ordinary
+retrieval failures from browser-visible pages and challenge pages. Their role
+is to make the later workflow-availability classification depend on stored
+article references and stored web evidence rather than on an unrecorded live
+browsing session.
+
+Two LLM-derived data products are then used in this subsection. The first is
+\path{data/processed/audit/article_reference_llm_classifications.json}. For
+each cached article reference, it records a workflow-obtainability
+classification, the workflow form when identifiable, whether manual checking is
+required, and the page evidence used for the classification. The second is
+\path{data/processed/audit/article_supplementary_llm_flags.json}. For each
+article, it records supplementary boolean flags such as KNIME use, version
+reporting, workflow figures, textual workflow descriptions, data availability,
+code availability, and extension information, together with short evidence
+snippets where available. These LLM steps use temperature 0 and bounded prompt
+schemas, but the output is still treated as model-dependent derived evidence
+rather than as raw observation.
+
+The central data product for the tables is
+\path{data/processed/audit/article_audit_report.json}. It merges article
+metadata, supplementary flags, and workflow-relevant reference classifications
+into one compact record per article. Each record contains the article PDF path,
+DOI, title, publication year, statistics-ready flag fields, and linked
+resources restricted to confirmed, possible, or manually checked workflow
+references. The report also stores summary counts used to check the generated
+tables.
+
+After workflow retrieval attempts, the workflow inventory in
+\path{data/processed/audit/knime_downloadable_workflow_references.json} adds
+artifact-level retrieval evidence. It records, for each workflow-relevant
+article reference, the source URL, local workflow directory, downloaded files,
+workflow files found, download status, and whether the successful retrieval was
+automatic or manual. The article report is then updated from this inventory so
+that article-level workflow-availability flags reflect workflow artifacts that
+were actually obtained. Finally, the table-source CSV files under
+\path{article/tables/} are generated from the compact report and workflow
+inventory rather than edited manually.
+
+Table~\ref{tab:top-cited-assessment} summarizes the statistics-ready fields in
+the compact article audit report. Seventy-five records use KNIME as a
+workflow, tool, interface, or implementation context. Sixty-eight records
+contain textual workflow or node descriptions, and forty-nine show workflow
+screenshots or figures. Twenty-three records report downloadable or linked
+KNIME workflow files, and workflow artifacts were obtained for eighteen article
+records after the workflow-inventory step. Version and dependency reporting are
+less complete: eighteen records report a KNIME version, twenty-three report
+KNIME extension or plugin dependencies, and four report an installation source.
+Data and code signals are recorded separately from workflow-artifact evidence:
+sixty-six records report input-data availability, twenty provide a direct
+input-data resource, and twenty provide code or scripts. We do not verify the
+availability of reported data or code in this table; we record whether the
+article and linked evidence report those resources.
 
 \begingroup
 \scriptsize
@@ -693,22 +846,19 @@ Audit category or flag & Count & Share of 100 & Interpretation \\
 \bottomrule
 \endfoot
 Audit records & 100 & 100.0\% & Most-cited KNIME-matching article records selected from OpenAlex \\
-Assessed from full text & 82 & 82.0\% & Article text available for manual assessment \\
-Not assessed from full text & 18 & 18.0\% & Full text unavailable at assessment time \\
-About KNIME & 8 & 8.0\% & Background/platform or extension papers, not deeper workflow-reporting cases \\
-Not a KNIME use case & 7 & 7.0\% & KNIME appears in the record but is not a KNIME-based study \\
+Records with local PDF & 79 & 79.0\% & Source PDF recorded in the compact audit report \\
 \midrule
-Uses KNIME & 67 & 67.0\% & KNIME used as a workflow, tool, interface, or implementation context \\
-Workflow or nodes described in text & 59 & 59.0\% & Named workflow steps, nodes, modules, or components recorded \\
-Workflow screenshots or figures & 37 & 37.0\% & Workflow shown visually in article or supplement \\
+Uses KNIME & 75 & 75.0\% & KNIME used as a workflow, tool, interface, or implementation context \\
+Workflow or nodes described in text & 68 & 68.0\% & Named workflow steps, nodes, modules, or components recorded \\
+Workflow screenshots or figures & 49 & 49.0\% & Workflow shown visually in article or supplement \\
 Reports KNIME version & 18 & 18.0\% & Specific KNIME version value found \\
-Reports downloadable workflows & 28 & 28.0\% & Executable workflow files provided or linked \\
-Reports extension/plugin dependencies & 30 & 30.0\% & KNIME extension or node-library dependency reported \\
-Reports extension installation source & 19 & 19.0\% & Update site, project URL, or installation source reported \\
+Reports downloadable workflows & 23 & 23.0\% & Executable workflow files provided or linked \\
+Reports extension/plugin dependencies & 23 & 23.0\% & KNIME extension or node-library dependency reported \\
+Reports extension installation source & 4 & 4.0\% & Update site, project URL, or installation source reported \\
 \midrule
-Provides code or scripts & 17 & 17.0\% & Code repository, scripts, or software code reported \\
-Reports input-data availability & 55 & 55.0\% & Data availability stated, with or without direct URL \\
-Direct input-data resource & 23 & 23.0\% & Direct data URL or resource pointer recorded \\
+Provides code or scripts & 20 & 20.0\% & Code repository, scripts, or software code reported \\
+Reports input-data availability & 66 & 66.0\% & Data availability stated, with or without direct URL \\
+Direct input-data resource & 20 & 20.0\% & Direct data URL or resource pointer recorded \\
 \end{longtable}
 \endgroup
 
@@ -719,7 +869,7 @@ Direct input-data resource & 23 & 23.0\% & Direct data URL or resource pointer r
   >{\raggedright\arraybackslash}p{0.62\textwidth}|
   r|
   r|}
-\caption{Workflow-reporting and retrieval signals among the 67 assessed KNIME-use cases.}
+\caption{Workflow-reporting and retrieval signals among the 75 assessed KNIME-use cases.}
 \label{tab:knime-use-assessment}\\
 \toprule
 Audit flag & Count & Share of KNIME-use cases \\
@@ -731,42 +881,40 @@ Audit flag & Count & Share of KNIME-use cases \\
 \endhead
 \bottomrule
 \endfoot
-Uses KNIME & 67 & 100.0\% \\
-Workflow or nodes described in text & 59 & 88.1\% \\
-Workflow screenshots or figures & 37 & 55.2\% \\
-Reports KNIME version & 18 & 26.9\% \\
-Reports extension/plugin dependencies & 30 & 44.8\% \\
-Reports extension installation source & 19 & 28.4\% \\
-Reports downloadable workflows & 28 & 41.8\% \\
-Articles with successfully downloaded workflows & 12 & 17.9\% \\
+Uses KNIME & 75 & 100.0\% \\
+Workflow or nodes described in text & 68 & 90.7\% \\
+Workflow screenshots or figures & 49 & 65.3\% \\
+Reports KNIME version & 18 & 24.0\% \\
+Reports extension/plugin dependencies & 23 & 30.7\% \\
+Reports extension installation source & 4 & 5.3\% \\
+Reports downloadable workflows & 23 & 30.7\% \\
+Articles with successfully downloaded workflows & 18 & 24.0\% \\
 \end{longtable}
 \endgroup
 
-Among the 28 article records that report downloadable or linked KNIME workflow
-files, Table~\ref{tab:workflow-retrieval-results} summarizes the 19 records
-for which we recorded an artifact-retrieval outcome. In this table, the
+For workflow retrieval, the authoritative data source is the workflow inventory
+derived from the compact audit report and the local workflow directories.
+Table~\ref{tab:workflow-retrieval-results} summarizes the recorded
+artifact-retrieval outcomes used for manuscript inspection. In this table, the
 \emph{Success} column marks whether a KNIME workflow artifact was actually
-obtained: \textbf{X} means that a workflow file, archive, or workflow
-directory was retrieved, while \textbf{-} means that no KNIME workflow artifact
-was obtained or confirmed. Workflow artifacts or workflow directories were
-obtained for 12 article records. The remaining recorded retrieval attempts
-failed because links were obsolete, blocked, unresolved, or led to repositories
-or supplements that did not contain a confirmed KNIME workflow file.
+obtained: \textbf{X} means that a workflow file, archive, or workflow directory
+was retrieved, while \textbf{-} means that no KNIME workflow artifact was
+obtained or confirmed. Failed or incomplete retrievals are recorded separately
+from article-level claims that a workflow was reported or linked.
 
 Table~\ref{tab:workflow-opening-results} then reports the manual current-KNIME
-opening and execution checks for those 12 downloaded article records. Here, the
+opening and execution checks for the downloaded article records. Here, the
 \emph{Success} column has a stricter meaning: \textbf{X} means that at least
 one workflow for the article opened and executed successfully in the tested
 environment, while \textbf{-} means that the workflow opened but did not have a
-confirmed successful end-to-end run, or failed during execution. Workflows from
-all 12 obtained article records opened in the local KNIME environment (KNIME
-5.8.3 LTS). Four article records had at least one workflow execute
-successfully: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration,
-and high-content organelle trafficking
+confirmed successful end-to-end run, or failed during execution. Four article
+records had at least one workflow execute successfully in the recorded manual
+checks: PAINS, Webinar Pricing Analytics, ImageJ ecosystem integration, and
+high-content organelle trafficking
 \cite{Saubern2011PAINS,VillarroelOrdenes2021KNIMEHub,Dietz2020ImageJKNIME,Pal2018OrganelleKNIME}.
-The remaining opened article records did not execute successfully in this
-manual check. This does not show that those workflows are unreproducible. They
-may require additional configuration, dependencies, or repair before a
+Other opened workflows did not have a confirmed successful end-to-end run in
+this manual check. This does not show that those workflows are unreproducible:
+they may require additional configuration, dependencies, or repair before a
 successful run. Across the opened workflows, the screenshots also show
 deprecated or legacy nodes, but we treat this as qualitative compatibility
 evidence here rather than counting visible deprecated nodes. The screenshots
@@ -1132,9 +1280,8 @@ benchmark. We do not estimate the failure rate of all published KNIME
 workflows. Instead, we show a reproducibility risk pattern: KNIME is used in a
 visible scientific literature, influential papers often do not publish
 executable workflow artifacts, successful current-version execution was
-confirmed for four of twelve downloaded article records in the manual
-experiment, and the KNIME node ecosystem has accumulated a substantial
-deprecated-node surface.
+confirmed for four article records in the recorded manual checks, and the
+KNIME node ecosystem has accumulated a substantial deprecated-node surface.
 
 The results suggest three practical implications. First, a published workflow
 image is not an executable artifact. Several highly cited papers provide
