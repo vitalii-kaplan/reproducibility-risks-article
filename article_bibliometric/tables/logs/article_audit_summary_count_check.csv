@@ -1,0 +1,11 @@
+flag,generated_true_count,json_summary_count,match
+uses_knime,75,75,True
+describes_workflow_or_nodes_in_text,68,68,True
+provides_workflow_screenshots_or_figures,49,49,True
+reports_knime_version,18,18,True
+provides_downloadable_knime_workflow_files,22,23,False
+reports_extension_or_plugin_dependencies,23,23,True
+reports_extension_installation_source,4,4,True
+provides_code_or_scripts,20,20,True
+reports_input_data_availability,66,66,True
+provides_input_data_direct_url,20,20,True

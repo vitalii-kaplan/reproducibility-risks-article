@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Build the KNIME-use workflow-reporting table from Table 3 and audit data.
+"""Build the KNIME-use workflow-reporting table from the audit summary and data.
 
-Table 4 reuses the article-level counts reported in Table 3, but changes the
-denominator to the number of KNIME-use cases. The audit JSON is still loaded so
-the script can verify that the Table 3 counts agree with the current
-``flag_audit_fields`` values before writing the derived CSV. Workflow-download
-outcomes are taken from the workflow inventory because they are retrieval
-results, not article-reporting flags.
+The source summary contains counts over the complete 100-record audit. This
+script verifies those counts, then recalculates every reporting flag within the
+subset whose ``uses_knime`` flag is true. Workflow-download outcomes are taken
+from the workflow inventory because they are retrieval results, not
+article-reporting flags.
 """
 
 from __future__ import annotations
@@ -112,17 +111,28 @@ def build_rows(
         raise ValueError("Table 3 CSV does not contain a 'Uses KNIME' row.")
 
     mismatches: list[str] = []
+    knime_use_articles = [
+        article for article in articles if flag_fields(article).get("uses_knime") is True
+    ]
+    if denominator != len(knime_use_articles):
+        mismatches.append(
+            f"Uses KNIME: source summary count {denominator} differs from "
+            f"JSON subset count {len(knime_use_articles)}"
+        )
+
     rows: list[TableRow] = []
     for label, flag_name in TABLE4_LABELS:
         if label not in table3_counts:
             raise ValueError(f"Table 3 CSV does not contain required row {label!r}.")
         table3_count = table3_counts[label]
-        json_count = flag_count(articles, flag_name)
-        if table3_count != json_count:
+        all_records_count = flag_count(articles, flag_name)
+        if table3_count != all_records_count:
             mismatches.append(
-                f"{label}: Table 3 count {table3_count} differs from JSON count {json_count}"
+                f"{label}: source summary count {table3_count} differs from "
+                f"all-record JSON count {all_records_count}"
             )
-        rows.append(TableRow(label, table3_count, pct(table3_count, denominator)))
+        subset_count = flag_count(knime_use_articles, flag_name)
+        rows.append(TableRow(label, subset_count, pct(subset_count, denominator)))
 
         if label == "Reports downloadable workflows":
             downloaded = workflow_download_count(workflow_references)
@@ -245,13 +255,13 @@ def main() -> int:
     print(f"Wrote {args.comparison}")
     mismatches = json_mismatches + latex_mismatches
     if mismatches:
-        print(f"Found {len(mismatches)} Table 4 mismatches.")
+        print(f"Found {len(mismatches)} KNIME-use table mismatches.")
         for mismatch in mismatches:
             print(f"- {mismatch}")
         return 1 if args.fail_on_mismatch else 0
 
     print(
-        "Generated Table 4 values match Table 3, the audit JSON, "
+        "Generated KNIME-use table values match the source summary, audit JSON, "
         "the workflow inventory, and the current LaTeX table."
     )
     return 0

@@ -1,14 +1,13 @@
 # Fdb version 4
-["bibtex article"] 1784033968.84494 "article.aux" "article.bbl" "article" 1784033969.93673 0
-  "./references.bib" 1783877799.58515 12076 ea9c0795151eac9c769e4722f5d0c0af ""
-  "./splncs04.bst" 1782898237.30583 32146 aadf770ded437d161532035219ea6f45 ""
-  "article.aux" 1784033969.62109 6614 96930350c6e9e62e87a75d96ada17ef1 "pdflatex"
+["bibtex article"] 1784044698.99102 "article.aux" "article.bbl" "article" 1784045242.87437 0
+  "./references.bib" 1783969936.53797 10305 701b7dc6f70d5810eab3dbb57d759070 ""
+  "./splncs04.bst" 1783969706.42155 32146 aadf770ded437d161532035219ea6f45 ""
+  "article.aux" 1784045242.58896 4953 28bc14cee45158de0a6475d9222e8086 "pdflatex"
   (generated)
   "article.bbl"
   "article.blg"
   (rewritten before read)
-["pdflatex"] 1784033968.94076 "article.tex" "article.pdf" "article" 1784033969.93691 0
-  "../data/processed/openalex/openalex_knime_articles_by_year.csv" 1783539076.14517 294 c709f8171e909c2832b2b4469444f964 ""
+["pdflatex"] 1784045241.91729 "article.tex" "article.pdf" "article" 1784045242.87451 0
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -181,10 +180,11 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1739209689 5466570 e8651e7fa7bb054fee9a07d3f37faf28 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739209844 3352639 2aa689c226d5667ed0ad838dc122ce61 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "article.aux" 1784033969.62109 6614 96930350c6e9e62e87a75d96ada17ef1 "pdflatex"
-  "article.bbl" 1784033968.93977 6380 fbd29bdce15ea5c27c250a8b7c881096 "bibtex article"
-  "article.tex" 1784033941.94438 66283 e32d3131144c0fc5fbe17c5fa9b26ff8 ""
-  "llncs.cls" 1782898237.30583 43405 543b73320c367b0229b3cdfcddaedc46 ""
+  "article.aux" 1784045242.58896 4953 28bc14cee45158de0a6475d9222e8086 "pdflatex"
+  "article.bbl" 1784044699.07694 5052 fa0a94c673e793d599063cebd629b76e "bibtex article"
+  "article.tex" 1784045231.06611 52508 36ed4af39b8011ecb41747ef6689a154 ""
+  "llncs.cls" 1783969706.41852 43405 543b73320c367b0229b3cdfcddaedc46 ""
+  "tables/openalex_knime_articles_by_year.csv" 1783969968.02148 294 c709f8171e909c2832b2b4469444f964 ""
   (generated)
   "article.aux"
   "article.log"

@@ -9,12 +9,10 @@
 \usepackage{pgfplotstable}
 \usepackage{url}
 
-\newcommand{\twolinecol}[2]{\texttt{#1}\newline\texttt{#2}}
 \pgfplotsset{compat=1.18}
 
-\title{KNIME Workflows in Scientific Studies:
-Publication Practices and Reproducibility Risks}
-\titlerunning{KNIME Workflow Publication Practices}
+\title{KNIME Workflows in Scientific Studies: A Semi-Automated Reproducibility Audit}
+\titlerunning{KNIME Workflows in Scientific Studies}
 
 \author{Vitalii Kaplan\orcidID{0009-0009-8181-2863}}
 \authorrunning{V. Kaplan}
@@ -26,33 +24,29 @@ Publication Practices and Reproducibility Risks}
 \begin{abstract}
 In this paper, we study how visual workflows are reported in scientific
 publications and how incomplete workflow preservation can make older studies
-harder to reproduce as workflow platforms evolve. We use KNIME as a case
-study, combining OpenAlex bibliometrics, a 100-record top-cited article audit
-registry, workflow retrieval and current-KNIME opening/execution checks, and
-repository-level mining of KNIME node metadata. OpenAlex shows that KNIME is
-visible across a broad scientific literature, while the article assessment
-shows that influential studies often report KNIME through figures,
-descriptions, or tool mentions rather than downloadable workflow artifacts. In
-the 100-record article audit registry, twenty-two records report
-downloadable or linked KNIME workflow files. Recorded retrieval attempts
-obtained workflow artifacts or workflow-directory evidence for eighteen article records. In the recorded
-manual execution checks, five article records had at least one workflow execute
-successfully.
-Repository mining gives the source-evolution context: deprecated ordinary
-nodes increased from 14.83\% of registered ordinary nodes in the 2018 source
-baseline to 33.33\% in the June 28, 2026 local source snapshot. Together,
-these results show that weak workflow preservation and evolving node metadata
-can make long-term reproduction of KNIME-based studies harder over time.
+harder to reproduce. Using KNIME as a case study, we develop and apply a
+semi-automated evidence pipeline that combines OpenAlex bibliometrics, a
+100-record top-cited article audit registry, workflow retrieval, and opening
+and execution checks in a current KNIME environment. The OpenAlex search shows
+that KNIME is visible across a broad scientific literature, while the article
+assessment shows that workflow figures and textual descriptions are more
+common than downloadable workflow artifacts. Of the 100 audited records, 22
+report downloadable or linked KNIME workflows, and recorded retrieval attempts
+obtained workflow artifacts or workflow directories for 18. In the
+recorded manual checks, five article records had at least one workflow execute
+successfully. These results show that incomplete artifact and environment
+preservation limits the long-term reproducibility of KNIME-based studies.
 
-\keywords{Workflow reproducibility \and KNIME \and Deprecated nodes \and
-Software evolution}
+\keywords{Workflow reproducibility \and KNIME \and Bibliometrics \and
+Research artifacts}
 \end{abstract}
 
 \section{Introduction}
 
 KNIME is a widely used open-source platform for constructing scientific
 data-analysis workflows, with more than a decade of use across published
-studies. Its visual workflows represent analyses as connected nodes with
+studies \cite{Berthold2009KNIME}. Its visual workflows represent analyses as
+connected nodes with
 stored settings, data ports, and extension dependencies, which can make
 computational work easier to inspect, reuse, and repeat. This representation
 provides more operational detail than a narrative method description, but it
@@ -75,37 +69,34 @@ as executable artifacts or only reported through descriptions and figures.
 Our top-cited article collection covers the 100 most-cited KNIME-matching
 records, with not-assessed placeholders retained where local full text is
 unavailable. The structured audit reported in
-Table~\ref{tab:top-cited-assessment} shows that publication practice is the
-weak link. Twenty-two records report downloadable or linked KNIME workflow
-files, and workflow artifacts or workflow-directory evidence were obtained for eighteen article records in
-the recorded retrieval attempts. Other links were stale, blocked, incomplete,
-or did not lead to a confirmed KNIME workflow artifact. In the recorded manual
-execution checks, five article records had at least one workflow execute
-successfully. For other influential studies, the strongest workflow evidence
-is usually weaker than an executable artifact. Several records present
-screenshots or figures of connected KNIME nodes, or describe workflow steps in
-text, without preserving all executable workflow context.
+Table~\ref{tab:top-cited-assessment} shows an uneven publication pattern.
+Twenty-two records report downloadable or linked KNIME workflow files, and
+workflow artifacts or workflow directories were obtained for 18 article
+records in the recorded retrieval attempts. Other links were stale, blocked,
+incomplete, or did not lead to a confirmed KNIME workflow artifact. In the
+recorded manual execution checks, five article records had at least one
+workflow execute successfully. By comparison, 49 records present workflow
+screenshots or figures, and 68 describe workflow steps or nodes in text. These
+forms of presentation do not preserve the complete executable workflow
+context.
 
-These reporting practices are risky because KNIME continues to evolve. A
-workflow that was executable when a paper was written may later depend on nodes
-that are deprecated, hidden, migrated, removed, or supplied by third-party
-extensions that are no longer easy to install. This paper therefore connects
-publication evidence with platform-evolution evidence. We combine OpenAlex
-bibliometrics, top-cited article retrieval and assessment, workflow-artifact
-retrieval and current-version execution attempts, and repository-level mining
-of KNIME node metadata. The goal is to show why publication practice and
-source-code evolution must be considered together when evaluating long-term
-reproducibility of KNIME-based studies.
+These reporting practices create a reproducibility risk because later readers
+may lack the executable artifact, input data, recorded KNIME version, or
+extension context needed to reconstruct and run the analysis. We therefore
+combine OpenAlex bibliometrics, top-cited article retrieval and assessment,
+workflow-artifact retrieval, and current-version opening and execution
+attempts. The goal is to measure how KNIME workflows are reported and
+preserved, and to distinguish publication-level claims of workflow availability
+from artifacts that were actually obtained and tested.
 
 The rest of the paper is organized as follows. Section~2 reviews related work
 on computational reproducibility, open-source workflow systems, environment
-preservation, and platform evolution. Section~3 presents the methods before
-the data because the study depends on how the bibliometric records, article
-assessments, and repository snapshots were collected. Section~4 describes the
-resulting datasets. Section~5 reports the bibliometric, article-audit,
-workflow-retrieval, manual compatibility-test, and repository-mining results.
-Section~6 discusses
-the implications, limitations, and future extensions of the study.
+preservation, and research artifacts. Section~3 presents the bibliometric
+method and semi-automated evidence pipeline. Section~4 describes the resulting
+datasets. Section~5 reports the bibliometric, article-audit,
+workflow-retrieval, and manual opening and execution results. Section~6
+discusses the implications, limitations, and future extensions, and Section~7
+concludes the paper.
 
 \section{Literature Review}
 
@@ -138,27 +129,18 @@ executable artifacts can remain sensitive to operating systems, dependency
 versions, timing, external services, and other environmental factors
 \cite{Rasheed2023FlakinessReview}.
 
-Even when an executable workflow is published, long-term reproduction can be
-affected by the evolution of the workflow platform itself. KNIME's node extension
-schema states that a deprecated node is no longer shown in the node repository,
-but is still loaded in existing workflows
-\cite{KNIMEWorkbenchNodeSchema2026}. This design supports backward
-compatibility, while also marking a change in the ordinary authoring surface.
-KNIME workflows also persist node factory class names, and the platform
-provides extension points for mapping old factory classes to newer
-implementations and for registering workflow-node migration rules
-\cite{KNIMECoreClassMapperSchema2026,KNIMEMigrationRuleSchema2026}. These
-mechanisms show that continued workflow loading may depend on compatibility
-metadata, extension availability, and migration support. We therefore treat
-KNIME node deprecation as a measurable risk marker for long-term workflow
-reproducibility.
+For visual workflow studies, preservation must include more than an image of
+the workflow graph. Node settings, extension dependencies, input paths, and
+version context are part of the executable method. The distinction between a
+reported workflow, a downloadable artifact, an artifact that opens, and one
+that executes successfully is therefore central to the present audit.
 
 \section{Methods}
 
 All scripts and data used for this study, except the other articles assessed
-as study objects, are available in the public replication repository
+as study objects, are available in the public GitHub repository
 \cite{KaplanReproducibilityRisksArticle2026}. Relative paths reported in this
-paper should be interpreted as paths within that GitHub repository.
+paper should be interpreted as paths within that repository.
 
 \subsection{Bibliometric Evidence}
 
@@ -213,13 +195,14 @@ The current run collected 963 records across 5 OpenAlex response pages.
 Derived bibliometric tables are generated from the JSONL file by
 \path{scripts/build_openalex_knime_bibliometrics.py}.
 
-\subsection{Top-Cited Article Assessment}
+\subsection{Semi-Automated Evidence Pipeline}
 
-For the article-level audit we developed an open-source application composed
-of scripts, JSON configuration files, and prompt configuration files. The
-process is specified in \path{scripts/audit_script_chain.json}, which acts as
-the workflow index for this part of the study. Each step consumes the recorded
-outputs of earlier steps and writes an explicit intermediate or final artifact.
+For the article-level audit, we developed an open-source, semi-automated
+evidence pipeline composed of scripts and JSON configuration files. The
+process is specified in \path{scripts/audit_script_chain.json}, which serves as
+the workflow index for this part of the study. Each step consumes recorded
+outputs from earlier steps and writes an explicit intermediate or final
+artifact.
 The current chain contains fifteen scripted steps and one manual checkpoint.
 Thirteen scripted steps are rule-based. Two scripted steps use an LLM.
 We use the LLM only where rule-based extraction is insufficient. The first LLM
@@ -229,13 +212,14 @@ processed text of the articles. The LLM calls use temperature 0 to reduce
 variation. Repeated execution may still depend on the model and service version
 used.
 
-The pipeline is mostly automatic, but it is deliberately semi-automatic at two boundary
-points: obtaining article PDFs at the beginning of the process and obtaining
-workflow artifacts near the end, before formal result preparation.
+The pipeline is largely automated, but it deliberately permits human
+intervention at two boundary points: obtaining article PDFs at the beginning
+of the process and obtaining workflow artifacts near the end, before formal
+result preparation.
 Both tasks may involve institutional access, protected publisher pages,
 supplement portals, captchas, and changing web interfaces. The process can
-therefore be improved by human assistance at the beginning and end, while the
-middle steps are executed automatically from the recorded intermediate files.
+therefore benefit from human assistance at the beginning and end, while the
+intermediate steps execute automatically from recorded evidence.
 
 The implementation was run with Python 3.14.5 and uses a separate
 \path{.venv-playwright} virtual environment for browser-dependent steps.
@@ -267,64 +251,68 @@ summary counts, and per-article classifications. This makes the exact prompt
 and local evidence auditable, while recognizing that future reruns may differ
 if the hosted model implementation changes.
 
-Step 1 collects KNIME-matching article records from the OpenAlex works API with
+The following paragraphs describe each step in the ordered script chain. For
+each step, we identify its purpose, implementation script, principal inputs or
+outputs, and any point at which manual intervention may be required.
+
+\textbf{Step 1} collects KNIME-matching article records from the OpenAlex works API with
 \path{scripts/collect_openalex_knime_works.py}. The query searches for KNIME in
 article titles and abstracts and stores the original API response pages, a
 complete JSONL stream, a compact CSV view, and query metadata. This step
 preserves the bibliographic source records before any article-level audit
 decisions are made.
 
-Step 2 builds the bibliometric summaries and the citation-ranked seed table
+\textbf{Step 2} builds the bibliometric summaries and the citation-ranked seed table
 with \path{scripts/build_openalex_knime_bibliometrics.py}. The script reads the
 OpenAlex JSONL export and derives processed CSV and JSON files used to select
 the top-cited audit candidates. The citation-ranked seed table is then used as
 the article list for downstream download, parsing, URL collection, and audit
 report construction.
 
-Step 3 attempts to download article PDFs by citation-rank range with
+\textbf{Step 3} attempts to download article PDFs by citation-rank range with
 \path{scripts/download_openalex_rank_range_articles.py}. This step is
-semi-automatic because OpenAlex links and open-access URLs do not always expose
+semi-automated because OpenAlex links and open-access URLs do not always expose
 the full paper, and some papers require lawful institutional access. The script
 records download attempts and stores retrieved PDFs under
 \path{data/original/articles/}; failed or protected records can be completed by
 manual download without changing the later audit logic.
 
-Step 4 converts the local PDFs into semantic article HTML with
+\textbf{Step 4} converts the local PDFs into semantic article HTML with
 \path{scripts/extract_article_grobid_html.py}. The current parser uses a local
 GROBID service to produce TEI XML and then renders an HTML reading copy with
 article metadata, abstract, body sections, paragraphs, and bibliography
 structure. This replaced earlier plain-text extraction because the downstream
 steps need stable article identity, paragraphs, and reference context.
 
-Step 5 collects article metadata and article-related URLs with
+\textbf{Step 5} collects article metadata and article-related URLs with
 \path{scripts/collect_article_urls.py}. The script joins the OpenAlex seed
 table, the canonical PDF registry, the GROBID TEI files, and the generated HTML
 files. At this stage it does not classify URLs or infer workflow availability;
 it only records metadata and normalized URLs that can be traced to the article
 content.
 
-Step 6 fetches the referenced URL pages with
+\textbf{Step 6} fetches the referenced URL pages with
 \path{scripts/fetch_article_url_pages.py}. For each unique URL, the script
 records HTTP status, redirect chain, final URL, response headers, and a stored
 copy of the response body where available. This creates local evidence for
 later classification and avoids asking the language model to rely on live web
 state.
 
-Step 7 attaches the URL-fetch metadata back to the article records with
+\textbf{Step 7} attaches the URL-fetch metadata back to the article records with
 \path{scripts/attach_url_fetch_metadata.py}. This rule-based step augments
 each URL entry with fetch status, HTTP code, final URL, redirect count, and the
 path to any stored page. It is metadata attachment only; it does not interpret
 whether a reference is a workflow, software page, dataset, article landing
 page, or documentation.
 
-Step 8 performs a second-stage fetch for reference pages that ordinary HTTP
+\textbf{Step 8} performs a second-stage fetch for reference pages that ordinary HTTP
 requests cannot access, using \path{scripts/browser_fetch_403_urls.py}. This
 step uses a browser when useful, stores rendered pages, and records challenge
 or blocked states explicitly. The process
 does not solve captchas or bypass access controls; protected pages are treated
 as evidence of access friction rather than forced downloads.
 
-Step 9 classifies reference pages for workflow obtainability with
+\textbf{Step 9} classifies reference pages for workflow obtainability with
 \path{scripts/classify_article_references_with_llm.py}. The language model is
 given URL metadata and locally cached reference-page excerpts, not the whole
 article as its primary evidence. The purpose is to decide whether a reference
@@ -332,7 +320,7 @@ can help a reader obtain a KNIME workflow artifact, whether it only points to
 software, documentation, data, or a general page, or whether manual checking is
 needed.
 
-Step 10 classifies supplementary article-level flags with
+\textbf{Step 10} classifies supplementary article-level flags with
 \path{scripts/classify_article_supplementary_flags_with_llm.py}. This LLM step
 uses the article HTML, metadata, and reference classifications to fill bounded
 boolean fields comparable to a manual audit checklist: KNIME use, KNIME version
@@ -341,7 +329,7 @@ descriptions, input-data availability, code or scripts, and extension or
 plugin information. These flags provide article-level context around the
 reference-page workflow evidence.
 
-Step 11 builds a compact article audit report with
+\textbf{Step 11} builds a compact article audit report with
 \path{scripts/build_article_audit_report.py}. This rule-based join combines
 article metadata, the supplementary flag fields, and the workflow-relevant
 reference classifications into
@@ -349,7 +337,7 @@ reference classifications into
 central article-level audit artifact used by later workflow-download and table
 generation steps.
 
-Step 12 attempts automatic workflow artifact downloads from the workflow
+\textbf{Step 12} attempts automated workflow-artifact downloads from the workflow
 references in the audit report with
 \path{scripts/download_workflow_artifacts.py}. The script uses rule-based
 HTTP retrieval and, where appropriate, browser-assisted discovery to look for
@@ -357,7 +345,7 @@ KNIME workflow archives, \texttt{workflow.knime} files, or archives containing
 workflow files. It writes attempt status, local directories, downloaded files,
 and discovered workflow files to the workflow-reference inventory.
 
-Step 13 is the manual workflow-download checkpoint. The auditor inspects
+\textbf{Step 13} is the manual workflow-download checkpoint. The auditor inspects
 \path{data/processed/audit/knime_downloadable_workflow_references.json} and
 tries to download missing workflow artifacts where access is allowed. The
 inventory JSON is not edited manually at this stage; the manual action is to
@@ -365,136 +353,37 @@ place obtained files in the article-specific directory under
 \path{data/original/workflows/}. This preserves a clear boundary between human
 retrieval and scripted evidence updating.
 
-Step 14 updates the article report from retrieved workflow evidence with
+\textbf{Step 14} updates the article report from retrieved workflow evidence with
 \path{scripts/update_article_report_from_workflow_inventory.py}. The script scans
 the workflow inventory and the actual files under \path{data/original/workflows/}
 and updates the article audit report when a downloadable KNIME workflow has
 been obtained. This makes the report reflect the local evidence rather than
 only the earlier URL classification.
 
-Step 15 generates the article-audit summary table source with
+\textbf{Step 15} generates the article-audit summary table source with
 \path{scripts/build_article_audit_tables.py}. The script reads the compact
-article audit report and writes the CSV files used for the publication-level
-summary table. The table data are therefore derived from the final structured
-report rather than maintained by hand.
+article audit report and writes the CSV source for the publication-level flag
+summary. The resulting data are therefore
+derived from the final structured report rather than maintained by hand.
 
-Step 16 generates the KNIME-use workflow-reporting table source with
+\textbf{Step 16} generates the KNIME-use workflow-reporting table source with
 \path{scripts/build_knime_use_workflow_reporting_table.py}. This step combines
 the article-level audit report with the workflow-reference inventory, so that
 publication-level workflow-reporting signals and actual obtained workflow
 evidence are kept separate but can be summarized consistently.
 
-The resulting process is reproducible at the level of inputs, scripts,
+The resulting evidence pipeline is reproducible at the level of inputs, scripts,
 configuration files, cached pages, LLM prompts, and derived JSON reports, while
 still acknowledging that publication and workflow retrieval are not fully
 automatable. Manual actions are restricted to acquiring protected article PDFs
 and workflow artifacts where access is lawful; the subsequent interpretation,
 report updating, and table construction are scripted from recorded evidence.
 
-\subsection{Repository-Level Analysis}
-
-We study KNIME node deprecation through repository mining of the public
-\texttt{knime-oss} GitHub organization. KNIME Analytics Platform is a
-workflow-based data-analysis system in which analyses are assembled from
-connected processing nodes
-\cite{Berthold2009KNIME,KNIMEUserGuide2026}. KNIME extensions are distributed
-through update sites and extend the platform with additional functionality
-\cite{KNIMEExtensions2026}. The KNIME source repositories were cloned locally,
-and each source snapshot was reconstructed by checking out every non-hidden
-top-level Git repository to the latest commit at or before a selected target
-date. This checkout step is implemented by
-\path{scripts/checkout_knime_oss_by_date.sh}.
-The script records a manifest for each snapshot, including repository name,
-checkout status, target date, selected commit, selected commit date, and
-previous head.
-
-The current repository-mining corpus contains 91 immediate Git repositories in
-the local clone. The date-based mining process includes 90 non-hidden immediate
-repositories. The hidden \texttt{.github} repository is excluded because it
-contains organization metadata rather than KNIME node implementation code. The
-exact repository list is stored in
-\path{data/processed/knime_snapshots/}
-\path{knime_oss_repositories.csv}.
-
-For each date-based source snapshot, we parse KNIME metadata files rather than
-grepping source text. The main deprecation marker is
-\texttt{deprecated="true"} on ordinary node registrations in
-\texttt{plugin.xml} under the Eclipse extension point
-\begin{quote}
-\texttt{org.knime.workbench.repository.nodes}
-\end{quote}
-The KNIME schema states that deprecated nodes are no longer shown in the node
-repository but are still loaded in existing workflows
-\cite{KNIMEWorkbenchNodeSchema2026}. Dynamic node sets use a separate
-extension point:
-\begin{quote}
-\texttt{org.knime.workbench.repository.nodesets}
-\end{quote}
-We count these registrations separately. Node-description XML files ending in
-\texttt{NodeFactory.xml} and rooted at \texttt{knimeNode} are parsed as a
-secondary deprecation source.
-Hidden nodes, marked with \texttt{hidden="true"}, are counted separately from
-deprecated nodes.
-
-The extraction also records compatibility-related metadata from two extension
-points:
-\begin{quote}
-\texttt{org.knime.core.NodeFactoryClassMapper}
-\end{quote}
-\begin{quote}
-\texttt{org.knime.workflow.migration.NodeMigrationRule}
-\end{quote}
-Together, these extension points document mechanisms for mapping persisted
-node-factory class names to newer implementations and for registering
-workflow-node migration rules
-\cite{KNIMECoreClassMapperSchema2026,KNIMEMigrationRuleSchema2026}. These
-records are not counted as deprecation markers, but they are relevant for later
-analysis of whether deprecated or replaced nodes have explicit migration
-support.
-
-The parser is implemented in
-\path{scripts/collect_knime_node_snapshot.py}.
-It uses Python's standard XML parser and skips \texttt{.git},
-\texttt{target}, \texttt{bin}, and \texttt{.metadata} directories. Boolean XML
-attributes are treated as true only when their value is case-insensitively
-equal to \texttt{true}.
-
-For each snapshot, the extractor writes per-record tables for node
-registrations, node descriptions, factory-class mappers, migration rules, and a
-local summary. The per-snapshot outputs are stored under
-\path{data/original/knime_snapshots/<snapshot-date>/}
-and include:
-\begin{itemize}
-\item \path{logs/checkout_<snapshot-date>.csv}
-\item \path{plugin_nodes.csv}
-\item \path{node_descriptions.csv}
-\item \path{factory_class_mappers.csv}
-\item \path{migration_rules.csv}
-\item \path{summary.csv}
-\end{itemize}
-The cross-snapshot table is stored as:
-\begin{quote}
-\path{data/processed/knime_snapshots/}
-
-\path{knime_node_snapshot_summary.csv}
-\end{quote}
-It is generated from these per-snapshot outputs by
-\path{scripts/build_knime_node_snapshot_summary.py}.
-
-The summary builder aggregates ordinary node registrations, dynamic nodesets,
-unique factory classes, deprecated nodes, hidden nodes, node-description files,
-deprecated node descriptions, factory-class mappers, and migration rules. It
-also counts processed and skipped repositories from each checkout manifest.
-Transition columns compare adjacent chronological snapshots. Node identity is
-based on \texttt{factory\_class} where available. Otherwise, the fallback key
-is \texttt{plugin\_xml:element:category\_path}. These transition counts are
-therefore metadata-level approximations and are strongest for nodes with stable
-factory classes.
-
 All project Python scripts are intended to be run with Python 3.11 or newer.
 The current scripts use only the Python standard library. No third-party
-Python packages are required for the OpenAlex and KNIME repository-mining
-pipelines.
+Python packages are required for the OpenAlex collection and rule-based audit
+steps. Browser-assisted, GROBID, and LLM-supported steps use the separately
+recorded tools and services described above.
 
 \section{Data}
 
@@ -540,7 +429,7 @@ These files summarize artifact-access signals and role-classification counts.
 \subsection{Top-Cited Article Assessment}
 
 The top-cited article dataset records the structured assessment of the 100
-most-cited OpenAlex records. The citation-ranked source list is
+most-cited KNIME-matching OpenAlex records. The citation-ranked source list is
 \path{data/processed/openalex/openalex_knime_most_cited.csv}, and the local
 article registry is stored under \path{data/original/articles/}. Local PDFs,
 where available, are preserved in that directory, while download-attempt logs
@@ -579,127 +468,18 @@ paths are recorded in
 \path{data/processed/audit/knime_downloadable_workflow_references.json}; manual
 KNIME-opening screenshots are stored under each workflow directory's
 \path{opened/} subdirectory. Table sources are generated under
-\path{article/tables/} from these JSON files rather than edited manually.
-
-\subsection{Repository-Level Analysis}
-
-The KNIME repository-mining data are organized as original per-snapshot audit
-files and one processed cross-snapshot summary. The processed summary is stored
-as:
-\begin{quote}
-\path{data/processed/knime_snapshots/}
-
-\path{knime_node_snapshot_summary.csv}.
-\end{quote}
-Per-snapshot audit files are stored under
-\path{data/original/knime_snapshots/<snapshot-date>/} and include:
-
-\begin{itemize}
-\item \path{logs/checkout_<snapshot-date>.csv}
-\item \path{plugin_nodes.csv}
-\item \path{node_descriptions.csv}
-\item \path{factory_class_mappers.csv}
-\item \path{migration_rules.csv}
-\item \path{summary.csv}
-\end{itemize}
-
-\begingroup
-\small
-\begin{longtable}{%
-  >{\raggedright\arraybackslash}p{0.40\textwidth}
-  >{\raggedright\arraybackslash}p{0.18\textwidth}
-  >{\raggedright\arraybackslash}p{0.32\textwidth}}
-\caption{Columns in the processed KNIME node snapshot summary.}
-\label{tab:summary-columns}\\
-\toprule
-Name & Type & Short description \\
-\midrule
-\endfirsthead
-\toprule
-Name & Type & Short description \\
-\midrule
-\endhead
-\bottomrule
-\endfoot
-\texttt{snapshot\_id} & string &
-Stable identifier for the snapshot. \\
-\texttt{snapshot\_kind} & categorical &
-Snapshot basis, currently date-based. \\
-\texttt{snapshot\_date} & date &
-Target date used for repository checkout. \\
-\texttt{knime\_version} & string &
-Version label or source-date context assigned by the summary script. \\
-\texttt{source\_basis} & categorical &
-Method used to obtain the source snapshot. \\
-\texttt{repos\_processed} & integer &
-Repositories with a checkout commit in the snapshot manifest. \\
-\texttt{repos\_skipped} & integer &
-Repositories without a commit at or before the target date. \\
-\texttt{plugin\_xml\_files} & integer &
-Distinct parsed \texttt{plugin.xml} files contributing node metadata. \\
-\texttt{repos\_with\_plugin\_xml} & integer &
-Repositories contributing at least one parsed \texttt{plugin.xml}. \\
-\texttt{registered\_nodes} & integer &
-Ordinary node registrations in the node extension point. \\
-\texttt{registered\_nodesets} & integer &
-Dynamic nodeset registrations in the nodeset extension point. \\
-\texttt{registered\_total} & integer &
-Sum of ordinary node and nodeset registrations. \\
-\texttt{unique\_factory\_classes} & integer &
-Distinct non-empty factory classes among ordinary node registrations. \\
-\texttt{deprecated\_nodes} & integer &
-Ordinary nodes with \texttt{deprecated="true"}. \\
-\texttt{deprecated\_nodesets} & integer &
-Nodesets with \texttt{deprecated="true"}. \\
-\texttt{deprecated\_total} & integer &
-Sum of deprecated ordinary nodes and deprecated nodesets. \\
-\twolinecol{unique\_deprecated}{\_factory\_classes} & integer &
-Distinct factory classes among deprecated ordinary nodes. \\
-\texttt{deprecated\_node\_percent} & percent &
-Deprecated ordinary nodes divided by registered ordinary nodes. \\
-\texttt{hidden\_nodes} & integer &
-Ordinary nodes with \texttt{hidden="true"}. \\
-\texttt{hidden\_node\_percent} & percent &
-Hidden ordinary nodes divided by registered ordinary nodes. \\
-\twolinecol{deprecated\_and}{\_hidden\_nodes} & integer &
-Ordinary nodes marked both deprecated and hidden. \\
-\texttt{node\_description\_files} & integer &
-Parsed \texttt{*NodeFactory.xml} files rooted at \texttt{knimeNode}. \\
-\twolinecol{description\_deprecated}{\_files} & integer &
-Node-description files with \texttt{deprecated="true"}. \\
-\twolinecol{description\_deprecated}{\_percent} & percent &
-Deprecated node descriptions divided by parsed node descriptions. \\
-\twolinecol{factory\_class\_mapper}{\_count} & integer &
-Registered \texttt{NodeFactoryClassMapper} contributions. \\
-\texttt{migration\_rule\_count} & integer &
-Registered \texttt{NodeMigrationRule} contributions. \\
-\twolinecol{nodes\_added}{\_since\_previous} & integer/blank &
-Node identity keys present in this snapshot but not the previous one. \\
-\twolinecol{nodes\_removed}{\_since\_previous} & integer/blank &
-Node identity keys present in the previous snapshot but absent here. \\
-\twolinecol{nodes\_newly\_deprecated}{\_since\_previous} & integer/blank &
-Common node keys that became deprecated since the previous snapshot. \\
-\twolinecol{nodes\_no\_longer\_deprecated}{\_since\_previous} &
-integer/blank &
-Common node keys no longer marked deprecated. \\
-\twolinecol{nodes\_newly\_hidden}{\_since\_previous} & integer/blank &
-Common node keys that became hidden since the previous snapshot. \\
-\twolinecol{nodes\_no\_longer\_hidden}{\_since\_previous} & integer/blank &
-Common node keys no longer marked hidden. \\
-\twolinecol{nodes\_category\_changed}{\_since\_previous} & integer/blank &
-Common node keys whose observed category-path set changed. \\
-\end{longtable}
-\endgroup
+\path{article_bibliometric/tables/} from these JSON files rather than edited
+manually.
 
 \section{Results}
 
 \subsection{Bibliometric Evidence}
 
 The OpenAlex title-and-abstract query returned 963 article-type records. This
-is the first piece of evidence for the study: KNIME is visible in a sizeable
-scientific literature, so preservation of KNIME workflows is not only a niche
-platform-maintenance issue. The annual series indicates that KNIME-matching
-literature becomes visible in OpenAlex from the mid-2000s and grows into a
+establishes that KNIME is visible in a sizeable scientific literature and that
+workflow preservation is relevant beyond platform-maintenance research. The
+annual series indicates that KNIME-matching literature appears in OpenAlex
+from the mid-2000s and grows into a
 sustained publication stream after 2015 (Fig.~\ref{fig:openalex-by-year}). The
 highest annual count in the current export is 104 records in 2023. Counts for
 2026 are incomplete because the query was collected on June 29, 2026.
@@ -729,7 +509,7 @@ highest annual count in the current export is 104 records in 2023. Counts for
   y index=1,
   col sep=comma,
   ignore chars={\"}
-] {../data/processed/openalex/openalex_knime_articles_by_year.csv};
+] {tables/openalex_knime_articles_by_year.csv};
 \end{axis}
 \end{tikzpicture}
 \caption{OpenAlex article records matching \texttt{KNIME} in title or
@@ -744,7 +524,7 @@ records are spread across Social Sciences, Life Sciences, and Health Sciences.
 This matters for the study because workflow reproducibility risk is not only a
 software-engineering concern. If KNIME workflows are used across computational
 chemistry, biomedical analysis, education, business analytics, and related
-areas, then missing workflow artifacts and changing node implementations can
+areas, then missing workflow artifacts and undocumented dependencies can
 affect published computational evidence in several research communities.
 
 \begin{table}
@@ -790,10 +570,11 @@ final case-study claims require manual full-text and artifact assessment.
 
 \subsection{Top-Cited Article Assessment}
 
-The top-cited audit shows that article access itself is already a limiting
-condition for reproducibility assessment. Of the 100 citation-ranked
-KNIME-matching records, 79 have a local PDF recorded in the compact audit
-report. This means that the automated middle of the pipeline can evaluate most,
+Of the 100 citation-ranked KNIME-matching records, 37 article PDFs were
+downloaded by the retrieval script and 42 were obtained manually, giving 79
+local PDFs in total. The top-cited audit therefore shows that article access
+itself is already a limiting condition for reproducibility assessment. This
+means that the automated middle of the pipeline can evaluate most,
 but not all, top-cited records from local article text and extracted
 references. The remaining records stay in the denominator, because excluding
 them would overstate the assessability of the literature.
@@ -804,33 +585,42 @@ workflow-relevant linked resources for 22 article records, with 68 linked
 resources retained after filtering generic article pages, datasets, software
 documentation, and malformed or unrelated URLs. This result is important
 methodologically: the clearest evidence for whether a reader can obtain a
-workflow often appears on the referenced page itself, not in the sentence that
-cites the URL.
+workflow can appear on the referenced page itself rather than in the sentence
+that cites the URL.
 
 The LLM reference-classification step reduced the URL set to resources that
-could plausibly support workflow retrieval. In the compact report, most retained
-workflow links are classified as downloaded workflow artifacts, with only two
-manual-check resources and a small number of landing-page or direct-workflow
-references. The broader workflow inventory keeps 31 article records as
-download candidates, because it preserves retrieval attempts even when the
-compact article flag is later stricter. This separation is useful: it lets the
-audit distinguish "the article or reference suggests a workflow may be
-available" from "a workflow artifact was actually obtained locally."
+could plausibly support workflow retrieval and assigned bounded categories for
+downloaded artifacts, workflow landing pages, direct workflow links, and
+resources requiring manual inspection. The broader workflow inventory retains
+31 candidate workflow-reference records because it preserves retrieval
+attempts even when the compact article-level flag is stricter. This separation
+allows the audit to distinguish evidence that an article or reference suggests
+a workflow is available from evidence that a workflow artifact was obtained
+locally.
 
-The supplementary LLM flag step gives the publication-level reporting pattern
-around those workflow links. Seventy-five records use KNIME as a workflow,
-tool, interface, or implementation context. Most of these KNIME-use records
-describe workflow steps or nodes in text, and many show workflow screenshots or
-figures. However, much smaller subsets report a KNIME version, a downloadable
-workflow, extension dependencies, or an extension installation source. This
-indicates that visual or narrative workflow presentation is more common than
-the executable and environment context needed for later reproduction.
+The supplementary LLM flag step provides the publication-level reporting
+context for those workflow links. Seventy-five records use KNIME as a workflow,
+tool, interface, or implementation context. Of the full 100-record registry, 68
+records describe workflow steps or nodes in text, and 49 show workflow
+screenshots or figures. In contrast, 18 report a KNIME version, 22 report a
+downloadable or linked workflow, 23 report extension dependencies, and four
+report an extension installation source. Visual or narrative workflow
+presentation is therefore more common than the executable and environment
+context needed for later reproduction.
+
+Restricting the reporting signals to the 75 KNIME-use cases changes two of the
+all-record counts: 48 of the KNIME-use articles show workflow screenshots or
+figures, and 22 report extension or plugin dependencies. The corresponding
+all-record counts are 49 and 23 because each signal also occurs once in a
+comparative paper that is not classified as a KNIME-use case. The remaining
+signals in Table~\ref{tab:knime-use-assessment} are fully contained within the
+75 KNIME-use cases.
 
 The workflow-download stage converts reported or linked workflow evidence into
 local artifact evidence. Eighteen article records yielded workflow files,
 archives, or workflow directories. Four were obtained automatically and
-fourteen required manual download. This confirms the semi-automatic nature of
-the boundary step: scripted retrieval can find some artifacts, but protected
+fourteen required manual download. This confirms the semi-automated character
+of the boundary step: scripted retrieval can find some artifacts, but protected
 pages, stale links, repository layouts, and supplement portals still require
 human inspection.
 
@@ -899,9 +689,9 @@ Audit flag & Count & Share of KNIME-use cases \\
 \endfoot
 Uses KNIME & 75 & 100.0\% \\
 Workflow or nodes described in text & 68 & 90.7\% \\
-Workflow screenshots or figures & 49 & 65.3\% \\
+Workflow screenshots or figures & 48 & 64.0\% \\
 Reports KNIME version & 18 & 24.0\% \\
-Reports extension/plugin dependencies & 23 & 30.7\% \\
+Reports extension/plugin dependencies & 22 & 29.3\% \\
 Reports extension installation source & 4 & 5.3\% \\
 Reports downloadable workflows & 22 & 29.3\% \\
 Articles with successfully downloaded workflows & 18 & 24.0\% \\
@@ -918,8 +708,9 @@ was retrieved, while \textbf{-} means that no KNIME workflow artifact was
 obtained or confirmed. Failed or incomplete retrievals are recorded separately
 from article-level claims that a workflow was reported or linked.
 
-Table~\ref{tab:workflow-opening-results} then reports the manual current-KNIME
-opening and execution checks for the downloaded article records. Here, the
+Table~\ref{tab:workflow-opening-results} then reports the manual opening and
+execution checks in the current KNIME environment for the downloaded article
+records. Here, the
 \emph{Executed} column has a stricter meaning: \textbf{X} means that at least
 one workflow for the article opened and executed successfully in the tested
 environment, while \textbf{-} means that the workflow opened but did not have a
@@ -931,10 +722,8 @@ high-content organelle trafficking, and GediNET
 Other opened workflows did not have a confirmed successful end-to-end run in
 this manual check. This does not show that those workflows are unreproducible:
 they may require additional configuration, dependencies, or repair before a
-successful run. Across the opened workflows, the screenshots also show
-deprecated or legacy nodes, but we treat this as qualitative compatibility
-evidence here rather than counting visible deprecated nodes. The screenshots
-are archived under each workflow directory's \texttt{opened/} subdirectory in
+successful run. The screenshots from the opening checks are archived under
+each workflow directory's \texttt{opened/} subdirectory in
 \path{data/original/workflows/}.
 
 \begingroup
@@ -1167,186 +956,88 @@ available notes. \\
 \end{longtable}
 \endgroup
 
-\subsection{Repository-Level Analysis}
-
-The repository-mining results explain why weak workflow reporting becomes more
-costly over time. Deprecated nodes are not an isolated metadata corner case in
-the KNIME source tree. At the earliest available source-code baseline,
-2018-04-03, 193 of 1301 registered ordinary nodes were marked as deprecated, or
-14.83\% (Table~\ref{tab:selected-snapshots}). By the KNIME Analytics Platform
-5.0.0 source-date anchor on 2023-02-22, the count had increased to 433 of 1442
-ordinary nodes, or 30.03\%. The current local source-date snapshot on June 28,
-2026, contains 502 deprecated ordinary nodes out of 1506, or 33.33\%. These
-figures show that the deprecated-node share approximately doubled between the
-2018 baseline and the 2026 local snapshot.
-
-The annual checkpoint table gives the same trend at regular intervals
-(Table~\ref{tab:annual-snapshots}). The number of repositories with checkout
-commits rises from 44 in 2018 to 90 in 2026, so early and late totals should
-not be compared as if the mined source corpus were fixed. Nevertheless, the
-deprecated-node share rises from 14.83\% in 2018 to 33.47\% at the 2026 annual
-checkpoint. Hidden ordinary nodes remain much less frequent than deprecated
-ordinary nodes, but they increase from 2 in 2018 to 24 in 2026. Deprecated
-dynamic nodesets appear from 2020 onward and remain at 2 in the annual
-checkpoints through 2026.
-
-\begin{table}
-\centering
-\caption{Selected KNIME repository-mining snapshots.}
-\label{tab:selected-snapshots}
-\scriptsize
-\begin{tabular}{lp{0.34\textwidth}rrr}
-\toprule
-Date & Version context & Nodes & Deprecated nodes &
-\shortstack{Deprecated\\share} \\
-\midrule
-2018-04-03 & KNIME Analytics Platform 3.5.3 source-date anchor & 1301 &
-193 & 14.83\% \\
-2019-12-05 & KNIME Analytics Platform 4.1.0 source-date anchor & 1191 &
-227 & 19.06\% \\
-2023-02-22 & KNIME Analytics Platform 5.0.0 source-date anchor & 1442 &
-433 & 30.03\% \\
-2026-03-03 & KNIME Analytics Platform 5.11.0 source-date anchor & 1503 &
-503 & 33.47\% \\
-2026-06-28 & Current local source-date snapshot & 1506 & 502 & 33.33\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}
-\centering
-\caption{Annual KNIME repository-mining checkpoint statistics.}
-\label{tab:annual-snapshots}
-\scriptsize
-\begin{tabular}{llrrrrrr}
-\toprule
-Year & Snapshot date & Repositories & Nodes &
-\shortstack{Deprecated\\nodes} &
-\shortstack{Deprecated\\nodesets} &
-\shortstack{Hidden\\nodes} &
-\shortstack{Deprecated\\share} \\
-\midrule
-2018 & 2018-04-03 & 44 & 1301 & 193 & 0 & 2 & 14.83\% \\
-2019 & 2019-01-01 & 45 & 1500 & 248 & 0 & 2 & 16.53\% \\
-2020 & 2020-01-01 & 54 & 1200 & 228 & 2 & 2 & 19.00\% \\
-2021 & 2021-01-01 & 60 & 1366 & 398 & 2 & 5 & 29.14\% \\
-2022 & 2022-01-01 & 67 & 1424 & 386 & 2 & 8 & 27.11\% \\
-2023 & 2023-01-01 & 72 & 1428 & 433 & 2 & 10 & 30.32\% \\
-2024 & 2024-01-01 & 80 & 1434 & 436 & 2 & 9 & 30.40\% \\
-2025 & 2025-01-01 & 86 & 1488 & 446 & 2 & 23 & 29.97\% \\
-2026 & 2026-01-01 & 90 & 1509 & 505 & 2 & 24 & 33.47\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}
-\centering
-\caption{Annual KNIME repository-mining transition statistics.}
-\label{tab:annual-transitions}
-\scriptsize
-\begin{tabular}{lrrrrr}
-\toprule
-Year & Added & Removed &
-\shortstack{Newly\\deprecated} &
-\shortstack{No longer\\deprecated} &
-\shortstack{Category\\changed} \\
-\midrule
-2018 & -- & -- & -- & -- & -- \\
-2019 & 194 & 22 & 16 & 0 & 6 \\
-2020 & 11 & 0 & 0 & 0 & 4 \\
-2021 & 140 & 1 & 80 & 0 & 111 \\
-2022 & 69 & 6 & 17 & 29 & 17 \\
-2023 & 56 & 4 & 61 & 0 & 67 \\
-2024 & 17 & 7 & 4 & 0 & 3 \\
-2025 & 36 & 0 & 9 & 0 & 1 \\
-2026 & 52 & 2 & 60 & 0 & 3 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The transition table indicates that node deprecation changes occur in bursts
-rather than at a constant rate (Table~\ref{tab:annual-transitions}). The largest
-annual increases in newly deprecated node identities occur at the 2021, 2023,
-and 2026 checkpoints, with 80, 61, and 60 newly deprecated node keys,
-respectively. The 2022 checkpoint is the only annual checkpoint in which a
-substantial number of common node keys are no longer marked deprecated: 29.
-Category-path changes are also concentrated in a few years, especially 2021
-and 2023. Because these transition counts use metadata-level node identity keys,
-they should be read as evidence of source metadata evolution, not as direct
-evidence that published workflows fail to open or execute.
-
-These repository-level results directly address the second research question:
-how KNIME node deprecation evolved over time. They also provide necessary
-context for the workflow-level questions, because a published workflow that
-depends on older node identities may encounter deprecated, hidden, removed, or
-migrated components in a later KNIME version. However, the tables do not answer
-how often uploaded or executed workflows use deprecated nodes. That question
-requires workflow-level corpora and execution traces beyond repository
-metadata.
-
-Taken together, the evidence gives the intended picture of the study. First,
-KNIME is visible in a broad and sustained scientific literature. Second,
-influential papers that use or mention KNIME rarely provide the full
-workflow-preservation package needed for later reproduction: executable
-workflow files, KNIME versions, extension context, data, and code. Third, the
-workflow experiment shows the practical consequence of this gap: 18 article
-records yielded workflow artifacts or workflow directories, workflows from all
-18 opened in the current local KNIME environment, and five article records had
-at least one workflow execute successfully. Fourth, KNIME's source metadata
-continues to evolve, and roughly one third of ordinary registered nodes are
-marked deprecated in recent source snapshots. The result is not a claim that
-all KNIME workflows fail. The result is a reproducibility risk: as KNIME
-evolves, papers that preserve only workflow images or textual descriptions
-become harder to diagnose, migrate, and reproduce.
+Taken together, the results show three stages of evidence. First, KNIME is
+visible in a broad and sustained scientific literature. Second, reporting
+signals are uneven: 68 records describe workflow steps or nodes in text, 49
+show workflow screenshots or figures, 22 report downloadable or linked
+workflows, and 18 yielded workflow artifacts or directories. Third, workflows
+from all 18 records with obtained artifacts opened in the current local KNIME
+environment, but only five article records had at least one workflow execute
+successfully in the recorded checks. These findings do not show that KNIME
+workflows generally fail. They identify a narrower reproducibility risk:
+workflow images and textual descriptions do not provide the executable and
+environmental evidence needed to test, diagnose, and reproduce the reported
+analysis.
 
 \section{Discussion}
 
-To our knowledge, this is the first focused empirical study connecting KNIME
-workflow reporting in scientific publications with KNIME source-code evolution.
-The contribution is intentionally narrower than a full reproducibility
-benchmark. We do not estimate the failure rate of all published KNIME
-workflows. Instead, we show a reproducibility risk pattern: KNIME is used in a
-visible scientific literature, influential papers often do not publish
-executable workflow artifacts, successful current-version execution was
-confirmed for five article records in the recorded manual checks, and the
-KNIME node ecosystem has accumulated a substantial deprecated-node surface.
+This study contributes a semi-automated evidence pipeline and a focused
+empirical account of how KNIME workflows are reported and preserved in
+scientific publications. Its scope is intentionally narrower than a full
+reproducibility benchmark: we do not estimate the failure rate of all published
+KNIME workflows. Instead, the pipeline links bibliometric records,
+publication-level reporting signals, referenced web resources, retrieved
+artifacts, and manual opening and execution outcomes. The resulting contrast is
+clear: 68 records contain textual workflow descriptions, 22 report downloadable
+or linked workflows, 18 yielded artifacts or directories, and five had a
+confirmed successful execution.
 
 The results suggest three practical implications. First, a published workflow
 image is not an executable artifact. Several highly cited papers provide
 figures or textual descriptions of connected KNIME nodes, but this is not
-enough to recover node settings, extension versions, input paths, or migration
-requirements. Second, reporting a KNIME version is useful but incomplete.
+enough to recover node settings, extension versions, or input paths. Second,
+reporting a KNIME version is useful but incomplete.
 Workflows may also depend on third-party extension update sites and node
 libraries, as shown by the PAINS case where the RDKit workflow could be
 updated and executed while the Indigo workflow was blocked by a missing
-extension. Third, repository-level deprecation is a useful warning signal. It
-does not prove that a workflow fails, but it identifies a compatibility surface
-that grows as the platform evolves. Without careful workflow preservation and
-version reporting, this growth makes old workflows harder to inspect and
-repair.
+extension. Third, a reported or linked workflow should not be counted as an
+obtained artifact without checking the target resource. The difference between
+22 records reporting downloadable or linked workflows and 18 records yielding
+workflow artifacts or directories demonstrates the importance of preserving
+retrieval evidence separately from publication-level reporting.
+
+The study has several limitations. The OpenAlex query identifies records whose
+titles or abstracts match \texttt{KNIME}; it is not a complete census of every
+study that used the platform. The top-cited audit is designed to examine
+influential records and is not a random sample. Local full text was available
+for 79 of the 100 records, and inaccessible records remain in the denominator.
+The audit records whether articles report data and code availability but does
+not verify every such resource. Finally, the opening and execution checks
+reflect the
+recorded local environment and available configuration effort. They support
+case-level outcomes, not a general estimate of workflow executability.
 
 The next development of this study should move from paper-level evidence to
 workflow-level evidence. One direction is to create a larger corpus of public
 KNIME workflows from supplements, myExperiment, KNIME Hub, GitHub, and other
-repositories, then test whether they open in current KNIME versions and which
-deprecated, hidden, migrated, or missing nodes they contain. A second direction
-is to link deprecated nodes to migration metadata and replacement nodes in the
-KNIME source tree, so that workflow warnings can distinguish low-risk
-deprecations from nodes that require unavailable extensions or manual repair.
-A third direction is to preserve reproducibility environments for selected
-case studies by recording operating system, KNIME version, installed
+repositories, then test whether they open and execute across documented KNIME
+versions and extension configurations. A second direction is to preserve
+reproducibility environments for selected case studies by recording operating
+system, KNIME version, installed
 extensions, update sites, input data, import warnings, execution errors, and
 output differences.
 
-Tools and services outside the present evidence base can provide the next
-layer of usage evidence. \texttt{knime2py} can help identify KNIME workflows that users
-try to translate or operationalize outside KNIME \cite{KaplanKnime2py2026},
-and \texttt{k2pweb.org} can provide anonymized aggregate evidence about real uploaded
-or executed workflows \cite{K2PWeb2026}. These
-sources would address a question that the current paper deliberately leaves
-open: how often researchers and analysts encounter deprecated KNIME nodes in
-practice, not only how often deprecated nodes appear in the source repository
-or in selected published artifacts.
+Tools and services outside the present evidence base could provide a further
+layer of usage evidence. \texttt{knime2py} could help identify KNIME workflows
+that users try to translate or operationalize outside KNIME
+\cite{KaplanKnime2py2026}, while \texttt{k2pweb.org} could provide anonymized,
+aggregate evidence about uploaded or executed workflows \cite{K2PWeb2026}.
+These sources could help answer a question that the current study leaves open:
+which access, dependency, configuration, and execution barriers researchers
+encounter when they attempt to reuse KNIME workflows in practice.
+
+\section{Conclusion}
+
+The bibliometric and audit evidence distinguishes the visibility of KNIME in
+scientific literature from the preservation of executable KNIME analyses. Of
+100 top-cited KNIME-matching records, 75 were classified as KNIME-use cases, 22
+reported downloadable or linked workflows, 18 yielded workflow artifacts or
+workflow directories, and five had at least one workflow execute successfully
+in the recorded checks. These results do not imply that KNIME workflows are
+generally unreproducible. They show that long-term assessment depends on
+publishing the executable workflow together with version, extension, data, and
+execution context, and on recording whether linked artifacts remain retrievable
+and runnable.
 
 \bibliographystyle{splncs04}
 \bibliography{references}

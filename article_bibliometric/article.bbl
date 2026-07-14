@@ -1,0 +1,111 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{Berthold2009KNIME}
+Berthold, M.R., Cebron, N., Dill, F., Gabriel, T.R., K{\"o}tter, T., Meinl, T.,
+  Ohl, P., Sieb, C., Thiel, K., Wiswedel, B.: {KNIME}: The {Konstanz}
+  information miner. In: Data Analysis, Machine Learning and Applications, pp.
+  319--326. Springer (2008). \doi{10.1007/978-3-540-78246-9_38}
+
+\bibitem{Dietz2020ImageJKNIME}
+Dietz, C., Rueden, C.T., Helfrich, S., Dobson, E.T.A., Horn, M., Eglinger, J.,
+  Evans, E.L., McLean, D.T., Novitskaya, T., Ricke, W.A., Sherer, N.M.,
+  Zijlstra, A., Berthold, M.R., Eliceiri, K.W.: Integration of the {ImageJ}
+  ecosystem in {KNIME} analytics platform. Frontiers in Computer Science
+  \textbf{2}, ~8 (2020). \doi{10.3389/fcomp.2020.00008}
+
+\bibitem{Fu2025GIScienceKNIME}
+Fu, X., Liu, L., Guan, W.W., Kalra, Y., Bao, S., K{\"o}tter, T., Sturm, K.:
+  Advancing replicable and reproducible {GIScience}: an approach with {KNIME}.
+  Cartography and Geographic Information Science  \textbf{53}(3),  270--290
+  (2025). \doi{10.1080/15230406.2024.2446556}
+
+\bibitem{GROBIDSoftware2026}
+{GROBID contributors}: {GROBID}: Generation of bibliographic data.
+  \url{https://github.com/kermitt2/grobid} (2026), version 0.9.0-crf Docker
+  image; accessed July 12, 2026
+
+\bibitem{Hall2009WEKA}
+Hall, M., Frank, E., Holmes, G., Pfahringer, B., Reutemann, P., Witten, I.H.:
+  The {WEKA} data mining software: An update. ACM SIGKDD Explorations
+  Newsletter  \textbf{11}(1),  10--18 (2009). \doi{10.1145/1656274.1656278}
+
+\bibitem{K2PWeb2026}
+Kaplan, V.: {k2p-web}: {KNIME} to {Python/Jupyter} converter.
+  \url{https://k2pweb.org/} (2026), accessed July 1, 2026
+
+\bibitem{KaplanKnime2py2026}
+Kaplan, V.: {knime2py}: {KNIME} to {Python} workbook.
+  \url{https://github.com/vitalii-kaplan/knime2py} (2026), accessed July 1,
+  2026
+
+\bibitem{KaplanReproducibilityRisksArticle2026}
+Kaplan, V.: {reproducibility-risks-article}: Replication repository for {KNIME}
+  workflow reproducibility-risk study.
+  \url{https://github.com/vitalii-kaplan/reproducibility-risks-article} (2026),
+  accessed July 1, 2026
+
+\bibitem{Kurtzer2017Singularity}
+Kurtzer, G.M., Sochat, V., Bauer, M.W.: Singularity: Scientific containers for
+  mobility of compute. PLOS ONE  \textbf{12}(5),  e0177459 (2017).
+  \doi{10.1371/journal.pone.0177459}
+
+\bibitem{PlaywrightPython2026}
+{Microsoft}: {Playwright for Python}. \url{https://playwright.dev/python/}
+  (2026), version 1.61.0; accessed July 12, 2026
+
+\bibitem{OpenAIAPI2026}
+{OpenAI}: {OpenAI API Documentation}: Chat completions.
+  \url{https://platform.openai.com/docs/api-reference/chat} (2026), accessed
+  July 12, 2026
+
+\bibitem{Pal2018OrganelleKNIME}
+Pal, A., Gla{\ss}, H., Naumann, M., Kreiter, N., Japtok, J., Sczech, R.,
+  Hermann, A.: High content organelle trafficking enables disease state
+  profiling as powerful tool for disease modelling. Scientific Data
+  \textbf{5}(1),  180241 (2018). \doi{10.1038/sdata.2018.241}
+
+\bibitem{Priem2022OpenAlex}
+Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly
+  works, authors, venues, institutions, and concepts. arXiv preprint
+  arXiv:2205.01833  (2022). \doi{10.48550/arXiv.2205.01833},
+  \url{https://arxiv.org/abs/2205.01833}
+
+\bibitem{Qumsiyeh2022GediNET}
+Qumsiyeh, E., Showe, L.C., Yousef, M.: {GediNET} for discovering gene
+  associations across diseases using knowledge based machine learning approach.
+  Scientific Reports  \textbf{12}(1),  19955 (2022).
+  \doi{10.1038/s41598-022-24421-0}
+
+\bibitem{SamuelMietchen2024JupyterReproducibility}
+Samuel, S., Mietchen, D.: Computational reproducibility of {Jupyter} notebooks
+  from biomedical publications. GigaScience  \textbf{13} (2024).
+  \doi{10.1093/gigascience/giad113}
+
+\bibitem{Saubern2011PAINS}
+Saubern, S., Guha, R., Baell, J.B.: {KNIME} workflow to assess {PAINS} filters
+  in {SMARTS} format: Comparison of {RDKit} and {Indigo} cheminformatics
+  libraries. Molecular Informatics  \textbf{30}(10),  847--850 (2011).
+  \doi{10.1002/minf.201100076}
+
+\bibitem{Rasheed2023FlakinessReview}
+Tahir, A., Rasheed, S., Dietrich, J., Hashemi, N., Zhang, L.: Test flakiness'
+  causes, detection, impact and responses: A multivocal review. Journal of
+  Systems and Software  \textbf{206},  111837 (2023).
+  \doi{10.1016/j.jss.2023.111837}
+
+\bibitem{VillarroelOrdenes2021KNIMEHub}
+Villarroel~Ordenes, F., Silipo, R.: Machine learning for marketing on the
+  {KNIME} hub: The development of a live repository for marketing applications.
+  Journal of Business Research  \textbf{137},  393--410 (2021).
+  \doi{10.1016/j.jbusres.2021.08.036}
+
+\bibitem{Walker2013ProveML}
+Walker, R., Slingsby, A., Dykes, J., Xu, K., Wood, J., Nguyen, P.H., Stephens,
+  D., Wong, B.L.W., Zheng, Y.: An extensible framework for provenance in human
+  terrain visual analytics. IEEE Transactions on Visualization and Computer
+  Graphics  \textbf{19}(12),  2139--2148 (2013). \doi{10.1109/TVCG.2013.132}
+
+\end{thebibliography}

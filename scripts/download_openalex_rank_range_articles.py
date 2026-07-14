@@ -12,7 +12,7 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 
 def slug(text: str, fallback: str) -> str:
@@ -69,8 +69,9 @@ def is_pdf(path: Path) -> bool:
 
 
 def download(url: str, path_prefix: Path, timeout: int) -> tuple[str, Path | None, str]:
+    request_url = quote(url, safe=":/?&=%#[]@!$'()*+,;~-._")
     req = urllib.request.Request(
-        url,
+        request_url,
         headers={
             "User-Agent": "Mozilla/5.0 reproducibility-risks article audit",
             "Accept": "application/pdf,text/html,application/octet-stream;q=0.9,*/*;q=0.8",

@@ -325,7 +325,7 @@
         "article/tables/logs/knime_use_workflow_reporting_table_comparison.csv"
       ],
       "handoff_to_next": "automatic",
-      "notes": "Uses flag counts from data/processed/audit/article_audit_report.json and the workflow inventory summary count for articles with successfully downloaded workflows."
+      "notes": "Validates the all-record flag counts against data/processed/audit/article_audit_report.json, then recalculates each reporting flag within the subset whose uses_knime flag is true. Uses the workflow inventory summary count for articles with successfully downloaded workflows."
     }
   ],
   "final_table_outputs": [

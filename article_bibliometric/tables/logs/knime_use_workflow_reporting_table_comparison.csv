@@ -1,0 +1,9 @@
+label,generated_count,article_count,count_match,generated_share_percent,article_share_percent,share_match
+Uses KNIME,75,75,True,100.0,100.0,True
+Workflow or nodes described in text,68,68,True,90.7,90.7,True
+Workflow screenshots or figures,48,48,True,64.0,64.0,True
+Reports KNIME version,18,18,True,24.0,24.0,True
+Reports extension/plugin dependencies,22,22,True,29.3,29.3,True
+Reports extension installation source,4,4,True,5.3,5.3,True
+Reports downloadable workflows,22,22,True,29.3,29.3,True
+Articles with successfully downloaded workflows,18,18,True,24.0,24.0,True
