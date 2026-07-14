@@ -7,9 +7,10 @@
 \usepackage{longtable}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
-\usepackage{url}
+\usepackage{xurl}
 
 \pgfplotsset{compat=1.18}
+\setlength{\emergencystretch}{2em}
 
 \title{KNIME Workflows in Scientific Studies: A Semi-Automated Reproducibility Audit}
 \titlerunning{KNIME Workflows in Scientific Studies}
@@ -502,6 +503,7 @@ highest annual count in the current export is 104 records in 2023. Counts for
   ymajorgrids=true,
   grid style={gray!25},
   tick label style={font=\scriptsize},
+  xticklabel style={/pgf/number format/1000 sep={}},
   label style={font=\small},
 ]
 \addplot table[
@@ -865,8 +867,8 @@ KNIME workflow directory. \\
 \begin{longtable}{|%
   >{\centering\arraybackslash}p{0.04\textwidth}|
   >{\raggedright\arraybackslash}p{0.25\textwidth}|
-  >{\centering\arraybackslash}p{0.09\textwidth}|
-  >{\raggedright\arraybackslash}p{0.51\textwidth}|}
+  >{\centering\arraybackslash}p{0.10\textwidth}|
+  >{\raggedright\arraybackslash}p{0.50\textwidth}|}
 \caption{Manual opening and execution results for downloaded KNIME workflow
 artifacts.}
 \label{tab:workflow-opening-results}\\
